@@ -1,37 +1,42 @@
 import { Container } from "@/components/marketing/layout/container"
 import { Check, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LearningPath } from "@/lib/supabase/types"
 
-export function SkillPackPricingNew() {
+interface SkillPackPricingNewProps {
+  skillPack: LearningPath
+}
+
+export function SkillPackPricingNew({ skillPack }: SkillPackPricingNewProps) {
   const pricingOptions = [
     {
       name: "Paiement unique",
-      price: "450 000",
+      price: skillPack.price.toLocaleString('fr-FR'),
       currency: "FCFA",
       description: "Accès à vie au Skill Pack complet",
       isPopular: false,
       features: [
-        "Tous les parcours inclus",
+        `${skillPack.courses_count} parcours inclus`,
         "Accès à vie aux contenus",
         "Mises à jour gratuites",
         "Certificats co-signés",
         "Support communautaire",
-        "Projets pratiques",
+        `${skillPack.projects_count} projets pratiques`,
       ],
     },
     {
       name: "Paiement mensuel",
-      price: "45 000",
+      price: Math.round(skillPack.price / 10).toLocaleString('fr-FR'), // Mock logic for monthly
       currency: "FCFA/mois",
       description: "Pendant 12 mois - Flexibilité maximale",
       isPopular: true,
       features: [
-        "Tous les parcours inclus",
+        `${skillPack.courses_count} parcours inclus`,
         "Accès pendant 12 mois",
         "Mises à jour gratuites",
         "Certificats co-signés",
         "Support prioritaire",
-        "Projets pratiques",
+        `${skillPack.projects_count} projets pratiques`,
         "Sessions de coaching mensuelles",
         "Accès au réseau alumni",
       ],
@@ -75,11 +80,10 @@ export function SkillPackPricingNew() {
 
                 {/* Card */}
                 <div
-                  className={`relative h-full bg-slate-800/50 backdrop-blur-sm border rounded-2xl p-8 transition-all duration-300 ${
-                    option.isPopular
+                  className={`relative h-full bg-slate-800/50 backdrop-blur-sm border rounded-2xl p-8 transition-all duration-300 ${option.isPopular
                       ? "border-violet-500/50 shadow-2xl shadow-violet-500/20 scale-105"
                       : "border-slate-700/50 hover:border-violet-500/30"
-                  }`}
+                    }`}
                 >
                   {/* Header */}
                   <div className="mb-8">
@@ -111,11 +115,10 @@ export function SkillPackPricingNew() {
 
                   {/* CTA */}
                   <Button
-                    className={`w-full text-base py-6 ${
-                      option.isPopular
+                    className={`w-full text-base py-6 ${option.isPopular
                         ? "bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 text-white"
                         : "bg-slate-700 hover:bg-slate-600 text-white"
-                    }`}
+                      }`}
                   >
                     Commencer maintenant
                   </Button>

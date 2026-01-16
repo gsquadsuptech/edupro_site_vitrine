@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { FormationBreadcrumb } from "@/components/marketing/sections/formation/breadcrumb";
 import { FormationHero } from "@/components/marketing/sections/formation/hero-section";
 import { FormationTabs } from "@/components/marketing/sections/formation/formation-tabs";
 import { SimilarCourses } from "@/components/marketing/sections/formation/similar-courses";
-import { MOCK_COURSE } from "@/data/mock-formation";
+import { CourseService } from "@/services/course-service";
 
 export const metadata: Metadata = {
     title: "Détails Formation - EduPro",
@@ -17,16 +18,23 @@ export default async function FormationPage({
 }) {
     const { locale, slug } = await params;
 
-    // In a real app, we would fetch data based on slug
-    // const course = await getCourseBySlug(slug);
+    const course = await CourseService.getCourseBySlug(slug);
+
+    if (!course) {
+        notFound();
+    }
+
+    const similarCourses = course.category?.slug
+        ? await CourseService.getSimilarCourses(course.category.slug, course.id)
+        : [];
 
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
                 <FormationBreadcrumb />
-                <FormationHero course={MOCK_COURSE} />
-                <FormationTabs />
-                <SimilarCourses />
+                <FormationHero course={course} />
+                <FormationTabs course={course} />
+                <SimilarCourses courses={similarCourses} />
             </main>
         </div>
     );

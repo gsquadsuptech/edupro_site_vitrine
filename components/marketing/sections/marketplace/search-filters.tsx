@@ -8,7 +8,11 @@ import { Slider } from "@/components/ui/slider"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
-export function SearchFilters() {
+interface SearchFiltersProps {
+  categories?: { id: string, label: string, count: number }[]
+}
+
+export function SearchFilters({ categories: initialCategories = [] }: SearchFiltersProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -35,12 +39,13 @@ export function SearchFilters() {
 
   const updateFilter = (section: string, value: string, checked: boolean | number[]) => {
     const params = new URLSearchParams(searchParams.toString())
+    // For single select filters like category/level/sort, we might want replace instead of append?
+    // Current logic supports multiple values (comma separated)
     const currentValues = params.get(section)?.split(',') || []
 
     let newValues: string[] = []
 
     if (Array.isArray(checked)) {
-      // Range slider case (removed generic handling for slider here for clarity, handled separately)
       return
     }
 
@@ -80,18 +85,20 @@ export function SearchFilters() {
   }
 
   const isChecked = (section: string, value: string) => {
+    // Handle legacy 'subcategory' param or new 'category' param
     const currentValues = searchParams.get(section)?.split(',') || []
     return currentValues.includes(value)
   }
 
-  const categories = [
-    { id: "tech-digital", label: "Tech & Digital", count: 120 }, // Updated IDs to match slugs
+  const categories = initialCategories.length > 0 ? initialCategories : [
+    { id: "tech-digital", label: "Tech & Digital", count: 120 },
     { id: "business-management", label: "Business & Management", count: 85 },
     { id: "construction-durable", label: "Construction Durable", count: 45 },
     { id: "soft-skills", label: "Soft Skills", count: 90 },
     { id: "sante", label: "Santé", count: 30 },
     { id: "finance", label: "Finance", count: 55 },
   ]
+
 
   const levels = [
     { id: "Débutant", label: "Débutant" }, // Updated IDs to match likely DB values or mapped values

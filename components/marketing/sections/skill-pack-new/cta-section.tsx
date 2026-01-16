@@ -7,7 +7,13 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 
-export function SkillPackCTA() {
+import { LearningPath } from "@/lib/supabase/types"
+
+interface SkillPackCTAProps {
+  skillPack?: LearningPath
+}
+
+export function SkillPackCTA({ skillPack }: SkillPackCTAProps) {
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
   const t = useTranslations("common")

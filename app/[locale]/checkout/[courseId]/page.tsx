@@ -8,7 +8,8 @@ import { SessionSelection } from "@/components/payment/session-selection";
 import { PaymentPlan } from "@/components/payment/payment-plan";
 import { PaymentProcess } from "@/components/payment/payment-process";
 import { PaymentConfirmation } from "@/components/payment/payment-confirmation";
-import { MOCK_COURSE } from "@/data/mock-formation";
+import { CourseService } from "@/services/course-service";
+
 
 export default function CheckoutPage({
     params,
@@ -20,34 +21,41 @@ export default function CheckoutPage({
 
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (Plan) by default
     const [selectedSession, setSelectedSession] = useState<any>(null);
     const [selectedPlan, setSelectedPlan] = useState<any>(null);
     const [paymentStatus, setPaymentStatus] = useState<
         "pending" | "success" | "failed"
     >("pending");
     const [paymentData, setPaymentData] = useState<any>(null);
-    const [skipSessionStep, setSkipSessionStep] = useState(false);
+    const [skipSessionStep, setSkipSessionStep] = useState(true); // Skip session as we don't have real sessions yet
 
     useEffect(() => {
-        // Simulate fetching course
-        setTimeout(() => {
-            // In reality, search MOCK_COURSE or similar by ID. 
-            // For now, we reuse MOCK_COURSE for everything or adjust title.
-            setCourse({
-                ...MOCK_COURSE,
-                id: courseId,
-                title: MOCK_COURSE.title + ` (ID: ${courseId})`
-            });
+        const fetchCourse = async () => {
+            try {
+                const fetchedCourse = await CourseService.getCourseById(courseId);
 
-            // Mock logic for skip session
-            if (MOCK_COURSE.format === "auto-formation") {
-                setSkipSessionStep(true);
-                setCurrentStep(2);
+                if (fetchedCourse) {
+                    // Adapt Course to PaymentPlan expectations
+                    const adaptedCourse = {
+                        ...fetchedCourse,
+                        one_time_price: fetchedCourse.price,
+                        // inferred pricing modes
+                        pricing_modes: {
+                            oneTime: (fetchedCourse.price || 0) > 0,
+                            // Add other modes if you can infer them or fetch them
+                        }
+                    };
+                    setCourse(adaptedCourse);
+                }
+            } catch (error) {
+                console.error("Failed to fetch course", error);
+            } finally {
+                setLoading(false);
             }
+        };
 
-            setLoading(false);
-        }, 500);
+        fetchCourse();
     }, [courseId]);
 
     const handleSessionSelect = (session: any) => {
@@ -79,19 +87,22 @@ export default function CheckoutPage({
     const handlePrevious = () => {
         if (currentStep > 1) {
             if (currentStep === 2 && skipSessionStep) {
-                router.push(`/${locale}/formation/${course?.slug || 'intelligence-artificielle-pratique'}`);
+                router.push(`/${locale}/formation/${course?.slug}`);
                 return;
             }
             setCurrentStep(currentStep - 1);
         } else {
-            router.push(`/${locale}/formation/${course?.slug || 'intelligence-artificielle-pratique'}`);
+            router.push(`/${locale}/formation/${course?.slug}`);
         }
     };
 
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
-                <p>Chargement des informations du cours...</p>
+                <div className="flex flex-col items-center gap-4">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                    <p>Chargement des informations du cours...</p>
+                </div>
             </div>
         );
     }
@@ -100,7 +111,7 @@ export default function CheckoutPage({
         return (
             <div className="flex flex-col items-center justify-center h-screen">
                 <h2 className="text-2xl font-bold mb-4">Cours non trouvé</h2>
-                <Button onClick={() => router.push(`/${locale}/catalogue`)}>
+                <Button onClick={() => router.push(`/${locale}/catalogue/all`)}>
                     Retour au catalogue
                 </Button>
             </div>

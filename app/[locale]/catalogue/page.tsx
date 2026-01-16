@@ -7,19 +7,32 @@ import { PartnerInstitutes } from "@/components/marketing/sections/marketplace/p
 import { LearnerTestimonials } from "@/components/marketing/sections/marketplace/learner-testimonials";
 import { MarketplaceCTA } from "@/components/marketing/sections/marketplace/marketplace-cta";
 
-export default function CataloguePage({
+import { CourseService } from "@/services/course-service";
+import { CategoryService } from "@/services/category-service";
+import { SkillPackService } from "@/services/skill-pack-service";
+
+export default async function CataloguePage({
     params,
 }: {
     params: Promise<{ locale: string }>;
 }) {
+    const { locale } = await params;
+
+    // Parallel data fetching
+    const [featuredCourses, categories, skillPacks] = await Promise.all([
+        CourseService.getFeaturedCourses(),
+        CategoryService.getCategoriesWithCounts(),
+        SkillPackService.getAllSkillPacks()
+    ]);
+
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
                 <MarketplaceHero />
                 <MarketplaceStats />
-                <FeaturedCourses />
-                <CategoriesGrid />
-                <SkillPacksSection />
+                <FeaturedCourses locale={locale} courses={featuredCourses} />
+                <CategoriesGrid locale={locale} categories={categories} />
+                <SkillPacksSection locale={locale} skillPacks={skillPacks} />
                 <PartnerInstitutes />
                 <LearnerTestimonials />
                 <MarketplaceCTA />

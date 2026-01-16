@@ -2,40 +2,16 @@ import { Star, Users, BookOpen, Linkedin, Twitter, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { FormationCard } from "@/components/marketing/sections/marketplace/formation-card"
+import { Course } from "@/lib/supabase/types"
 
-export function InstructorTab() {
-  const otherCourses = [
-    {
-      id: "1",
-      slug: "data-science-python",
-      title: "Data Science avec Python",
-      thumbnail: "/placeholder.svg?key=ixqvh",
-      category: "Tech & Digital",
-      level: "Intermédiaire",
-      instructor: "Dr. Aminata Diallo",
-      rating: 4.8,
-      reviewCount: 289,
-      price: 30000,
-      monthlyPrice: 6000,
-      enrolledCount: 1834,
-      duration: "24h",
-    },
-    {
-      id: "2",
-      slug: "deep-learning-avance",
-      title: "Deep Learning Avancé",
-      thumbnail: "/placeholder.svg?key=bnqxe",
-      category: "Tech & Digital",
-      level: "Avancé",
-      instructor: "Dr. Aminata Diallo",
-      rating: 4.9,
-      reviewCount: 156,
-      price: 35000,
-      monthlyPrice: 7000,
-      enrolledCount: 987,
-      duration: "32h",
-    },
-  ]
+interface InstructorTabProps {
+  course: Course
+}
+
+export function InstructorTab({ course }: InstructorTabProps) {
+  const instructor = course.instructor || { full_name: "Instructeur Inconnu", avatar_url: null };
+  // Static placeholders for missing DB fields
+  const otherCourses: any[] = [];
 
   return (
     <div className="space-y-8">
@@ -43,14 +19,14 @@ export function InstructorTab() {
       <div className="rounded-xl border border-border bg-card p-6">
         <div className="mb-6 flex flex-col gap-6 md:flex-row">
           <img
-            src="/placeholder.svg?key=rvqxh"
-            alt="Dr. Aminata Diallo"
+            src={instructor.avatar_url || "/placeholder.svg?key=rvqxh"}
+            alt={instructor.full_name}
             className="h-32 w-32 rounded-full object-cover"
           />
           <div className="flex-1">
-            <h3 className="mb-2 text-2xl font-bold">Dr. Aminata Diallo</h3>
+            <h3 className="mb-2 text-2xl font-bold">{instructor.full_name}</h3>
             <p className="mb-3 text-muted-foreground">
-              Docteure en Intelligence Artificielle • Chercheuse & Formatrice
+              Formateur EduPro
             </p>
             <div className="mb-4 flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-1">

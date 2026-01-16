@@ -1,11 +1,17 @@
 "use client"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { OverviewTab } from "./tabs/overview-tab"
 import { CurriculumTab } from "./tabs/curriculum-tab"
 import { InstructorTab } from "./tabs/instructor-tab"
 import { ReviewsTab } from "./tabs/reviews-tab"
+import { Course } from "@/lib/supabase/types"
 
-export function FormationTabs() {
+interface FormationTabsProps {
+  course: Course & { rating?: number; reviewCount?: number }
+}
+
+export function FormationTabs({ course }: FormationTabsProps) {
   return (
     <section className="border-t border-border bg-muted/30 py-8">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
@@ -18,15 +24,15 @@ export function FormationTabs() {
           </TabsList>
 
           <TabsContent value="apercu">
-            <OverviewTab />
+            <OverviewTab course={course} />
           </TabsContent>
 
           <TabsContent value="programme">
-            <CurriculumTab />
+            <CurriculumTab course={course} />
           </TabsContent>
 
           <TabsContent value="formateur">
-            <InstructorTab />
+            <InstructorTab course={course} />
           </TabsContent>
 
           <TabsContent value="avis">

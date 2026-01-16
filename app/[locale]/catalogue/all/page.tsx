@@ -3,6 +3,8 @@ import { ContextualHero } from "@/components/marketing/sections/category/context
 import { SubCategories } from "@/components/marketing/sections/category/sub-categories";
 import { SearchFilters } from "@/components/marketing/sections/marketplace/search-filters";
 import { SearchResults } from "@/components/marketing/sections/marketplace/search-results";
+import { CourseService } from "@/services/course-service";
+import { CategoryService } from "@/services/category-service";
 
 export const metadata: Metadata = {
     title: "Catalogue - EduPro",
@@ -18,50 +20,48 @@ export default async function CatalogueAllPage({
 }) {
     const { locale } = await params;
     const resolvedSearchParams = await searchParams;
-    const category = (resolvedSearchParams?.category as string) || "all";
+    const categoryQuery = (resolvedSearchParams?.category as string) || "all";
+    const searchQuery = (resolvedSearchParams?.q as string) || "";
+    const minPrice = resolvedSearchParams?.minPrice ? Number(resolvedSearchParams.minPrice) : undefined;
+    const maxPrice = resolvedSearchParams?.maxPrice ? Number(resolvedSearchParams.maxPrice) : undefined;
+    const levelQuery = resolvedSearchParams?.level as string;
+    const levels = levelQuery ? levelQuery.split(',') : undefined;
 
-    // Mock data for filtered results (simulating filter based on searchParams)
-    const mockFilteredCourses = Array(9).fill(null).map((_, i) => ({
-        id: `filtered-${i}`,
-        slug: `formation-result-${i}`,
-        title: `Formation ${category !== 'all' ? category : 'Générale'} - Niveau ${i + 1}`,
-        thumbnail: '/placeholder.svg',
-        level: i % 2 === 0 ? 'Intermédiaire' : 'Avancé',
-        price: 25000 + (i * 5000),
-        monthlyPrice: 0,
-        duration: `${10 + i}h`,
-        // Ensure category matches user intent or is generic
-        category: category !== 'all' ? category : 'tech-digital',
-        instructor: 'Expert Pro',
-        rating: 4.5 + (i * 0.1),
-        reviewCount: 15 + i,
-        enrolledCount: 80 + (i * 10)
+    // Fetch data in parallel
+    const [categoriesData, coursesResult] = await Promise.all([
+        CategoryService.getCategoriesWithCounts(), // Assuming this exists or falls back to getAllCategories
+        CourseService.searchCourses({
+            searchTerm: searchQuery,
+            category: categoryQuery,
+            minPrice,
+            maxPrice,
+            level: levels,
+            limit: 12
+        })
+    ]);
+
+    const { courses, total } = coursesResult;
+
+    // Transform categories for filters
+    const filterCategories = categoriesData.map(c => ({
+        id: c.slug,
+        label: c.name,
+        count: 0 // Count per category logic would be complex to dynamic update, leaving 0 or implementing specialized service later
     }));
 
-    // Map slug to display name
-    const categoryNames: Record<string, string> = {
-        'all': 'Catalogue Complet',
-        'tech-digital': 'Tech & Digital',
-        'business-management': 'Business & Management',
-        'construction-durable': 'Construction Durable',
-        'soft-skills': 'Soft Skills',
-        'sante': 'Santé',
-        'finance': 'Finance',
-        'design': 'Design',
-        'langues': 'Langues'
-    };
-
-    const categoryDisplayName = categoryNames[category] || category || 'Catégorie';
+    // Derive display name
+    const currentCategory = categoriesData.find(c => c.slug === categoryQuery);
+    const categoryDisplayName = currentCategory?.name || (categoryQuery === 'all' ? 'Catalogue Complet' : categoryQuery);
 
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
-                <ContextualHero categorySlug={category} />
+                <ContextualHero categorySlug={categoryQuery} />
                 <SubCategories />
                 <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
-                        <SearchFilters />
-                        <SearchResults courses={mockFilteredCourses} />
+                        <SearchFilters categories={filterCategories} />
+                        <SearchResults courses={courses} />
                     </div>
                 </div>
             </main>

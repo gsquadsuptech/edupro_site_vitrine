@@ -2,8 +2,13 @@ import { Container } from "@/components/marketing/layout/container"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Play, Users, Clock, Award, TrendingUp } from "lucide-react"
+import { LearningPath } from "@/lib/supabase/types"
 
-export function SkillPackHeroNew() {
+interface SkillPackHeroNewProps {
+  skillPack: LearningPath
+}
+
+export function SkillPackHeroNew({ skillPack }: SkillPackHeroNewProps) {
   return (
     <section className="relative min-h-screen overflow-hidden border-b border-slate-800 py-20 lg:py-32">
       <div className="absolute inset-0">
@@ -33,27 +38,25 @@ export function SkillPackHeroNew() {
               <div>
                 <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-cyan-400">Next Skills Africa</p>
                 <h1 className="text-balance text-5xl font-black leading-[1.1] text-white lg:text-6xl xl:text-7xl">
-                  IA & Productivité Augmentée
+                  {skillPack.title}
                 </h1>
               </div>
 
               <p className="text-pretty text-xl leading-relaxed text-slate-300 lg:text-2xl">
-                Maîtrisez l'intelligence artificielle pour <span className="font-bold text-white">automatiser</span>,{" "}
-                <span className="font-bold text-white">analyser</span> et{" "}
-                <span className="font-bold text-white">améliorer</span> votre performance professionnelle
+                {skillPack.description || "Maîtrisez les compétences de demain pour transformer votre carrière."}
               </p>
             </div>
 
             {/* Duration & commitment */}
             <div className="inline-flex w-fit items-center gap-8 rounded-2xl border border-fuchsia-700 bg-fuchsia-950/30 px-6 py-4">
               <div>
-                <p className="text-sm font-medium text-slate-400">Durée</p>
-                <p className="text-2xl font-bold text-white">10-12 semaines</p>
+                <p className="text-sm font-medium text-slate-400">Durée estimée</p>
+                <p className="text-2xl font-bold text-white">{skillPack.hours} heures</p>
               </div>
               <div className="h-12 w-px bg-slate-700" />
               <div>
-                <p className="text-sm font-medium text-slate-400">Engagement</p>
-                <p className="text-2xl font-bold text-white">8-10h/semaine</p>
+                <p className="text-sm font-medium text-slate-400">Projets</p>
+                <p className="text-2xl font-bold text-white">{skillPack.projects_count}</p>
               </div>
             </div>
 
@@ -71,7 +74,7 @@ export function SkillPackHeroNew() {
               </div>
               <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 backdrop-blur-sm">
                 <Clock className="mb-2 h-6 w-6 text-cyan-400" />
-                <p className="text-2xl font-bold text-white">5 parcours</p>
+                <p className="text-2xl font-bold text-white">{skillPack.courses_count} modules</p>
                 <p className="text-sm text-slate-400">Formations incluses</p>
               </div>
               <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 backdrop-blur-sm">

@@ -1,7 +1,13 @@
 import { Container } from "@/components/marketing/layout/container"
 import { Star, Quote } from "lucide-react"
 
-export function SkillPackTestimonialsNew() {
+import { LearningPath } from "@/lib/supabase/types"
+
+interface SkillPackTestimonialsNewProps {
+  skillPack?: LearningPath
+}
+
+export function SkillPackTestimonialsNew({ skillPack }: SkillPackTestimonialsNewProps) {
   const testimonials = [
     {
       name: "Aminata Diallo",

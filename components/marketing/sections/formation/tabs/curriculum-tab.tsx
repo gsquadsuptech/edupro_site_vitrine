@@ -3,10 +3,29 @@
 import { useState } from "react"
 import { ChevronDown, ChevronRight, Play, Lock, FileText, CheckCircle } from "lucide-react"
 
-export function CurriculumTab() {
+import { Course } from "@/lib/supabase/types"
+
+interface CurriculumTabProps {
+  course?: Course
+}
+
+export function CurriculumTab({ course }: CurriculumTabProps) {
   const [expandedSections, setExpandedSections] = useState<number[]>([0])
 
-  const curriculum = [
+  // Use dynamic data if available, otherwise fall back to static
+  const hasDynamicData = course?.sections && course.sections.length > 0
+
+  const curriculum = hasDynamicData ? course.sections!.map(section => ({
+    title: section.title,
+    lessons: section.lessons.length,
+    duration: "Unknown", // Calc from lessons if needed
+    items: section.lessons.map(lesson => ({
+      title: lesson.title,
+      duration: lesson.duration,
+      type: lesson.type,
+      preview: lesson.is_preview
+    }))
+  })) : [
     {
       title: "Introduction à l'IA",
       lessons: 5,

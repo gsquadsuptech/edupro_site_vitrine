@@ -6,22 +6,16 @@ import { Star, Users, Clock, Heart, Bookmark } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
+import { Course } from "@/lib/supabase/types"
+
 interface FormationCardProps {
-  course: {
-    id: string
-    slug: string
-    title: string
-    thumbnail: string
-    category: string
-    level: string
-    instructor: string
-    rating: number
-    reviewCount: number
-    price: number
-    monthlyPrice?: number
-    enrolledCount: number
-    duration: string
+  course: Course & {
+    // Add missing properties that might be computed or hardcoded for now
+    rating?: number
+    reviewCount?: number
+    enrolledCount?: number
     badge?: string
+    monthlyPrice?: number
   }
 }
 
@@ -29,13 +23,22 @@ export function FormationCard({ course }: FormationCardProps) {
   const params = useParams()
   const locale = params?.locale || 'fr'
 
+  // Derived/Fallback values
+  const imageUrl = course.image_url || "/placeholder.svg"
+  const categoryName = course.category?.name || "Général"
+  const instructorName = course.instructor?.full_name || "Instructeur"
+  const rating = course.rating || 4.5
+  const reviewCount = course.reviewCount || 0
+  const enrolledCount = course.enrolledCount || 0
+  const price = course.price || 0
+
   return (
     <Link href={`/${locale}/formation/${course.slug}`}>
       <div className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg">
         {/* Thumbnail */}
         <div className="relative aspect-video overflow-hidden">
           <img
-            src={course.thumbnail || "/placeholder.svg"}
+            src={imageUrl}
             alt={course.title}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -50,10 +53,10 @@ export function FormationCard({ course }: FormationCardProps) {
           {/* Category & Level */}
           <div className="mb-2 flex items-center gap-2 text-xs">
             <Badge variant="secondary" className="font-medium">
-              {course.category}
+              {categoryName}
             </Badge>
             <span className="text-muted-foreground">•</span>
-            <span className="text-muted-foreground">{course.level}</span>
+            <span className="text-muted-foreground">{course.level || 'Tous niveaux'}</span>
           </div>
 
           {/* Title */}
@@ -64,7 +67,7 @@ export function FormationCard({ course }: FormationCardProps) {
           {/* Instructor */}
           <div className="mb-2 flex items-center gap-1 text-sm text-muted-foreground">
             <Users className="h-3.5 w-3.5" />
-            <span>{course.instructor}</span>
+            <span>{instructorName}</span>
           </div>
 
           {/* Rating */}
@@ -73,20 +76,19 @@ export function FormationCard({ course }: FormationCardProps) {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-4 w-4 ${
-                    i < Math.floor(course.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                  }`}
+                  className={`h-4 w-4 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                    }`}
                 />
               ))}
             </div>
-            <span className="text-sm font-medium">{course.rating}</span>
-            <span className="text-sm text-muted-foreground">({course.reviewCount} avis)</span>
+            <span className="text-sm font-medium">{rating}</span>
+            <span className="text-sm text-muted-foreground">({reviewCount} avis)</span>
           </div>
 
           {/* Price & Actions */}
           <div className="flex items-center justify-between border-t border-border pt-3">
             <div>
-              <div className="text-lg font-bold">{course.price.toLocaleString()} FCFA</div>
+              <div className="text-lg font-bold">{price.toLocaleString()} FCFA</div>
               {course.monthlyPrice && (
                 <div className="text-xs text-muted-foreground">ou {course.monthlyPrice.toLocaleString()}/mois</div>
               )}
@@ -105,12 +107,12 @@ export function FormationCard({ course }: FormationCardProps) {
           <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Users className="h-3.5 w-3.5" />
-              <span>{course.enrolledCount.toLocaleString()} inscrits</span>
+              <span>{enrolledCount.toLocaleString()} inscrits</span>
             </div>
             <span>•</span>
             <div className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
-              <span>{course.duration}</span>
+              <span>{course.duration || 'N/A'}</span>
             </div>
           </div>
         </div>

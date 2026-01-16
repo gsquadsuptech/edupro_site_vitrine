@@ -1,24 +1,18 @@
 "use client"
 
 import Link from "next/link"
-import { Code, Briefcase, Building2, Users, Heart, TrendingUp, Palette, Languages, Globe, Monitor, GraduationCap, Lightbulb } from "lucide-react"
+import { Code } from "lucide-react"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Category } from "@/lib/supabase/types"
 
 interface CategoriesGridProps {
   locale?: string
+  categories: Category[]
 }
 
-const staticCategories = [
-  { name: "Tech & Digital", icon: Code, count: 120, slug: "tech-digital", color: "from-blue-500 to-cyan-500" },
-  { name: "Business & Management", icon: Briefcase, count: 85, slug: "business-management", color: "from-purple-500 to-pink-500" },
-  { name: "Construction Durable", icon: Building2, count: 45, slug: "construction-durable", color: "from-green-500 to-emerald-500" },
-  { name: "Soft Skills", icon: Users, count: 90, slug: "soft-skills", color: "from-orange-500 to-red-500" },
-  { name: "Santé", icon: Heart, count: 30, slug: "sante", color: "from-red-500 to-pink-500" },
-  { name: "Finance", icon: TrendingUp, count: 40, slug: "finance", color: "from-yellow-500 to-orange-500" },
-  { name: "Design", icon: Palette, count: 50, slug: "design", color: "from-pink-500 to-purple-500" },
-  { name: "Langues", icon: Languages, count: 60, slug: "langues", color: "from-indigo-500 to-blue-500" }
-]
-
-export function CategoriesGrid({ locale = 'fr' }: CategoriesGridProps) {
+export function CategoriesGrid({ locale = 'fr', categories }: CategoriesGridProps) {
+  const displayCategories = categories || [];
+  const showSkeleton = displayCategories.length === 0;
 
   return (
     <section className="py-16 md:py-20" id="categories-grid">
@@ -29,17 +23,40 @@ export function CategoriesGrid({ locale = 'fr' }: CategoriesGridProps) {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {staticCategories.map((category, index) => (
-            <Link key={`${category.slug}-${index}`} href={`/${locale}/catalogue/all?category=${category.slug}`}>
-              <div className="group relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg">
-                <div className={`mb-4 inline-flex rounded-lg bg-gradient-to-br ${category.color} p-3`}>
-                  <category.icon className="h-6 w-6 text-white" />
+          {showSkeleton ? (
+            Array.from({ length: 8 }).map((_, index) => (
+              <div key={`skeleton-${index}`} className="flex items-center space-x-4 rounded-xl border p-4">
+                <Skeleton className="h-12 w-12 rounded-full" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-[150px]" />
+                  <Skeleton className="h-4 w-[100px]" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold group-hover:text-primary">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">{category.count} cours</p>
               </div>
-            </Link>
-          ))}
+            ))
+          ) : (
+            displayCategories.map((category, index) => {
+              // Fallback/Mapping for icons and colors
+              const colors = [
+                "from-blue-500 to-cyan-500", "from-purple-500 to-pink-500", "from-green-500 to-emerald-500",
+                "from-orange-500 to-red-500", "from-red-500 to-pink-500", "from-yellow-500 to-orange-500",
+                "from-pink-500 to-purple-500", "from-indigo-500 to-blue-500"
+              ];
+              const color = colors[index % colors.length];
+              const Icon = Code;
+
+              return (
+                <Link key={`${category.slug}-${index}`} href={`/${locale}/catalogue/all?category=${category.slug}`}>
+                  <div className="group relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg">
+                    <div className={`mb-4 inline-flex rounded-lg bg-gradient-to-br ${color} p-3`}>
+                      <Icon className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="mb-2 text-lg font-semibold group-hover:text-primary">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground">{category.courses_count || 0} cours</p>
+                  </div>
+                </Link>
+              )
+            })
+          )}
         </div>
       </div>
     </section>

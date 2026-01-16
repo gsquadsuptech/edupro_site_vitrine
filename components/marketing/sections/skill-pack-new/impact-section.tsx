@@ -1,7 +1,13 @@
 import { Container } from "@/components/marketing/layout/container"
 import { TrendingUp, Users, Award, Zap } from "lucide-react"
 
-export function SkillPackImpact() {
+import { LearningPath } from "@/lib/supabase/types"
+
+interface SkillPackImpactProps {
+  skillPack?: LearningPath
+}
+
+export function SkillPackImpact({ skillPack }: SkillPackImpactProps) {
   const impactStats = [
     {
       icon: Users,

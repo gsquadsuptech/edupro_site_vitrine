@@ -4,8 +4,10 @@ import { FormationCard } from "@/components/marketing/marketplace/formation-card
 import { Button } from "@/components/ui/button"
 import { Search } from "lucide-react"
 
+import { Course } from "@/lib/supabase/types"
+
 interface SearchResultsProps {
-  courses?: any[] // We can refine type later
+  courses?: Course[]
 }
 
 export function SearchResults({ courses = [] }: SearchResultsProps) {

@@ -3,16 +3,26 @@
 import { Container } from "@/components/marketing/layout/container"
 import { Zap, Target, Rocket, Shield } from "lucide-react"
 
+import { LearningPath } from "@/lib/supabase/types"
+
 interface SkillPackHighlightsProps {
-  slug?: string
+  skillPack: LearningPath
 }
 
-export function SkillPackHighlights({ slug }: SkillPackHighlightsProps) {
+export function SkillPackHighlights({ skillPack }: SkillPackHighlightsProps) {
   // Static Data
   let pathTitle = "Une nouvelle façon d'apprendre"
   let pathDesc = "Des formations pensées pour les professionnels africains"
 
-  const staticHighlights = [
+  // Dynamic Data with Static Fallback for Icons/Colors
+  const dynamicHighlights = skillPack.highlights?.map((text, index) => ({
+    icon: [Zap, Target, Rocket, Shield][index % 4],
+    title: "Point clé du programme", // Generic title since we only have strings in highlights
+    description: text,
+    color: ["from-cyan-500 to-blue-500", "from-indigo-500 to-purple-500", "from-fuchsia-500 to-pink-500", "from-pink-500 to-rose-500"][index % 4],
+  })) || []
+
+  const displayHighlights = dynamicHighlights.length > 0 ? dynamicHighlights : [
     {
       icon: Zap,
       title: "Apprendre vite, apprendre utile",
@@ -50,7 +60,7 @@ export function SkillPackHighlights({ slug }: SkillPackHighlightsProps) {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:gap-12">
-          {staticHighlights.map((highlight, index) => {
+          {displayHighlights.map((highlight, index) => {
             const Icon = highlight.icon
             return (
               <div

@@ -1,6 +1,12 @@
 import { CheckCircle2 } from "lucide-react"
+import { Course } from "@/lib/supabase/types"
 
-export function OverviewTab() {
+interface OverviewTabProps {
+  course: Course
+}
+
+export function OverviewTab({ course }: OverviewTabProps) {
+  // Keeping static lists for now as DB schema doesn't have them
   const learningPoints = [
     "Comprendre les concepts fondamentaux de l'IA et du Machine Learning",
     "Maîtriser les algorithmes de base (régression, classification, clustering)",
@@ -42,20 +48,8 @@ export function OverviewTab() {
       {/* Description détaillée */}
       <div className="rounded-xl border border-border bg-card p-6">
         <h3 className="mb-4 text-xl font-bold">Description détaillée</h3>
-        <div className="prose prose-sm max-w-none">
-          <p className="mb-4 text-muted-foreground">
-            Cette formation complète vous permettra de maîtriser les fondamentaux de l'Intelligence Artificielle et du
-            Machine Learning, avec une approche pratique et adaptée au contexte africain.
-          </p>
-          <p className="mb-4 text-muted-foreground">
-            Vous découvrirez comment l'IA peut résoudre des problèmes concrets dans différents secteurs : agriculture,
-            santé, finance, éducation. Chaque concept théorique sera illustré par des exemples pratiques et des
-            exercices hands-on.
-          </p>
-          <p className="text-muted-foreground">
-            À la fin de cette formation, vous serez capable de concevoir, développer et déployer vos propres solutions
-            d'IA, et vous aurez un portfolio de projets à présenter aux employeurs.
-          </p>
+        <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
+          {course.description || "Aucune description disponible pour cette formation."}
         </div>
       </div>
 
