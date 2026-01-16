@@ -1,0 +1,555 @@
+{
+  "meta": {
+    "title": "EduPro Trainers | Digitize and Monetize Your Expertise",
+    "description": "Transform your know-how into pan-African impact. Join 150+ trainers and institutes sharing their expertise on EduPro. AI tools to create, pan-African audience to shine, complete support to succeed.",
+    "keywords": "trainer platform, online training creation, monetize expertise, e-learning platform, Africa, digital training"
+  },
+  "hero": {
+    "title": "Transform your know-how into",
+    "titleHighlight": "pan-African impact",
+    "subtitle": "Join 150+ trainers and institutes sharing their expertise on EduPro. AI tools to create, pan-African audience to shine, complete support to succeed.",
+    "cta": {
+      "primary": "Discover our offers",
+      "secondary": "Create your account"
+    },
+    "features": "Free to start · AI tools included · Attractive commission · Dedicated support",
+    "stats": {
+      "trainers": "Active trainers",
+      "learners": "Trained learners",
+      "satisfaction": "Trainer satisfaction",
+      "reach": "Global reach"
+    }
+  },
+  "solution": {
+    "title": "EduPro: Your partner to digitize and shine",
+    "subtitle": "Create once, impact thousands",
+    "description": "EduPro is much more than a platform: it's your technology partner to digitize your expertise, reach a pan-African audience, and focus on what you do best: sharing your know-how. Whether you're an independent trainer or training institute, we have the solution adapted to your ambitions.",
+    "independent": {
+      "title": "INDEPENDENT TRAINERS",
+      "subtitle": "Share your expertise with a pan-African audience",
+      "features": [
+        "AI tools to create your courses",
+        "Zero startup fees",
+        "Commissions up to 70%",
+        "Complete technical support",
+        "Expert community"
+      ],
+      "examples": "Examples of expertise:",
+      "examplesList": "Management • Tech • Soft Skills • Trades",
+      "cta": "Become a trainer"
+    },
+    "institutes": {
+      "title": "TRAINING INSTITUTES",
+      "subtitle": "Your white-label digital academy in 48h",
+      "features": [
+        "Platform personalized to your colors",
+        "Your domain name",
+        "Complete learner management",
+        "Advanced analytics and reporting",
+        "Migration of your existing content"
+      ],
+      "ideal": "Ideal for:",
+      "idealList": "Training firms • Universities • Centers",
+      "cta": "Request institute demo"
+    }
+  },
+  "why": {
+    "title": "Why 150+ trainers trust us",
+    "subtitle": "The 6 reasons that change everything",
+    "reasons": {
+      "simplified": {
+        "title": "Simplified Creation",
+        "highlight": "Save 40% time with AI",
+        "description": "Our AI assistant helps you structure your courses, create relevant quizzes, generate practical exercises. Creation has never been so simple.",
+        "cta": "Script your expertise in a few clicks"
+      },
+      "audience": {
+        "title": "Pan-African Audience",
+        "highlight": "Reach all of Africa",
+        "description": "Your training is accessible to thousands of motivated learners across Africa and the world. No borders for your expertise.",
+        "cta": "An audience you would never have reached alone"
+      },
+      "revenue": {
+        "title": "Recurring Revenue",
+        "highlight": "Up to 70% commission",
+        "description": "Create once, generate revenue with each enrollment. Monetize your expertise without revenue cap.",
+        "cta": "Your training works for you 24/7"
+      },
+      "support": {
+        "title": "Complete Support",
+        "highlight": "We handle the technical side",
+        "description": "Hosting, payments, certificates, learner support: everything is managed. You focus on creation and transmission.",
+        "cta": "Dedicated support in French, response within 24h"
+      },
+      "pilotage": {
+        "title": "Easy Management",
+        "highlight": "Real-time analytics",
+        "description": "Track your learners' progress, identify improvement points, measure your impact. Data to optimize your training.",
+        "cta": "Intuitive dashboard, actionable insights"
+      },
+      "zeroInvestment": {
+        "title": "Zero Investment",
+        "highlight": "Start without fees or infrastructure",
+        "description": "No website to create, no hosting to pay, no marketing tools to buy. EduPro handles everything: technology, payments, promotion.",
+        "cta": "Focus on your expertise, we handle the rest."
+      }
+    }
+  },
+  "features": {
+    "title": "Tools designed for your success",
+    "subtitle": "Everything you need, in one place",
+    "features": {
+      "studio": {
+        "title": "Creation Studio",
+        "items": [
+          "Intuitive content editor",
+          "Video integration (auto-optimized)",
+          "Quiz and exercise creation",
+          "Document integration (PDF, PPT, Word)",
+          "Real-time preview"
+        ]
+      },
+      "ai": {
+        "title": "AI Assistant",
+        "items": [
+          "Automatic course structuring",
+          "Contextualized quiz generation",
+          "Practical exercise suggestions",
+          "Pedagogical optimization"
+        ]
+      },
+      "learners": {
+        "title": "Learner Management",
+        "items": [
+          "Real-time progress tracking",
+          "Integrated messaging",
+          "Discussion groups",
+          "Live sessions (Meet/Zoom/Teams)",
+          "Automated certificate delivery",
+          "Smart notifications"
+        ]
+      },
+      "monetization": {
+        "title": "Monetization",
+        "items": [
+          "Flexible pricing (one-time, subscription, installment payments)",
+          "Secure payments (Mobile Money, credit card)",
+          "Automatic commissions",
+          "Automatically generated invoices",
+          "Promo codes and offers"
+        ]
+      },
+      "multiPlatform": {
+        "title": "Multi-platform",
+        "items": [
+          "Responsive web",
+          "PWA application",
+          "Offline mode",
+          "Automatic synchronization",
+          "Low bandwidth optimized",
+          "Unlimited 24/7 access"
+        ]
+      },
+      "analytics": {
+        "title": "Analytics",
+        "items": [
+          "Completion rate",
+          "Engagement per module",
+          "Learner feedback",
+          "Real-time revenue",
+          "Pedagogical insights",
+          "Data export"
+        ]
+      },
+      "personalization": {
+        "title": "Personalization (Institutes)",
+        "items": [
+          "Internal digital academy",
+          "Your domain name",
+          "Custom brand identity",
+          "Branded emails",
+          "Certificates in your name",
+          "Dedicated portal"
+        ]
+      },
+      "security": {
+        "title": "Security & Compliance",
+        "items": [
+          "Secure hosting",
+          "SSL certificates",
+          "Daily backups",
+          "GDPR compliant",
+          "Content protection",
+          "Anti-piracy"
+        ]
+      },
+      "certifications": {
+        "title": "Certifications",
+        "items": [
+          "Customizable templates",
+          "Online verification",
+          "High-quality PDF export",
+          "Digital badges",
+          "Automatic LinkedIn sharing"
+        ]
+      }
+    }
+  },
+  "pricing": {
+    "title": "Attractive and transparent revenue",
+    "subtitle": "Monetize your expertise at its fair value",
+    "plans": {
+      "starter": {
+        "name": "EDUPRO TEACH Starter",
+        "subtitle": "Monetize your expertise",
+        "position": "Positioning: Sell on marketplace",
+        "pricing": {
+          "free": "Free",
+          "freeNote": "Free (50% commission)",
+          "pro": "Pro: 150K FCFA/year",
+          "proNote": "(70% commission on sales)"
+        },
+        "features": [
+          "Marketplace publication",
+          "AI creation tools (Pro offer)",
+          "Sales and payment management",
+          "Performance analytics",
+          "Creator support",
+          "Public trainer profile"
+        ],
+        "cta": "Start for free"
+      },
+      "academy": {
+        "name": "EDUPRO TEACH Academy",
+        "subtitle": "Your white-label online academy",
+        "position": "Positioning: Personalized digital school",
+        "pricing": {
+          "starter": "Academy Starter",
+          "starterPrice": "500K FCFA/year (up to 100 learners)",
+          "growth": "Academy Growth",
+          "growthPrice": "1.5M FCFA/year (up to 500 learners)",
+          "enterprise": "Academy Enterprise",
+          "enterprisePrice": "2.5M FCFA/year (up to 1000 learners)",
+          "more": "+1000 learners: on quote"
+        },
+        "features": [
+          "All TEACH Starter +",
+          "Personalized platform",
+          "Custom domain",
+          "Complete learner management",
+          "Advanced creation tools",
+          "Customizable sales pages",
+          "Payment integrations",
+          "Advanced analytics",
+          "Account manager"
+        ],
+        "cta": "Request a demo",
+        "popular": "POPULAR"
+      },
+      "certified": {
+        "name": "EDUPRO TEACH Certified",
+        "subtitle": "Become a certified EduPro trainer",
+        "position": "Positioning: Professional trainer certification",
+        "pricing": {
+          "price": "250K FCFA",
+          "validity": "Certification valid for 3 years"
+        },
+        "program": "Trainer Bootcamp (6 intensive weeks):",
+        "programItems": [
+          "Modern learning design",
+          "Pedagogical scripting",
+          "E-learning creation tools",
+          "Learner engagement and animation",
+          "Learning assessment",
+          "Training marketing"
+        ],
+        "features": [
+          "100% practical training (assisted creation of your first course)",
+          "Recognized certification (valid for 3 years)",
+          "LinkedIn badge + Digital certificate",
+          "Priority listing on marketplace",
+          "Certified trainer community",
+          "Monthly webinars and masterclasses"
+        ],
+        "cta": "Enroll in bootcamp"
+      },
+      "partner": {
+        "name": "EDUPRO TEACH Partner",
+        "subtitle": "Strategic co-certification partnerships",
+        "position": "Positioning: Institute-platform collaboration",
+        "model": "Model: Co-creation of certifying pathways",
+        "features": [
+          "Double badge certification (Institute + EduPro)",
+          "Shared revenue",
+          "Joint marketing",
+          "EduPro technology access",
+          "Dedicated support"
+        ],
+        "structure": "Structure: Custom partnership",
+        "cta": "Contact partnership"
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "questions": {
+      "technical": {
+        "q": "Do I need technical skills to create my training?",
+        "a": "Absolutely not! Our interface is designed to be intuitive. If you know how to use PowerPoint or Word, you'll know how to use EduPro. Our support team is always available to help you."
+      },
+      "time": {
+        "q": "How long does it take to create training?",
+        "a": "Thanks to our AI tools, you can structure a complete training in 2-3 days instead of 2-3 weeks. Our trainers create their first module on average in 4-6 hours. Note that creation time depends on the availability of your training content."
+      },
+      "payment": {
+        "q": "How am I paid?",
+        "a": "Commissions are calculated automatically and paid at the end of the month (within 30 days) via Mobile Money, bank transfer, or any other payment method available in your country. For self-paced training: payment within 30 days after purchase. For sessions: payment at end of session or in installments as you go. You receive a detailed invoice by email."
+      },
+      "pricing": {
+        "q": "Can I set my own prices?",
+        "a": "Yes! You set your training prices with complete freedom. We advise you on market prices, but the final decision is yours."
+      },
+      "refund": {
+        "q": "What happens if a learner requests a refund?",
+        "a": "We apply a 7-day refund policy. If a learner requests a refund within 7 days of purchase and hasn't exceeded usage thresholds, the refund is accepted. After 7 days, commissions are considered acquired."
+      },
+      "existing": {
+        "q": "Can I use my existing training?",
+        "a": "Absolutely! You can import your existing content (PowerPoint, PDF, videos). Our team can even help you restructure it in digital format for a better learner experience."
+      },
+      "promotion": {
+        "q": "How is my training promoted?",
+        "a": "EduPro invests in marketing to attract learners to the platform. Your training is highlighted according to its quality, learner evaluations, and your subscription level. You can also promote your training on your own channels."
+      }
+    },
+    "another": "Another question?",
+    "contact": "Contact our trainer team"
+  },
+  "problems": {
+    "title": "The training challenges in Africa you know too well",
+    "subtitle": "Your expertise is valuable, but under-exploited",
+    "problems": {
+      "reach": {
+        "title": "Limited reach",
+        "description": "You train 10-30 people in person, but thousands need your expertise.",
+        "consequence": "Limited impact and capped revenue despite recognized expertise."
+      },
+      "tools": {
+        "title": "Complex tools",
+        "description": "Creating quality digital content requires technical skills you don't have or little time to master.",
+        "consequence": "You remain stuck in in-person or create average quality content."
+      },
+      "visibility": {
+        "title": "Non-existent visibility",
+        "description": "Even with quality content, how do you reach your target audience across Africa?",
+        "consequence": "Your training remains confidential and your expertise undervalued."
+      },
+      "management": {
+        "title": "Time-consuming management",
+        "description": "Between creation, administrative management, learner tracking and logistics, you lack time for what matters: training.",
+        "consequence": "Exhaustion and inability to scale your activity."
+      }
+    },
+    "closing": "What if you could train thousands of people with the same effort?"
+  },
+  "testimonials": {
+    "title": "They have digitized their expertise with EduPro",
+    "subtitle": "Trainers who are already succeeding",
+    "testimonials": {
+      "mariame": {
+        "name": "Mariame WONE",
+        "role": "Coach - Trainer",
+        "specialty": "Career management and professional dynamics",
+        "quote": "I would like to thank the team for the initiative and support. Used to webinars and in-person sessions, I discovered an entirely new format... and I come out with real skills! Thanks to the courses in video format viewed in advance, course creation was easy. An inspiring collaboration that I look forward to continuing.",
+        "course": "Career management",
+        "rating": 5
+      },
+      "auger": {
+        "name": "Auger MAYOUMA",
+        "role": "Coach - QHSE Trainer",
+        "specialty": "Quality, Hygiene, Safety and Environment",
+        "quote": "It's a very good initiative to have a platform that meets the needs of the African continent. The more we progressed, I realized that as trainers, we have the knowledge but we didn't know how to deliver it in the digital age. I was able to acquire many skills during this bootcamp, especially course structuring. I'm starting to apply them in my training at my company level.",
+        "course": "QHSE & Safety",
+        "rating": 5
+      },
+      "ibrahima": {
+        "name": "Ibrahima YADE",
+        "role": "Coach - Training Trainer",
+        "specialty": "Trainer training",
+        "quote": "I congratulate the entire Edupro team for their availability and follow-up during this bootcamp. I had an enriching and inspiring experience. I learned to use digital tools and AI to modernize my courses. Above all, I was able to adapt my formerly in-person training to digital format: structured modules, quizzes, certificates and learner tracking. Today, I could deploy my sessions online with a better experience for everyone.",
+        "course": "Trainer training",
+        "rating": 5
+      }
+    },
+    "closing": "More than 150 trainers and institutes trust us across all of Africa and the world"
+  },
+  "process": {
+    "title": "How to get started with EduPro",
+    "subtitle": "From registration to your first sale in 4 steps",
+    "steps": {
+      "application": {
+        "number": "01",
+        "title": "Application (5 min)",
+        "subtitle": "Tell us about your expertise",
+        "description": "Fill out our form with your areas of expertise, your experience, and your goals. Simple and fast.",
+        "note": "Adapted form: independent or institute"
+      },
+      "qualification": {
+        "number": "02",
+        "title": "Qualification (48h)",
+        "subtitle": "We validate your profile",
+        "description": "Our team analyzes your application and contacts you within 48h for a qualification phone call.",
+        "note": "Acceptance rate: 85% of qualified candidates"
+      },
+      "onboarding": {
+        "number": "03",
+        "title": "Onboarding (1 week)",
+        "subtitle": "Training and support",
+        "description": "Access our training bootcamp, discover the tools, create your first module with our support.",
+        "note": "Video tutorials + live sessions + dedicated support"
+      },
+      "launch": {
+        "number": "04",
+        "title": "Launch (You choose)",
+        "subtitle": "Publish and start training",
+        "description": "Once your content is ready, publish it on the platform. We handle promotion, you handle your expertise.",
+        "note": "Analytics dashboard included"
+      }
+    },
+    "cta": "Start my journey now"
+  },
+  "resources": {
+    "title": "We support you at every step",
+    "subtitle": "You're never alone with EduPro",
+    "resources": {
+      "training": {
+        "title": "Training Center",
+        "items": [
+          "Trainer bootcamp (6 modules)",
+          "Video tutorials (50+)",
+          "Downloadable PDF guides",
+          "Pedagogical best practices",
+          "Periodic webinars"
+        ]
+      },
+      "community": {
+        "title": "Community",
+        "items": [
+          "WhatsApp groups by country",
+          "Networking events",
+          "Experience sharing",
+          "Content co-creation",
+          "Peer mentoring"
+        ]
+      },
+      "support": {
+        "title": "Technical Support",
+        "items": [
+          "Live chat (9am-6pm)",
+          "Email support (24h)",
+          "Troubleshooting videos",
+          "Account manager (Premium)",
+          "Knowledge base"
+        ]
+      },
+      "marketing": {
+        "title": "Marketing Tools",
+        "items": [
+          "Promotion templates",
+          "Communication visuals",
+          "Custom landing pages",
+          "Unlimited promo codes",
+          "Marketing guides"
+        ]
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Ready to transform your expertise into impact?",
+    "subtitle": "Join the 150+ trainers changing Africa",
+    "description": "Thousands of learners across Senegal, Ivory Coast and Rwanda are actively seeking your expertise. Don't let your know-how be limited by in-person borders.",
+    "ctas": {
+      "starter": "Start with TEACH Starter",
+      "academy": "Discover TEACH Academy",
+      "certified": "Become TEACH Certified",
+      "partner": "Contact TEACH Partner"
+    },
+    "features": "✓ Registration in 5 minutes · Validation within 48h · Dedicated support in French"
+  },
+  "application": {
+    "title": "Trainer Application",
+    "subtitle": "Fill out this form to apply as a trainer on EduPro",
+    "page": {
+      "title": "Apply as a trainer",
+      "subtitle": "Join our community of trainers and share your expertise"
+    },
+    "form": {
+      "fields": {
+        "firstName": {
+          "label": "First name *",
+          "placeholder": "Ex: Cheikh"
+        },
+        "lastName": {
+          "label": "Last name *",
+          "placeholder": "Ex: Ndiaye"
+        },
+        "email": {
+          "label": "Email *",
+          "placeholder": "your.email@example.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "+221 77 123 45 67"
+        },
+        "experienceYears": {
+          "label": "Years of experience",
+          "placeholder": "Select",
+          "options": {
+            "0": "Less than 1 year",
+            "1": "1-2 years",
+            "3": "3-5 years",
+            "6": "6-10 years",
+            "11": "More than 10 years"
+          }
+        },
+        "specialties": {
+          "label": "Specialties / Areas of expertise *",
+          "placeholder": "Ex: Web development, Digital marketing, Project management...",
+          "hint": "List your areas of expertise separated by commas"
+        },
+        "cv": {
+          "label": "CV * (PDF, DOC, DOCX - Max 5MB)"
+        },
+        "coverLetter": {
+          "label": "Cover letter *",
+          "placeholder": "Describe your motivation for becoming a trainer on EduPro..."
+        },
+        "bootcamp": {
+          "label": "I wish to enroll in the Trainer Bootcamp",
+          "description": "Intensive 6-week program to master digital training creation"
+        },
+        "certification": {
+          "label": "I wish to become a certified EduPro trainer",
+          "price": "250,000 FCFA - Certification valid for 3 years",
+          "includes": "Includes: Trainer Bootcamp (6 intensive weeks), Recognized certification, LinkedIn badge, Priority listing on marketplace, Community of certified trainers, Monthly webinars and masterclasses"
+        }
+      },
+      "submit": {
+        "sending": "Sending...",
+        "send": "Submit my application"
+      },
+      "success": {
+        "title": "Application sent!",
+        "message": "Thank you for your application. Our team will review it and contact you shortly.",
+        "backHome": "Back to home"
+      },
+      "errors": {
+        "recaptchaNotLoaded": "reCAPTCHA is not loaded yet. Please wait a moment.",
+        "recaptchaError": "Error during security verification. Please try again.",
+        "submitError": "Error sending application",
+        "genericError": "An error occurred"
+      }
+    }
+  }
+}
+

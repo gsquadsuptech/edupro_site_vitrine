@@ -1,0 +1,69 @@
+{
+  "title": "Enrollments",
+  "description": "Manage student enrollments in different courses",
+  "newEnrollment": "New enrollment",
+  "searchPlaceholder": "Search enrollments...",
+  "export": "Export",
+
+  "filters": {
+    "status": "Status",
+    "all": "All"
+  },
+
+  "table": {
+    "student": "Student",
+    "course": "Course",
+    "cohort": "Cohort",
+    "enrollmentDate": "Enrollment date",
+    "status": "Status",
+    "progress": "Progress",
+    "actions": "Actions",
+    "noEnrollments": "No enrollments found",
+    "loading": "Loading data...",
+    "noCohort": "-"
+  },
+
+  "status": {
+    "active": "Active",
+    "completed": "Completed",
+    "pending": "Pending",
+    "inactive": "Inactive"
+  },
+
+  "cohortStatus": {
+    "active": "Active",
+    "completed": "Completed"
+  },
+
+  "actions": {
+    "changeStatus": "Change status",
+    "viewDetails": "View details",
+    "cancelEnrollment": "Cancel enrollment",
+    "openMenu": "Open menu",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+
+  "changeStatusModal": {
+    "title": "Change enrollment status",
+    "description": "Change the enrollment status of {studentName} for the course {courseTitle}.",
+    "newStatusLabel": "New status",
+    "selectPlaceholder": "Select a status",
+    "confirmButton": "Confirm"
+  },
+
+  "cancelModal": {
+    "title": "Cancel enrollment",
+    "description": "Are you sure you want to cancel the enrollment of {studentName} for the course {courseTitle}?",
+    "warning": "This action is irreversible.",
+    "confirmButton": "Confirm cancellation"
+  },
+
+  "messages": {
+    "loadError": "Error loading enrollments",
+    "statusUpdateSuccess": "Status updated successfully",
+    "statusUpdateError": "Error updating status",
+    "cancelSuccess": "Enrollment cancelled successfully",
+    "cancelError": "Error cancelling enrollment"
+  }
+}

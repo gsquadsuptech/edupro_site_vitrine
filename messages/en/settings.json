@@ -1,0 +1,511 @@
+{
+  "users": {
+    "title": "Users and Roles",
+    "tabs": {
+      "users": "Users",
+      "roles": "Roles and Permissions"
+    },
+    "usersList": {
+      "title": "Users list",
+      "description": "Manage your organization's users and their access.",
+      "searchPlaceholder": "Search by name or email...",
+      "inviteUser": "Invite user",
+      "table": {
+        "avatar": "Avatar",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "lastLogin": "Last login",
+        "actions": "Actions"
+      },
+      "empty": {
+        "title": "No users found",
+        "description": "Check your logs or invite new users if the list is empty."
+      },
+      "actions": {
+        "viewProfile": "View profile",
+        "editRole": "Edit role",
+        "resetPassword": "Reset password",
+        "resendInvitation": "Resend invitation",
+        "reactivateAccount": "Reactivate account",
+        "deactivateAccount": "Deactivate account"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "pending": "Pending"
+      },
+      "unknownUser": "Unknown User",
+      "unknownEmail": "Unknown Email"
+    },
+    "invite": {
+      "title": "Invite a new user",
+      "description": "Enter the user's information and select their role in the organization.",
+      "firstName": "First name",
+      "firstNamePlaceholder": "John",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Doe",
+      "email": "Email",
+      "emailPlaceholder": "user@example.com",
+      "role": "Role",
+      "rolePlaceholder": "Select a role",
+      "loadingRoles": "Loading roles...",
+      "noRoles": "No roles available",
+      "cancel": "Cancel",
+      "invite": "Invite user",
+      "inviting": "Inviting..."
+    },
+    "roles": {
+      "title": "Roles",
+      "description": "Define system roles and their permissions",
+      "newRole": "New role",
+      "newRoleDescription": "Define a code and a name. The code must be unique in your organization.",
+      "name": "Name",
+      "namePlaceholder": "Manager",
+      "description": "Description",
+      "descriptionPlaceholder": "Course and learner management",
+      "create": "Create",
+      "creating": "Creating...",
+      "usersCount": "{count} user",
+      "usersCountPlural": "{count} users",
+      "selectRole": "Select a role",
+      "selectRoleDescription": "Click on a role to view and edit its permissions",
+      "duplicate": "Duplicate",
+      "duplicating": "Duplicating...",
+      "save": "Save",
+      "saving": "Saving...",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "roleName": "Role name",
+      "permissions": "Permissions",
+      "loadingPermissions": "Loading permissions...",
+      "adminAllPermissions": "Administrators have all permissions by default.",
+      "selectRoleMessage": "Please select a role to view its details and permissions"
+    },
+    "deleteConfirm": {
+      "title": "Confirm deletion",
+      "description": "Are you sure you want to delete the role \"{name}\"? This action is irreversible and will also delete all associated permissions.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "categories": {
+      "main": "Main Menu",
+      "catalogue": "Training Catalog",
+      "learners": "Learners",
+      "instructors": "Instructors",
+      "evaluations": "Evaluations",
+      "certifications": "Certifications",
+      "finance": "Sales & Finance",
+      "config": "Configuration",
+      "support": "Help & Support"
+    },
+    "modules": {
+      "dashboard": "Dashboard",
+      "courses": "Courses",
+      "learning_paths": "Training paths",
+      "microlearning": "Micro-Learning",
+      "categories": "Categories",
+      "tags": "Tags",
+      "content": "Course content",
+      "students": "Students",
+      "cohorts": "Cohorts/Groups",
+      "enrollments": "Enrollments",
+      "progress": "Progress & results",
+      "instructors": "Instructors",
+      "assignments": "Course assignment",
+      "commissions": "Commissions",
+      "quizzes": "Quizzes and tests",
+      "evaluations": {
+        "results": "Evaluation results",
+        "feedback": "Feedback"
+      },
+      "certificates": {
+        "templates": "Certificate templates",
+        "issued": "Issued certificates"
+      },
+      "payments": "Payments",
+      "transactions": "Transactions",
+      "subscriptions": "Subscriptions",
+      "invoices": "Invoices",
+      "discounts": "Discounts & promotions",
+      "organization": "Institute profile",
+      "users": "Users & roles",
+      "roles": "Roles",
+      "notifications": "Email & notifications",
+      "settings": "Settings",
+      "email": "Email",
+      "help": "Help center",
+      "tickets": "Support tickets",
+      "support": "Support"
+    },
+    "messages": {
+      "error": "Error",
+      "success": "Success",
+      "information": "Information",
+      "loadUsersError": "Error loading users",
+      "checkConsole": "Check the console for technical details.",
+      "unknownError": "An unknown error occurred while retrieving users.",
+      "noOrganization": "No organization selected or found to display users.",
+      "loadPermissionsError": "Unable to load permissions",
+      "loadRolesError": "Unable to load roles",
+      "supabaseNotInitialized": "Supabase client not initialized or user not logged in.",
+      "organizationIdMissing": "Organization identifier is missing.",
+      "requiredFields": "Required fields",
+      "emailRoleRequired": "Email and role are required to invite a user.",
+      "invalidRole": "Invalid role",
+      "roleNotExists": "The selected role does not exist.",
+      "inviteSuccess": "User invited successfully.",
+      "inviteError": "Invitation error",
+      "inviteUserError": "Error inviting user.",
+      "errorOccurred": "An error occurred.",
+      "loadRolePermissionsError": "Unable to load role permissions",
+      "roleUpdated": "Role updated",
+      "roleUpdatedSuccess": "The role \"{name}\" has been updated successfully.",
+      "saveRoleError": "Unable to save role",
+      "roleDuplicated": "Role duplicated",
+      "roleDuplicatedSuccess": "The role \"{original}\" has been duplicated as \"{new}\".",
+      "duplicateRoleError": "Unable to duplicate role",
+      "roleDeleted": "Role deleted",
+      "roleDeletedSuccess": "The role has been deleted successfully.",
+      "deleteRoleError": "Unable to delete role",
+      "roleNameRequired": "Role name is required",
+      "roleCreated": "Role created successfully",
+      "createRoleError": "Unable to create role"
+    }
+  },
+
+  "institute": {
+    "title": "Institute profile",
+    "description": "Manage your training institution's information that will appear on the platform",
+    "logo": {
+      "title": "Logo and visual information",
+      "description": "Customize your institute's visual identity",
+      "changeLogo": "Change logo",
+      "formats": "Accepted formats: PNG, JPG, SVG. Max size: 2MB",
+      "invalidType": "Invalid file type",
+      "invalidTypeDescription": "Please select a PNG, JPG, or SVG file.",
+      "fileTooLarge": "File too large",
+      "fileTooLargeDescription": "Maximum logo size is 2MB.",
+      "uploadError": "Logo upload error",
+      "uploadErrorDescription": "A problem occurred during upload.",
+      "uploadErrorDetails": "Error uploading logo: {message}",
+      "publicUrlError": "Unable to get public URL of uploaded logo."
+    },
+    "publicProfile": {
+      "title": "Public profile",
+      "description": "Make the institute profile public",
+      "enabled": "Public profile enabled",
+      "enabledDescription": "Your institute is now publicly visible",
+      "disabled": "Public profile disabled",
+      "disabledDescription": "Your institute is no longer publicly visible",
+      "updateError": "Unable to modify profile visibility",
+      "share": "Share my profile",
+      "linkCopied": "Link copied",
+      "linkCopiedDescription": "Profile link copied to clipboard",
+      "copyError": "Unable to copy link",
+      "copyErrorDescription": "Please try again.",
+      "linkCopiedShort": "Link copied!"
+    },
+    "social": {
+      "title": "Social networks",
+      "none": "No social networks configured.",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "facebookPlaceholder": "Facebook URL",
+      "twitterPlaceholder": "Twitter URL",
+      "linkedinPlaceholder": "LinkedIn URL",
+      "instagramPlaceholder": "https://instagram.com/yourinstitute"
+    },
+    "legal": {
+      "title": "Legal documents",
+      "upload": "Upload documents (Coming soon)"
+    },
+    "info": {
+      "title": "Institute information",
+      "description": "This information will be displayed publicly on your training platform",
+      "name": "Institute name",
+      "namePlaceholder": "Institute name",
+      "legalName": "Legal name",
+      "legalNamePlaceholder": "Legal name",
+      "foundedYear": "Year founded",
+      "foundedYearPlaceholder": "Year founded",
+      "website": "Website",
+      "websitePlaceholder": "https://...",
+      "description": "Description",
+      "descriptionPlaceholder": "Description of your institute"
+    },
+    "contact": {
+      "title": "Contact details",
+      "email": "Email",
+      "emailPlaceholder": "contact@example.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+221 xx xxx xx xx",
+      "address": "Address",
+      "addressPlaceholder": "Address",
+      "city": "City",
+      "cityPlaceholder": "City",
+      "postalCode": "Postal code (optional)",
+      "postalCodePlaceholder": "Postal code",
+      "country": "Country",
+      "countryPlaceholder": "Select a country"
+    },
+    "legalInfo": {
+      "title": "Legal information",
+      "registrationNumber": "Registration number",
+      "registrationNumberPlaceholder": "RCCM No.",
+      "taxId": "Tax identification number (NINEA)",
+      "taxIdPlaceholder": "NINEA"
+    },
+    "actions": {
+      "save": "Save changes",
+      "saving": "Saving...",
+      "retry": "Retry"
+    },
+    "errors": {
+      "loadError": "Error loading institute information.",
+      "notFound": "No institute information found.",
+      "notFoundDescription": "Please check your configuration or contact support.",
+      "organizationIdMissing": "Unable to find organization identifier.",
+      "updateError": "Error updating",
+      "updateErrorDescription": "A problem occurred.",
+      "updateFailed": "Failed to update profile"
+    },
+    "success": {
+      "updated": "Profile updated",
+      "updatedDescription": "Institute information has been saved successfully."
+    },
+    "validation": {
+      "nameMin": "Name must contain at least 2 characters",
+      "legalNameMin": "Legal name must contain at least 2 characters",
+      "descriptionMin": "Description must contain at least 10 characters",
+      "foundedYearInvalid": "Founding year must be valid",
+      "addressMin": "Address must contain at least 5 characters",
+      "cityMin": "City must contain at least 2 characters",
+      "countryRequired": "Country must be selected",
+      "emailInvalid": "Invalid email",
+      "phoneInvalid": "Invalid phone number",
+      "websiteInvalid": "Website URL must start with http://, https:// or www.",
+      "registrationNumberInvalid": "Invalid registration number",
+      "taxIdInvalid": "Invalid tax identification number",
+      "facebookUrlInvalid": "Invalid Facebook URL",
+      "twitterUrlInvalid": "Invalid Twitter URL",
+      "linkedinUrlInvalid": "Invalid LinkedIn URL",
+      "instagramUrlInvalid": "Invalid Instagram URL",
+      "logoUrlInvalid": "Invalid logo URL"
+    }
+  },
+
+  "branding": {
+    "title": "Branding & Public Site",
+    "description": "Control center for your visual identity and public site",
+    "backToSettings": "Back to settings",
+    "reset": "Reset",
+    "save": "Save",
+    "saving": "Saving...",
+    "errors": {
+      "tableNotFound": "Error: Branding settings table does not exist.",
+      "tableNotFoundDescription": "Please contact the administrator to resolve this issue.",
+      "noPermission": "Error: You do not have the necessary permissions.",
+      "noPermissionDescription": "Please contact the administrator to obtain the necessary permissions.",
+      "loadError": "Error",
+      "loadErrorDescription": "Unable to load branding settings.",
+      "saveError": "Error",
+      "saveErrorDescription": "Unable to save settings. Please try again.",
+      "organizationNotReady": "Organization or user not identified, or Supabase client not ready.",
+      "logoUploadError": "Error uploading logo: {message}",
+      "faviconUploadError": "Error uploading favicon: {message}",
+      "bannerUploadError": "Error uploading banner: {message}"
+    },
+    "success": {
+      "saved": "Success",
+      "savedDescription": "Settings have been saved successfully.",
+      "themeApplied": "Theme applied",
+      "themeAppliedDescription": "Theme \"{name}\" has been applied successfully.",
+      "colorsReset": "Colors reset",
+      "colorsResetDescription": "All colors have been reset to default values."
+    },
+    "tabs": {
+      "visualIdentity": "Visual Identity",
+      "logoAssets": "Logo & Assets",
+      "content": "Content",
+      "analytics": "Analytics"
+    },
+    "colors": {
+      "title": "Main colors",
+      "description": "Define the main colors that will be used throughout the interface",
+      "headerFooterTitle": "Header and footer",
+      "headerFooterDescription": "Customize the appearance of the header and footer",
+      "primary": "Primary color",
+      "primaryForeground": "Text on primary",
+      "secondary": "Secondary color",
+      "secondaryForeground": "Text on secondary",
+      "accent": "Accent color",
+      "accentForeground": "Text on accent",
+      "background": "Background",
+      "foreground": "Main text",
+      "headerBackground": "Header background",
+      "headerForeground": "Header text",
+      "footerBackground": "Footer background",
+      "footerForeground": "Footer text"
+    },
+    "typography": {
+      "title": "Typography",
+      "description": "Configure fonts and text sizes for your site",
+      "headingFont": "Heading font",
+      "bodyFont": "Body font",
+      "h1Size": "H1 size",
+      "h2Size": "H2 size",
+      "h3Size": "H3 size",
+      "bodySize": "Body size",
+      "lineHeight": "Line height",
+      "letterSpacing": "Letter spacing",
+      "selectFont": "Choose a font"
+    },
+    "logo": {
+      "title": "Organization logo",
+      "description": "Upload your organization's logo. Recommended format: PNG or SVG, minimum size 200x200px",
+      "noLogo": "No logo",
+      "formats": "Accepted formats: PNG, SVG. Maximum size: 2MB"
+    },
+    "favicon": {
+      "title": "Favicon",
+      "description": "Upload your site's favicon. Recommended format: ICO or PNG, size 32x32px",
+      "formats": "Accepted formats: ICO, PNG. Maximum size: 1MB"
+    },
+    "sitePublic": {
+      "publicUrl": "Institute public URL:"
+    },
+    "analytics": {
+      "title": "Public Site Analytics",
+      "description": "Track your public site performance (coming soon)",
+      "comingSoon": "Public site analytics",
+      "comingSoonDescription": "Your public site statistics will be available here once activated"
+    },
+    "preview": {
+      "title": "Preview",
+      "description": "Real-time preview of your changes",
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "mobile": "Mobile",
+      "descriptionText": "This preview shows how your changes will be applied to the platform.",
+      "guideTitle": "Customization guide",
+      "tips": "Tips",
+      "tip1": "Use colors that match your logo and visual identity",
+      "tip2": "Ensure sufficient contrast between text and background",
+      "tip3": "Limit yourself to 2-3 main colors for a clean interface",
+      "tip4": "Test on different devices to ensure readability",
+      "tip5": "Don't forget to save your changes",
+      "note": "Changes made will affect the appearance of both the admin interface and the learner interface.",
+      "interfaceTitle": "Interface Preview",
+      "interfaceDescription": "Preview of the admin interface with your colors"
+    },
+    "previewElements": {
+      "buttons": "Buttons",
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "outline": "Outline",
+      "ghost": "Ghost",
+      "card": "Card",
+      "cardTitle": "Example card",
+      "cardDescription": "This is a card preview",
+      "cardContent": "This is what your card content will look like.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "header": "Header",
+      "instituteName": "Your institute name",
+      "home": "Home",
+      "courses": "Courses",
+      "profile": "Profile",
+      "footer": "Footer",
+      "copyright": "© 2023 Your Institute",
+      "terms": "Terms of use",
+      "privacy": "Privacy",
+      "contact": "Contact"
+    }
+  },
+
+  "notifications": {
+    "title": "Emails and notifications",
+    "description": "Configure messages sent to your platform users",
+    "tabs": {
+      "emailTemplates": "Email templates",
+      "notificationSettings": "Notifications",
+      "systemMessages": "System messages"
+    },
+    "emailTemplates": {
+      "title": "Email templates",
+      "description": "Manage email templates sent to users",
+      "new": "New",
+      "filterPlaceholder": "Filter by category",
+      "allCategories": "All categories",
+      "account": "Account",
+      "course": "Course",
+      "transaction": "Transactions",
+      "system": "System",
+      "selectTemplate": "Select a template",
+      "selectTemplateDescription": "Click on a template to view and edit its content",
+      "preview": "Preview",
+      "save": "Save",
+      "subject": "Subject",
+      "content": "Email content",
+      "insertVariable": "Insert variable",
+      "availableVariables": "Available variables",
+      "tips": {
+        "title": "Tips for sending emails in Senegal",
+        "tip1": "Make sure all emails contain company contact information",
+        "tip2": "The main language is French, but consider Wolof options if possible",
+        "tip3": "Respect local time zones for sending emails (UTC+0)",
+        "tip4": "Take into account possible mobile connection issues"
+      },
+      "empty": "Please select an email template to edit",
+      "lastEdited": "Last edited {date}"
+    },
+    "notificationSettings": {
+      "title": "Notification settings",
+      "description": "Configure when and how notifications are sent to users",
+      "notification": "Notification",
+      "email": "Email",
+      "push": "Push",
+      "sms": "SMS"
+    },
+    "sms": {
+      "title": "SMS settings",
+      "description": "Configure SMS sending for critical notifications (Adapted for Senegal)",
+      "provider": "SMS provider",
+      "providerPlaceholder": "Select a provider",
+      "providerDescription": "Choose your SMS service provider.",
+      "providers": {
+        "orange": "Orange Business Services",
+        "free": "Free Senegal",
+        "expresso": "Expresso",
+        "teranga": "Teranga SMS",
+        "custom": "Other"
+      },
+      "senderId": "Sender ID",
+      "senderIdPlaceholder": "e.g. JANGALTECH",
+      "senderIdDescription": "Limited to 11 characters, no spaces or special characters.",
+      "monthlyLimit": "Monthly SMS limit",
+      "monthlyLimitDescription": "Maximum SMS you can send per month.",
+      "optOut": "Include opt-out option",
+      "quietHours": "Respect quiet hours (9pm-8am)",
+      "specifics": {
+        "title": "SMS specifics in Senegal",
+        "tip1": "Number format: International format +221 XX XXX XX XX",
+        "tip2": "Character limit: 160 for a standard SMS (70 in Unicode)",
+        "tip3": "Optimize for local mobile network which can sometimes be unstable",
+        "tip4": "Preferably send in French to ensure understanding"
+      }
+    },
+    "systemMessages": {
+      "title": "System messages",
+      "description": "Configure messages displayed in the user interface",
+      "intro": "This section allows you to customize messages displayed to users in the interface.",
+      "comingSoon": "Feature under development",
+      "comingSoonDescription": "This feature will be available soon. You will be able to customize all system messages on the platform."
+    }
+  }
+}
+

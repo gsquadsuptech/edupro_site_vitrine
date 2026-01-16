@@ -1,0 +1,420 @@
+{
+  "common": {
+    "export": "Export",
+    "search": "Search",
+    "loading": "Loading...",
+    "noData": "No data found",
+    "filters": "Filters",
+    "actions": "Actions",
+    "status": "Status",
+    "type": "Type",
+    "all": "All",
+    "openMenu": "Open menu"
+  },
+
+  "transactions": {
+    "title": "Transactions",
+    "description": "Track all financial transactions on your platform",
+    "searchPlaceholder": "Search by ID, name or description...",
+
+    "filters": {
+      "allTypes": "All types",
+      "allStatuses": "All statuses"
+    },
+
+    "types": {
+      "coursePurchase": "Course purchase",
+      "subscription": "Subscription",
+      "bundlePurchase": "Course bundle"
+    },
+
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+
+    "table": {
+      "id": "ID",
+      "dateTime": "Date & Time",
+      "client": "Client",
+      "type": "Type",
+      "description": "Description",
+      "method": "Method",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions"
+    },
+
+    "actions": {
+      "viewDetails": "View details",
+      "viewInvoice": "View invoice",
+      "refund": "Refund",
+      "markAsPaid": "Mark as paid",
+      "cancel": "Cancel"
+    },
+
+    "empty": {
+      "title": "No transactions found",
+      "description": "Try adjusting your search filters"
+    }
+  },
+
+  "discounts": {
+    "title": "Discounts",
+    "description": "Manage discount codes and promotions",
+    "createDiscount": "Create discount",
+    "searchPlaceholder": "Search by code or description...",
+    "loading": "Loading discounts...",
+
+    "stats": {
+      "totalDiscounts": "Total Discounts",
+      "activePromotions": "Active promotions",
+      "codesUsed": "Codes used",
+      "upcomingExpiration": "Upcoming expiration",
+      "none": "None"
+    },
+
+    "filters": {
+      "allTypes": "All types",
+      "allStatuses": "All statuses"
+    },
+
+    "types": {
+      "percentage": "Percentage",
+      "fixed": "Fixed amount",
+      "freeShipping": "Free shipping"
+    },
+
+    "status": {
+      "active": "Active",
+      "scheduled": "Scheduled",
+      "expired": "Expired",
+      "disabled": "Disabled"
+    },
+
+    "table": {
+      "code": "Code",
+      "description": "Description",
+      "type": "Type",
+      "value": "Value",
+      "applicableTo": "Applicable to",
+      "allCourses": "All courses",
+      "validity": "Validity",
+      "usage": "Usage",
+      "validPeriod": "Valid period",
+      "status": "Status",
+      "actions": "Actions"
+    },
+
+    "usage": {
+      "used": "{used} / {limit} used",
+      "unlimited": "Unlimited",
+      "usages": "usages",
+      "percentUsed": "{percent}% used",
+      "maxPerUser": "Max {max}/user"
+    },
+
+    "validity": {
+      "from": "From",
+      "to": "to",
+      "start": "Start:",
+      "end": "End:",
+      "noLimit": "No limit",
+      "expires": "Expires",
+      "expiresIn": "Expires in {days} days",
+      "expiresToday": "Expires today",
+      "expiresTomorrow": "Expires tomorrow",
+      "daysRemaining": "{days} days remaining",
+      "expired": "Expired",
+      "invalidDate": "Invalid date",
+      "notStarted": "Starts {date}"
+    },
+
+    "value": {
+      "minPurchase": "Min. purchase: {amount}",
+      "maxDiscount": "Max. discount: {amount}"
+    },
+
+    "actions": {
+      "view": "View details",
+      "copy": "Copy code",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "disable": "Disable",
+      "enable": "Enable",
+      "delete": "Delete",
+      "openMenu": "Open menu"
+    },
+
+    "messages": {
+      "loadError": "Unable to load discounts",
+      "codeCopied": "Code copied to clipboard",
+      "copyError": "Unable to copy code",
+      "createSuccess": "Discount created successfully",
+      "createError": "Error creating discount",
+      "updateSuccess": "Discount updated successfully",
+      "updateError": "Unable to update discount",
+      "deleteSuccess": "Discount deleted successfully",
+      "deleteError": "Unable to delete discount",
+      "duplicateSuccess": "Discount duplicated successfully",
+      "duplicateError": "Unable to duplicate discount",
+      "disableSuccess": "Discount disabled successfully",
+      "disableError": "Error disabling discount",
+      "enableSuccess": "Discount enabled successfully",
+      "enableError": "Error enabling discount",
+      "activatedSuccess": "Discount activated successfully",
+      "deactivatedSuccess": "Discount deactivated successfully",
+      "confirmActivate": "Are you sure you want to activate this discount?",
+      "confirmDeactivate": "Are you sure you want to deactivate this discount?",
+      "confirmDelete": "Are you sure you want to delete this discount?",
+      "error": "Error",
+      "success": "Success"
+    },
+
+    "empty": {
+      "title": "No promotions found",
+      "description": "Try adjusting your search filters",
+      "createButton": "Create discount",
+      "noOrganization": "Organization not found",
+      "noOrganizationDescription": "Please reconnect or contact the administrator"
+    },
+
+    "modal": {
+      "createTitle": "New discount",
+      "editTitle": "Edit discount",
+      "code": "Discount code *",
+      "codePlaceholder": "PROMO2024",
+      "name": "Name",
+      "namePlaceholder": "Promotion name",
+      "description": "Description",
+      "descriptionPlaceholder": "Promotion description",
+      "type": "Type *",
+      "typePercentage": "Percentage (%)",
+      "typeFixed": "Fixed amount (FCFA)",
+      "value": "Value *",
+      "minPurchase": "Minimum purchase amount (FCFA)",
+      "minPurchasePlaceholder": "0",
+      "maxDiscount": "Maximum discount (FCFA)",
+      "maxDiscountPlaceholder": "No limit",
+      "applicableTo": "Applicable to *",
+      "applicableAllCourses": "All courses",
+      "applicableAllPaths": "All learning paths",
+      "applicableAllCategories": "All categories",
+      "applicableSpecificCourse": "Specific course",
+      "applicableCategory": "Category",
+      "applicableLearningPath": "Learning path",
+      "applicableSpecificCohort": "Specific cohort",
+      "selectCourse": "Select course *",
+      "selectCategory": "Select category *",
+      "selectPath": "Select learning path *",
+      "selectCohort": "Select cohort *",
+      "selectItem": "Select an item",
+      "loadingOptions": "Loading options...",
+      "validFrom": "Valid from *",
+      "validUntil": "Valid until",
+      "validUntilHint": "Leave empty for no end date",
+      "maxUsage": "Maximum number of uses",
+      "maxUsagePlaceholder": "Unlimited",
+      "maxUsagePerUser": "Maximum per user *",
+      "isStackable": "Stackable with other codes",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "codeRequired": "Code is required",
+      "saveError": "Error saving"
+    },
+
+    "details": {
+      "title": "Discount details",
+      "value": "Discount value",
+      "constraints": "Constraints",
+      "minPurchase": "Minimum purchase:",
+      "maxDiscount": "Max discount:",
+      "noConstraints": "No constraints",
+      "applicableTo": "Applicable to",
+      "validity": "Validity period",
+      "start": "Start",
+      "end": "End",
+      "noLimit": "No limit",
+      "usage": "Usage statistics",
+      "usages": "Usages",
+      "maxPerUser": "Max/user",
+      "stackable": "Stackable",
+      "yes": "Yes",
+      "no": "No",
+      "createdAt": "Created on:",
+      "updatedAt": "Last modified:",
+      "close": "Close",
+      "duplicate": "Duplicate",
+      "invalidDate": "Invalid date",
+      "expired": "Expired",
+      "expiresToday": "Expires today",
+      "expiresTomorrow": "Expires tomorrow",
+      "expiresIn": "Expires in {days} days",
+      "daysRemaining": "{days} days remaining"
+    }
+  },
+
+  "invoices": {
+    "title": "Invoices",
+    "description": "View and manage all invoices issued to customers",
+    "newInvoice": "New invoice",
+    "export": "Export",
+    "searchPlaceholder": "Search by number, reference or client...",
+    "status": {
+      "label": "Status",
+      "all": "All statuses",
+      "paid": "Paid",
+      "pending": "Pending",
+      "overdue": "Overdue",
+      "draft": "Draft",
+      "cancelled": "Cancelled"
+    },
+    "period": {
+      "label": "Period",
+      "all": "All periods",
+      "thisMonth": "This month",
+      "lastMonth": "Last month",
+      "thisYear": "This year"
+    },
+    "table": {
+      "reference": "Reference",
+      "client": "Client",
+      "issueDate": "Issue date",
+      "dueDate": "Due date",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions",
+      "overdue": "Overdue"
+    },
+    "actions": {
+      "openMenu": "Open menu",
+      "view": "View invoice",
+      "downloadPdf": "Download PDF",
+      "publicLink": "Public link",
+      "sendEmail": "Send by email",
+      "print": "Print",
+      "edit": "Edit",
+      "finalize": "Finalize and send",
+      "markAsPaid": "Mark as paid",
+      "sendReminder": "Send reminder",
+      "duplicate": "Duplicate"
+    },
+    "empty": {
+      "title": "No invoices found",
+      "description": "Try adjusting your search filters"
+    }
+  },
+
+  "subscriptions": {
+    "title": "Subscriptions",
+    "description": "Manage all active and historical subscriptions",
+    "export": "Export",
+    "searchPlaceholder": "Search by ID or name...",
+    "status": {
+      "label": "Status",
+      "all": "All statuses",
+      "active": "Active",
+      "trial": "Trial",
+      "past_due": "Past due",
+      "canceled": "Canceled"
+    },
+    "plan": {
+      "label": "Plan",
+      "all": "All plans",
+      "standard": "Standard",
+      "premium": "Premium",
+      "pro": "Pro"
+    },
+    "table": {
+      "id": "ID",
+      "client": "Client",
+      "plan": "Plan",
+      "startDate": "Start date",
+      "nextRenewal": "Next renewal",
+      "paymentMethod": "Payment method",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "renewal": {
+      "canceled": "Subscription canceled",
+      "missed": "Renewal missed",
+      "today": "Today",
+      "inDays": "In {days} days"
+    },
+    "actions": {
+      "openMenu": "Open menu",
+      "viewDetails": "View details",
+      "billingHistory": "Billing history",
+      "changePlan": "Change plan",
+      "updatePayment": "Update payment",
+      "cancel": "Cancel subscription",
+      "renewManually": "Renew manually",
+      "reactivate": "Reactivate"
+    },
+    "empty": {
+      "title": "No subscriptions found",
+      "description": "Try adjusting your search filters"
+    }
+  },
+
+  "payments": {
+    "title": "Payments",
+    "description": "Manage transactions and payments",
+    "refresh": "Refresh",
+    "export": "Export",
+    "searchPlaceholder": "Search by user or course...",
+    "stats": {
+      "totalTransactions": "Total transactions",
+      "successfulPayments": "Successful payments",
+      "pending": "Pending",
+      "failed": "Failed"
+    },
+    "filters": {
+      "status": {
+        "label": "Filter by status",
+        "all": "All statuses",
+        "success": "Success",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      },
+      "method": {
+        "label": "Payment method",
+        "all": "All methods",
+        "stripe": "Stripe",
+        "paypal": "PayPal",
+        "bank_transfer": "Bank transfer",
+        "mobile_money": "Mobile Money"
+      },
+      "dateFrom": "Start date",
+      "dateTo": "End date",
+      "clearDates": "Clear dates"
+    },
+    "status": {
+      "success": "Success",
+      "pending": "Pending",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "table": {
+      "title": "Transactions",
+      "user": "User",
+      "course": "Course",
+      "amount": "Amount",
+      "method": "Method",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions",
+      "deletedUser": "Deleted user",
+      "deletedCourse": "Deleted course",
+      "emailNotAvailable": "Email not available"
+    },
+    "loading": "Loading...",
+    "errors": {
+      "loadError": "Error loading payments"
+    }
+  }
+}

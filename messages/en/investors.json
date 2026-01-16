@@ -1,0 +1,422 @@
+{
+  "meta": {
+    "title": "EduPro Investors | Join the EdTech Revolution in Africa",
+    "description": "40 billion FCFA market. Zero dominant player. We're launching in 30 days. Join visionary investors in transforming professional training in Africa.",
+    "keywords": "EdTech investment, Africa startup, seed round, professional training platform, education technology, Africa investment"
+  },
+  "hero": {
+    "title": "40 billion FCFA market.",
+    "titleLine2": "Zero dominant player.",
+    "titleHighlight": "We're launching in 30 days.",
+    "subtitle": "EduPro is the first platform connecting <strong>companies</strong>, <strong>professionals</strong>, <strong>trainers</strong> and <strong>investors</strong> around professional training in Africa. We're opening our <strong>SEED round</strong> to visionary investors.",
+    "cta": {
+      "primary": "Fill investor form",
+      "secondary": "Schedule a call"
+    },
+    "stats": {
+      "trainers": "Active Trainers",
+      "trainersValue": "45+",
+      "trainersSub": "Ready to train",
+      "courses": "Available Courses",
+      "coursesValue": "180+",
+      "coursesSub": "Ready for launch",
+      "launch": "Public Launch",
+      "launchValue": "Dec 2025",
+      "launchSub": "30 days"
+    }
+  },
+  "opportunity": {
+    "title": "The Opportunity in 3 Numbers",
+    "subtitle": "A massive market in full growth without a consolidated leader",
+    "opportunities": {
+      "market": {
+        "number": "40-50 Md FCFA",
+        "title": "Total Market",
+        "description": "Size of the professional training market in our 3 launch countries (Senegal, Ivory Coast, Rwanda)"
+      },
+      "growth": {
+        "number": "+32% CAGR",
+        "title": "Market Growth",
+        "description": "Annual growth of the EdTech sector in Africa, accelerated post-COVID and by public policies"
+      },
+      "leader": {
+        "number": "None",
+        "title": "Dominant Leader",
+        "description": "Massively fragmented market, opportunity to create the pan-African leader in professional training"
+      }
+    }
+  },
+  "whyEdupro": {
+    "title": "We solve a problem that no one else addresses",
+    "subtitle": "The problem exists at 3 levels",
+    "problems": {
+      "enterprises": {
+        "title": "For Companies",
+        "points": [
+          "Catastrophic turnover (35-50% in BPOs)",
+          "Manual, long and costly onboarding",
+          "No way to measure training ROI",
+          "Inadequate and overpriced international solutions"
+        ]
+      },
+      "professionals": {
+        "title": "For Professionals",
+        "points": [
+          "Inaccessible international training (500-2000 USD)",
+          "Content disconnected from African realities",
+          "No flexibility (schedules, mobile, payment)",
+          "Diplomas not recognized locally"
+        ]
+      },
+      "trainers": {
+        "title": "For Trainers",
+        "points": [
+          "Dependence on in-person = unstable income",
+          "No tools to digitize their expertise",
+          "Visibility limited to their geographic area",
+          "Impossible to scale their impact"
+        ]
+      }
+    },
+    "solution": {
+      "title": "Our Solution: The 4-Sided Marketplace",
+      "description": "We are the only ones connecting the entire ecosystem."
+    },
+    "differentiators": {
+      "title": "4 Differentiation Pillars",
+      "ai": {
+        "title": "AI at the Service of Africa",
+        "description": "AI assistant to create training 40% faster, automatic contextualization and adaptive content generation according to learner level"
+      },
+      "mobile": {
+        "title": "Mobile-First & Offline-Ready",
+        "description": "78% of African traffic is mobile → mobile-native design, offline mode for essential content, optimized for low bandwidth"
+      },
+      "panafrican": {
+        "title": "Pan-African from MVP",
+        "description": "3 launch countries, multilingual (French + English), integrated mobile payment (Orange Money, Wave, M-Pesa)"
+      },
+      "team": {
+        "title": "Team That Executes",
+        "description": "Founders with track record, intimate knowledge of the African field, complementary expertise in technology, education and entrepreneurship"
+      }
+    }
+  },
+  "seedRound": {
+    "title": "The SEED Round",
+    "subtitle": "We're looking for our first investors",
+    "structure": {
+      "title": "Round Structure",
+      "amount": "Amount sought: To be defined with investors",
+      "amountNote": "(according to validated needs post-launch)",
+      "stage": "Stage:",
+      "stageValue": "Pre-revenue / Early traction",
+      "closing": "Expected closing:",
+      "closingValue": "Q4 2025 - Q1 2026"
+    },
+    "fundUses": {
+      "title": "Planned Use of Funds",
+      "acquisition": {
+        "percentage": "40%",
+        "title": "Acquisition & Marketing",
+        "items": [
+          "Multi-country digital campaigns",
+          "Content marketing and SEO",
+          "Strategic partnerships",
+          "Community management"
+        ]
+      },
+      "product": {
+        "percentage": "30%",
+        "title": "Product & Technology",
+        "items": [
+          "Mobile app improvement",
+          "Advanced features (live classes, mentoring)",
+          "Scalable infrastructure",
+          "Recruitment +3 developers"
+        ]
+      },
+      "operations": {
+        "percentage": "20%",
+        "title": "Operations & Talent",
+        "items": [
+          "Key team recruitment (CMO, Head of Sales B2B)",
+          "Multilingual customer support",
+          "Tools and software",
+          "Offices (Dakar + Abidjan)"
+        ]
+      },
+      "expansion": {
+        "percentage": "10%",
+        "title": "Geographic Expansion",
+        "items": [
+          "Rwanda launch preparation",
+          "Content localization",
+          "Local partnerships"
+        ]
+      }
+    }
+  },
+  "team": {
+    "title": "The right people, at the right time",
+    "subtitle": "Founding Team",
+    "advisors": {
+      "title": "Advisors & Supporters",
+      "placeholder": "To be completed with real profiles and supporters"
+    }
+  },
+  "timing": {
+    "title": "Why Now?",
+    "subtitle": "6 catalysts converging simultaneously",
+    "catalysts": {
+      "mobile": {
+        "title": "Mobile Revolution",
+        "points": [
+          "78% mobile penetration rate",
+          "4G widespread in medium-sized cities",
+          "Data cost divided by 4 since 2020"
+        ]
+      },
+      "mobileMoney": {
+        "title": "Mobile Money Explosion",
+        "points": [
+          "60% of population banked via mobile money",
+          "300M Orange Money, Wave, M-Pesa users",
+          "Mature fintech ecosystem for subscriptions"
+        ]
+      },
+      "policies": {
+        "title": "Favorable Public Policies",
+        "points": [
+          "Senegal: Vision 2050 + 3FPT Fund",
+          "Ivory Coast: Continuing Education Fund (15Md FCFA)",
+          "Rwanda: Digital Skills Program"
+        ]
+      },
+      "talent": {
+        "title": "Post-COVID Talent Shortage",
+        "points": [
+          "Hybrid work normalized",
+          "Explosive demand for digital skills",
+          "Companies ready to invest in training"
+        ]
+      },
+      "momentum": {
+        "title": "EdTech Africa Momentum",
+        "points": [
+          "+200% EdTech startups since 2020",
+          "500M USD funding in 2023-2024",
+          "Successful exits: Andela, uLesson"
+        ]
+      },
+      "demographic": {
+        "title": "Demographic Dividend",
+        "points": [
+          "60% of African population under 25",
+          "40% of young graduates unemployed due to lack of practical skills",
+          "Middle class explosion (+170M by 2030)",
+          "High professional aspirations + social mobility"
+        ]
+      }
+    },
+    "window": "The opportunity window: <span class=\"text-primary\">2-3 years to take the lead.</span>"
+  },
+  "vision": {
+    "title": "Vision 2030",
+    "subtitle": "From 3 countries to 15 countries in 5 years",
+    "aspirational": {
+      "title": "Aspirational Vision (Numbers)",
+      "countries": {
+        "label": "Countries covered",
+        "value": "15",
+        "description": "Sub-Saharan Africa"
+      },
+      "learners": {
+        "label": "Trained learners",
+        "value": "2M+",
+        "description": "Cumulative"
+      },
+      "companies": {
+        "label": "Client companies",
+        "value": "10K+",
+        "description": "Active"
+      },
+      "trainers": {
+        "label": "Partner trainers",
+        "value": "5K+",
+        "description": "Qualified"
+      },
+      "arr": {
+        "label": "Target ARR",
+        "value": "50M+",
+        "description": "USD"
+      },
+      "valuation": {
+        "label": "Valuation",
+        "value": "250M+",
+        "description": "USD"
+      }
+    },
+    "impact": {
+      "title": "Social Impact",
+      "employment": {
+        "metric": "85%",
+        "description": "of learners find employment within 6 months"
+      },
+      "income": {
+        "metric": "+35%",
+        "description": "income increase post-training"
+      },
+      "women": {
+        "metric": "50%+",
+        "description": "women in our programs"
+      },
+      "sdg": {
+        "metric": "SDG",
+        "description": "Contribution to SDGs 4, 5, 8, 10"
+      }
+    }
+  },
+  "form": {
+    "title": "Access More Information",
+    "subtitle": "Fill out this quick form so we can exchange",
+    "sections": {
+      "who": {
+        "title": "Section 1: Who Are You?",
+        "investorType": {
+          "label": "Investor type",
+          "required": "*",
+          "placeholder": "Select...",
+          "options": {
+            "angel": "Angel Investor",
+            "vc": "Venture Capital Fund",
+            "family": "Family Office",
+            "corporate": "Corporate VC",
+            "impact": "Impact Fund / DFI",
+            "other": "Other"
+          }
+        },
+        "fullName": {
+          "label": "Full name / Fund name",
+          "required": "*"
+        },
+        "email": {
+          "label": "Professional email",
+          "required": "*"
+        },
+        "phone": {
+          "label": "Phone",
+          "required": "*"
+        },
+        "linkedin": {
+          "label": "LinkedIn Profile"
+        }
+      },
+      "interest": {
+        "title": "Section 2: Your Interest",
+        "africaInvestment": {
+          "label": "Do you invest in Africa?",
+          "options": {
+            "regularly": "Yes, regularly",
+            "occasionally": "Yes, occasionally",
+            "no": "No, this would be my first",
+            "researching": "I'm researching"
+          }
+        },
+        "ticket": {
+          "label": "Typical investment ticket",
+          "options": {
+            "50k": "< 50K USD",
+            "50-100k": "50K - 100K USD",
+            "100-250k": "100K - 250K USD",
+            "250k+": "250K+ USD",
+            "flexible": "To be discussed"
+          }
+        },
+        "timeline": {
+          "label": "Investment timeline",
+          "options": {
+            "immediate": "Immediately",
+            "3-6": "3-6 months",
+            "6-12": "6-12 months",
+            "later": "Later"
+          }
+        }
+      },
+      "context": {
+        "title": "Section 3: Context",
+        "discovered": {
+          "label": "How did you discover EduPro?",
+          "options": {
+            "referral": "Referral",
+            "linkedin": "LinkedIn / Social networks",
+            "event": "Event / Conference",
+            "search": "Active EdTech Africa search",
+            "article": "Article / Press",
+            "other": "Other"
+          }
+        },
+        "interest": {
+          "label": "What interests you in EduPro?",
+          "placeholder": "Your message..."
+        }
+      },
+      "nextSteps": {
+        "title": "Section 4: Next Steps",
+        "email": "Receive more information by email",
+        "call": "Schedule a call with the CEO (15-30 min)",
+        "newsletter": "Receive monthly updates (investor newsletter)"
+      }
+    },
+    "submit": "📩 Send my request",
+    "response": "Response within 48h"
+  },
+  "faq": {
+    "title": "Investor FAQ",
+    "subtitle": "Frequently Asked Questions",
+    "questions": {
+      "revenue": {
+        "q": "You don't have revenue yet, why invest now?",
+        "a": "Because this is when you can enter at the best valuation, with a proven team that executes. In 6 months with traction, the terms will be different."
+      },
+      "valuation": {
+        "q": "What is your valuation?",
+        "a": "We discuss valuation with each investor based on what they bring (capital + network + expertise). Contact us to discuss."
+      },
+      "ticket": {
+        "q": "What is the minimum ticket?",
+        "a": "We're flexible on the minimum ticket for SEED. What matters is vision alignment and what you bring beyond capital."
+      },
+      "lead": {
+        "q": "Are you looking for a lead investor?",
+        "a": "Ideally yes, someone who takes the lead of the round and mobilizes their network. But we're open to multiple aligned investors."
+      },
+      "profitability": {
+        "q": "When do you plan to be profitable?",
+        "a": "Breakeven target: 18-24 months post-launch. But the intermediate goal is growth and validation of product-market fit."
+      },
+      "seriesA": {
+        "q": "Why not Series A directly?",
+        "a": "We want to validate our traction with the right SEED partner first. Series A will come naturally in 12-18 months with the right metrics."
+      }
+    }
+  },
+  "cta": {
+    "title": "The best opportunities are taken early",
+    "subtitle": "In 6 months, we'll have numbers. Today, you have the opportunity to enter at the best conditions, with a team that executes and a massive market ahead of us.",
+    "highlight": "Investors building tomorrow's Africa invest today.",
+    "buttons": {
+      "form": "Fill out the form",
+      "call": "Schedule a call"
+    },
+    "contact": {
+      "urgent": "Urgent questions?",
+      "email": "contact@edupro.africa",
+      "phone": "Phone",
+      "phoneValue": "+221 77 XXX XX XX",
+      "follow": "Follow us",
+      "followValue": "LinkedIn, Twitter, Instagram"
+    }
+  }
+}
+

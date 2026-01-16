@@ -1,0 +1,242 @@
+{
+  "templates": {
+    "title": "Certificate Templates",
+    "description": "Create and manage certificate templates for your courses",
+    "newTemplate": "New Template",
+    "searchPlaceholder": "Search templates...",
+    "category": "Category",
+    "allCategories": "All categories",
+    "status": "Status",
+    "all": "All",
+    "loading": "Loading certificate templates...",
+    "error": "Error",
+    "errorMessage": "Please try again later or contact support.",
+    "noTemplates": "No certificate template found",
+    "noTemplatesDescription": "Try adjusting your filters or create a new template",
+    "preview": "Preview",
+    "edit": "Edit",
+    "editDisabled": "Not available for published templates",
+    "duplicate": "Duplicate",
+    "publish": "Publish",
+    "setDraft": "Set as draft",
+    "delete": "Delete",
+    "categoryLabel": "Category:",
+    "createdAt": "Created on:",
+    "updatedAt": "Updated:",
+    "previewTitle": "Template Preview: {name}",
+    "statusBadges": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "errors": {
+      "authError": "Authentication error",
+      "userNotConnected": "User not connected",
+      "profileError": "Unable to retrieve user profile",
+      "noOrganization": "No organization associated with your account",
+      "fetchError": "Error retrieving certificate templates",
+      "unexpectedError": "An error occurred",
+      "previewDataMissing": "Unable to display preview: template data missing",
+      "invalidSession": "Invalid session. Please log in again.",
+      "organizationError": "Unable to retrieve your organization information",
+      "duplicateError": "Error duplicating template",
+      "noDataAfterDuplicate": "No data returned after duplication",
+      "statusUpdateError": "Error updating status",
+      "noDataAfterUpdate": "No data returned after update",
+      "deleteError": "Error deleting template",
+      "deleteUnexpectedError": "An error occurred while deleting"
+    },
+    "success": {
+      "duplicated": "Template duplicated successfully",
+      "deleted": "Template deleted successfully",
+      "statusUpdated": "Template {status} successfully"
+    },
+    "statusMessages": {
+      "draft": "set as draft",
+      "published": "published",
+      "archived": "archived"
+    },
+    "confirmDelete": "Are you sure you want to delete this certificate template?"
+  },
+
+  "new": {
+    "title": "New Certificate Template",
+    "description": "Create a new certificate template for your courses",
+    "back": "Back",
+    "modelTitle": "Template Title",
+    "modelTitlePlaceholder": "Enter template title",
+    "preview": "Preview",
+    "save": "Save Template",
+    "saving": "Saving...",
+    "previewTitle": "Certificate Template Preview",
+    "defaultTitle": "New Certificate Template",
+    "defaultDescription": "Certificate template created with the editor",
+    "defaultDirectorTitle": "Director",
+    "errors": {
+      "supabaseNotInitialized": "Supabase client not initialized or user not connected.",
+      "noOrganization": "You must be associated with an organization to create a certificate template",
+      "saveError": "Error saving template",
+      "unexpectedError": "An error occurred",
+      "directorsError": "Error retrieving directors"
+    },
+    "success": {
+      "saved": "Certificate template saved successfully"
+    }
+  },
+
+  "edit": {
+    "title": "Edit Certificate Template",
+    "description": "Modify your certificate template settings",
+    "back": "Back",
+    "backToTemplates": "Back to Templates",
+    "modelTitle": "Template Title",
+    "modelTitlePlaceholder": "Enter template title",
+    "preview": "Preview",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "previewTitle": "Certificate Template Preview",
+    "loading": "Loading...",
+    "notFound": {
+      "title": "Template Not Found",
+      "description": "The certificate template you are looking for does not exist or has been deleted."
+    },
+    "publishedError": {
+      "title": "Modification Not Allowed",
+      "description": "You cannot modify a certificate template that is already published. Please set it to draft first before modifying it.",
+      "setDraftAndEdit": "Set to Draft and Edit"
+    },
+    "errors": {
+      "fetchError": "Error retrieving certificate template",
+      "userNotConnected": "User not connected",
+      "profileError": "Unable to retrieve user profile",
+      "directorsError": "Error retrieving directors",
+      "templateNotLoaded": "Unable to save: template not loaded",
+      "noData": "No data to save",
+      "saveError": "Error saving changes",
+      "statusUpdateError": "Error updating status",
+      "unexpectedError": "An error occurred"
+    },
+    "success": {
+      "saved": "Changes saved successfully",
+      "setDraft": "Template set to draft successfully"
+    },
+    "defaultDirectorTitle": "Director",
+    "defaultValues": {
+      "certificateTitle": "CERTIFICATE",
+      "certificateSubtitle": "of completion",
+      "studentIntroText": "This certificate is awarded to",
+      "courseIntroText": "for successfully completing the course",
+      "gradeIntroText": "with a grade of"
+    }
+  },
+
+  "editor": {
+    "tabs": {
+      "model": "Model",
+      "background": "Background"
+    },
+    "distinction": {
+      "show": "Show distinction",
+      "showLabel": "Show distinction",
+      "thresholds": "Distinctions by grade",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "threshold": "Threshold (%)",
+      "text": "Text",
+      "addThreshold": "Add distinction threshold",
+      "newMention": "New distinction",
+      "andMore": "and above:"
+    },
+    "texts": {
+      "title": "Model texts",
+      "certificateTitle": "Certificate title",
+      "certificateSubtitle": "Certificate subtitle",
+      "studentIntro": "Student introduction text",
+      "courseIntro": "Course introduction text",
+      "gradeIntro": "Grade introduction text",
+      "saveChanges": "Save changes",
+      "display": {
+        "title": "Title:",
+        "subtitle": "Subtitle:",
+        "studentIntro": "Student intro:",
+        "courseIntro": "Course intro:",
+        "gradeIntro": "Grade intro:"
+      }
+    },
+    "signatures": {
+      "title": "Signatures",
+      "showDirector": "Show director signature",
+      "selectDirector": "Select director",
+      "selectDirectorPlaceholder": "Select a director",
+      "noDirectors": "No directors available",
+      "showInstructor": "Show instructor signature"
+    },
+    "background": {
+      "type": "Background type",
+      "color": "Color",
+      "image": "Image",
+      "gradient": "Gradient",
+      "colorLabel": "Background color",
+      "imageLabel": "Background image",
+      "imageUrl": "Image URL",
+      "browse": "Browse",
+      "imageFormats": "Supported formats: JPG, PNG, GIF. Maximum size: 5MB.",
+      "gradientStart": "Start color",
+      "gradientEnd": "End color",
+      "clientLogoSize": "Client logo size",
+      "eduproLogoSize": "EduPro logo size"
+    },
+    "preview": {
+      "date": "Date",
+      "clientLogoAlt": "Client logo",
+      "eduproLogoAlt": "EduPro logo"
+    }
+  },
+
+  "issued": {
+    "title": "Issued Certificates",
+    "description": "Manage certificates awarded to learners who have completed their courses",
+    "issueCertificate": "Issue Certificate",
+    "searchPlaceholder": "Search by ID, learner or course...",
+    "export": "Export",
+    "course": {
+      "label": "Course",
+      "all": "All Courses",
+      "devFrontend": "Frontend Web Development",
+      "jsAdvanced": "Advanced JavaScript",
+      "uxUi": "UX/UI Design",
+      "reactNative": "React Native",
+      "pythonData": "Python Data Science"
+    },
+    "table": {
+      "certificateId": "Certificate ID",
+      "student": "Student",
+      "course": "Course",
+      "template": "Template",
+      "issuedAt": "Issue Date",
+      "expiration": "Expiration",
+      "status": "Status",
+      "actions": "Actions",
+      "openMenu": "Open menu"
+    },
+    "status": {
+      "active": "Active",
+      "revoked": "Revoked",
+      "expired": "Expired"
+    },
+    "actions": {
+      "view": "View",
+      "details": "Details",
+      "downloadPdf": "Download PDF",
+      "sendEmail": "Send by email",
+      "shareLink": "Share link",
+      "print": "Print",
+      "revoke": "Revoke"
+    },
+    "verification": {
+      "title": "Verification Process",
+      "description": "Each certificate has a unique verification code that can be used to confirm its authenticity. Learners can verify their certificates on the dedicated page:",
+      "link": "edupro.com/verify"
+    }
+  }
+}
+

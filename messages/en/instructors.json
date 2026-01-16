@@ -1,0 +1,294 @@
+{
+  "title": "Instructors",
+  "description": "Manage your platform instructors",
+  "createInstructor": "Add an instructor",
+  "searchPlaceholder": "Search instructors...",
+
+  "stats": {
+    "totalInstructors": "Total Instructors",
+    "coursesCreated": "Courses Created",
+    "averageRating": "Average Rating",
+    "newThisMonth": "this month",
+    "newThisWeek": "this week",
+    "loading": "..."
+  },
+
+  "viewMode": {
+    "label": "View:",
+    "cards": "Cards",
+    "table": "Table"
+  },
+
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "specialization": "Specialization",
+    "status": "Status",
+    "courses": "Courses",
+    "students": "Students",
+    "registrationDate": "Registration date",
+    "actions": "Actions",
+    "noSpecialization": "-"
+  },
+
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+
+  "list": {
+    "courses": "courses",
+    "students": "students"
+  },
+
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "resendInvitation": "Resend invitation",
+    "sending": "Sending…",
+    "cancel": "Cancel"
+  },
+
+  "confirmDialog": {
+    "deleteTitle": "Are you sure?",
+    "deleteDescription": "This action is irreversible. It will permanently delete the instructor and all associated data.",
+    "deleteButton": "Delete"
+  },
+
+  "messages": {
+    "loadError": "Unable to load instructors",
+    "deleteSuccess": "Instructor deleted successfully",
+    "deleteError": "Unable to delete instructor",
+    "resendInvitationSuccess": "Invitation sent successfully",
+    "resendInvitationError": "Failed to resend invitation",
+    "resendInvitationErrorGeneric": "Unable to send invitation"
+  },
+
+  "new": {
+    "title": "New Instructor",
+    "description": "Add a new instructor to your platform and create their user account",
+    "backToList": "Back to list",
+    "loadingOrg": "Loading organization...",
+    "avatar": {
+      "label": "Instructor photo",
+      "clickToSelect": "Click to select an image",
+      "orDragDrop": "or drag and drop",
+      "formats": "PNG, JPG, GIF up to 5MB",
+      "preview": "Preview",
+      "invalidFile": "Please select a valid image file",
+      "fileTooLarge": "Image size must not exceed 5MB",
+      "uploadError": "Error uploading avatar",
+      "uploadPermissionsError": "Insufficient permissions to upload avatar. Contact administrator.",
+      "uploadDuplicateError": "A file with this name already exists. Please try again.",
+      "uploadGenericError": "Upload error",
+      "noDataReturned": "No data returned after upload"
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "specialization": "Specialization",
+      "status": "Status",
+      "statusPlaceholder": "Select a status",
+      "bio": "Biography",
+      "commission": {
+        "title": "Commission configuration",
+        "enable": "Enable commission",
+        "enableDescription": "Allow this instructor to receive commissions on course sales",
+        "percentage": "Commission percentage (%)",
+        "percentagePlaceholder": "Ex: 15.5",
+        "percentageDescription": "Commission percentage the instructor will receive on each course sale",
+        "invalidPercentage": "Commission percentage must be between 0.1 and 100%"
+      }
+    },
+    "errors": {
+      "orgNotFound": "Organization not found",
+      "serverError": "Server response error",
+      "createError": "Error creating",
+      "createGenericError": "Unable to create instructor"
+    },
+    "success": {
+      "created": "Instructor and user account created successfully. An invitation email will be sent."
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "create": "Create instructor",
+      "creating": "Creating..."
+    }
+  },
+
+  "commissions": {
+    "title": "Commissions",
+    "description": "Manage commissions paid to instructors",
+    "export": "Export",
+    "period": {
+      "thisMonth": "This month",
+      "lastMonth": "Last month",
+      "lastQuarter": "Last quarter",
+      "thisYear": "This year"
+    },
+    "stats": {
+      "totalCommissions": "Total commissions",
+      "pendingCommissions": "Pending",
+      "averageCommission": "Average commission",
+      "activeInstructors": "Active instructors",
+      "vsPreviousMonth": "vs previous month",
+      "toPayThisMonth": "To pay this month",
+      "perInstructorThisMonth": "Per instructor this month",
+      "receivingCommissions": "Receiving commissions"
+    },
+    "tabs": {
+      "all": "All commissions",
+      "pending": "Pending",
+      "history": "Payment history"
+    },
+    "filters": {
+      "searchPlaceholder": "Search instructor or course...",
+      "status": "Status",
+      "statusPlaceholder": "Status",
+      "all": "All",
+      "paid": "Paid",
+      "pending": "Pending",
+      "canceled": "Canceled"
+    },
+    "table": {
+      "instructor": "Instructor",
+      "course": "Course",
+      "enrollments": "Enrollments",
+      "amount": "Amount",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions",
+      "dueDate": "Due date",
+      "transactionId": "Transaction ID",
+      "paymentDate": "Payment date",
+      "method": "Method",
+      "noData": "No commission data available",
+      "noResults": "No results found for selected criteria",
+      "noPending": "No pending commissions",
+      "noHistory": "No payments in history"
+    },
+    "actions": {
+      "pay": "Pay",
+      "details": "Details",
+      "payAll": "Pay all",
+      "processing": "Processing...",
+      "receipt": "Receipt"
+    },
+    "pending": {
+      "title": "Commissions pending payment"
+    },
+    "history": {
+      "title": "Payment history",
+      "period": "Period",
+      "periodPlaceholder": "Period"
+    },
+    "paymentModal": {
+      "title": "Confirm payment",
+      "description": "Payment of commission for {name}",
+      "instructor": "Instructor:",
+      "course": "Course:",
+      "amount": "Amount:",
+      "method": "Payment method",
+      "reference": "Transaction reference",
+      "referencePlaceholder": "Payment reference",
+      "date": "Payment date",
+      "notes": "Notes (optional)",
+      "notesPlaceholder": "Notes on payment...",
+      "proof": {
+        "label": "Payment proof",
+        "required": "*",
+        "description": "Attach a receipt, screenshot or any payment proof (JPG, PNG, PDF - max 5MB)",
+        "clickToSelect": "Click to select",
+        "orDragFile": "or drag a file",
+        "formats": "JPG, PNG, WebP or PDF up to 5MB",
+        "preview": "Preview",
+        "invalidFormat": "Unsupported format",
+        "invalidFormatDescription": "Please select an image file (JPG, PNG, WebP) or PDF.",
+        "fileTooLarge": "File too large",
+        "fileTooLargeDescription": "File size must not exceed 5 MB.",
+        "requiredError": "Payment proof required",
+        "requiredErrorDescription": "Please attach a payment proof (receipt, screenshot, etc.)",
+        "uploadError": "Upload error",
+        "uploadPermissionsError": "Insufficient permissions to upload payment proof. Contact administrator.",
+        "uploadGenericError": "Upload error",
+        "viewProof": "View proof"
+      },
+      "cancel": "Cancel",
+      "confirm": "Confirm payment",
+      "processing": "Processing..."
+    },
+    "detailsModal": {
+      "title": "Commission details",
+      "description": "Complete information about this commission",
+      "instructor": "Instructor:",
+      "email": "Email:",
+      "course": "Course:",
+      "saleAmount": "Sale amount:",
+      "commissionRate": "Commission rate:",
+      "commission": "Commission:",
+      "date": "Date:",
+      "status": "Status:",
+      "paymentInfo": "Payment information",
+      "method": "Method:",
+      "reference": "Reference:",
+      "paidAt": "Paid on:",
+      "close": "Close"
+    },
+    "messages": {
+      "loading": "Loading commission data...",
+      "loadError": "Unable to load commission data",
+      "genericError": "An error occurred while loading data",
+      "payAllDisabled": "Feature temporarily disabled",
+      "payAllDisabledDescription": "Bulk payment requires a payment proof for each commission. Please process payments individually.",
+      "paymentSuccess": "Payment completed",
+      "paymentSuccessDescription": "Commission of {amount} paid successfully.",
+      "paymentError": "Error",
+      "paymentErrorDescription": "Unable to process payment"
+    }
+  },
+
+  "assignments": {
+    "title": "Course Assignments",
+    "description": "Manage instructor assignments to courses adapted to the Senegalese context",
+    "newAssignment": "New Assignment",
+    "searchPlaceholder": "Search assignments...",
+    "export": "Export",
+    "status": {
+      "label": "Status",
+      "all": "All",
+      "active": "Active",
+      "completed": "Completed",
+      "pending": "Pending"
+    },
+    "stats": {
+      "activeAssignments": "Active Assignments",
+      "activeAssignmentsDescription": "Courses currently being taught",
+      "instructors": "Instructors",
+      "instructorsDescription": "Currently assigned",
+      "upcomingAssignments": "Upcoming Assignments",
+      "upcomingAssignmentsDescription": "Starting in the next 30 days"
+    },
+    "table": {
+      "instructor": "Instructor",
+      "course": "Assigned Course",
+      "students": "Students",
+      "period": "Period",
+      "status": "Status",
+      "actions": "Actions",
+      "openMenu": "Open menu",
+      "noAssignments": "No assignments found"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "editAssignment": "Edit Assignment",
+      "deleteAssignment": "Delete Assignment"
+    },
+    "loading": "Loading assignments...",
+    "errors": {
+      "loadError": "Unable to load assignments",
+      "genericError": "Loading error"
+    },
+    "retry": "Retry"
+  }
+}

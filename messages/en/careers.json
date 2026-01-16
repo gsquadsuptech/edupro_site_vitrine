@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "Careers | Edupro",
+    "description": "Join the Edupro team and participate in transforming professional training in Africa."
+  },
+  "hero": {
+    "badge": "We're hiring",
+    "title": "Join the team that",
+    "titleHighlight": "transforms education in Africa",
+    "subtitle": "At EduPro, we're building the platform that democratizes access to quality professional skills. Join a passionate, innovative team committed to social impact.",
+    "cta": {
+      "viewPositions": "View open positions",
+      "spontaneous": "Spontaneous application"
+    },
+    "stats": {
+      "employees": "Employees",
+      "countries": "Countries",
+      "remote": "Remote friendly"
+    },
+    "imageAlt": "EduPro Team"
+  },
+  "values": {
+    "title": "Our values",
+    "subtitle": "What guides us daily",
+    "innovation": {
+      "title": "Innovation",
+      "description": "We push boundaries to create revolutionary learning solutions adapted to the African context."
+    },
+    "impact": {
+      "title": "Impact",
+      "description": "Every action we take aims to create a measurable impact on the lives of learners and communities."
+    },
+    "community": {
+      "title": "Community",
+      "description": "We believe in the strength of the collective and cultivate an inclusive environment where everyone can thrive."
+    },
+    "excellence": {
+      "title": "Excellence",
+      "description": "We strive for excellence in everything we do, from our products to our relationships with partners."
+    }
+  },
+  "positions": {
+    "title": "Open positions",
+    "subtitle": "Find your place in our team",
+    "loading": "Loading positions...",
+    "empty": "No open positions at the moment.",
+    "apply": "Apply",
+    "noMatch": {
+      "title": "Can't find the ideal position?",
+      "description": "Send us a spontaneous application. We're always looking for exceptional talent!",
+      "button": "Spontaneous application"
+    }
+  },
+  "detail": {
+    "loading": "Loading position...",
+    "notFound": {
+      "title": "Position not found",
+      "description": "The position you're looking for doesn't exist or is no longer available.",
+      "back": "Back to positions"
+    },
+    "apply": "Apply",
+    "applyNow": "Apply now",
+    "back": "Back to positions",
+    "share": "Share",
+    "sections": {
+      "description": "Job description",
+      "requirements": "Requirements",
+      "benefits": "Benefits",
+      "closingDate": "Closing date",
+      "closingDateLabel": "Closing date:"
+    }
+  },
+  "spontaneous": {
+    "meta": {
+      "title": "Spontaneous Application | Edupro",
+      "description": "Apply to join the Edupro team even if no position matches your profile."
+    },
+    "form": {
+      "title": "Spontaneous Application",
+      "subtitle": "Can't find the ideal position? Send us your spontaneous application.",
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "phone": "Phone",
+        "cv": "Resume",
+        "cvPlaceholder": "Select a file (PDF, DOC, DOCX - max 10MB)",
+        "coverLetter": "Cover Letter",
+        "coverLetterPlaceholder": "Describe your motivation and skills...",
+        "interestDomain": "Interest Domain",
+        "interestDomainPlaceholder": "Select a domain",
+        "availability": "Availability",
+        "availabilityPlaceholder": "Select an option",
+        "additionalMessage": "Additional Message",
+        "additionalMessagePlaceholder": "Any other information you'd like to share..."
+      },
+      "domains": {
+        "development": "Development",
+        "design": "Design",
+        "marketing": "Marketing",
+        "sales": "Sales",
+        "support": "Customer Support",
+        "management": "Management",
+        "other": "Other"
+      },
+      "availabilityOptions": {
+        "immediate": "Immediate",
+        "oneMonth": "In 1 month",
+        "twoMonths": "In 2 months",
+        "threeMonths": "In 3 months",
+        "flexible": "Flexible"
+      },
+      "submit": "Submit my application",
+      "submitting": "Submitting...",
+      "validation": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Email is not valid",
+        "cvRequired": "Resume is required",
+        "cvInvalidType": "File must be a PDF, DOC or DOCX",
+        "cvTooLarge": "File is too large (max 10MB)",
+        "phoneInvalid": "Phone number is not valid"
+      },
+      "success": {
+        "title": "Application submitted successfully!",
+        "message": "We have received your spontaneous application. We will contact you shortly if your profile matches our needs."
+      },
+      "error": {
+        "title": "Submission error",
+        "message": "An error occurred while submitting your application. Please try again.",
+        "uploadError": "Error uploading resume"
+      }
+    },
+    "admin": {
+      "title": "Spontaneous Applications",
+      "subtitle": "Manage spontaneous applications submitted via the public form",
+      "filters": {
+        "status": "Status",
+        "statusAll": "All statuses",
+        "domain": "Domain",
+        "domainAll": "All domains",
+        "date": "Date",
+        "search": "Search by name or email..."
+      },
+      "status": {
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "contacted": "Contacted",
+        "rejected": "Rejected"
+      },
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "domain": "Domain",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions",
+        "view": "View",
+        "downloadCv": "Download Resume",
+        "noApplications": "No applications at the moment"
+      },
+      "detail": {
+        "title": "Application Details",
+        "back": "Back to list",
+        "personalInfo": "Personal Information",
+        "applicationInfo": "Application Information",
+        "cv": "Resume",
+        "coverLetter": "Cover Letter",
+        "additionalMessage": "Additional Message",
+        "notes": "Internal Notes",
+        "notesPlaceholder": "Add internal notes about this application...",
+        "updateStatus": "Update Status",
+        "saveNotes": "Save Notes",
+        "saving": "Saving...",
+        "updated": "Application updated successfully"
+      }
+    }
+  }
+}
+

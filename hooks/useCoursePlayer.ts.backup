@@ -1,0 +1,407 @@
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { 
+  CoursePlayerState, 
+  ResumeData, 
+  ProgressUpdate, 
+  Chapter, 
+  Module,
+  CoursePlayerError,
+  CoursePlayerConfig,
+  DEFAULT_KEYBOARD_SHORTCUTS,
+  AUTO_SAVE_INTERVAL,
+  DEBOUNCE_DELAY
+} from '../types/coursePlayer.types';
+
+interface UseCoursePlayerOptions {
+  courseId: string;
+  initialChapterId?: string;
+  autoResume?: boolean;
+  config?: Partial<CoursePlayerConfig>;
+  onProgressUpdate?: (progress: ProgressUpdate) => void;
+  onChapterChange?: (chapterId: string) => void;
+  onComplete?: () => void;
+  onError?: (error: CoursePlayerError) => void;
+}
+
+interface UseCoursePlayerReturn {
+  // État
+  isLoading: boolean;
+  error: CoursePlayerError | null;
+  resumeData: ResumeData | null;
+  currentChapter: Chapter | null;
+  modules: Module[];
+  overallProgress: number;
+  
+  // Actions
+  navigateToChapter: (chapterId: string) => void;
+  updateProgress: (time: number, progress: number) => void;
+  markAsComplete: () => void;
+  resumeFromLastPosition: () => void;
+  refreshData: () => void;
+  
+  // État du lecteur
+  isPlaying: boolean;
+  setIsPlaying: (playing: boolean) => void;
+  currentTime: number;
+  setCurrentTime: (time: number) => void;
+  volume: number;
+  setVolume: (volume: number) => void;
+  isMuted: boolean;
+  setIsMuted: (muted: boolean) => void;
+  isFullscreen: boolean;
+  setIsFullscreen: (fullscreen: boolean) => void;
+}
+
+const DEFAULT_CONFIG: CoursePlayerConfig = {
+  autoSaveInterval: AUTO_SAVE_INTERVAL,
+  debounceDelay: DEBOUNCE_DELAY,
+  maxRetries: 3,
+  offlineSupport: true,
+  analytics: true,
+  keyboardShortcuts: true,
+};
+
+export const useCoursePlayer = (options: UseCoursePlayerOptions): UseCoursePlayerReturn => {
+  const {
+    courseId,
+    initialChapterId,
+    autoResume = true,
+    config = {},
+    onProgressUpdate,
+    onChapterChange,
+    onComplete,
+    onError,
+  } = options;
+
+  const finalConfig = { ...DEFAULT_CONFIG, ...config };
+  
+  // État principal
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<CoursePlayerError | null>(null);
+  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
+  const [modules, setModules] = useState<Module[]>([]);
+  const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
+  const [overallProgress, setOverallProgress] = useState(0);
+  
+  // État du lecteur
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  
+  // Refs pour la gestion des intervalles et timeouts
+  const autoSaveIntervalRef = useRef<NodeJS.Timeout>();
+  const debounceTimeoutRef = useRef<NodeJS.Timeout>();
+  const retryCountRef = useRef(0);
+  
+  // Fonction pour gérer les erreurs
+  const handleError = useCallback((error: CoursePlayerError) => {
+    setError(error);
+    onError?.(error);
+    console.error('CoursePlayer Error:', error);
+  }, [onError]);
+
+  // Fonction pour charger les données de reprise
+  const loadResumeData = useCallback(async (): Promise<ResumeData | null> => {
+    try {
+      const response = await fetch(`/api/v1/student/courses/${courseId}/resume`);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          // Pas de données de reprise, c'est normal
+          return null;
+        }
+        throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      handleError({
+        code: 'RESUME_LOAD_ERROR',
+        message: 'Erreur lors du chargement des données de reprise',
+        details: err,
+      });
+      return null;
+    }
+  }, [courseId, handleError]);
+
+  // Fonction pour charger les modules et chapitres
+  const loadCourseData = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/v1/student/courses/${courseId}/chapters`);
+      
+      if (!response.ok) {
+        throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      setModules(data.modules);
+      
+      // Déterminer le chapitre initial
+      let targetChapterId = initialChapterId;
+      
+      if (autoResume && resumeData?.lastChapterId) {
+        targetChapterId = resumeData.lastChapterId;
+      }
+      
+      if (targetChapterId) {
+        const chapter = data.modules
+          .flatMap((module: Module) => module.chapters)
+          .find((chapter: Chapter) => chapter.id === targetChapterId);
+        
+        if (chapter) {
+          setCurrentChapter(chapter);
+          onChapterChange?.(chapter.id);
+        }
+      }
+      
+      setOverallProgress(data.overallProgress || 0);
+    } catch (err) {
+      handleError({
+        code: 'COURSE_LOAD_ERROR',
+        message: 'Erreur lors du chargement des données du cours',
+        details: err,
+      });
+    }
+  }, [courseId, initialChapterId, autoResume, resumeData, onChapterChange, handleError]);
+
+  // Fonction pour sauvegarder la progression
+  const saveProgress = useCallback(async (progress: ProgressUpdate) => {
+    if (!currentChapter) return;
+    
+    try {
+      const response = await fetch(
+        `/api/v1/student/courses/${courseId}/chapters/${currentChapter.id}/progress`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(progress),
+        }
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+      }
+      
+      onProgressUpdate?.(progress);
+    } catch (err) {
+      handleError({
+        code: 'PROGRESS_SAVE_ERROR',
+        message: 'Erreur lors de la sauvegarde de la progression',
+        details: err,
+      });
+    }
+  }, [courseId, currentChapter, onProgressUpdate, handleError]);
+
+  // Fonction pour marquer un chapitre comme terminé
+  const markAsComplete = useCallback(async () => {
+    if (!currentChapter) return;
+    
+    const progress: ProgressUpdate = {
+      videoTimePosition: currentTime,
+      chapterProgress: 100,
+      completionStatus: 'completed',
+      timestamp: new Date().toISOString(),
+    };
+    
+    await saveProgress(progress);
+    
+    // Mettre à jour l'état local
+    setOverallProgress(prev => Math.min(prev + 10, 100));
+    
+    onComplete?.();
+  }, [currentChapter, currentTime, saveProgress, onComplete]);
+
+  // Fonction pour naviguer vers un chapitre
+  const navigateToChapter = useCallback((chapterId: string) => {
+    const chapter = modules
+      .flatMap(module => module.chapters)
+      .find(ch => ch.id === chapterId);
+    
+    if (chapter) {
+      setCurrentChapter(chapter);
+      setCurrentTime(0);
+      setIsPlaying(false);
+      onChapterChange?.(chapter.id);
+      
+      // Sauvegarder la navigation
+      const progress: ProgressUpdate = {
+        videoTimePosition: 0,
+        chapterProgress: 0,
+        completionStatus: 'in_progress',
+        timestamp: new Date().toISOString(),
+      };
+      
+      saveProgress(progress);
+    }
+  }, [modules, onChapterChange, saveProgress]);
+
+  // Fonction pour reprendre depuis la dernière position
+  const resumeFromLastPosition = useCallback(() => {
+    if (resumeData && resumeData.videoTimePosition > 0) {
+      setCurrentTime(resumeData.videoTimePosition);
+      setIsPlaying(true);
+    }
+  }, [resumeData]);
+
+  // Fonction pour mettre à jour la progression avec debounce
+  const updateProgress = useCallback((time: number, progress: number) => {
+    setCurrentTime(time);
+    
+    // Debounce pour éviter trop de sauvegardes
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+    
+    debounceTimeoutRef.current = setTimeout(() => {
+      if (currentChapter) {
+        const progressUpdate: ProgressUpdate = {
+          videoTimePosition: time,
+          chapterProgress: progress,
+          completionStatus: progress >= 90 ? 'completed' : 'in_progress',
+          timestamp: new Date().toISOString(),
+        };
+        
+        saveProgress(progressUpdate);
+      }
+    }, finalConfig.debounceDelay);
+  }, [currentChapter, saveProgress, finalConfig.debounceDelay]);
+
+  // Fonction pour rafraîchir les données
+  const refreshData = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    retryCountRef.current = 0;
+    
+    try {
+      const [resumeDataResult] = await Promise.all([
+        loadResumeData(),
+        loadCourseData(),
+      ]);
+      
+      setResumeData(resumeDataResult);
+    } catch (err) {
+      if (retryCountRef.current < finalConfig.maxRetries) {
+        retryCountRef.current++;
+        setTimeout(refreshData, 1000 * retryCountRef.current);
+      } else {
+        handleError({
+          code: 'REFRESH_ERROR',
+          message: 'Erreur lors du rafraîchissement des données',
+          details: err,
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [loadResumeData, loadCourseData, finalConfig.maxRetries, handleError]);
+
+  // Sauvegarde automatique périodique
+  useEffect(() => {
+    if (currentChapter && finalConfig.autoSaveInterval > 0) {
+      autoSaveIntervalRef.current = setInterval(() => {
+        if (currentTime > 0) {
+          const progress = (currentTime / (currentChapter.duration * 60)) * 100;
+          updateProgress(currentTime, progress);
+        }
+      }, finalConfig.autoSaveInterval);
+    }
+    
+    return () => {
+      if (autoSaveIntervalRef.current) {
+        clearInterval(autoSaveIntervalRef.current);
+      }
+    };
+  }, [currentChapter, currentTime, updateProgress, finalConfig.autoSaveInterval]);
+
+  // Raccourcis clavier
+  useEffect(() => {
+    if (!finalConfig.keyboardShortcuts) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignorer si on est dans un champ de saisie
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      
+      const shortcut = DEFAULT_KEYBOARD_SHORTCUTS.find(s => s.key === e.key);
+      if (!shortcut) return;
+      
+      e.preventDefault();
+      
+      switch (shortcut.action) {
+        case 'toggle_play':
+          setIsPlaying(!isPlaying);
+          break;
+        case 'previous_chapter':
+          // Logique pour chapitre précédent
+          break;
+        case 'next_chapter':
+          // Logique pour chapitre suivant
+          break;
+        case 'toggle_fullscreen':
+          setIsFullscreen(!isFullscreen);
+          break;
+        case 'toggle_mute':
+          setIsMuted(!isMuted);
+          break;
+        case 'mark_complete':
+          markAsComplete();
+          break;
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [finalConfig.keyboardShortcuts, isPlaying, isFullscreen, isMuted, markAsComplete]);
+
+  // Chargement initial
+  useEffect(() => {
+    refreshData();
+  }, [courseId]);
+
+  // Nettoyage
+  useEffect(() => {
+    return () => {
+      if (autoSaveIntervalRef.current) {
+        clearInterval(autoSaveIntervalRef.current);
+      }
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  return {
+    // État
+    isLoading,
+    error,
+    resumeData,
+    currentChapter,
+    modules,
+    overallProgress,
+    
+    // Actions
+    navigateToChapter,
+    updateProgress,
+    markAsComplete,
+    resumeFromLastPosition,
+    refreshData,
+    
+    // État du lecteur
+    isPlaying,
+    setIsPlaying,
+    currentTime,
+    setCurrentTime,
+    volume,
+    setVolume,
+    isMuted,
+    setIsMuted,
+    isFullscreen,
+    setIsFullscreen,
+  };
+}; 

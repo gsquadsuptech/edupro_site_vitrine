@@ -1,0 +1,334 @@
+{
+  "meta": {
+    "title": "EduPro | Professional Training Platform for Africa",
+    "description": "Transform your skills into concrete opportunities. The first platform connecting companies, professionals, trainers and investors around a common goal: excellence in skills across Africa.",
+    "keywords": "professional training, e-learning, Africa, skills development, online courses, certifications, corporate training"
+  },
+  "hero": {
+    "title": "Transform your skills into",
+    "titleHighlight": "concrete opportunities",
+    "subtitle": "The first platform that connects companies, professionals, trainers and investors around a common goal: excellence in skills across Africa.",
+    "cta": {
+      "primary": "Create my free account",
+      "secondary": "Book a demo"
+    },
+    "features": {
+      "trial": "14-day free trial",
+      "noCard": "No credit card required"
+    },
+    "stats": {
+      "growth": "Growth e-learning",
+      "learners": "Active learners",
+      "companies": "Interested companies",
+      "countries": "Countries covered"
+    }
+  },
+  "problem": {
+    "title": "The skills gap is slowing African innovation",
+    "subtitle": "97% of African talents don't have access to continuous professional training",
+    "problems": {
+      "limitedAccess": {
+        "title": "Limited access",
+        "stat": "Only 3%",
+        "description": "of African workers access continuous professional training.",
+        "consequence": "Massive skills gap slowing economic growth."
+      },
+      "inadequateSolutions": {
+        "title": "Inadequate solutions",
+        "stat": "120,000-300,000 FCFA/month",
+        "description": "International platforms are too expensive and not contextualized to African realities.",
+        "consequence": "Content disconnected from real local market needs."
+      },
+      "unexploitedExpertise": {
+        "title": "Unexploited expertise",
+        "stat": "Thousands of experts",
+        "description": "African experts cannot digitize and monetize their know-how due to lack of adapted tools.",
+        "consequence": "Brain drain and loss of local knowledge."
+      },
+      "invisibleROI": {
+        "title": "Invisible ROI",
+        "stat": "Unoptimized budgets",
+        "description": "Companies invest in training without being able to measure impact on performance.",
+        "consequence": "Uncertain results and unoptimized investments."
+      }
+    },
+    "closing": "What if the solution came from Africa, for Africa?"
+  },
+  "solution": {
+    "title": "One platform, three revolutions",
+    "subtitle": "EduPro is the first professional training platform designed for African realities. We combine international quality and local context to create an ecosystem where everyone finds their place.",
+    "differentiators": {
+      "premiumAccessible": {
+        "title": "Premium Accessible",
+        "subtitle": "International quality at African prices",
+        "description": "World-class content adapted to local context, up to 70% cheaper than international platforms.",
+        "example": "Example: 15,000 FCFA/month vs $200/month elsewhere"
+      },
+      "aiIntegrated": {
+        "title": "AI Integrated",
+        "subtitle": "Create content 40% faster",
+        "description": "AI assistant to script, create quizzes, generate exercises. Professional training creation has never been so simple.",
+        "example": "Demo available on request"
+      },
+      "mobileFirst": {
+        "title": "Mobile-First",
+        "subtitle": "Learn anywhere, even offline",
+        "description": "Optimized for low bandwidth, native offline mode, smart synchronization. 78% of our traffic is mobile.",
+        "example": "Download, learn, synchronize"
+      }
+    }
+  },
+  "stats": {
+    "title": "The numbers that prove our traction",
+    "stats": {
+      "learners": {
+        "value": "500+",
+        "label": "ACTIVE LEARNERS",
+        "sublabel": "Pilot phase (6 months)"
+      },
+      "companies": {
+        "value": "25+",
+        "label": "COMPANIES",
+        "sublabel": "Contacted - 85% interest rate"
+      },
+      "trainers": {
+        "value": "150+",
+        "label": "TRAINERS",
+        "sublabel": "Interested - Validated expertise"
+      },
+      "countries": {
+        "value": "3",
+        "label": "COUNTRIES COVERED",
+        "sublabel": "Senegal • Ivory Coast • Rwanda"
+      },
+      "growth": {
+        "value": "+30%",
+        "label": "GROWTH",
+        "sublabel": "E-learning post-COVID"
+      },
+      "timeSavings": {
+        "value": "40%",
+        "label": "TIME SAVINGS",
+        "sublabel": "Content creation with AI"
+      }
+    }
+  },
+  "testimonials": {
+    "title": "They're already transforming with EduPro",
+    "testimonials": {
+      "auger": {
+        "quote": "It's a very good initiative to have a platform that responds to the needs of the African continent. As we progressed, I realized that as trainers, we have the knowledge but didn't know how to deliver it in the digital age. I acquired many skills during this bootcamp, especially course structuring. I'm starting to apply them in my training at my company.",
+        "name": "Auger MAYOUMA",
+        "role": "Q-HSE Expert | Consultant & Trainer",
+        "flag": "🇸🇳",
+        "results": {
+          "title": "Impact:",
+          "items": {
+            "0": "Acquisition of digital skills",
+            "1": "Improved course structuring",
+            "2": "Immediate application in company"
+          }
+        }
+      },
+      "ibrahima": {
+        "quote": "I congratulate the entire Edupro team for their availability and follow-up during this bootcamp. I had an enriching and inspiring experience. I learned to use digital tools and AI to modernize my courses. Above all, I was able to adapt my previously in-person training to digital format: structured modules, quizzes, certificates and learner tracking. Today, I could deploy my sessions online with a better experience for everyone.",
+        "name": "Ibrahima YADE",
+        "role": "COACH - TRAINING TRAINER | GENERAL DIRECTOR ACA",
+        "flag": "🇸🇳",
+        "results": {
+          "title": "Transformation:",
+          "items": {
+            "0": "Training adapted to digital format",
+            "1": "Structured modules with quizzes",
+            "2": "Optimized learner tracking"
+          }
+        }
+      },
+      "mariame": {
+        "quote": "I would like to thank the team for the initiative and support. Used to webinars and in-person sessions, I discovered an entirely new format... and I come out with real skills! Thanks to courses in video format viewed in advance, course creation was easy. An inspiring collaboration that I look forward to continuing.",
+        "name": "Mariame WONE",
+        "role": "COACH - TRAINER | Career and professional dynamics management",
+        "flag": "🇸🇳",
+        "results": {
+          "title": "Results:",
+          "items": {
+            "0": "New skills acquired",
+            "1": "Course creation facilitated",
+            "2": "Inspiring collaboration"
+          }
+        }
+      }
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "forWhom": "For whom?",
+    "about": "About",
+    "companies": "Companies",
+    "professionals": "Professionals",
+    "trainers": "Trainers",
+    "investors": "Investors"
+  },
+  "cta": {
+    "getStarted": "Get started",
+    "login": "Login",
+    "freeAccount": "Create my free account",
+    "bookDemo": "Book a demo",
+    "contactUs": "Contact us"
+  },
+  "audienceCards": {
+    "title": "Whoever you are, EduPro accelerates your impact",
+    "enterprises": {
+      "title": "FOR COMPANIES & HR",
+      "headline": "Train your teams at the speed of innovation",
+      "benefits": {
+        "0": "Automated onboarding",
+        "1": "Internal digital academy",
+        "2": "Real-time measurable ROI",
+        "3": "-60% costs vs in-person"
+      },
+      "caseStudy": {
+        "title": "CLIENT CASE: BPO Call Center",
+        "result": "-50% time-to-productivity"
+      },
+      "cta": "Discover enterprise solution",
+      "ctaLink": "/en/entreprises"
+    },
+    "professionals": {
+      "title": "FOR PROFESSIONALS",
+      "headline": "Learn skills that boost your career",
+      "benefits": {
+        "0": "Certifications co-created with recognized experts",
+        "1": "Contextualized pathways",
+        "2": "Accessible 24/7 from mobile",
+        "3": "Sought-after skills"
+      },
+      "caseStudy": {
+        "title": "SKILL PACKS AVAILABLE:",
+        "result": "Tech • Business • Soft Skills"
+      },
+      "cta": "Boost your career",
+      "ctaLink": "/en/professionnels"
+    },
+    "trainers": {
+      "title": "FOR TRAINERS & INSTITUTES",
+      "headline": "Digitize and monetize your expertise",
+      "benefits": {
+        "0": "AI creation tools",
+        "1": "Pan-African audience",
+        "2": "Complete technical support",
+        "3": "White label for institutes"
+      },
+      "caseStudy": {
+        "title": "150+ TRAINERS",
+        "result": "already trust us"
+      },
+      "cta": "Become a partner trainer",
+      "ctaLink": "/en/formateurs"
+    },
+    "investors": {
+      "title": "FOR INVESTORS",
+      "headline": "Invest in Africa's future",
+      "benefits": {
+        "0": "Market: 40-50B FCFA/year",
+        "1": "Growth: +30% post-COVID",
+        "2": "Projected ROI: 206% over 3 years",
+        "3": "Expansion: 3 countries → 15+ countries"
+      },
+      "caseStudy": {
+        "title": "PILOT PHASE ONGOING",
+        "result": "Expansion planned across 3 markets"
+      },
+      "cta": "Why Invest",
+      "ctaLink": "/en/investisseurs"
+    }
+  },
+  "geographicCoverage": {
+    "title": "Already present in 3 countries, coming to you soon",
+    "senegal": {
+      "name": "SENEGAL",
+      "city": "Dakar (HQ)",
+      "stats": {
+        "0": "",
+        "1": ""
+      }
+    },
+    "ivoryCoast": {
+      "name": "IVORY COAST",
+      "city": "Abidjan",
+      "stats": {
+        "0": "",
+        "1": ""
+      }
+    },
+    "rwanda": {
+      "name": "RWANDA",
+      "city": "Kigali",
+      "stats": {
+        "0": "",
+        "1": ""
+      }
+    }
+  },
+  "finalCTA": {
+    "title": "Ready to transform your talents?",
+    "ctas": {
+      "enterprises": {
+        "title": "I AM A COMPANY",
+        "cta": "Discover our solutions",
+        "subtitle": "48h setup · 14-day free trial",
+        "href": "/en/entreprises"
+      },
+      "professionals": {
+        "title": "I AM A PROFESSIONAL",
+        "cta": "Create my free account",
+        "subtitle": "Large catalog . mobile payment",
+        "href": "/en/inscription"
+      },
+      "trainers": {
+        "title": "I AM A TRAINER/INSTITUTE",
+        "cta": "Join the community",
+        "subtitle": "AI tools included · Pan-African audience",
+        "href": "/en/formateurs"
+      },
+      "investors": {
+        "title": "I AM AN INVESTOR",
+        "cta": "Why Invest",
+        "subtitle": "206% ROI over 3 years · 40-50B market",
+        "href": "/en/investisseurs"
+      }
+    },
+    "reassurances": {
+      "0": "99.9% guaranteed availability",
+      "1": "Bilingual support 7/7",
+      "2": "Secure payments (Mobile Money, Visa, Mastercard)",
+      "3": "Data hosted in GDPR compliance",
+      "4": "Optimized for low bandwidth"
+    }
+  },
+  "newsletter": {
+    "title": "Stay informed of our news",
+    "subtitle": "Receive our news, tips and offers",
+    "placeholder": "Your email",
+    "cta": "Subscribe",
+    "submitting": "Subscribing...",
+    "success": "Thank you for subscribing to our newsletter!",
+    "error": "Error during subscription",
+    "unsubscribe": "Unsubscribe anytime"
+  },
+  "footer": {
+    "tagline": "The first professional training platform designed for Africa.",
+    "solutions": "Solutions",
+    "resources": "Resources",
+    "company": "Company",
+    "blog": "Blog",
+    "documentation": "Documentation",
+    "caseStudies": "Case studies",
+    "support": "Support",
+    "careers": "Careers",
+    "contact": "Contact",
+    "legal": "Legal notice",
+    "copyright": "All rights reserved",
+    "presentIn": "Present in"
+  }
+}

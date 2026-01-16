@@ -1,0 +1,72 @@
+{
+  "comingSoon": {
+    "badge": "Bientôt disponible",
+    "title": "La Marketplace des formations professionnelles africaines",
+    "subtitle": "Découvrez bientôt une plateforme unique regroupant les meilleures formations certifiantes pour développer vos compétences et transformer votre carrière.",
+    "launch": {
+      "label": "Lancement prévu",
+      "date": "Décembre 2025"
+    },
+    "notify": {
+      "title": "Soyez les premiers informés",
+      "subtitle": "Inscrivez-vous pour recevoir une notification dès le lancement de la marketplace.",
+      "success": "Merci ! Vous serez notifié(e) dès le lancement.",
+      "emailPlaceholder": "Votre email",
+      "button": {
+        "sending": "Envoi...",
+        "default": "Notifier"
+      },
+      "errors": {
+        "recaptchaNotLoaded": "reCAPTCHA n'est pas encore chargé. Veuillez patienter quelques instants.",
+        "recaptchaError": "Erreur lors de la vérification de sécurité. Veuillez réessayer.",
+        "saveError": "Erreur lors de l'enregistrement",
+        "generic": "Une erreur est survenue"
+      }
+    },
+    "stats": {
+      "trainings": "Formations disponibles",
+      "trainers": "Formateurs experts",
+      "domains": "Domaines couverts"
+    },
+    "preview": {
+      "title": "Ce qui vous attend",
+      "subtitle": "Une expérience complète pour développer vos compétences professionnelles",
+      "cards": {
+        "certifications": {
+          "title": "Formations certifiantes",
+          "description": "Accédez à des parcours professionnels reconnus par les plus grandes organisations internationales."
+        },
+        "experts": {
+          "title": "Experts africains",
+          "description": "Apprenez auprès de formateurs expérimentés qui comprennent les réalités du marché africain."
+        },
+        "tracking": {
+          "title": "Suivi personnalisé",
+          "description": "Bénéficiez d'un accompagnement adapté à vos objectifs professionnels et à votre rythme."
+        },
+        "community": {
+          "title": "Communauté active",
+          "description": "Rejoignez un réseau de professionnels ambitieux partageant les mêmes valeurs."
+        }
+      }
+    },
+    "cta": {
+      "title": "Prêt à transformer votre carrière ?",
+      "subtitle": "En attendant le lancement de la marketplace, découvrez nos parcours phares déjà disponibles.",
+      "button": "Créer mon compte maintenant"
+    },
+    "ctaSection": {
+      "title": "Prêt à transformer votre carrière ?",
+      "subtitle": "Rejoignez plus de 50 000 professionnels qui développent leurs compétences avec EduPro",
+      "primary": "Commencer votre formation",
+      "secondary": "Devenir formateur",
+      "bullets": {
+        "unlimited": "Accès illimité",
+        "certificates": "Certificats reconnus",
+        "trainerSupport": "Support formateur"
+      }
+    }
+  }
+}
+
+

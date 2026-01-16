@@ -1,0 +1,250 @@
+{
+  "title": "Learning Paths",
+  "description": "Manage your structured training paths",
+  "newPath": "New path",
+
+  "stats": {
+    "total": "Total paths",
+    "published": "Published",
+    "draft": "Drafts",
+    "enrollments": "Enrollments"
+  },
+
+  "filters": {
+    "title": "Filters",
+    "searchPlaceholder": "Search for a path...",
+    "allLevels": "All levels",
+    "allStatuses": "All statuses"
+  },
+
+  "table": {
+    "title": "Title",
+    "level": "Level",
+    "status": "Status",
+    "instructors": "Instructors",
+    "category": "Category",
+    "courses": "Courses",
+    "enrollments": "Enrollments",
+    "duration": "Duration",
+    "lastUpdate": "Last update",
+    "actions": "Actions",
+    "pathsList": "List of paths ({count})"
+  },
+
+  "status": {
+    "published": "Published",
+    "draft": "Draft",
+    "archived": "Archived"
+  },
+
+  "level": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "publish": "Publish",
+    "unpublish": "Set to draft",
+    "archive": "Archive",
+    "restore": "Unarchive",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+
+  "labels": {
+    "uncategorized": "Uncategorized",
+    "notAssigned": "Not assigned",
+    "noInstructor": "No instructor",
+    "courses": "courses",
+    "enrolled": "enrolled",
+    "updated": "Updated",
+    "hours": "h"
+  },
+
+  "messages": {
+    "noPathsFound": "No paths found",
+    "loadError": "Unable to load learning paths",
+    "deleteSuccess": "Path deleted successfully",
+    "deleteError": "Error deleting path",
+    "publishSuccess": "Path published successfully",
+    "draftSuccess": "Path set to draft successfully",
+    "archiveSuccess": "Path archived successfully",
+    "statusUpdateError": "Unable to update status",
+    "deleting": "Deleting...",
+    "processing": "Processing..."
+  },
+
+  "confirmDialog": {
+    "deleteTitle": "Delete path",
+    "publishTitle": "Publish path",
+    "unpublishTitle": "Set to draft",
+    "archiveTitle": "Archive path",
+    "restoreTitle": "Unarchive path",
+    "deleteMessage": "Are you sure you want to permanently delete the path \"{title}\"? This action is irreversible and will also delete all associated data (enrollments, certificates, etc.).",
+    "publishMessage": "Are you sure you want to publish the path \"{title}\"? It will be visible to all users and can be viewed and followed.",
+    "unpublishMessage": "Are you sure you want to set the path \"{title}\" back to draft? It will no longer be visible to users but will remain accessible for editing.",
+    "archiveMessage": "Are you sure you want to archive the path \"{title}\"? It will no longer be accessible to users but can be restored later.",
+    "restoreMessage": "Are you sure you want to unarchive the path \"{title}\"? It will be set back to draft mode and can be edited and republished."
+  },
+
+  "create": {
+    "title": "Create a path",
+    "subtitle": "Create a new structured training path",
+    "back": "Back",
+
+    "steps": {
+      "general": "General",
+      "courses": "Courses",
+      "objectives": "Objectives",
+      "pricing": "Pricing",
+      "settings": "Settings"
+    },
+
+    "general": {
+      "title": "General information",
+      "nameLabel": "Title",
+      "nameRequired": "Title *",
+      "namePlaceholder": "Path title",
+      "levelLabel": "Level",
+      "levelPlaceholder": "Select a level",
+      "descriptionLabel": "Description",
+      "descriptionRequired": "Description *",
+      "descriptionPlaceholder": "Path description",
+      "thumbnailLabel": "Cover image",
+      "uploadImage": "Upload an image",
+      "uploading": "Uploading...",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "Select a category",
+      "videoLabel": "Presentation video",
+      "videoPlaceholder": "Video URL"
+    },
+
+    "courses": {
+      "title": "Course selection",
+      "searchPlaceholder": "Search for courses...",
+      "addedCourses": "Added courses",
+      "noCourses": "No courses added yet",
+      "noCoursesFound": "No courses found",
+      "availableCourses": "Available courses",
+      "mandatory": "Mandatory",
+      "optional": "Optional",
+      "weight": "Weight",
+      "threshold": "Completion threshold",
+      "thresholdSuffix": "%",
+      "duration": "Duration",
+      "alreadyAdded": "This course is already added to the path"
+    },
+
+    "objectives": {
+      "title": "Objectives and prerequisites",
+      "prerequisitesLabel": "Prerequisites",
+      "prerequisitesPlaceholder": "Add a prerequisite",
+      "objectivesLabel": "Learning objectives",
+      "objectivesPlaceholder": "Add an objective",
+      "resultsLabel": "Expected results",
+      "resultsPlaceholder": "Add an expected result"
+    },
+
+    "pricing": {
+      "title": "Pricing",
+      "accessType": "Access type",
+      "free": "Free",
+      "paid": "Paid",
+      "invitation": "Invitation only",
+      "pricingOptions": "Pricing options",
+      "oneTimePayment": "One-time payment",
+      "totalAmount": "Total amount",
+      "amount": "Amount",
+      "discount": "Discount",
+      "finalPrice": "Final price:",
+      "installmentPayment": "Installment payment",
+      "installments": "Installments",
+      "dueDate": "Due date (days)",
+      "dueDatePlaceholder": "Days after registration",
+      "addInstallment": "Add an installment",
+      "total": "Total:",
+      "subscription": "Monthly payments",
+      "monthlyAmount": "Monthly amount",
+      "registrationAndMonthly": "Registration + Monthly payments",
+      "registrationFee": "Registration fee",
+      "monthlyFeeAmount": "Monthly fee amount",
+      "errors": {
+        "missingData": "Error: Missing pricing data"
+      }
+    },
+
+    "settings": {
+      "title": "Settings",
+      "certificateLabel": "Enable certificate",
+      "certificateDescription": "Issue a certificate upon completion",
+      "certificateTemplateLabel": "Certificate template",
+      "noTemplate": "No template",
+      "durationLabel": "Access duration",
+      "durationDays": "days",
+      "sequenceLabel": "Sequence type",
+      "sequencePlaceholder": "Select a sequence type",
+      "linear": "Linear",
+      "flexible": "Flexible",
+      "languageLabel": "Language",
+      "languagePlaceholder": "Select a language",
+      "passingScoreLabel": "Minimum score (%)",
+      "requiredCoursesLabel": "Required courses",
+      "requiredCoursesPlaceholder": "Required courses",
+      "allCourses": "All courses",
+      "mandatoryOnly": "Mandatory courses only",
+      "percentageCourses": "Percentage of courses",
+      "allowRetakes": "Allow retakes"
+    },
+
+    "actions": {
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "add": "Add",
+      "remove": "Remove",
+      "previous": "Previous",
+      "next": "Next",
+      "createPath": "Create path"
+    },
+
+    "messages": {
+      "warning": "Warning",
+      "courseAlreadyAdded": "This course is already added to the path",
+      "fillRequiredFields": "Please fill in all required fields",
+      "addAtLeastOneCourse": "Add at least one course to the path",
+      "createSuccess": "Path created successfully",
+      "createSuccessDescription": "The path has been created successfully",
+      "createError": "Error creating path",
+      "createErrorDescription": "An error occurred while creating the path",
+      "loadError": "Unable to load data",
+      "uploadSuccess": "Success",
+      "uploadSuccessDescription": "Image uploaded successfully"
+    },
+
+    "errors": {
+      "uploadError": "Error",
+      "uploadErrorDescription": "Error uploading image",
+      "imageSizeError": "Error",
+      "imageSizeErrorDescription": "Image must not exceed 5 MB",
+      "imageTypeError": "Error",
+      "imageTypeErrorDescription": "Please select a valid image",
+      "createError": "Error",
+      "createErrorDescription": "Error creating path"
+    },
+
+    "placeholders": {
+      "selectCategory": "Select a category",
+      "selectLanguage": "Select a language",
+      "selectSequenceType": "Select a sequence type",
+      "addPrerequisite": "Add a prerequisite",
+      "addResult": "Add a result",
+      "accessDuration": "Access duration in days",
+      "selectTemplate": "Select a template",
+      "minScore": "Minimum score to pass"
+    }
+  }
+}

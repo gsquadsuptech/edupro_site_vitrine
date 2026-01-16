@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "title": "EduPro Business | Solutions de Formation d'Entreprise pour l'Afrique",
+    "description": "Transformez votre capital humain en avantage compétitif. Plateforme de formation complète pour les entreprises africaines : onboarding accéléré, upskilling continu, et mesure d'impact en temps réel.",
+    "keywords": "formation d'entreprise, formation des employés, solutions RH, plateforme e-learning, Afrique, développement des compétences, onboarding"
+  },
+  "hero": {
+    "title": "Transformez votre capital humain en",
+    "titleHighlight": "avantage compétitif",
+    "subtitle": "EduPro accompagne les entreprises africaines dans leur transformation par la formation : onboarding accéléré, upskilling continu, et mesure d'impact en temps réel.",
+    "trust": "Plus de 25 entreprises nous font déjà confiance au Sénégal, en Côte d'Ivoire et au Rwanda.",
+    "cta": {
+      "primary": "Réserver une démo personnalisée",
+      "secondary": "Découvrir nos offres"
+    },
+    "features": {
+      "demo": "Démo gratuite 30 min",
+      "proposal": "Proposition commerciale sous 24h",
+      "deployment": "Déploiement en 48h · Essai gratuit 14 jours"
+    },
+    "stats": {
+      "productivity": "Time-to-productivity",
+      "deployment": "Déploiement moyen",
+      "roi": "ROI visible en temps réel",
+      "costs": "vs coûts présentiel"
+    }
+  },
+  "challenges": {
+    "title": "Les 6 défis qui freinent votre croissance",
+    "challenges": {
+      "turnover": {
+        "title": "Turnover explosif",
+        "description": "70% de turnover dans certains secteurs (BPO, retail, tech). Former un collaborateur qui part après 6 mois coûte une fortune.",
+        "impact": "Perte de productivité, coûts de recrutement répétés, démotivation des équipes."
+      },
+      "onboarding": {
+        "title": "Onboarding interminable",
+        "description": "3 à 6 mois pour atteindre la pleine productivité. Formations en présentiel coûteuses, manuels PDF obsolètes, formateurs surchargés.",
+        "impact": "Time-to-productivity rallongé, nouvelles recrues frustrées, managers dépassés."
+      },
+      "skillsGap": {
+        "title": "Skills gap grandissant",
+        "description": "Les compétences d'hier ne suffisent plus. 85% des métiers de 2030 n'existent pas encore. Vos équipes ont besoin d'upskilling constant.",
+        "impact": "Perte de compétitivité, difficultés à innover, dépendance aux recrutements externes."
+      },
+      "budget": {
+        "title": "Budget formation mal optimisé",
+        "description": "Vous investissez 2-5% de la masse salariale dans la formation sans savoir si ça marche vraiment. Aucune donnée, juste de l'intuition.",
+        "impact": "ROI invisible, difficultés à justifier le budget auprès de la direction, gaspillage."
+      },
+      "multiSites": {
+        "title": "Multi-sites ingérable",
+        "description": "Vos équipes sont dispersées (Dakar, Abidjan, Nairobi, agences régionales). Former tout le monde de manière cohérente relève du casse-tête.",
+        "impact": "Formations inégales, collaborateurs isolés, coûts logistiques énormes."
+      },
+      "compliance": {
+        "title": "Conformité et certifications",
+        "description": "Prouver la conformité des formations (ISO, audits clients, réglementation locale) devient mission impossible sans traçabilité digitale.",
+        "impact": "Risques d'audit, perte de certifications, contrats clients menacés."
+      }
+    },
+    "closing": "Et si vous pouviez régler ces 6 problèmes avec une seule plateforme?"
+  },
+  "solution": {
+    "title": "Une académie digitale clé en main, à votre marque",
+    "subtitle": "EduPro Enterprise est la solution complète pour digitaliser, automatiser et mesurer vos formations en Afrique.",
+    "differentiators": {
+      "personalization": {
+        "title": "Personnalisation à Votre Image",
+        "subtitle": "Votre académie digitale clé en main",
+        "description": "Accédez à votre espace de formation sur un sous-domaine EduPro personnalisé. Logo, couleurs de marque, contenus sur-mesure. Option marque blanche disponible pour un domaine 100% à votre nom si besoin.",
+        "example": "Exemple: votreentreprise.edupro.africa"
+      },
+      "roi": {
+        "title": "ROI Mesurable en Temps Réel",
+        "subtitle": "Enfin des chiffres qui parlent à la direction",
+        "description": "Dashboard analytics complet : taux de complétion, temps passé, skills acquis, impact sur la performance. Exportez vos rapports en 2 clics.",
+        "example": "Démonstration du dashboard lors de la démo"
+      },
+      "deployment": {
+        "title": "Déploiement Express",
+        "subtitle": "48h de l'onboarding au premier cours",
+        "description": "Pas de projet IT de 6 mois. Nos experts vous accompagnent : migration de contenus, création de parcours, formation des admins. Vous êtes opérationnel en 2 jours.",
+        "example": "Support dédié pendant 3 mois"
+      }
+    }
+  },
+  "caseStudy": {
+    "title": "Cas d'usage : BPO/Centres d'appels",
+    "subtitle": "Le secteur où l'impact d'EduPro est le plus immédiat",
+    "challenge": "Le défi : Turnover massif, coûts de formation énormes",
+    "before": {
+      "title": "Avant EduPro",
+      "items": [
+        "80% de turnover annuel (recrutement constant)",
+        "3-4 mois d'onboarding en présentiel coûteux",
+        "Formateurs dédiés à temps plein (coût élevé)",
+        "Qualité inégale selon le formateur",
+        "Zéro mesure de ROI sur les formations"
+      ]
+    },
+    "after": {
+      "title": "Après EduPro",
+      "items": [
+        "Onboarding digitalisé : 4 à 6 semaines au lieu de 3-4 mois",
+        "-50% de coûts formation (pas de présentiel)",
+        "Qualité standardisée (tous les nouveaux reçoivent le même contenu)",
+        "Les meilleurs agents deviennent formateurs (gamification)",
+        "Dashboard pour montrer l'impact au management"
+      ]
+    },
+    "results": {
+      "costs": "Coûts de formation vs présentiel",
+      "productivity": "Time-to-productivity au lieu de 3-4 mois",
+      "roi": "ROI annuel pour nos clients BPO"
+    }
+  },
+  "features": {
+    "title": "Tout ce dont votre DRH a besoin (et même plus)",
+    "features": {
+      "onboarding": {
+        "title": "Onboarding Automatisé",
+        "subtitle": "Transformez 6 mois en 6 semaines",
+        "description": "Parcours personnalisés par poste/département, validation étape par étape, quiz auto-corrigés, certificat d'intégration automatique, notifications manageurs.",
+        "benefit": "Bénéfice mesurable: -50% time-to-productivity constaté chez nos clients BPO"
+      },
+      "marketplace": {
+        "title": "Accès à la Marketplace",
+        "subtitle": "Des centaines de formations sectorielles",
+        "description": "Soft skills (communication, leadership, service client), hard skills sectoriels (Tech, Entrepreneuriat, Construction, BPO, Santé), contenus créés par des experts africains certifiés.",
+        "benefit": "Catalogue en constante expansion selon les besoins du marché"
+      },
+      "aiCreation": {
+        "title": "Création de Contenus IA",
+        "subtitle": "Vos experts deviennent formateurs",
+        "description": "Assistant IA pour scénariser vos formations, génération automatique de quiz, transformation de documents en modules interactifs, interface intuitive et guidée.",
+        "benefit": "Créez vos formations internes 10x plus vite"
+      },
+      "multiSites": {
+        "title": "Gestion Multi-Sites",
+        "subtitle": "Une plateforme, N agences",
+        "description": "Gestion centralisée avec vue par site, parcours différenciés selon la localisation, multi-administrateurs avec rôles et permissions, déploiement simultané.",
+        "benefit": "Formez toutes vos équipes de manière cohérente, où qu'elles soient"
+      },
+      "certifications": {
+        "title": "Certifications et Conformité",
+        "subtitle": "Traçabilité totale pour vos audits",
+        "description": "Certificats personnalisables et vérifiables, historique complet des formations par collaborateur, exports pour audits, rappels automatiques de renouvellement.",
+        "benefit": "Toute la documentation nécessaire pour vos audits en quelques clics"
+      },
+      "analytics": {
+        "title": "Analytics et Reporting",
+        "subtitle": "Les données qui font la différence",
+        "description": "Dashboard de suivi en temps réel, taux de complétion et engagement par équipe, statistiques détaillées par formation, exports personnalisables.",
+        "benefit": "Suivez précisément la progression de vos équipes et identifiez les besoins"
+      }
+    }
+  },
+  "pricing": {
+    "title": "EDUPRO BUSINESS",
+    "subtitle": "Nos solutions de formation pour entreprises",
+    "plans": {
+      "essentials": {
+        "name": "EDUPRO BUSINESS Essentials",
+        "subtitle": "L'essentiel pour démarrer",
+        "position": "TPE et startups (10-50 employés)",
+        "components": "Composantes :",
+        "features": [
+          "Accès marketplace de formations",
+          "5 places administrateurs",
+          "Création de parcours basiques",
+          "Certificats personnalisables",
+          "Reporting simplifié",
+          "Support standard (email/WhatsApp)"
+        ],
+        "cta": "Demander une démo"
+      },
+      "professional": {
+        "name": "EDUPRO BUSINESS Professional",
+        "subtitle": "Formez vos équipes sans complexité",
+        "position": "PME et ETI (50-500 employés)",
+        "components": "Composantes :",
+        "features": [
+          "Tout BUSINESS Essentials +",
+          "Sous-domaine EduPro (votreentreprise.edupro.africa)",
+          "Outils de création de contenu avec IA",
+          "Gestion avancée des parcours",
+          "Dashboard analytics complet",
+          "Gamification et engagement",
+          "Intégration calendriers/emails",
+          "Accès aux webinaires / masterclasses exclusifs",
+          "Support prioritaire"
+        ],
+        "cta": "Demander une démo"
+      },
+      "enterprise": {
+        "name": "EDUPRO BUSINESS Enterprise",
+        "subtitle": "Votre académie digitale en marque blanche",
+        "position": "Grandes entreprises et groupes (500+ employés)",
+        "components": "Composantes :",
+        "features": [
+          "Tout BUSINESS Professional +",
+          "Domaine dédié personnalisé (academy.votreentreprise.com)",
+          "Marque blanche complète",
+          "Intégrations SIRH possibles",
+          "Multi-sites et multi-entités",
+          "Analytics avancés et tableaux de bord RH",
+          "Customer Success Manager dédié",
+          "Accès aux webinaires / masterclasses exclusifs",
+          "Support prioritaire 24/7"
+        ],
+        "cta": "Demander une démo"
+      }
+    }
+  },
+  "payment": {
+    "title": "Modalités de paiement flexibles",
+    "subtitle": "Nous nous adaptons à vos contraintes",
+    "methods": {
+      "title": "Modes de paiement",
+      "card": {
+        "title": "Carte bancaire",
+        "description": "Visa, Mastercard"
+      },
+      "bank": {
+        "title": "Virement bancaire",
+        "description": "Comptes locaux disponibles"
+      },
+      "mobile": {
+        "title": "Mobile Money",
+        "description": "Orange Money, Wave, MTN Money"
+      }
+    },
+    "frequencies": {
+      "title": "Fréquences de facturation",
+      "monthly": {
+        "title": "Paiement mensuel",
+        "description": "Facturation automatique chaque mois",
+        "note": "Flexibilité et sérénité. Idéal pour commencer."
+      },
+      "quarterly": {
+        "title": "Paiement trimestriel/annuel",
+        "description": "Remises attractives sur engagement long terme",
+        "note": "Meilleure visibilité budgétaire. Économies garanties."
+      }
+    },
+    "public": "Secteur public, ONG? Nous acceptons également les mandats administratifs. Contactez-nous pour les modalités spécifiques."
+  },
+  "faq": {
+    "title": "Les questions que se posent les DRH",
+    "categories": {
+      "onboarding": {
+        "category": "Onboarding & Déploiement",
+        "questions": {
+          "deployment": {
+            "q": "Combien de temps pour déployer EduPro dans mon entreprise?",
+            "a": "48h en moyenne du paiement à l'accès de vos premiers collaborateurs. Jour 1: configuration et formation des admins. Jour 2: tests et déploiement général. Pour les formules Enterprise avec intégrations SIRH complexes, prévoir 1-2 semaines."
+          },
+          "content": {
+            "q": "Qui s'occupe de la création des contenus?",
+            "a": "3 options: 1) Marketplace existante - accès à nos formations créées par des experts africains 2) Création autonome - vous créez avec nos outils IA 3) Création accompagnée - nos learning designers créent pour vous (service add-on)."
+          },
+          "training": {
+            "q": "Faut-il former nos collaborateurs à utiliser la plateforme?",
+            "a": "Non. EduPro est pensé pour être intuitif. Vos collaborateurs reçoivent un email de bienvenue et c'est parti. Nous formons toujours vos admins/RH pour maîtriser le back-office (formation 2 à 4h selon la formule)."
+          }
+        }
+      },
+      "technical": {
+        "category": "Technique & Intégrations",
+        "questions": {
+          "offline": {
+            "q": "EduPro fonctionne-t-il hors ligne?",
+            "a": "EduPro est une PWA accessible depuis n'importe quel navigateur. Les vidéos uploadées peuvent être téléchargées pour consultation hors ligne. Pour vos collaborateurs en zone à faible connectivité, privilégiez les contenus uploadés directement."
+          },
+          "hris": {
+            "q": "Peut-on intégrer EduPro à notre SIRH existant?",
+            "a": "Oui, mais cela nécessite une étude préalable. Les intégrations SIRH sont proposées en option et font l'objet d'un devis spécifique après étude de votre infrastructure."
+          }
+        }
+      },
+      "content": {
+        "category": "Contenus & Pédagogie",
+        "questions": {
+          "quality": {
+            "q": "Comment garantissez-vous la qualité pédagogique?",
+            "a": "Tous nos formateurs suivent notre Bootcamp des Formateurs les certifiant à la création de contenu e-learning professionnel. Chaque formation suit les principes du microlearning: modules courts (10-20min), vidéos dynamiques, exercices interactifs, cas pratiques contextualisés."
+          },
+          "internal": {
+            "q": "Peut-on ajouter nos propres formateurs internes?",
+            "a": "Oui! Vos experts métiers peuvent devenir formateurs sur la plateforme. Vous leur créez un compte formateur, ils accèdent aux outils de création simples et assistés par IA, créent leurs cours, vous validez et puis publication auprès de vos collaborateurs."
+          }
+        }
+      },
+      "roi": {
+        "category": "ROI & Résultats",
+        "questions": {
+          "roi": {
+            "q": "Quel ROI puis-je espérer?",
+            "a": "Nos clients constatent généralement un retour positif dès les premiers mois provenant de: réduction des coûts formation (-40 à 60% vs présentiel), time-to-productivity (-30 à 50%), réduction du turnover (-10 à 20%), gains de productivité (+15 à 25%)."
+          },
+          "timeline": {
+            "q": "Combien de temps avant de voir des résultats?",
+            "a": "Résultats immédiats (Mois 1): réduction logistique. Court terme (Mois 3-6): amélioration time-to-productivity mesurable. Moyen terme (12 mois): impact sur turnover et culture de learning continu installée."
+          }
+        }
+      }
+    }
+  },
+  "extendedFaq": {
+    "categories": {
+      "support": {
+        "category": "Support & Accompagnement",
+        "questions": {
+          "support": {
+            "q": "Quel niveau de support après le déploiement?",
+            "a": "Nous vous accompagnons à chaque étape avec support technique (email, chat, centre d'aide en ligne), formation continue de vos administrateurs, documentation détaillée et communauté d'entraide. Selon votre formule, option support prioritaire et Customer Success Manager dédié disponibles."
+          },
+          "demo": {
+            "q": "Proposez-vous des démos ou périodes d'essai?",
+            "a": "Oui! Nous proposons des démos personnalisées gratuites (30-45 min) avec présentation adaptée à votre secteur, configuration d'un environnement de test, et réponses à vos questions. Nous offrons également 14 jours d'essai gratuit. Vous recevez une proposition commerciale détaillée sous 48h."
+          }
+        }
+      },
+      "languages": {
+        "category": "Langues & Localisation",
+        "questions": {
+          "languages": {
+            "q": "Les formations sont-elles en français uniquement?",
+            "a": "La plateforme supporte le français et l'anglais. Nos contenus de formation sont principalement disponibles en français et anglais, avec certains contenus spécifiques en langues locales (Wolof, Swahili, etc.). Quand vous créez vos formations internes, vous pouvez utiliser n'importe quelle langue."
+          }
+        }
+      },
+      "quality": {
+        "category": "Qualité & Conformité",
+        "questions": {
+          "quality": {
+            "q": "Comment garantissez-vous la qualité pédagogique?",
+            "a": "Tous nos formateurs suivent notre Bootcamp des Formateurs pour créer du contenu e-learning professionnel. Chaque formation suit les principes du microlearning: modules courts (10-20min), vidéos dynamiques avec sous-titres, exercices interactifs, cas pratiques contextualisés, feedback immédiat. Sur demande, nous pouvons auditer vos contenus internes."
+          }
+        }
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Rejoignez les 25+ entreprises qui transforment déjà leurs équipes",
+    "subtitle": "Votre académie digitale en 48h. Prêt?",
+    "demo": {
+      "title": "Réserver ma démo personnalisée",
+      "items": [
+        "Appel de 30-45 min avec un expert",
+        "Présentation adaptée à votre secteur",
+        "Estimation budgétaire indicative",
+        "Proposition commerciale sous 48h"
+      ],
+      "cta": "Réserver maintenant"
+    },
+    "quote": {
+      "title": "Demander un devis",
+      "description": "Décrivez-nous votre projet en quelques lignes et recevez une première estimation sous 48h",
+      "cta": "Formulaire devis"
+    },
+    "benefits": {
+      "deployment": {
+        "title": "Déploiement Express",
+        "description": "Opérationnel en 48h, pas de projet IT complexe"
+      },
+      "roi": {
+        "title": "ROI Garanti",
+        "description": "180-250% sur 12 mois ou on reprend la discussion"
+      },
+      "support": {
+        "title": "Support Dédié",
+        "description": "Experts africains qui comprennent vos enjeux"
+      }
+    },
+    "launch": {
+      "title": "Offre de lancement",
+      "description": "Les 10 prochaines entreprises qui signent avant fin du mois bénéficient de:",
+      "items": [
+        "Setup offert (valeur 500K FCFA)",
+        "1er mois -50%",
+        "20h de consulting learning offert",
+        "Création d'1 parcours sur-mesure offert"
+      ],
+      "remaining": "Plus que 6 places disponibles"
+    }
+  },
+  "demoRequest": {
+    "title": "Demandez une démonstration",
+    "subtitle": {
+      "enterprise": "Découvrez comment EduPro peut transformer la formation dans votre entreprise",
+      "institute": "Découvrez comment EduPro peut transformer la formation dans votre institut"
+    },
+    "form": {
+      "title": {
+        "enterprise": "Informations sur votre entreprise",
+        "institute": "Informations sur votre institut"
+      },
+      "subtitle": "Remplissez ce formulaire pour recevoir une démonstration personnalisée",
+      "fields": {
+        "companyName": {
+          "label": {
+            "enterprise": "Nom de l'entreprise *",
+            "institute": "Nom de l'institut *"
+          },
+          "placeholder": {
+            "enterprise": "Ex: Orange Sénégal",
+            "institute": "Ex: Institut de Formation Professionnelle"
+          }
+        },
+        "contactName": {
+          "label": "Nom du contact *",
+          "placeholder": "Ex: Cheikh Ndiaye"
+        },
+        "email": {
+          "label": "Email professionnel *",
+          "placeholder": "contact@entreprise.com"
+        },
+        "phone": {
+          "label": "Téléphone",
+          "placeholder": "+221 77 123 45 67"
+        },
+        "companySize": {
+          "label": {
+            "enterprise": "Taille de l'entreprise",
+            "institute": "Nombre d'apprenants"
+          },
+          "placeholder": "Sélectionnez",
+          "options": {
+            "enterprise": {
+              "1-10": "1-10 employés",
+              "11-50": "11-50 employés",
+              "51-200": "51-200 employés",
+              "201-500": "201-500 employés",
+              "500+": "Plus de 500 employés"
+            },
+            "institute": {
+              "1-50": "1-50 apprenants",
+              "51-200": "51-200 apprenants",
+              "201-500": "201-500 apprenants",
+              "501-1000": "501-1000 apprenants",
+              "1000+": "Plus de 1000 apprenants"
+            }
+          }
+        },
+        "industry": {
+          "label": "Secteur d'activité",
+          "placeholder": "Sélectionnez",
+          "options": {
+            "Télécommunications": "Télécommunications",
+            "Banque & Finance": "Banque & Finance",
+            "Commerce & Distribution": "Commerce & Distribution",
+            "Services": "Services",
+            "Industrie": "Industrie",
+            "Santé": "Santé",
+            "Éducation": "Éducation",
+            "Autre": "Autre"
+          }
+        },
+        "country": {
+          "label": "Pays",
+          "placeholder": "Sénégal"
+        },
+        "city": {
+          "label": "Ville",
+          "placeholder": "Dakar"
+        },
+        "message": {
+          "label": "Message (optionnel)",
+          "placeholder": "Décrivez vos besoins en formation ou posez vos questions..."
+        }
+      },
+      "submit": {
+        "sending": "Envoi en cours...",
+        "send": "Envoyer la demande"
+      },
+      "success": {
+        "title": "Demande envoyée !",
+        "message": "Merci pour votre intérêt. Notre équipe commerciale vous contactera dans les plus brefs délais pour organiser votre démonstration personnalisée.",
+        "backHome": "Retour à l'accueil"
+      },
+      "errors": {
+        "recaptchaNotLoaded": "reCAPTCHA n'est pas encore chargé. Veuillez patienter quelques instants.",
+        "recaptchaError": "Erreur lors de la vérification de sécurité. Veuillez réessayer.",
+        "submitError": "Erreur lors de l'envoi de la demande",
+        "genericError": "Une erreur est survenue"
+      }
+    }
+  }
+}
+

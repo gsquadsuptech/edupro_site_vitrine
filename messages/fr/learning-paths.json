@@ -1,0 +1,250 @@
+{
+  "title": "Parcours de formations",
+  "description": "Gérez vos parcours de formation structurés",
+  "newPath": "Nouveau parcours",
+
+  "stats": {
+    "total": "Total des parcours",
+    "published": "Publiés",
+    "draft": "Brouillons",
+    "enrollments": "Inscriptions"
+  },
+
+  "filters": {
+    "title": "Filtres",
+    "searchPlaceholder": "Rechercher un parcours...",
+    "allLevels": "Tous les niveaux",
+    "allStatuses": "Tous les statuts"
+  },
+
+  "table": {
+    "title": "Titre",
+    "level": "Niveau",
+    "status": "Statut",
+    "instructors": "Instructeurs",
+    "category": "Catégorie",
+    "courses": "Cours",
+    "enrollments": "Inscriptions",
+    "duration": "Durée",
+    "lastUpdate": "Dernière mise à jour",
+    "actions": "Actions",
+    "pathsList": "Liste des parcours ({count})"
+  },
+
+  "status": {
+    "published": "Publié",
+    "draft": "Brouillon",
+    "archived": "Archivé"
+  },
+
+  "level": {
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé"
+  },
+
+  "actions": {
+    "view": "Voir",
+    "edit": "Modifier",
+    "publish": "Publier",
+    "unpublish": "Mettre en brouillon",
+    "archive": "Archiver",
+    "restore": "Désarchiver",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
+  },
+
+  "labels": {
+    "uncategorized": "Non catégorisé",
+    "notAssigned": "Non assigné",
+    "noInstructor": "Sans instructeur",
+    "courses": "cours",
+    "enrolled": "inscrits",
+    "updated": "Mis à jour",
+    "hours": "h"
+  },
+
+  "messages": {
+    "noPathsFound": "Aucun parcours trouvé",
+    "loadError": "Impossible de charger les parcours de formations",
+    "deleteSuccess": "Parcours supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression du parcours",
+    "publishSuccess": "Parcours publié avec succès",
+    "draftSuccess": "Parcours mis en brouillon avec succès",
+    "archiveSuccess": "Parcours archivé avec succès",
+    "statusUpdateError": "Impossible de mettre à jour le statut",
+    "deleting": "Suppression...",
+    "processing": "Traitement..."
+  },
+
+  "confirmDialog": {
+    "deleteTitle": "Supprimer le parcours",
+    "publishTitle": "Publier le parcours",
+    "unpublishTitle": "Mettre en brouillon",
+    "archiveTitle": "Archiver le parcours",
+    "restoreTitle": "Désarchiver le parcours",
+    "deleteMessage": "Êtes-vous sûr de vouloir supprimer définitivement le parcours \"{title}\" ? Cette action est irréversible et supprimera également toutes les données associées (inscriptions, certificats, etc.).",
+    "publishMessage": "Êtes-vous sûr de vouloir publier le parcours \"{title}\" ? Il sera visible par tous les utilisateurs et pourra être consulté et suivi.",
+    "unpublishMessage": "Êtes-vous sûr de vouloir remettre le parcours \"{title}\" en brouillon ? Il ne sera plus visible par les utilisateurs mais restera accessible pour modification.",
+    "archiveMessage": "Êtes-vous sûr de vouloir archiver le parcours \"{title}\" ? Il ne sera plus accessible aux utilisateurs mais pourra être restauré ultérieurement.",
+    "restoreMessage": "Êtes-vous sûr de vouloir désarchiver le parcours \"{title}\" ? Il repassera en mode brouillon et pourra être modifié et republié."
+  },
+
+  "create": {
+    "title": "Créer un parcours",
+    "subtitle": "Créez un nouveau parcours de formation structuré",
+    "back": "Retour",
+
+    "steps": {
+      "general": "Général",
+      "courses": "Cours",
+      "objectives": "Objectifs",
+      "pricing": "Tarification",
+      "settings": "Paramètres"
+    },
+
+    "general": {
+      "title": "Informations générales",
+      "nameLabel": "Titre",
+      "nameRequired": "Titre *",
+      "namePlaceholder": "Titre du parcours",
+      "levelLabel": "Niveau",
+      "levelPlaceholder": "Sélectionner un niveau",
+      "descriptionLabel": "Description",
+      "descriptionRequired": "Description *",
+      "descriptionPlaceholder": "Description du parcours",
+      "thumbnailLabel": "Image de couverture",
+      "uploadImage": "Télécharger une image",
+      "uploading": "Téléchargement...",
+      "categoryLabel": "Catégorie",
+      "categoryPlaceholder": "Sélectionner une catégorie",
+      "videoLabel": "Vidéo de présentation",
+      "videoPlaceholder": "URL de la vidéo"
+    },
+
+    "courses": {
+      "title": "Sélection des cours",
+      "searchPlaceholder": "Rechercher des cours...",
+      "addedCourses": "Cours ajoutés",
+      "noCourses": "Aucun cours ajouté pour le moment",
+      "noCoursesFound": "Aucun cours trouvé",
+      "availableCourses": "Cours disponibles",
+      "mandatory": "Obligatoire",
+      "optional": "Optionnel",
+      "weight": "Poids",
+      "threshold": "Seuil de complétion",
+      "thresholdSuffix": "%",
+      "duration": "Durée",
+      "alreadyAdded": "Ce cours est déjà ajouté au parcours"
+    },
+
+    "objectives": {
+      "title": "Objectifs et prérequis",
+      "prerequisitesLabel": "Prérequis",
+      "prerequisitesPlaceholder": "Ajouter un prérequis",
+      "objectivesLabel": "Objectifs d'apprentissage",
+      "objectivesPlaceholder": "Ajouter un objectif",
+      "resultsLabel": "Résultats attendus",
+      "resultsPlaceholder": "Ajouter un résultat attendu"
+    },
+
+    "pricing": {
+      "title": "Tarification",
+      "accessType": "Type d'accès",
+      "free": "Gratuit",
+      "paid": "Payant",
+      "invitation": "Sur invitation uniquement",
+      "pricingOptions": "Options de tarification",
+      "oneTimePayment": "Paiement Unique",
+      "totalAmount": "Montant total",
+      "amount": "Montant",
+      "discount": "Réduction",
+      "finalPrice": "Prix final:",
+      "installmentPayment": "Paiement Échelonné",
+      "installments": "Versements",
+      "dueDate": "Échéance (jours)",
+      "dueDatePlaceholder": "Jours après inscription",
+      "addInstallment": "Ajouter un versement",
+      "total": "Total:",
+      "subscription": "Mensualités",
+      "monthlyAmount": "Montant mensuel",
+      "registrationAndMonthly": "Inscription + Mensualités",
+      "registrationFee": "Frais d'inscription",
+      "monthlyFeeAmount": "Montant des mensualités",
+      "errors": {
+        "missingData": "Erreur: Données de tarification manquantes"
+      }
+    },
+
+    "settings": {
+      "title": "Paramètres",
+      "certificateLabel": "Activer le certificat",
+      "certificateDescription": "Délivrer un certificat à la fin du parcours",
+      "certificateTemplateLabel": "Template de certificat",
+      "noTemplate": "Aucun template",
+      "durationLabel": "Durée d'accès",
+      "durationDays": "jours",
+      "sequenceLabel": "Type de séquence",
+      "sequencePlaceholder": "Sélectionner un type de séquence",
+      "linear": "Linéaire",
+      "flexible": "Flexible",
+      "languageLabel": "Langue",
+      "languagePlaceholder": "Sélectionner une langue",
+      "passingScoreLabel": "Score minimum (%)",
+      "requiredCoursesLabel": "Cours requis",
+      "requiredCoursesPlaceholder": "Cours requis",
+      "allCourses": "Tous les cours",
+      "mandatoryOnly": "Cours obligatoires seulement",
+      "percentageCourses": "Pourcentage des cours",
+      "allowRetakes": "Autoriser les reprises"
+    },
+
+    "actions": {
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "add": "Ajouter",
+      "remove": "Retirer",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "createPath": "Créer le parcours"
+    },
+
+    "messages": {
+      "warning": "Attention",
+      "courseAlreadyAdded": "Ce cours est déjà ajouté au parcours",
+      "fillRequiredFields": "Veuillez remplir tous les champs requis",
+      "addAtLeastOneCourse": "Ajoutez au moins un cours au parcours",
+      "createSuccess": "Parcours créé avec succès",
+      "createSuccessDescription": "Le parcours a été créé avec succès",
+      "createError": "Erreur lors de la création du parcours",
+      "createErrorDescription": "Une erreur est survenue lors de la création du parcours",
+      "loadError": "Impossible de charger les données",
+      "uploadSuccess": "Succès",
+      "uploadSuccessDescription": "Image téléchargée avec succès"
+    },
+
+    "errors": {
+      "uploadError": "Erreur",
+      "uploadErrorDescription": "Erreur lors du téléchargement de l'image",
+      "imageSizeError": "Erreur",
+      "imageSizeErrorDescription": "L'image ne doit pas dépasser 5 MB",
+      "imageTypeError": "Erreur",
+      "imageTypeErrorDescription": "Veuillez sélectionner une image valide",
+      "createError": "Erreur",
+      "createErrorDescription": "Erreur lors de la création du parcours"
+    },
+
+    "placeholders": {
+      "selectCategory": "Sélectionner une catégorie",
+      "selectLanguage": "Sélectionner une langue",
+      "selectSequenceType": "Sélectionner le type de séquence",
+      "addPrerequisite": "Ajouter un prérequis",
+      "addResult": "Ajouter un résultat",
+      "accessDuration": "Durée d'accès en jours",
+      "selectTemplate": "Sélectionner un template",
+      "minScore": "Score minimum pour réussir"
+    }
+  }
+}

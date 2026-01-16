@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "title": "EduPro Business | Corporate Training Solutions for Africa",
+    "description": "Transform your human capital into a competitive advantage. Complete training platform for African companies: accelerated onboarding, continuous upskilling, and real-time impact measurement.",
+    "keywords": "corporate training, employee training, HR solutions, e-learning platform, Africa, skills development, onboarding"
+  },
+  "hero": {
+    "title": "Transform your human capital into",
+    "titleHighlight": "competitive advantage",
+    "subtitle": "EduPro supports African companies in their transformation through training: accelerated onboarding, continuous upskilling, and real-time impact measurement.",
+    "trust": "More than 25 companies already trust us in Senegal, Ivory Coast and Rwanda.",
+    "cta": {
+      "primary": "Book a personalized demo",
+      "secondary": "Discover our offers"
+    },
+    "features": {
+      "demo": "Free 30 min demo",
+      "proposal": "Business proposal within 24h",
+      "deployment": "Deployment in 48h · 14-day free trial"
+    },
+    "stats": {
+      "productivity": "Time-to-productivity",
+      "deployment": "Average deployment",
+      "roi": "ROI visible in real-time",
+      "costs": "vs in-person costs"
+    }
+  },
+  "challenges": {
+    "title": "The 6 challenges slowing your growth",
+    "challenges": {
+      "turnover": {
+        "title": "Explosive turnover",
+        "description": "70% turnover in some sectors (BPO, retail, tech). Training an employee who leaves after 6 months costs a fortune.",
+        "impact": "Loss of productivity, repeated recruitment costs, team demotivation."
+      },
+      "onboarding": {
+        "title": "Endless onboarding",
+        "description": "3 to 6 months to reach full productivity. Expensive in-person training, obsolete PDF manuals, overloaded trainers.",
+        "impact": "Extended time-to-productivity, frustrated new recruits, overwhelmed managers."
+      },
+      "skillsGap": {
+        "title": "Growing skills gap",
+        "description": "Yesterday's skills are no longer enough. 85% of 2030 jobs don't exist yet. Your teams need constant upskilling.",
+        "impact": "Loss of competitiveness, difficulty innovating, dependence on external recruitment."
+      },
+      "budget": {
+        "title": "Unoptimized training budget",
+        "description": "You invest 2-5% of payroll in training without knowing if it really works. No data, just intuition.",
+        "impact": "Invisible ROI, difficulty justifying budget to management, waste."
+      },
+      "multiSites": {
+        "title": "Unmanageable multi-sites",
+        "description": "Your teams are scattered (Dakar, Abidjan, Nairobi, regional offices). Training everyone consistently is a headache.",
+        "impact": "Uneven training, isolated employees, huge logistical costs."
+      },
+      "compliance": {
+        "title": "Compliance and certifications",
+        "description": "Proving training compliance (ISO, client audits, local regulations) becomes mission impossible without digital traceability.",
+        "impact": "Audit risks, loss of certifications, threatened client contracts."
+      }
+    },
+    "closing": "What if you could solve these 6 problems with a single platform?"
+  },
+  "solution": {
+    "title": "A turnkey digital academy, branded to your image",
+    "subtitle": "EduPro Enterprise is the complete solution to digitize, automate and measure your training in Africa.",
+    "differentiators": {
+      "personalization": {
+        "title": "Personalization to Your Image",
+        "subtitle": "Your turnkey digital academy",
+        "description": "Access your training space on a personalized EduPro subdomain. Logo, brand colors, custom content. White label option available for a 100% branded domain if needed.",
+        "example": "Example: yourcompany.edupro.africa"
+      },
+      "roi": {
+        "title": "Measurable ROI in Real Time",
+        "subtitle": "Finally numbers that speak to management",
+        "description": "Complete analytics dashboard: completion rate, time spent, skills acquired, impact on performance. Export your reports in 2 clicks.",
+        "example": "Dashboard demonstration during demo"
+      },
+      "deployment": {
+        "title": "Express Deployment",
+        "subtitle": "48h from onboarding to first course",
+        "description": "No 6-month IT project. Our experts support you: content migration, course creation, admin training. You're operational in 2 days.",
+        "example": "Dedicated support for 3 months"
+      }
+    }
+  },
+  "caseStudy": {
+    "title": "Use case: BPO/Call Centers",
+    "subtitle": "The sector where EduPro's impact is most immediate",
+    "challenge": "The challenge: Massive turnover, huge training costs",
+    "before": {
+      "title": "Before EduPro",
+      "items": [
+        "80% annual turnover (constant recruitment)",
+        "3-4 months of expensive in-person onboarding",
+        "Full-time dedicated trainers (high cost)",
+        "Uneven quality depending on trainer",
+        "Zero ROI measurement on training"
+      ]
+    },
+    "after": {
+      "title": "After EduPro",
+      "items": [
+        "Digitized onboarding: 4 to 6 weeks instead of 3-4 months",
+        "-50% training costs (no in-person)",
+        "Standardized quality (all new hires receive same content)",
+        "Best agents become trainers (gamification)",
+        "Dashboard to show impact to management"
+      ]
+    },
+    "results": {
+      "costs": "Training costs vs in-person",
+      "productivity": "Time-to-productivity instead of 3-4 months",
+      "roi": "Annual ROI for our BPO clients"
+    }
+  },
+  "features": {
+    "title": "Everything your HR needs (and more)",
+    "features": {
+      "onboarding": {
+        "title": "Automated Onboarding",
+        "subtitle": "Transform 6 months into 6 weeks",
+        "description": "Personalized pathways by position/department, step-by-step validation, auto-corrected quizzes, automatic integration certificate, manager notifications.",
+        "benefit": "Measurable benefit: -50% time-to-productivity observed in our BPO clients"
+      },
+      "marketplace": {
+        "title": "Marketplace Access",
+        "subtitle": "Hundreds of sector-specific trainings",
+        "description": "Soft skills (communication, leadership, customer service), sector-specific hard skills (Tech, Entrepreneurship, Construction, BPO, Health), content created by certified African experts.",
+        "benefit": "Catalog constantly expanding according to market needs"
+      },
+      "aiCreation": {
+        "title": "AI Content Creation",
+        "subtitle": "Your experts become trainers",
+        "description": "AI assistant to script your training, automatic quiz generation, transformation of documents into interactive modules, intuitive and guided interface.",
+        "benefit": "Create your internal training 10x faster"
+      },
+      "multiSites": {
+        "title": "Multi-Site Management",
+        "subtitle": "One platform, N offices",
+        "description": "Centralized management with site view, differentiated pathways by location, multi-administrators with roles and permissions, simultaneous deployment.",
+        "benefit": "Train all your teams consistently, wherever they are"
+      },
+      "certifications": {
+        "title": "Certifications and Compliance",
+        "subtitle": "Total traceability for your audits",
+        "description": "Customizable and verifiable certificates, complete training history per employee, exports for audits, automatic renewal reminders.",
+        "benefit": "All documentation needed for your audits in a few clicks"
+      },
+      "analytics": {
+        "title": "Analytics and Reporting",
+        "subtitle": "Data that makes the difference",
+        "description": "Real-time tracking dashboard, completion rate and engagement by team, detailed statistics per training, customizable exports.",
+        "benefit": "Precisely track your teams' progress and identify needs"
+      }
+    }
+  },
+  "pricing": {
+    "title": "EDUPRO BUSINESS",
+    "subtitle": "Our training solutions for companies",
+    "plans": {
+      "essentials": {
+        "name": "EDUPRO BUSINESS Essentials",
+        "subtitle": "The essentials to get started",
+        "position": "SMEs and startups (10-50 employees)",
+        "components": "Components:",
+        "features": [
+          "Marketplace training access",
+          "5 administrator seats",
+          "Basic course creation",
+          "Customizable certificates",
+          "Simplified reporting",
+          "Standard support (email/WhatsApp)"
+        ],
+        "cta": "Request a demo"
+      },
+      "professional": {
+        "name": "EDUPRO BUSINESS Professional",
+        "subtitle": "Train your teams without complexity",
+        "position": "SMEs and mid-size companies (50-500 employees)",
+        "components": "Components:",
+        "features": [
+          "All BUSINESS Essentials +",
+          "EduPro subdomain (yourcompany.edupro.africa)",
+          "AI content creation tools",
+          "Advanced course management",
+          "Complete analytics dashboard",
+          "Gamification and engagement",
+          "Calendar/email integration",
+          "Access to exclusive webinars / masterclasses",
+          "Priority support"
+        ],
+        "cta": "Request a demo"
+      },
+      "enterprise": {
+        "name": "EDUPRO BUSINESS Enterprise",
+        "subtitle": "Your white-label digital academy",
+        "position": "Large companies and groups (500+ employees)",
+        "components": "Components:",
+        "features": [
+          "All BUSINESS Professional +",
+          "Custom dedicated domain (academy.yourcompany.com)",
+          "Complete white label",
+          "Possible HRIS integrations",
+          "Multi-sites and multi-entities",
+          "Advanced analytics and HR dashboards",
+          "Dedicated Customer Success Manager",
+          "Access to exclusive webinars / masterclasses",
+          "24/7 priority support"
+        ],
+        "cta": "Request a demo"
+      }
+    }
+  },
+  "payment": {
+    "title": "Flexible payment terms",
+    "subtitle": "We adapt to your constraints",
+    "methods": {
+      "title": "Payment methods",
+      "card": {
+        "title": "Credit card",
+        "description": "Visa, Mastercard"
+      },
+      "bank": {
+        "title": "Bank transfer",
+        "description": "Local accounts available"
+      },
+      "mobile": {
+        "title": "Mobile Money",
+        "description": "Orange Money, Wave, MTN Money"
+      }
+    },
+    "frequencies": {
+      "title": "Billing frequencies",
+      "monthly": {
+        "title": "Monthly payment",
+        "description": "Automatic billing each month",
+        "note": "Flexibility and peace of mind. Ideal to start."
+      },
+      "quarterly": {
+        "title": "Quarterly/annual payment",
+        "description": "Attractive discounts on long-term commitment",
+        "note": "Better budget visibility. Guaranteed savings."
+      }
+    },
+    "public": "Public sector, NGO? We also accept administrative mandates. Contact us for specific terms."
+  },
+  "faq": {
+    "title": "Questions HR professionals ask",
+    "categories": {
+      "onboarding": {
+        "category": "Onboarding & Deployment",
+        "questions": {
+          "deployment": {
+            "q": "How long to deploy EduPro in my company?",
+            "a": "48h on average from payment to access for your first employees. Day 1: configuration and admin training. Day 2: tests and general deployment. For Enterprise formulas with complex HRIS integrations, plan 1-2 weeks."
+          },
+          "content": {
+            "q": "Who handles content creation?",
+            "a": "3 options: 1) Existing marketplace - access to our training created by African experts 2) Autonomous creation - you create with our AI tools 3) Assisted creation - our learning designers create for you (add-on service)."
+          },
+          "training": {
+            "q": "Do we need to train our employees to use the platform?",
+            "a": "No. EduPro is designed to be intuitive. Your employees receive a welcome email and that's it. We always train your admins/HR to master the back-office (2 to 4h training depending on formula)."
+          }
+        }
+      },
+      "technical": {
+        "category": "Technical & Integrations",
+        "questions": {
+          "offline": {
+            "q": "Does EduPro work offline?",
+            "a": "EduPro is a PWA accessible from any browser. Uploaded videos can be downloaded for offline viewing. For your employees in low connectivity areas, prioritize directly uploaded content."
+          },
+          "hris": {
+            "q": "Can we integrate EduPro with our existing HRIS?",
+            "a": "Yes, but this requires a preliminary study. HRIS integrations are offered as an option and subject to a specific quote after studying your infrastructure."
+          }
+        }
+      },
+      "content": {
+        "category": "Content & Pedagogy",
+        "questions": {
+          "quality": {
+            "q": "How do you guarantee pedagogical quality?",
+            "a": "All our trainers follow our Trainer Bootcamp certifying them in professional e-learning content creation. Each training follows microlearning principles: short modules (10-20min), dynamic videos, interactive exercises, contextualized practical cases."
+          },
+          "internal": {
+            "q": "Can we add our own internal trainers?",
+            "a": "Yes! Your subject matter experts can become trainers on the platform. You create a trainer account for them, they access simple AI-assisted creation tools, create their courses, you validate and then publish to your employees."
+          }
+        }
+      },
+      "roi": {
+        "category": "ROI & Results",
+        "questions": {
+          "roi": {
+            "q": "What ROI can I expect?",
+            "a": "Our clients generally see positive returns from the first months from: training cost reduction (-40 to 60% vs in-person), time-to-productivity (-30 to 50%), turnover reduction (-10 to 20%), productivity gains (+15 to 25%)."
+          },
+          "timeline": {
+            "q": "How long before seeing results?",
+            "a": "Immediate results (Month 1): logistical reduction. Short term (Months 3-6): measurable time-to-productivity improvement. Medium term (12 months): impact on turnover and continuous learning culture established."
+          }
+        }
+      }
+    }
+  },
+  "extendedFaq": {
+    "categories": {
+      "support": {
+        "category": "Support & Accompanying",
+        "questions": {
+          "support": {
+            "q": "What level of support after deployment?",
+            "a": "We support you at every step with technical support (email, chat, online help center), continuous admin training, detailed documentation and support community. Depending on your formula, priority support option and dedicated Customer Success Manager available."
+          },
+          "demo": {
+            "q": "Do you offer demos or trial periods?",
+            "a": "Yes! We offer free personalized demos (30-45 min) with presentation adapted to your sector, test environment configuration, and answers to your questions. We also offer a 14-day free trial. You receive a detailed business proposal within 48h."
+          }
+        }
+      },
+      "languages": {
+        "category": "Languages & Localization",
+        "questions": {
+          "languages": {
+            "q": "Are trainings in French only?",
+            "a": "The platform supports French and English. Our training content is mainly available in French and English, with some specific content in local languages (Wolof, Swahili, etc.). When you create your internal training, you can use any language."
+          }
+        }
+      },
+      "quality": {
+        "category": "Quality & Compliance",
+        "questions": {
+          "quality": {
+            "q": "How do you guarantee pedagogical quality?",
+            "a": "All our trainers follow our Trainer Bootcamp to create professional e-learning content. Each training follows microlearning principles: short modules (10-20min), dynamic videos with subtitles, interactive exercises, contextualized practical cases, immediate feedback. On request, we can audit your internal content."
+          }
+        }
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Join the 25+ companies already transforming their teams",
+    "subtitle": "Your digital academy in 48h. Ready?",
+    "demo": {
+      "title": "Book my personalized demo",
+      "items": [
+        "30-45 min call with an expert",
+        "Presentation adapted to your sector",
+        "Indicative budget estimate",
+        "Business proposal within 48h"
+      ],
+      "cta": "Book now"
+    },
+    "quote": {
+      "title": "Request a quote",
+      "description": "Describe your project in a few lines and receive a first estimate within 48h",
+      "cta": "Quote form"
+    },
+    "benefits": {
+      "deployment": {
+        "title": "Express Deployment",
+        "description": "Operational in 48h, no complex IT project"
+      },
+      "roi": {
+        "title": "Guaranteed ROI",
+        "description": "180-250% over 12 months or we reopen discussion"
+      },
+      "support": {
+        "title": "Dedicated Support",
+        "description": "African experts who understand your challenges"
+      }
+    },
+    "launch": {
+      "title": "Launch offer",
+      "description": "The next 10 companies that sign before end of month benefit from:",
+      "items": [
+        "Free setup (value 500K FCFA)",
+        "First month -50%",
+        "20h of learning consulting offered",
+        "Creation of 1 custom course offered"
+      ],
+      "remaining": "Only 6 spots remaining"
+    }
+  },
+  "demoRequest": {
+    "title": "Request a demonstration",
+    "subtitle": {
+      "enterprise": "Discover how EduPro can transform training in your company",
+      "institute": "Discover how EduPro can transform training in your institute"
+    },
+    "form": {
+      "title": {
+        "enterprise": "Information about your company",
+        "institute": "Information about your institute"
+      },
+      "subtitle": "Fill out this form to receive a personalized demonstration",
+      "fields": {
+        "companyName": {
+          "label": {
+            "enterprise": "Company name *",
+            "institute": "Institute name *"
+          },
+          "placeholder": {
+            "enterprise": "Ex: Orange Senegal",
+            "institute": "Ex: Professional Training Institute"
+          }
+        },
+        "contactName": {
+          "label": "Contact name *",
+          "placeholder": "Ex: Cheikh Ndiaye"
+        },
+        "email": {
+          "label": "Professional email *",
+          "placeholder": "contact@company.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "+221 77 123 45 67"
+        },
+        "companySize": {
+          "label": {
+            "enterprise": "Company size",
+            "institute": "Number of learners"
+          },
+          "placeholder": "Select",
+          "options": {
+            "enterprise": {
+              "1-10": "1-10 employees",
+              "11-50": "11-50 employees",
+              "51-200": "51-200 employees",
+              "201-500": "201-500 employees",
+              "500+": "More than 500 employees"
+            },
+            "institute": {
+              "1-50": "1-50 learners",
+              "51-200": "51-200 learners",
+              "201-500": "201-500 learners",
+              "501-1000": "501-1000 learners",
+              "1000+": "More than 1000 learners"
+            }
+          }
+        },
+        "industry": {
+          "label": "Industry",
+          "placeholder": "Select",
+          "options": {
+            "Télécommunications": "Telecommunications",
+            "Banque & Finance": "Banking & Finance",
+            "Commerce & Distribution": "Commerce & Distribution",
+            "Services": "Services",
+            "Industrie": "Industry",
+            "Santé": "Health",
+            "Éducation": "Education",
+            "Autre": "Other"
+          }
+        },
+        "country": {
+          "label": "Country",
+          "placeholder": "Senegal"
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "Dakar"
+        },
+        "message": {
+          "label": "Message (optional)",
+          "placeholder": "Describe your training needs or ask your questions..."
+        }
+      },
+      "submit": {
+        "sending": "Sending...",
+        "send": "Send request"
+      },
+      "success": {
+        "title": "Request sent!",
+        "message": "Thank you for your interest. Our sales team will contact you shortly to organize your personalized demonstration.",
+        "backHome": "Back to home"
+      },
+      "errors": {
+        "recaptchaNotLoaded": "reCAPTCHA is not loaded yet. Please wait a moment.",
+        "recaptchaError": "Error during security verification. Please try again.",
+        "submitError": "Error sending request",
+        "genericError": "An error occurred"
+      }
+    }
+  }
+}
+

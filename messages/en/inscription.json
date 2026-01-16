@@ -1,0 +1,231 @@
+{
+  "hero": {
+    "title": "Join EduPro",
+    "subtitle": "The Awakening of African Talents"
+  },
+  "tabs": {
+    "apprenant": "Professional",
+    "formateur": "Trainer",
+    "institut": "Training Institute",
+    "entreprise": "Company"
+  },
+  "apprenant": {
+    "title": "Create my account",
+    "subtitle": "Start your learning journey in 2 minutes",
+    "form": {
+      "fullname": {
+        "label": "Full name *",
+        "placeholder": "Your full name"
+      },
+      "email": {
+        "label": "Email *",
+        "placeholder": "your.email@example.com"
+      },
+      "password": {
+        "label": "Password *",
+        "placeholder": "••••••••",
+        "strength": {
+          "label": "Strength:",
+          "weak": "Weak",
+          "medium": "Medium",
+          "strong": "Strong"
+        }
+      },
+      "terms": {
+        "label": "I accept the",
+        "termsLink": "terms of use",
+        "and": "and the",
+        "privacyLink": "privacy policy"
+      },
+      "submit": {
+        "creating": "Creating...",
+        "create": "Create my free account"
+      },
+      "divider": "Or continue with",
+      "google": "Google",
+      "facebook": "Facebook",
+      "alreadyHaveAccount": "Already have an account?",
+      "login": "Log in"
+    },
+    "errors": {
+      "allFieldsRequired": "All fields are required",
+      "termsRequired": "You must accept the terms of use",
+      "emailAlreadyUsed": "This email is already in use. Please log in or use another email.",
+      "accountCreationError": "Error creating account",
+      "genericError": "An error occurred while creating the account"
+    },
+    "success": {
+      "accountCreated": "Account created successfully!"
+    }
+  },
+  "formateur": {
+    "title": "Become a Trainer",
+    "subtitle": "Share your expertise and train thousands of African learners",
+    "benefits": {
+      "visibility": {
+        "title": "Pan-African visibility",
+        "description": "Reach thousands of learners"
+      },
+      "aiTools": {
+        "title": "AI creation tools",
+        "description": "Create your courses easily"
+      },
+      "commission": {
+        "title": "Up to 85% commission",
+        "description": "Attractive revenue"
+      },
+      "support": {
+        "title": "Dedicated support",
+        "description": "Training and support"
+      }
+    },
+    "process": {
+      "title": "The process",
+      "steps": {
+        "application": {
+          "title": "Application",
+          "description": "Fill out the form (5 min)"
+        },
+        "qualification": {
+          "title": "Qualification",
+          "description": "Exchange with our team (48h)"
+        },
+        "onboarding": {
+          "title": "Onboarding",
+          "description": "Tool training (1 week)"
+        },
+        "launch": {
+          "title": "Launch",
+          "description": "Publish and start training"
+        }
+      }
+    },
+    "cta": {
+      "button": "Apply as a trainer",
+      "acceptanceRate": "Acceptance rate: 85% of qualified candidates"
+    }
+  },
+  "entreprise": {
+    "title": "Enterprise Solution",
+    "subtitle": "Train your teams with a turnkey platform",
+    "benefits": {
+      "deployment": {
+        "title": "Rapid deployment",
+        "description": "Operational in 48h"
+      },
+      "whiteLabel": {
+        "title": "White label",
+        "description": "Your academy with your colors"
+      },
+      "catalog": {
+        "title": "Rich catalog",
+        "description": "180+ ready-made trainings"
+      },
+      "reporting": {
+        "title": "Complete reporting",
+        "description": "Track your teams' progress"
+      }
+    },
+    "useCases": {
+      "title": "They trust us",
+      "callCenters": {
+        "title": "Call centers",
+        "description": "Soft skills training for agents"
+      },
+      "techCompanies": {
+        "title": "Tech companies",
+        "description": "Upskilling digital teams"
+      },
+      "industries": {
+        "title": "Industries",
+        "description": "Safety and compliance"
+      },
+      "institutes": {
+        "title": "Institutes",
+        "description": "White label solution"
+      }
+    },
+    "process": {
+      "title": "How it works",
+      "steps": {
+        "demoRequest": {
+          "title": "Demo request",
+          "description": "Fill out the form"
+        },
+        "personalizedDemo": {
+          "title": "Personalized demo",
+          "description": "Adapted presentation (48h)"
+        },
+        "freeTrial": {
+          "title": "Free trial",
+          "description": "Test for 14 days"
+        },
+        "deployment": {
+          "title": "Deployment",
+          "description": "Configuration and training (48h)"
+        }
+      }
+    },
+    "cta": {
+      "button": "Request a demo",
+      "response": "Response within 24h - No commitment"
+    }
+  },
+  "institut": {
+    "title": "Training Institute Solution",
+    "subtitle": "Transform your institute with a complete digital training platform",
+    "benefits": {
+      "personalizedAcademy": {
+        "title": "Personalized digital academy with your colors",
+        "description": "Your platform with your visual identity"
+      },
+      "domain": {
+        "title": "Your domain name",
+        "description": "Platform accessible via your own domain"
+      },
+      "learnerManagement": {
+        "title": "Complete learner management",
+        "description": "Tracking and administration of all your learners"
+      },
+      "analytics": {
+        "title": "Advanced analytics and reporting",
+        "description": "Dashboards and detailed reports on progress"
+      }
+    },
+    "process": {
+      "title": "How it works",
+      "steps": {
+        "demoRequest": {
+          "title": "Demo request",
+          "description": "Fill out the form"
+        },
+        "personalizedDemo": {
+          "title": "Personalized demo",
+          "description": "Adapted presentation (48h)"
+        },
+        "freeTrial": {
+          "title": "Free trial",
+          "description": "Test for 14 days"
+        },
+        "deployment": {
+          "title": "Deployment",
+          "description": "Configuration and training (48h)"
+        }
+      }
+    },
+    "cta": {
+      "button": "Request a demo",
+      "response": "Response within 24h - No commitment"
+    }
+  },
+  "footer": {
+    "needHelp": "Need help?",
+    "cgu": "Terms of Use",
+    "privacy": "Privacy Policy"
+  },
+  "oauth": {
+    "googleError": "Error connecting with Google",
+    "facebookError": "Error connecting with Facebook"
+  }
+}
+

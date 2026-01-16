@@ -1,0 +1,396 @@
+{
+  "meta": {
+    "title": "About EduPro | Transforming Professional Training in Africa",
+    "description": "We believe in African genius. EduPro was born from a simple conviction: Africa has the talents, it just needs the right tools to reveal them. Since 2023, we've been building the platform that transforms this vision into reality, one skill at a time.",
+    "keywords": "about EduPro, African education, professional training platform, skills development, Africa, mission, vision"
+  },
+  "hero": {
+    "title": "We believe in African genius",
+    "subtitle": "EduPro was born from a simple conviction: Africa has the talents, it just needs the right tools to reveal them. Since 2023, we've been building the platform that transforms this vision into reality, one skill at a time.",
+    "stats": {
+      "learners": "Transformed learners",
+      "companies": "Partner companies",
+      "countries": "Countries present",
+      "trainings": "Created trainings"
+    }
+  },
+  "mission": {
+    "title": "Our mission: Accelerate skills transformation in Africa",
+    "observation": {
+      "title": "The Observation",
+      "text": "Every year, millions of African professionals see their potential unexploited. Not for lack of talent or ambition, but for lack of access to quality continuous training. International solutions? Too expensive, too far from our realities. Local solutions? Often limited in scope and impact."
+    },
+    "approach": {
+      "title": "Our Approach",
+      "intro": "We create a platform that addresses three major challenges:",
+      "challenges": {
+        "accessibility": {
+          "label": "Accessibility",
+          "description": "Quality training at affordable prices, optimized for mobile and low bandwidth"
+        },
+        "interactivity": {
+          "label": "Interactivity",
+          "description": "Engaging learning experiences that promote retention and practical application"
+        },
+        "measurability": {
+          "label": "Measurability",
+          "description": "Precise tracking of progress and real impact on professional performance"
+        }
+      }
+    },
+    "ecosystem": {
+      "title": "The Ecosystem",
+      "text": "We don't just create a platform. We build an ecosystem where companies, trainers, learners and investors collaborate to raise the skill level of the continent. Each actor finds their value, each interaction creates impact. Because when Africa excels, the whole world benefits."
+    },
+    "quote": {
+      "text": "I grew up seeing extraordinary talents limited by lack of training opportunities. EduPro is my answer to this injustice. We don't seek to copy what exists elsewhere - we create what should exist here.",
+      "author": "— Founder, CEO & Co-founder EduPro"
+    }
+  },
+  "vision": {
+    "title": "Our vision: Build the next generation of African talents",
+    "main": "Build the next generation of African talents through digitalization of professional training and equitable access to knowledge.",
+    "description": "Africa is full of exceptional talents. Our vision is to give them digital tools to develop their skills, regardless of their geographic location or economic situation.",
+    "future": {
+      "title": "We believe in a future where:",
+      "items": {
+        "professional": "Every African professional has access to the same training opportunities as their international peers",
+        "digitalization": "Digitalization eliminates geographic and financial barriers",
+        "knowledge": "Knowledge flows freely across the continent",
+        "talents": "African talents are recognized and valued at their fair value on the world stage"
+      }
+    },
+    "ambition": "Our ambition: Become the pan-African reference in digital professional training, reaching millions of learners in the next 10 years."
+  },
+  "pillars": {
+    "title": "The 4 pillars that guide us",
+    "pillars": {
+      "accessibility": {
+        "title": "Accessibility",
+        "subtitle": "Break down all barriers",
+        "meaning": "What it means concretely:",
+        "features": [
+          "Prices adapted to local realities (up to 70% cheaper)",
+          "Mobile-first: 78% of our traffic is mobile",
+          "Native offline mode for low connectivity areas",
+          "Multilingual (FR, EN, + local languages in phase 2)",
+          "Local payments (Mobile Money, FCFA, Shilling)"
+        ],
+        "commitment": "No talent should be limited by their geography or economic situation."
+      },
+      "inclusion": {
+        "title": "Inclusion",
+        "subtitle": "Every voice counts, every talent has its place",
+        "meaning": "What it means concretely:",
+        "features": [
+          "Content created by African experts for Africa",
+          "Fair representation of genders and regions",
+          "Pathways adapted to all levels (beginner to expert)",
+          "Intuitive and accessible interface on all devices",
+          "Inclusive and caring community for all learners"
+        ],
+        "commitment": "We celebrate African diversity as our greatest wealth."
+      },
+      "contextualization": {
+        "title": "Contextualization",
+        "subtitle": "Solutions designed for our realities",
+        "meaning": "What it means concretely:",
+        "features": [
+          "Use cases based on real African companies",
+          "Trainers who understand local context",
+          "Integration of regulatory specificities of each country",
+          "Examples and exercises rooted in African reality",
+          "Partnerships with leading local companies"
+        ],
+        "commitment": "International quality, local relevance. The best of both worlds."
+      },
+      "sustainability": {
+        "title": "Sustainability",
+        "subtitle": "Build for future generations",
+        "meaning": "What it means concretely:",
+        "features": [
+          "Balanced and profitable economic model",
+          "Fair remuneration of African trainers",
+          "Measurable and transparent social impact",
+          "Development of critical skills for the future",
+          "Partnerships with actors committed to development"
+        ],
+        "commitment": "We're not building a startup. We're building an institution."
+      }
+    }
+  },
+  "values": {
+    "title": "The values that unite us",
+    "subtitle": "Our values are not words on a wall. They are the principles that guide each of our decisions, from our internal culture to our interactions with our clients.",
+    "values": {
+      "excellence": {
+        "title": "African Excellence",
+        "subtitle": "We aim for world excellence, anchored in Africa",
+        "description": "We refuse compromise on quality. Every training, every feature, every interaction must be at the level of the best international standards, while being deeply relevant to the African context.",
+        "practices": [
+          "Rigorous trainer selection process",
+          "Continuous user testing",
+          "Permanent technological watch",
+          "International certifications"
+        ]
+      },
+      "impact": {
+        "title": "Impact Before Profit",
+        "subtitle": "Our success is measured in transformed lives",
+        "description": "We build a sustainable economic model, but never at the expense of our mission. Every decision is evaluated first on its impact on learners, trainers, and African companies.",
+        "practices": [
+          "Affordable prices designed for African context",
+          "Partnerships with organizations to facilitate access to training",
+          "Total transparency on our vision and impact objectives",
+          "Priority reinvestment in R&D and platform improvement"
+        ]
+      },
+      "userOriented": {
+        "title": "User Orientation",
+        "subtitle": "Every decision starts with the learner",
+        "description": "We design every feature, every content, every interaction thinking first about our users' experience: learners, trainers and companies. Their success is our only compass.",
+        "practices": [
+          "Regular user testing before each launch",
+          "Reactive and caring customer support",
+          "Feedback continuously integrated into our development cycles",
+          "Training co-created with end users",
+          "Interface designed for African context (mobile-first, low bandwidth)"
+        ]
+      },
+      "agility": {
+        "title": "Agility and Innovation",
+        "subtitle": "Status quo is not an option",
+        "description": "Africa evolves rapidly, and so do we. We test, iterate, learn, and improve constantly. Smart failure is encouraged, stagnation is unacceptable.",
+        "practices": [
+          "Quarterly innovation sprints",
+          "Test & learn culture",
+          "Rapid adoption of relevant new technologies",
+          "User feedback continuously integrated"
+        ]
+      }
+    }
+  },
+  "join": {
+    "title": "Want to be part of the story?",
+    "subtitle": "EduPro is not just a company. It's a movement to transform professional education in Africa. And we're looking for passionate people to join us.",
+    "opportunities": {
+      "careers": {
+        "title": "Career Opportunities",
+        "subtitle": "Build with us the platform of tomorrow",
+        "description": "Joining EduPro means participating in the transformation of professional training in Africa. We're looking for passionate talents who share our vision and want to have a measurable impact.",
+        "benefits": [
+          "Inspiring mission with direct social impact",
+          "Stimulating and caring work environment",
+          "Remote-friendly with flexibility",
+          "Continuous training and skills development",
+          "Multicultural and dynamic team"
+        ],
+        "note": "We regularly recruit in development, design, pedagogy, business development and customer support.",
+        "cta": "Contact us to explore opportunities",
+        "ctaLink": "#contact"
+      },
+      "trainer": {
+        "title": "Become Partner Trainer",
+        "subtitle": "Share your expertise, reach thousands of learners",
+        "description": "You're an expert in your field and want to have impact at scale?",
+        "benefits": [
+          "AI tools to create your training 40% faster",
+          "Pan-African visibility to thousands of learners",
+          "Transparent and fair remuneration",
+          "Complete technical support",
+          "Community of excellent African trainers"
+        ],
+        "note": "Fields sought: Tech, Business, Leadership, Construction, Health, Agriculture",
+        "cta": "Join trainer community",
+        "ctaLink": "/en/formateurs"
+      },
+      "partner": {
+        "title": "Become Partner",
+        "subtitle": "Let's build tomorrow's ecosystem together",
+        "description": "We're open to strategic partnerships with:",
+        "benefits": [
+          "Companies - Custom training for your teams",
+          "Institutes - White-label solution",
+          "Media - Content co-creation",
+          "NGOs & Donors - Social impact programs",
+          "Investors - Join our mission"
+        ],
+        "cta": "Discuss a partnership",
+        "ctaLink": "#contact"
+      }
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact | EduPro",
+      "description": "Contact the EduPro team for your professional training needs."
+    },
+    "title": "Let's get in touch",
+    "subtitle": "We respond to all your messages (promise!)",
+    "hero": {
+      "title": "Let's get in",
+      "titleHighlight": "contact",
+      "subtitle": "A question, a project, a collaboration? Our team is here to help you."
+    },
+    "form": {
+      "title": "Send us a message",
+      "fields": {
+        "firstname": {
+          "label": "First name",
+          "placeholder": "Jean"
+        },
+        "lastname": {
+          "label": "Last name",
+          "placeholder": "Dupont"
+        },
+        "email": {
+          "label": "Professional email",
+          "placeholder": "jean@company.com"
+        },
+        "subject": {
+          "label": "Subject",
+          "placeholder": "Select a subject",
+          "options": {
+            "Demande de formation": "Training request",
+            "Partenariat": "Partnership",
+            "Support technique": "Technical support",
+            "Autre": "Other"
+          }
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "How can we help you?"
+        }
+      },
+      "submit": {
+        "sending": "Sending...",
+        "send": "Send message"
+      },
+      "success": {
+        "title": "Message sent!",
+        "message": "Thank you for contacting us. Our team will get back to you as soon as possible.",
+        "sendAnother": "Send another message"
+      },
+      "errors": {
+        "subjectRequired": "Please select a subject",
+        "recaptchaNotLoaded": "reCAPTCHA is not loaded yet. Please wait a moment.",
+        "recaptchaError": "Error during security verification. Please try again.",
+        "submitError": "Error sending message",
+        "genericError": "An error occurred"
+      }
+    },
+    "offices": {
+      "title": "Our Offices",
+      "dakar": {
+        "location": "🇸🇳 Dakar, Senegal (Headquarters)",
+        "address1": "Antalya Building, 6th floor",
+        "address2": "Dakar, Senegal",
+        "email": "contact@edupro.africa",
+        "phone": "+221 XX XXX XX XX"
+      },
+      "abidjan": {
+        "location": "🇨🇮 Abidjan, Ivory Coast",
+        "address1": "Plateau, SCIAM Building",
+        "address2": "Abidjan, Ivory Coast",
+        "email": "ci@edupro.africa",
+        "phone": "+225 XX XXX XX XX"
+      }
+    },
+    "writeUs": {
+      "title": "Write to Us",
+      "enterprises": {
+        "label": "For companies:",
+        "email": "entreprises@edupro.africa"
+      },
+      "trainers": {
+        "label": "For trainers or institutes:",
+        "email": "formateurs@edupro.africa"
+      },
+      "learners": {
+        "label": "For learners:",
+        "email": "contact@edupro.africa"
+      },
+      "investors": {
+        "label": "For investors:",
+        "email": "contact@edupro.africa"
+      },
+      "press": {
+        "label": "Press & Partners:",
+        "email": "partenariats@edupro.africa"
+      }
+    },
+    "social": {
+      "title": "Social Networks",
+      "subtitle": "Follow our adventure daily:",
+      "linkedin": "LinkedIn - Company news & insights",
+      "twitter": "Twitter/X - News & conversations",
+      "instagram": "Instagram - Behind the scenes & community",
+      "facebook": "Facebook - Events & success stories",
+      "youtube": "YouTube - Tutorials & testimonials",
+      "newsletter": {
+        "title": "Monthly newsletter:",
+        "placeholder": "Your email",
+        "button": "OK",
+        "success": "Thank you for subscribing to our newsletter!",
+        "description": "One email per month, zero spam, 100% added value"
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Ready to transform Africa?",
+    "subtitle": "Whether you're a company, trainer, talent or investor, there's a place for you in the EduPro adventure.",
+    "ctas": {
+      "solutions": "Discover our solutions",
+      "join": "Join the team",
+      "trainer": "Become a trainer"
+    },
+    "reassurance": {
+      "response": "Response within 24h",
+      "support": "Support in FR/EN"
+    }
+  },
+  "contactInfo": {
+    "title": "Contact us",
+    "subtitle": "Have a question? A training project? Our team is here to help you.",
+    "sections": {
+      "email": {
+        "title": "Email",
+        "description": "Our team responds within 24h.",
+        "dakar": {
+          "label": "🇸🇳 Dakar (Headquarters)",
+          "email": "contact@edupro.africa"
+        },
+        "abidjan": {
+          "label": "🇨🇮 Abidjan",
+          "email": "ci@edupro.africa"
+        }
+      },
+      "phone": {
+        "title": "Phone",
+        "description": "Monday to Friday, 9am-6pm GMT.",
+        "dakar": {
+          "label": "🇸🇳 Dakar (Headquarters)",
+          "phone": "+221 76 665 17 17"
+        },
+        "abidjan": {
+          "label": "🇨🇮 Abidjan",
+          "phone": "+225 05 54 04 07 07"
+        }
+      },
+      "offices": {
+        "title": "Offices",
+        "dakar": {
+          "label": "🇸🇳 Dakar, Senegal (Headquarters)",
+          "address1": "Antalya Building, 6th floor",
+          "address2": "Dakar, Senegal"
+        },
+        "abidjan": {
+          "label": "🇨🇮 Abidjan, Ivory Coast",
+          "address1": "Plateau, SCIAM Building",
+          "address2": "Abidjan, Ivory Coast"
+        }
+      }
+    }
+  }
+}
+

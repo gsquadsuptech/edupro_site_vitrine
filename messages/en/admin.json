@@ -1,0 +1,175 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "noData": "No data available",
+    "error": "An error occurred",
+    "success": "Operation successful"
+  },
+  "actions": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "refresh": "Refresh",
+    "apply": "Apply",
+    "reset": "Reset",
+    "view": "View",
+    "preview": "Preview",
+    "duplicate": "Duplicate",
+    "archive": "Archive",
+    "restore": "Restore",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "finish": "Finish",
+    "submit": "Submit",
+    "download": "Download",
+    "upload": "Upload"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "draft": "Draft",
+    "published": "Published",
+    "archived": "Archived",
+    "review": "Under Review"
+  },
+  "filters": {
+    "all": "All",
+    "allStatuses": "All Statuses",
+    "allCategories": "All Categories",
+    "allTypes": "All Types",
+    "date": "Date",
+    "status": "Status",
+    "category": "Category",
+    "type": "Type"
+  },
+  "sorting": {
+    "sortBy": "Sort by",
+    "lastUpdated": "Last Updated",
+    "createdAt": "Created At",
+    "title": "Title",
+    "name": "Name",
+    "ascending": "Ascending",
+    "descending": "Descending"
+  },
+  "viewModes": {
+    "grid": "Grid",
+    "list": "List",
+    "table": "Table"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "description": "Description",
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "price": "Price",
+    "date": "Date",
+    "time": "Time",
+    "duration": "Duration",
+    "category": "Category",
+    "tags": "Tags",
+    "status": "Status",
+    "type": "Type",
+    "image": "Image",
+    "thumbnail": "Thumbnail",
+    "url": "URL"
+  },
+  "placeholders": {
+    "search": "Search...",
+    "searchByName": "Search by name...",
+    "searchByEmail": "Search by email...",
+    "selectCategory": "Select a category",
+    "selectStatus": "Select a status",
+    "selectType": "Select a type",
+    "enterName": "Enter a name",
+    "enterEmail": "Enter an email",
+    "enterDescription": "Enter a description"
+  },
+  "messages": {
+    "confirmDelete": "Are you sure you want to delete this item?",
+    "confirmArchive": "Are you sure you want to archive this item?",
+    "deleteSuccess": "Item deleted successfully",
+    "deleteError": "Error deleting item",
+    "saveSuccess": "Saved successfully",
+    "saveError": "Error saving",
+    "updateSuccess": "Updated successfully",
+    "updateError": "Error updating",
+    "createSuccess": "Created successfully",
+    "createError": "Error creating",
+    "loadError": "Error loading data",
+    "noResults": "No results found",
+    "requiredField": "This field is required",
+    "invalidEmail": "Invalid email",
+    "invalidUrl": "Invalid URL"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "showing": "Showing",
+    "results": "results",
+    "perPage": "per page"
+  },
+  "cohorts": {
+    "sessions": {
+      "title": "Manage Sessions",
+      "back": "Back",
+      "save": "Save",
+      "sessions": "Sessions",
+      "add": "Add",
+      "loading": "Loading...",
+      "empty": "No sessions. Click \"Add\".",
+      "form": {
+        "title": "Title",
+        "titleAria": "Session title",
+        "titlePlaceholder": "Title",
+        "date": "Date",
+        "dateAria": "Session date",
+        "startTime": "Start Time",
+        "startTimeAria": "Start time",
+        "endTime": "End Time",
+        "endTimeAria": "End time",
+        "description": "Description",
+        "descriptionAria": "Session description",
+        "descriptionPlaceholder": "Description",
+        "meetingUrl": "Meeting Link (optional)",
+        "meetingUrlAria": "Meeting link",
+        "meetingUrlPlaceholder": "Meeting link (optional)",
+        "willBeRecorded": "This session will be recorded",
+        "recordingUrl": "Recording URL (optional)",
+        "recordingUrlAria": "Recording URL",
+        "recordingUrlPlaceholder": "Recording URL (optional)"
+      },
+      "errors": {
+        "loadError": "Loading error",
+        "deleteError": "Error deleting",
+        "saveError": "Unable to save",
+        "savePartial": "{failures} failure(s), {successes} success(es). Please retry for items in error."
+      },
+      "success": {
+        "delete": "Session deleted",
+        "save": "Sessions saved"
+      },
+      "warnings": {
+        "incompleteSessions": "{count} incomplete session ignored. Please fill in the title, date and times. | {count} incomplete sessions ignored. Please fill in the title, date and times."
+      }
+    }
+  }
+}

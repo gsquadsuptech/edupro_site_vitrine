@@ -1,0 +1,402 @@
+{
+  "meta": {
+    "title": "EduPro Professionnels | Formations Certifiantes en Ligne pour la Croissance de Carrière",
+    "description": "Transformez vos ambitions en succès concrets. Formations certifiantes 100% en ligne, accessibles 24/7 depuis votre mobile, pensées pour les réalités africaines. Rejoignez les 500+ professionnels qui montent en compétences avec EduPro.",
+    "keywords": "formation en ligne, développement professionnel, croissance de carrière, certifications, skill packs, e-learning, Afrique"
+  },
+  "hero": {
+    "title": "Transformez vos ambitions en",
+    "titleHighlight": "succès concrets",
+    "subtitle": "Formations certifiantes 100% en ligne, accessibles 24/7 depuis votre mobile, pensées pour les réalités africaines. Rejoignez les 500+ professionnels qui montent en compétences avec EduPro au Sénégal, en Côte d'Ivoire et au Rwanda.",
+    "cta": {
+      "primary": "Créer mon compte gratuit",
+      "secondary": "Explorer le catalogue"
+    },
+    "learn": "Je veux apprendre :",
+    "categories": {
+      "tech": "Tech",
+      "business": "Business",
+      "construction": "Construction"
+    },
+    "stats": {
+      "learners": "Apprenants actifs",
+      "completion": "Taux de complétion",
+      "accessible": "Accessible",
+      "mobile": "Mobile optimisé"
+    }
+  },
+  "whyEdupro": {
+    "title": "6 raisons de choisir EduPro pour booster votre carrière",
+    "reasons": {
+      "contextualized": {
+        "title": "Contenus Contextualisés",
+        "description": "Des formations créées par des experts africains qui comprennent vos défis. Exemples, cas pratiques et scénarios adaptés à nos réalités locales.",
+        "example": "Apprenez le marketing digital avec des exemples d'Orange CI, Wave, Jumia – des marques que vous connaissez."
+      },
+      "accessibility": {
+        "title": "Accessibilité Totale",
+        "description": "Des formations de qualité internationale à prix accessible pour le marché africain. Paiement Mobile Money accepté (Orange Money, Wave, MTN).",
+        "example": "L'excellence ne devrait pas être réservée à une élite."
+      },
+      "flexibility": {
+        "title": "Flexibilité Maximale",
+        "description": "Deux formats selon vos besoins : formations en auto-formation (100% à votre rythme) ou hybrides (sessions live et accompagnement).",
+        "example": "Apprenez pendant vos trajets, votre pause déjeuner, le soir chez vous – ou rejoignez des cohortes."
+      },
+      "certifications": {
+        "title": "Certifications de Compétences",
+        "description": "Des certificats de compétences avérées créés en co-certification avec des experts. Chaque certification valide des compétences pratiques et mesurables.",
+        "example": "Partagez-les sur LinkedIn en 1 clic. Augmentez votre employabilité et votre valeur sur le marché."
+      },
+      "community": {
+        "title": "Communauté et Support",
+        "description": "Rejoignez une communauté panafricaine de professionnels ambitieux. Support en français et anglais, assistance technique, et accès à des mentors experts.",
+        "example": "Vous n'apprenez jamais seul, réseau professionnel en bonus."
+      },
+      "results": {
+        "title": "Résultats Mesurables",
+        "description": "Des parcours conçus pour l'impact : augmentation de salaire, promotion, ou nouveau poste dans les 6 mois. Vos compétences acquises se traduisent en opportunités concrètes sur le marché africain.",
+        "example": "Votre formation doit changer votre vie professionnelle, pas seulement enrichir votre CV."
+      }
+    },
+    "closing": "Prêt à découvrir le Skill Pack qui transformera votre carrière ?"
+  },
+  "skillPacks": {
+    "title": "3 Skill Packs pour Transformer Votre Carrière",
+    "subtitle": "Parcours complets avec certifications, projets et accompagnement carrière",
+    "packs": {
+      "tech": {
+        "title": "TECH & MAÎTRISE DIGITALE",
+        "headline": "Devenez expert en technologies digitales et IA",
+        "courses": [
+          { "name": "DATA ANALYTICS & IA", "duration": "3-4 mois", "level": "Débutant à Inter." },
+          { "name": "DÉVELOPPEMENT WEB", "duration": "4-5 mois", "level": "Débutant à Avancé" },
+          { "name": "MARKETING DIGITAL", "duration": "2-3 mois", "level": "Débutant à Inter." },
+          { "name": "CYBERSÉCURITÉ", "duration": "3 mois", "level": "Intermédiaire" }
+        ],
+        "highlights": [
+          "100+ heures de contenu vidéo",
+          "50+ exercices pratiques et projets",
+          "4 certifications professionnelles",
+          "Accès à des datasets africains",
+          "Portfolio de projets à présenter",
+          "Support technique dédié"
+        ],
+        "jobs": [
+          "Data Analyst",
+          "Développeur Web",
+          "Responsable Marketing Digital",
+          "Community Manager",
+          "Expert Cybersécurité",
+          "Consultant IT"
+        ],
+        "salary": "300K - 1,5M FCFA/mois",
+        "demand": "Très élevée",
+        "testimonial": {
+          "text": "Avant EduPro, j'étais assistant administratif à 150K FCFA/mois. Après le Skill Pack Data Analytics, j'ai décroché un poste de Data Analyst chez Orange CI à 600K. Ma vie a changé en 4 mois.",
+          "author": "Aya Kouassi, 28 ans",
+          "role": "Data Analyst chez Orange CI 🇨🇮"
+        }
+      },
+      "business": {
+        "title": "EXCELLENCE BUSINESS & LEADERSHIP",
+        "headline": "Dirigez, managez, entreprenez avec les compétences de leader africain",
+        "courses": [
+          { "name": "LEADERSHIP & MANAGEMENT", "duration": "2-3 mois", "level": "Tous niveaux" },
+          { "name": "GESTION DE PROJET", "duration": "3 mois", "level": "Débutant à Avancé" },
+          { "name": "ENTREPRENEURIAT", "duration": "3-4 mois", "level": "Tous niveaux" },
+          { "name": "FINANCE & COMPTABILITÉ", "duration": "3 mois", "level": "Débutant à Inter." },
+          { "name": "BUSINESS DEVELOPMENT", "duration": "2-3 mois", "level": "Intermédiaire" }
+        ],
+        "highlights": [
+          "80+ heures de contenu vidéo",
+          "30+ cas pratiques africains",
+          "5 certifications professionnelles",
+          "Modèles et outils prêts à l'emploi",
+          "Études de cas d'entreprises africaines",
+          "Accès à des mentors entrepreneurs"
+        ],
+        "jobs": [
+          "Manager / Directeur",
+          "Chef de Projet",
+          "Entrepreneur",
+          "Business Developer",
+          "Consultant",
+          "Directeur Commercial"
+        ],
+        "salary": "400K - 2M FCFA/mois (+ variable)",
+        "demand": "Très élevée",
+        "testimonial": {
+          "text": "Le parcours Entrepreneuriat m'a permis de structurer mon projet, lever 50M FCFA, et lancer ma startup EdTech qui emploie aujourd'hui 15 personnes. EduPro a été le déclencheur.",
+          "author": "Moussa Traoré, 32 ans",
+          "role": "Fondateur de TechLearn Mali 🇲🇱"
+        }
+      },
+      "construction": {
+        "title": "CONSTRUCTION DURABLE & BIM",
+        "headline": "Construisez l'avenir avec des compétences modernes de construction",
+        "courses": [
+          { "name": "ÉCO-CONSTRUCTION", "duration": "3 mois", "level": "Débutant à Inter." },
+          { "name": "BIM (BUILDING INFO MODELING)", "duration": "4 mois", "level": "Intermédiaire" },
+          { "name": "GESTION DE CHANTIER", "duration": "3 mois", "level": "Intermédiaire" },
+          { "name": "NORMES ENVIRONNEMENTALES", "duration": "2 mois", "level": "Intermédiaire" }
+        ],
+        "highlights": [
+          "70+ heures de contenu vidéo",
+          "20+ projets pratiques de construction",
+          "4 certifications sectorielles",
+          "Logiciels BIM (licences étudiantes)",
+          "Études de cas de projets africains",
+          "Réseau de professionnels de la construction"
+        ],
+        "jobs": [
+          "Ingénieur BIM",
+          "Architecte",
+          "Chef de Projet Construction",
+          "Consultant",
+          "Coordinateur BIM",
+          "Expert Normes"
+        ],
+        "salary": "350K - 1,8M FCFA/mois",
+        "demand": "Forte croissance",
+        "testimonial": {
+          "text": "Grâce au parcours BIM, je suis passé de dessinateur CAD à BIM Manager. Mon salaire a doublé et je travaille maintenant sur des projets internationaux depuis Dakar.",
+          "author": "Cheikh Diop, 35 ans",
+          "role": "BIM Manager, Cabinet d'architecture 🇸🇳"
+        }
+      }
+    },
+    "cta": "Découvrir le Skill Pack"
+  },
+  "howItWorks": {
+    "title": "De l'inscription à votre certificat en 3 étapes",
+    "steps": {
+      "choose": {
+        "number": 1,
+        "title": "CHOISISSEZ & COMMENCEZ",
+        "items": [
+          "Créez votre compte gratuit",
+          "Explorez le catalogue",
+          "Choisissez votre formation",
+          "Paiement flexible (Mobile Money accepté)"
+        ],
+        "timing": "Inscription en 2 minutes · Sans carte bancaire · Accès immédiat"
+      },
+      "learn": {
+        "number": 2,
+        "title": "APPRENEZ À VOTRE RYTHME",
+        "items": [
+          "Contenu interactif (vidéos, textes, exercices)",
+          "Exercices pratiques & projets réels",
+          "Quiz auto-corrigés avec feedback immédiat",
+          "Mode offline disponible"
+        ],
+        "timing": "Sur mobile, tablette ou ordinateur · En ligne ou hors ligne · 24/7"
+      },
+      "certify": {
+        "number": 3,
+        "title": "CERTIFIEZ-VOUS & PROGRESSEZ",
+        "items": [
+          "Certificats sécurisés et vérifiables",
+          "Co-certifiés avec des experts",
+          "Partagez sur LinkedIn en 1 clic",
+          "Accédez à de nouvelles opportunités"
+        ],
+        "timing": "Certificats co-certifiés · Portfolio en ligne · Reconnaissance marché"
+      }
+    },
+    "experience": {
+      "title": "Ce que vous vivrez concrètement avec EduPro",
+      "features": {
+        "quality": {
+          "title": "Contenu de Qualité",
+          "description": "Cours en plusieurs formats (vidéos HD, textes, audio, infographies) avec sous-titres français/anglais. Formateurs experts qui expliquent clairement. Durée optimale : 10-15 min par module.",
+          "benefit": "Apprenez selon votre style préféré, à votre rythme, sans vous ennuyer."
+        },
+        "practical": {
+          "title": "Exercices Pratiques",
+          "description": "Après chaque module, pratiquez avec des exercices concrets et des projets réels. Pas de théorie pure, vous construisez votre portfolio.",
+          "benefit": "Prouvez vos compétences aux recruteurs avec des réalisations concrètes."
+        },
+        "quizzes": {
+          "title": "Quiz et Évaluations",
+          "description": "Quiz interactifs après chaque section pour valider votre apprentissage. Feedback immédiat. Progression visible en temps réel.",
+          "benefit": "Identifiez vos forces et vos axes d'amélioration."
+        },
+        "community": {
+          "title": "Communauté et Support",
+          "description": "Rejoignez des groupes d'apprentissage avec d'autres apprenants. Posez vos questions, partagez vos projets, entraidez-vous.",
+          "benefit": "Apprenez plus vite grâce à l'intelligence collective."
+        }
+      }
+    }
+  },
+  "certifications": {
+    "title": "Des certificats qui ouvrent des portes",
+    "subtitle": "Chaque Skill Pack se conclut par une certification de compétences avérées créée en co-certification avec des experts. Nos certificats sont vérifiables et vous donnent un avantage concurrentiel.",
+    "features": {
+      "verifiable": {
+        "title": "Vérifiables",
+        "description": "Chaque certificat a un numéro unique et un QR code. Les recruteurs peuvent vérifier son authenticité en ligne en quelques secondes.",
+        "impact": "Confiance totale des employeurs, zéro fraude possible."
+      },
+      "coCertified": {
+        "title": "Co-certifiés",
+        "description": "Nos certifications sont créées en co-certification avec des experts reconnus. Chaque certification valide des compétences pratiques spécifiques.",
+        "impact": "Crédibilité maximale, validation par les pairs du secteur."
+      },
+      "shareable": {
+        "title": "Partageables",
+        "description": "Ajoutez vos certificats à votre profil LinkedIn en 1 clic. Affichez-les sur votre CV digital. Impressionnez les recruteurs et votre réseau.",
+        "impact": "Visibilité accrue, crédibilité renforcée."
+      },
+      "evolutive": {
+        "title": "Évolutives",
+        "description": "Accumulez plusieurs certifications et créez votre badge d'expertise. Devenez 'Data Analyst Certifié EduPro' ou 'Expert Business Developer'.",
+        "impact": "Différenciation sur le marché de l'emploi."
+      }
+    },
+    "example": {
+      "title": "Exemple de Certificat",
+      "name": "Jean Dupont",
+      "certified": "est certifié en",
+      "skill": "Data Analytics & IA",
+      "date": "Délivré le",
+      "number": "Certificat N°",
+      "verify": "Vérifier ce certificat"
+    }
+  },
+  "faq": {
+    "title": "Questions fréquemment posées",
+    "subtitle": "Tout ce que vous devez savoir avant de commencer",
+    "categories": {
+      "registration": {
+        "category": "INSCRIPTION & ACCÈS",
+        "questions": {
+          "account": {
+            "q": "Comment créer mon compte ?",
+            "a": "C'est très simple : Cliquez sur 'Créer mon compte gratuit', entrez email + mot de passe, choisissez votre pays, validez votre email. Durée totale : 2 minutes. Aucune carte bancaire nécessaire pour commencer."
+          },
+          "payment": {
+            "q": "Quels modes de paiement acceptez-vous ?",
+            "a": "Nous acceptons Mobile Money (Orange Money, Wave, MTN, M-Pesa), cartes bancaires (Visa, Mastercard), et virements bancaires. Aucune carte bancaire requise si vous payez avec Mobile Money !"
+          },
+          "lifetime": {
+            "q": "Ai-je un accès à vie aux formations achetées ?",
+            "a": "Cela dépend de la formation. Certaines offrent un accès à vie, d'autres une durée limitée (ex. 6 mois, 1 an). Les conditions d'accès sont clairement indiquées sur la page de chaque formation."
+          }
+        }
+      },
+      "content": {
+        "category": "CONTENU & APPRENTISSAGE",
+        "questions": {
+          "formats": {
+            "q": "Quels formats de formation sont proposés ?",
+            "a": "Nous proposons deux formats : Auto-formation (asynchrone) - apprenez 24/7 à votre rythme, ou Sessions cohorte (hybride) - groupe avec sessions live et interaction directe. Chaque formation indique clairement son format."
+          },
+          "prerequisites": {
+            "q": "Ai-je besoin de connaissances préalables ?",
+            "a": "Cela dépend de la formation. Chaque cours indique son niveau requis (débutant, intermédiaire, avancé) et les prérequis. Les formations débutant n'ont généralement pas de prérequis."
+          },
+          "languages": {
+            "q": "Les formations sont-elles uniquement en français ?",
+            "a": "Non ! Nous proposons du contenu en français, anglais, et certaines langues locales. L'interface de la plateforme est en français et anglais. La langue de chaque cours est clairement indiquée."
+          },
+          "mobile": {
+            "q": "Puis-je apprendre depuis mon téléphone ?",
+            "a": "Oui ! EduPro est 100% mobile-friendly avec interface optimisée, vidéos adaptatives, et mode offline. 78% de nos apprenants utilisent principalement leur smartphone !"
+          },
+          "offline": {
+            "q": "Que se passe-t-il si je n'ai pas toujours Internet ?",
+            "a": "Pas de problème ! Le mode offline permet de télécharger les vidéos et consulter le contenu sans connexion. Nous avons pensé à la réalité de la connectivité en Afrique avec optimisation de la bande passante."
+          }
+        }
+      },
+      "certifications": {
+        "category": "CERTIFICATIONS & CARRIÈRE",
+        "questions": {
+          "quality": {
+            "q": "Les certificats EduPro sont-ils de qualité ?",
+            "a": "Oui ! Créés selon les plus hauts standards : co-certifiés avec des experts, validant des compétences pratiques mesurables, alignés sur les besoins réels du marché, régulièrement mis à jour."
+          },
+          "employment": {
+            "q": "EduPro aide-t-il à trouver un emploi ?",
+            "a": "Oui ! Nous accompagnons avec des certificats de compétences avérées, portfolio de projets, et communauté professionnelle active. Nous développons des partenariats avec des entreprises pour faciliter le recrutement."
+          }
+        }
+      },
+      "pedagogy": {
+        "category": "PÉDAGOGIE & SUPPORT",
+        "questions": {
+          "updated": {
+            "q": "Les cours sont-ils à jour ?",
+            "a": "Oui ! Révisions majeures tous les 6-12 mois, ajouts continus de contenu, corrections dès signalement. Le digital évolue vite, nous veillons à ce que vous appreniez toujours des compétences actuelles."
+          }
+        }
+      },
+      "other": {
+        "category": "AUTRES QUESTIONS",
+        "questions": {
+          "countries": {
+            "q": "Dans quels pays EduPro est-il disponible ?",
+            "a": "Actuellement : Sénégal, Côte d'Ivoire, Rwanda. Accessible depuis n'importe où, même d'autres pays africains."
+          },
+          "friends": {
+            "q": "Puis-je apprendre avec des amis/collègues ?",
+            "a": "Oui, c'est encouragé ! Créez des groupes d'étude privés, partagez notes et projets, discutez en groupe. Apprendre en groupe augmente la motivation et favorise l'entraide !"
+          }
+        }
+      }
+    }
+  },
+  "cta": {
+    "title": "Votre prochaine opportunité commence ici",
+    "subtitle": "Prêt à transformer votre carrière ?",
+    "options": {
+      "start": {
+        "title": "Vous démarrez",
+        "description": "Explorez nos Skill Packs et formations",
+        "cta": "Découvrir"
+      },
+      "progress": {
+        "title": "Vous progressez",
+        "description": "Achat à la carte · Mobile Money accepté",
+        "cta": "Voir les formations"
+      },
+      "excellence": {
+        "title": "Vous visez l'excellence",
+        "description": "Formation complète · Certifications",
+        "cta": "Explorer"
+      },
+      "questions": {
+        "title": "Vous avez des questions",
+        "description": "Chat, email, téléphone · Réponse rapide",
+        "cta": "Contacter"
+      }
+    },
+    "launch": {
+      "badge": "Offre de lancement",
+      "title": "Les 100 premiers inscrits bénéficient de :",
+      "items": [
+        "Réduction de 25% sur votre prochain cours."
+      ],
+      "note": "Offre limitée - Ne manquez pas cette chance",
+      "cta": "Créer mon compte maintenant"
+    },
+    "reassurance": {
+      "quality": {
+        "title": "Garantie Qualité",
+        "description": "Contenu créé par des experts africains certifiés. Régulièrement mis à jour."
+      },
+      "support": {
+        "title": "Support Réactif",
+        "description": "Assistance en français et anglais. Communauté active. Vous n'êtes jamais seul."
+      },
+      "riskFree": {
+        "title": "Sans Risque",
+        "description": "Informations détaillées sur chaque formation. Paiement sécurisé. Support inclus."
+      }
+    }
+  }
+}
+

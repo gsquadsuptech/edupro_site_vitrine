@@ -1,0 +1,555 @@
+{
+  "meta": {
+    "title": "EduPro Formateurs | Digitalisez et Monétisez Votre Expertise",
+    "description": "Transformez votre savoir-faire en impact panafricain. Rejoignez 150+ formateurs et instituts qui partagent leur expertise sur EduPro. Outils IA pour créer, audience panafricaine pour rayonner, support complet pour réussir.",
+    "keywords": "plateforme formateurs, création de formations en ligne, monétiser expertise, plateforme e-learning, Afrique, formation digitale"
+  },
+  "hero": {
+    "title": "Transformez votre savoir-faire en",
+    "titleHighlight": "impact panafricain",
+    "subtitle": "Rejoignez 150+ formateurs et instituts qui partagent leur expertise sur EduPro. Des outils IA pour créer, une audience panafricaine pour rayonner, un support complet pour réussir.",
+    "cta": {
+      "primary": "Découvrir nos offres",
+      "secondary": "Créer votre compte"
+    },
+    "features": "Gratuit pour commencer · Outils IA inclus · Commission attractive · Support dédié",
+    "stats": {
+      "trainers": "Formateurs actifs",
+      "learners": "Apprenants formés",
+      "satisfaction": "Satisfaction formateurs",
+      "reach": "Portée mondiale"
+    }
+  },
+  "solution": {
+    "title": "EduPro : Votre partenaire pour digitaliser et rayonner",
+    "subtitle": "Créez une fois, impactez des milliers",
+    "description": "EduPro est bien plus qu'une plateforme : c'est votre partenaire technologique pour digitaliser votre expertise, toucher une audience panafricaine, et vous concentrer sur ce que vous faites de mieux : transmettre votre savoir-faire. Que vous soyez formateur indépendant ou institut de formation, nous avons la solution adaptée à vos ambitions.",
+    "independent": {
+      "title": "FORMATEURS INDÉPENDANTS",
+      "subtitle": "Partagez votre expertise avec une audience panafricaine",
+      "features": [
+        "Outils IA pour créer vos cours",
+        "Zéro frais de démarrage",
+        "Commissions jusqu'à 70%",
+        "Support technique complet",
+        "Communauté d'experts"
+      ],
+      "examples": "Exemples d'expertise :",
+      "examplesList": "Management • Tech • Soft Skills • Métiers",
+      "cta": "Devenir formateur"
+    },
+    "institutes": {
+      "title": "INSTITUTS DE FORMATION",
+      "subtitle": "Votre académie digitale en marque blanche en 48h",
+      "features": [
+        "Plateforme personnalisée à vos couleurs",
+        "Votre nom de domaine",
+        "Gestion complète des apprenants",
+        "Analytics et reporting avancés",
+        "Migration de votre contenu existant"
+      ],
+      "ideal": "Idéal pour :",
+      "idealList": "Cabinets de formation • Universités • Centres",
+      "cta": "Demander une démo institut"
+    }
+  },
+  "why": {
+    "title": "Pourquoi 150+ formateurs nous font confiance",
+    "subtitle": "Les 6 raisons qui changent tout",
+    "reasons": {
+      "simplified": {
+        "title": "Création Simplifiée",
+        "highlight": "Gagnez 40% de temps avec l'IA",
+        "description": "Notre assistant IA vous aide à structurer vos cours, créer des quiz pertinents, générer des exercices pratiques. La création n'a jamais été aussi simple.",
+        "cta": "Scénarisez votre expertise en quelques clics"
+      },
+      "audience": {
+        "title": "Audience Panafricaine",
+        "highlight": "Toucher toute l'Afrique",
+        "description": "Vos formations sont accessibles à des milliers d'apprenants motivés à travers l'Afrique et le monde entier. Pas de frontières pour votre expertise.",
+        "cta": "Une audience que vous n'auriez jamais touchée seul"
+      },
+      "revenue": {
+        "title": "Revenus Récurrents",
+        "highlight": "Jusqu'à 70% de commission",
+        "description": "Créez une fois, générez des revenus à chaque inscription. Monétisez votre expertise sans plafond de revenus.",
+        "cta": "Vos formations travaillent pour vous 24/7"
+      },
+      "support": {
+        "title": "Support Complet",
+        "highlight": "On s'occupe de la technique",
+        "description": "Hébergement, paiements, certificats, support apprenants : tout est géré. Vous vous concentrez sur la création et la transmission.",
+        "cta": "Support dédié en français, réponse sous 24h"
+      },
+      "pilotage": {
+        "title": "Pilotage Facile",
+        "highlight": "Analytics en temps réel",
+        "description": "Suivez la progression de vos apprenants, identifiez les points d'amélioration, mesurez votre impact. Des données pour optimiser vos formations.",
+        "cta": "Dashboard intuitif, insights actionnables"
+      },
+      "zeroInvestment": {
+        "title": "Zéro Investissement",
+        "highlight": "Lancez-vous sans frais ni infrastructure",
+        "description": "Pas de site web à créer, pas d'hébergement à payer, pas d'outils marketing à acheter. EduPro gère tout : la technologie, les paiements, la promotion.",
+        "cta": "Concentrez-vous sur votre expertise, on s'occupe du reste."
+      }
+    }
+  },
+  "features": {
+    "title": "Des outils conçus pour votre succès",
+    "subtitle": "Tout ce dont vous avez besoin, en un seul endroit",
+    "features": {
+      "studio": {
+        "title": "Studio de Création",
+        "items": [
+          "Éditeur de contenu intuitif",
+          "Intégration de vidéos (optimisées auto)",
+          "Création de quiz et exercices",
+          "Intégration de documents (PDF, PPT, Word)",
+          "Aperçu en temps réel"
+        ]
+      },
+      "ai": {
+        "title": "Assistant IA",
+        "items": [
+          "Structuration automatique de cours",
+          "Génération de quiz contextualisés",
+          "Suggestions d'exercices pratiques",
+          "Optimisation pédagogique"
+        ]
+      },
+      "learners": {
+        "title": "Gestion des Apprenants",
+        "items": [
+          "Suivi de progression en temps réel",
+          "Messagerie intégrée",
+          "Groupes de discussion",
+          "Sessions live (Meet/Zoom/Teams)",
+          "Livraison automatique de certificats",
+          "Notifications intelligentes"
+        ]
+      },
+      "monetization": {
+        "title": "Monétisation",
+        "items": [
+          "Tarification flexible (ponctuel, abonnement, paiements échelonnés)",
+          "Paiements sécurisés (Mobile Money, carte bancaire)",
+          "Commissions automatiques",
+          "Factures générées automatiquement",
+          "Codes promo et offres"
+        ]
+      },
+      "multiPlatform": {
+        "title": "Multi-plateforme",
+        "items": [
+          "Web responsive",
+          "Application PWA",
+          "Mode offline",
+          "Synchronisation automatique",
+          "Optimisé faible bande passante",
+          "Accès illimité 24/7"
+        ]
+      },
+      "analytics": {
+        "title": "Analytics",
+        "items": [
+          "Taux de complétion",
+          "Engagement par module",
+          "Feedback apprenants",
+          "Revenus en temps réel",
+          "Insights pédagogiques",
+          "Export de données"
+        ]
+      },
+      "personalization": {
+        "title": "Personnalisation (Instituts)",
+        "items": [
+          "Académie digitale interne",
+          "Votre nom de domaine",
+          "Identité de marque personnalisée",
+          "Emails de marque",
+          "Certificats à votre nom",
+          "Portail dédié"
+        ]
+      },
+      "security": {
+        "title": "Sécurité & Conformité",
+        "items": [
+          "Hébergement sécurisé",
+          "Certificats SSL",
+          "Sauvegardes quotidiennes",
+          "Conforme RGPD",
+          "Protection du contenu",
+          "Anti-piratage"
+        ]
+      },
+      "certifications": {
+        "title": "Certifications",
+        "items": [
+          "Modèles personnalisables",
+          "Vérification en ligne",
+          "Export PDF haute qualité",
+          "Badges digitaux",
+          "Partage LinkedIn automatique"
+        ]
+      }
+    }
+  },
+  "pricing": {
+    "title": "Des revenus attractifs et transparents",
+    "subtitle": "Monétisez votre expertise à votre juste valeur",
+    "plans": {
+      "starter": {
+        "name": "EDUPRO TEACH Starter",
+        "subtitle": "Monétisez votre expertise",
+        "position": "Positionnement : Vendre sur la marketplace",
+        "pricing": {
+          "free": "Free",
+          "freeNote": "Gratuit (commission 50%)",
+          "pro": "Pro : 150K FCFA/an",
+          "proNote": "(commission 70% sur les ventes)"
+        },
+        "features": [
+          "Publication sur marketplace",
+          "Outils de création IA (offre Pro)",
+          "Gestion des ventes et paiements",
+          "Analytics de performance",
+          "Support créateur",
+          "Profil formateur public"
+        ],
+        "cta": "Commencer gratuitement"
+      },
+      "academy": {
+        "name": "EDUPRO TEACH Academy",
+        "subtitle": "Votre académie en ligne en marque blanche",
+        "position": "Positionnement : École digitale personnalisée",
+        "pricing": {
+          "starter": "Academy Starter",
+          "starterPrice": "500K FCFA/an (jusqu'à 100 apprenants)",
+          "growth": "Academy Growth",
+          "growthPrice": "1,5M FCFA/an (jusqu'à 500 apprenants)",
+          "enterprise": "Academy Enterprise",
+          "enterprisePrice": "2,5M FCFA/an (jusqu'à 1000 apprenants)",
+          "more": "+1000 apprenants : sur devis"
+        },
+        "features": [
+          "Tout TEACH Starter +",
+          "Plateforme personnalisée",
+          "Domaine personnalisé",
+          "Gestion complète des apprenants",
+          "Outils de création avancés",
+          "Pages de vente personnalisables",
+          "Intégrations paiement",
+          "Analytics avancés",
+          "Account manager"
+        ],
+        "cta": "Demander une démo",
+        "popular": "POPULAIRE"
+      },
+      "certified": {
+        "name": "EDUPRO TEACH Certified",
+        "subtitle": "Devenez formateur certifié EduPro",
+        "position": "Positionnement : Certification professionnelle de formateur digital",
+        "pricing": {
+          "price": "250K FCFA",
+          "validity": "Certification valable 3 ans"
+        },
+        "program": "Programme - Bootcamp des Formateurs (6 semaines intensives) :",
+        "programItems": [
+          "Learning design moderne",
+          "Scénarisation pédagogique",
+          "Outils de création e-learning",
+          "Animation et engagement apprenant",
+          "Évaluation des apprentissages",
+          "Marketing de formations"
+        ],
+        "features": [
+          "Formation 100% pratique (création assistée de votre premier cours)",
+          "Certification reconnue (valable 3 ans)",
+          "Badge LinkedIn + Certificat digital",
+          "Listing prioritaire sur marketplace",
+          "Communauté de formateurs certifiés",
+          "Webinaires et masterclasses mensuelles"
+        ],
+        "cta": "S'inscrire au bootcamp"
+      },
+      "partner": {
+        "name": "EDUPRO TEACH Partner",
+        "subtitle": "Partenariats stratégiques de co-certification",
+        "position": "Positionnement : Collaboration institut-plateforme",
+        "model": "Modèle : Co-création de parcours certifiants",
+        "features": [
+          "Certification double badge (Institut + EduPro)",
+          "Revenus partagés",
+          "Marketing commun",
+          "Accès technologie EduPro",
+          "Support dédié"
+        ],
+        "structure": "Structure : Partenariat sur mesure",
+        "cta": "Contacter partenariat"
+      }
+    }
+  },
+  "faq": {
+    "title": "Questions fréquemment posées",
+    "questions": {
+      "technical": {
+        "q": "Ai-je besoin de compétences techniques pour créer mes formations ?",
+        "a": "Absolument pas ! Notre interface est conçue pour être intuitive. Si vous savez utiliser PowerPoint ou Word, vous saurez utiliser EduPro. Notre équipe support est toujours disponible pour vous aider."
+      },
+      "time": {
+        "q": "Combien de temps faut-il pour créer une formation ?",
+        "a": "Grâce à nos outils IA, vous pouvez structurer une formation complète en 2-3 jours au lieu de 2-3 semaines. Nos formateurs créent en moyenne leur premier module en 4-6 heures. Notez que le temps de création dépend de la disponibilité de votre contenu de formation."
+      },
+      "payment": {
+        "q": "Comment suis-je payé ?",
+        "a": "Les commissions sont calculées automatiquement et payées en fin de mois (sous 30 jours) via Mobile Money, virement bancaire, ou tout autre moyen de paiement disponible dans votre pays. Pour les formations en auto-formation : paiement sous 30 jours après achat. Pour les sessions : paiement en fin de session ou par échéances au fur et à mesure. Vous recevez une facture détaillée par email."
+      },
+      "pricing": {
+        "q": "Puis-je fixer mes propres prix ?",
+        "a": "Oui ! Vous fixez vos prix de formation en toute liberté. Nous vous conseillons sur les prix du marché, mais la décision finale vous appartient."
+      },
+      "refund": {
+        "q": "Que se passe-t-il si un apprenant demande un remboursement ?",
+        "a": "Nous appliquons une politique de remboursement de 7 jours. Si un apprenant demande un remboursement dans les 7 jours suivant l'achat et n'a pas dépassé les seuils d'utilisation, le remboursement est accepté. Après 7 jours, les commissions sont considérées acquises."
+      },
+      "existing": {
+        "q": "Puis-je utiliser mes formations existantes ?",
+        "a": "Absolument ! Vous pouvez importer votre contenu existant (PowerPoint, PDF, vidéos). Notre équipe peut même vous aider à le restructurer en format digital pour une meilleure expérience apprenant."
+      },
+      "promotion": {
+        "q": "Comment ma formation est-elle promue ?",
+        "a": "EduPro investit dans le marketing pour attirer les apprenants sur la plateforme. Votre formation est mise en avant selon sa qualité, les évaluations des apprenants, et votre niveau d'abonnement. Vous pouvez également promouvoir votre formation sur vos propres canaux."
+      }
+    },
+    "another": "Une autre question ?",
+    "contact": "Contacter notre équipe formateurs"
+  },
+  "problems": {
+    "title": "Les défis de la formation en Afrique que vous connaissez trop bien",
+    "subtitle": "Votre expertise est précieuse, mais sous-exploitée",
+    "problems": {
+      "reach": {
+        "title": "Portée limitée",
+        "description": "Vous formez 10-30 personnes en présentiel, mais des milliers ont besoin de votre expertise.",
+        "consequence": "Impact limité et revenus plafonnés malgré une expertise reconnue."
+      },
+      "tools": {
+        "title": "Outils complexes",
+        "description": "Créer du contenu digital de qualité demande des compétences techniques que vous n'avez pas ou peu de temps à maîtriser.",
+        "consequence": "Vous restez bloqué dans le présentiel ou créez du contenu de qualité moyenne."
+      },
+      "visibility": {
+        "title": "Visibilité inexistante",
+        "description": "Même avec du contenu de qualité, comment atteindre votre audience cible à travers l'Afrique?",
+        "consequence": "Vos formations restent confidentielles et votre expertise sous-valorisée."
+      },
+      "management": {
+        "title": "Gestion chronophage",
+        "description": "Entre la création, la gestion administrative, le suivi des apprenants et la logistique, vous manquez de temps pour ce qui compte: former.",
+        "consequence": "Épuisement et impossibilité de scaler votre activité."
+      }
+    },
+    "closing": "Et si vous pouviez former des milliers de personnes avec le même effort?"
+  },
+  "testimonials": {
+    "title": "Ils ont digitalisé leur expertise avec EduPro",
+    "subtitle": "Des formateurs qui réussissent déjà",
+    "testimonials": {
+      "mariame": {
+        "name": "Mariame WONE",
+        "role": "Coach - Formatrice",
+        "specialty": "Gestion de carrière et dynamiques professionnelles",
+        "quote": "Je tiens à remercier l'équipe pour l'initiative et l'accompagnement. Habituée aux webinaires et aux sessions en présentiel, j'ai découvert un format entièrement nouveau... et j'en ressors avec de vraies compétences! Grâce aux cours sous format vidéos visualisées en amont, la création de cours s'est faite facilement. Une collaboration inspirante que j'ai hâte de poursuivre.",
+        "course": "Gestion de carrière",
+        "rating": 5
+      },
+      "auger": {
+        "name": "Auger MAYOUMA",
+        "role": "Coach - Formateur QHSE",
+        "specialty": "Qualité, Hygiène, Sécurité et Environnement",
+        "quote": "C'est une très bonne initiative d'avoir une plateforme qui répond aux besoins du continent africain. Plus on avançait je me suis rendu compte qu'en tant que formateur, nous avons les connaissances mais nous ne savions pas comment les dispenser à l'ère du digital. J'ai pu acquérir beaucoup de compétences au cours de ce bootcamp surtout la structuration des cours. Je commence à les appliquer dans mes formations au niveau de mon entreprise.",
+        "course": "QHSE & Sécurité",
+        "rating": 5
+      },
+      "ibrahima": {
+        "name": "Ibrahima YADE",
+        "role": "Coach - Formateur en Formation",
+        "specialty": "Formation de formateurs",
+        "quote": "Je félicite toute l'équipe de Edupro pour leur disponibilité et leur suivi lors de ce bootcamp. J'ai vécu une expérience enrichissante et inspirante. J'y ai appris à utiliser les outils digitaux et l'IA pour moderniser mes cours. Surtout, j'ai su adapter mes formations jadis en présentiel au format digital: modules structurés, quiz, certificats et suivi des apprenants. Aujourd'hui, je pourrais déployer mes sessions en ligne avec une meilleure expérience pour tous.",
+        "course": "Formation de formateurs",
+        "rating": 5
+      }
+    },
+    "closing": "Plus de 150 formateurs et instituts nous font confiance à travers toute l'Afrique et le monde entier"
+  },
+  "process": {
+    "title": "Comment démarrer avec EduPro",
+    "subtitle": "De l'inscription à votre première vente en 4 étapes",
+    "steps": {
+      "application": {
+        "number": "01",
+        "title": "Candidature (5 min)",
+        "subtitle": "Parlez-nous de votre expertise",
+        "description": "Remplissez notre formulaire avec vos domaines d'expertise, votre expérience, et vos objectifs. Simple et rapide.",
+        "note": "Formulaire adapté : indépendant ou institut"
+      },
+      "qualification": {
+        "number": "02",
+        "title": "Qualification (48h)",
+        "subtitle": "Nous validons votre profil",
+        "description": "Notre équipe analyse votre candidature et vous contacte sous 48h pour un échange téléphonique de qualification.",
+        "note": "Taux d'acceptation : 85% des candidats qualifiés"
+      },
+      "onboarding": {
+        "number": "03",
+        "title": "Onboarding (1 semaine)",
+        "subtitle": "Formation et accompagnement",
+        "description": "Accédez à notre bootcamp de formation, découvrez les outils, créez votre premier module avec notre support.",
+        "note": "Tutoriels vidéo + sessions live + support dédié"
+      },
+      "launch": {
+        "number": "04",
+        "title": "Lancement (Vous choisissez)",
+        "subtitle": "Publiez et commencez à former",
+        "description": "Une fois votre contenu prêt, publiez-le sur la plateforme. Nous gérons la promotion, vous gérez votre expertise.",
+        "note": "Dashboard analytique inclus"
+      }
+    },
+    "cta": "Commencer mon parcours maintenant"
+  },
+  "resources": {
+    "title": "On vous accompagne à chaque étape",
+    "subtitle": "Vous n'êtes jamais seul avec EduPro",
+    "resources": {
+      "training": {
+        "title": "Centre de Formation",
+        "items": [
+          "Bootcamp formateurs (6 modules)",
+          "Tutoriels vidéo (50+)",
+          "Guides PDF téléchargeables",
+          "Best practices pédagogiques",
+          "Webinaires périodiques"
+        ]
+      },
+      "community": {
+        "title": "Communauté",
+        "items": [
+          "Groupes WhatsApp par pays",
+          "Événements networking",
+          "Partage d'expériences",
+          "Co-création de contenus",
+          "Mentorat entre pairs"
+        ]
+      },
+      "support": {
+        "title": "Support Technique",
+        "items": [
+          "Chat en direct (9h-18h)",
+          "Email support (24h)",
+          "Vidéos de dépannage",
+          "Account manager (Premium)",
+          "Base de connaissances"
+        ]
+      },
+      "marketing": {
+        "title": "Outils Marketing",
+        "items": [
+          "Templates de promotion",
+          "Visuels de communication",
+          "Landing pages personnalisées",
+          "Codes promo illimités",
+          "Guides marketing"
+        ]
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Prêt à transformer votre expertise en impact ?",
+    "subtitle": "Rejoignez les 150+ formateurs qui changent l'Afrique",
+    "description": "Des milliers d'apprenants à travers le Sénégal, la Côte d'Ivoire et le Rwanda recherchent activement votre expertise. Ne laissez pas votre savoir-faire limité par les frontières du présentiel.",
+    "ctas": {
+      "starter": "Commencer avec TEACH Starter",
+      "academy": "Découvrir TEACH Academy",
+      "certified": "Devenir TEACH Certified",
+      "partner": "Contacter TEACH Partner"
+    },
+    "features": "✓ Inscription en 5 minutes · Validation sous 48h · Support dédié en français"
+  },
+  "application": {
+    "title": "Candidature Formateur",
+    "subtitle": "Remplissez ce formulaire pour postuler comme formateur sur EduPro",
+    "page": {
+      "title": "Postuler comme formateur",
+      "subtitle": "Rejoignez notre communauté de formateurs et partagez votre expertise"
+    },
+    "form": {
+      "fields": {
+        "firstName": {
+          "label": "Prénom *",
+          "placeholder": "Ex: Cheikh"
+        },
+        "lastName": {
+          "label": "Nom *",
+          "placeholder": "Ex: Ndiaye"
+        },
+        "email": {
+          "label": "Email *",
+          "placeholder": "votre.email@exemple.com"
+        },
+        "phone": {
+          "label": "Téléphone",
+          "placeholder": "+221 77 123 45 67"
+        },
+        "experienceYears": {
+          "label": "Années d'expérience",
+          "placeholder": "Sélectionnez",
+          "options": {
+            "0": "Moins de 1 an",
+            "1": "1-2 ans",
+            "3": "3-5 ans",
+            "6": "6-10 ans",
+            "11": "Plus de 10 ans"
+          }
+        },
+        "specialties": {
+          "label": "Spécialités / Domaines d'expertise *",
+          "placeholder": "Ex: Développement web, Marketing digital, Gestion de projet...",
+          "hint": "Listez vos domaines d'expertise séparés par des virgules"
+        },
+        "cv": {
+          "label": "CV * (PDF, DOC, DOCX - Max 5MB)"
+        },
+        "coverLetter": {
+          "label": "Lettre de motivation *",
+          "placeholder": "Décrivez votre motivation pour devenir formateur sur EduPro..."
+        },
+        "bootcamp": {
+          "label": "Je souhaite m'inscrire au Bootcamp des Formateurs",
+          "description": "Programme intensif de 6 semaines pour maîtriser la création de formations digitales"
+        },
+        "certification": {
+          "label": "Je souhaite devenir formateur certifié EduPro",
+          "price": "250 000 FCFA - Certification valable 3 ans",
+          "includes": "Inclut : Bootcamp des Formateurs (6 semaines intensives), Certification reconnue, Badge LinkedIn, Listing prioritaire sur marketplace, Communauté de formateurs certifiés, Webinaires et masterclasses mensuelles"
+        }
+      },
+      "submit": {
+        "sending": "Envoi en cours...",
+        "send": "Envoyer ma candidature"
+      },
+      "success": {
+        "title": "Candidature envoyée !",
+        "message": "Merci pour votre candidature. Notre équipe l'examinera et vous contactera dans les plus brefs délais.",
+        "backHome": "Retour à l'accueil"
+      },
+      "errors": {
+        "recaptchaNotLoaded": "reCAPTCHA n'est pas encore chargé. Veuillez patienter quelques instants.",
+        "recaptchaError": "Erreur lors de la vérification de sécurité. Veuillez réessayer.",
+        "submitError": "Erreur lors de l'envoi de la candidature",
+        "genericError": "Une erreur est survenue"
+      }
+    }
+  }
+}
+

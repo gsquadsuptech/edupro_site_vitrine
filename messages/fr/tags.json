@@ -1,0 +1,97 @@
+{
+  "title": "Tags de cours",
+  "description": "Gérez les tags pour organiser et filtrer vos cours",
+  "createTag": "Créer un tag",
+  "searchPlaceholder": "Rechercher un tag...",
+
+  "sortBy": {
+    "label": "Trier par",
+    "recent": "Plus récent",
+    "oldest": "Plus ancien",
+    "nameAsc": "Nom (A-Z)",
+    "nameDesc": "Nom (Z-A)"
+  },
+
+  "form": {
+    "name": "Nom du tag",
+    "namePlaceholder": "Ex: JavaScript",
+    "slug": "Slug (URL)",
+    "slugPlaceholder": "Ex: javascript",
+    "slugDescription": "Généré automatiquement à partir du nom. Utilisé dans les URL.",
+    "slugModifiable": "Vous pouvez modifier le slug manuellement",
+    "slugGeneratedTooltip": "Le slug est généré automatiquement à partir du nom",
+    "description": "Description",
+    "descriptionPlaceholder": "Une brève description du tag",
+    "color": "Couleur"
+  },
+
+  "table": {
+    "name": "Nom",
+    "description": "Description",
+    "slug": "Slug",
+    "courses": "Cours",
+    "actions": "Actions"
+  },
+
+  "actions": {
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "create": "Créer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "viewCourses": "Voir les cours",
+    "update": "Mettre à jour"
+  },
+
+  "viewMode": {
+    "grid": "Grille",
+    "list": "Liste"
+  },
+
+  "messages": {
+    "noTags": "Aucun tag trouvé",
+    "loadError": "Erreur lors du chargement des tags",
+    "loadingTags": "Chargement des tags...",
+    "supabaseNotInitialized": "Client Supabase non initialisé.",
+    "unableToLoad": "Impossible de charger les tags. Veuillez réessayer.",
+    "noTagsCreate": "Aucun tag trouvé. Créez-en un nouveau.",
+    "errorLoading": "Une erreur est survenue lors du chargement des tags.",
+    "noResults": "Aucun résultat ne correspond à votre recherche",
+    "createNewTag": "Créez un nouveau tag pour commencer",
+    "nameRequired": "Le nom du tag est requis",
+    "slugExists": "Ce slug est déjà utilisé par un autre tag. Veuillez en choisir un autre.",
+    "organizationError": "Impossible de récupérer l'ID de l'organisation. Veuillez vous reconnecter.",
+    "unexpectedError": "Une erreur inattendue est survenue. Veuillez réessayer.",
+    "tagUpdated": "Tag mis à jour",
+    "tagUpdatedDesc": "Le tag \"{name}\" a été modifié avec succès.",
+    "tagCreated": "Nouveau tag créé",
+    "tagCreatedDesc": "Le tag \"{name}\" a été ajouté avec succès à votre organisation.",
+    "connectionError": "Erreur de connexion",
+    "connectionErrorDesc": "Impossible de se connecter à la base de données. Veuillez rafraîchir la page.",
+    "tagDeleted": "Tag supprimé",
+    "tagDeletedDesc": "Le tag \"{name}\" a été supprimé définitivement.",
+    "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer ce tag ? Cette action est irréversible.",
+    "createSuccess": "Tag créé avec succès",
+    "createError": "Erreur lors de la création du tag",
+    "updateSuccess": "Tag mis à jour avec succès",
+    "updateError": "Erreur lors de la mise à jour du tag",
+    "deleteSuccess": "Tag supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression du tag",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce tag ?",
+    "authRequired": "Authentification requise pour charger les tags."
+  },
+
+  "dialog": {
+    "editTitle": "Modifier le tag",
+    "createTitle": "Créer un nouveau tag"
+  },
+
+  "badge": {
+    "courses": "cours"
+  },
+
+  "colorPicker": {
+    "title": "Sélectionner une couleur"
+  }
+}

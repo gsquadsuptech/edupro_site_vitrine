@@ -1,0 +1,877 @@
+{
+  "common": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "loading": "Loading...",
+    "loadingInstructorSpace": "Loading your instructor space...",
+    "redirectingToLogin": "Redirecting to login page...",
+    "error": "Error",
+    "loadingError": "Loading error",
+    "allTime": "All time",
+    "currentMonth": "Current month",
+    "active": "active",
+    "pending": "Pending",
+    "average": "Course average",
+    "createdOn": "Created on",
+    "students": "students",
+    "seeDetails": "See details",
+    "manageCohort": "Manage cohort",
+    "noData": "No data available",
+    "refresh": "Refresh",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "download": "Download",
+    "view": "View",
+    "actions": "Actions"
+  },
+  "dashboard": {
+    "title": "Instructor Dashboard",
+    "welcome": "Welcome, {name}. Here's an overview of your performance.",
+    "totalRevenue": "Total Revenue",
+    "currentMonthRevenue": "Current Month Revenue",
+    "students": "Students",
+    "courses": "Courses",
+    "commissionsToReceive": "Commissions to Receive",
+    "completionRate": "Completion Rate",
+    "revenueEvolution": "Revenue Evolution",
+    "recentActivity": "Recent Activity",
+    "loadingData": "Loading data...",
+    "quickActions": "Quick Actions",
+    "contactStudents": "Contact Students",
+    "contactStudentsDesc": "Send a message",
+    "viewAnalytics": "View Analytics",
+    "viewAnalyticsDesc": "Performance details",
+    "generateReport": "Generate Report",
+    "generateReportDesc": "Export data"
+  },
+  "sidebar": {
+    "title": "EduPro Instructor",
+    "dashboard": "Dashboard",
+    "myCourses": "My Courses",
+    "students": "Students",
+    "analytics": "Analytics",
+    "commissions": "Commissions",
+    "reports": "Reports",
+    "settings": "Settings",
+    "activeCourses": "Active courses",
+    "studentsLabel": "Students",
+    "averageRating": "Average rating",
+    "learnerInterface": "Learner Interface",
+    "adminInterface": "Admin Interface",
+    "logout": "Log out",
+    "loggingOut": "Logging out...",
+    "instructor": "Instructor"
+  },
+  "header": {
+    "title": "EduPro Instructor",
+    "settings": "Settings",
+    "logout": "Logout",
+    "instructor": "Instructor"
+  },
+  "courses": {
+    "title": "My Courses",
+    "description": "Manage your courses and track their performance",
+    "totalCourses": "Total Courses",
+    "publishedCourses": "Published Courses",
+    "totalStudents": "Total Students",
+    "allCourses": "All Courses ({count})",
+    "noCourses": "No courses found",
+    "noCoursesDesc": "Your courses will appear here once they are created by the administration.",
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "createdOn": "Created on"
+  },
+  "students": {
+    "title": "Student Management",
+    "description": "Manage your students and track their progress",
+    "refresh": "Refresh",
+    "sendMessage": "Send a message",
+    "sendMessageTo": "Send a message to {count} student(s)",
+    "messageTemplate": "Message template",
+    "customMessage": "Custom message",
+    "welcome": "Welcome",
+    "reminder": "Training reminder",
+    "congratulations": "Congratulations",
+    "subject": "Subject",
+    "subjectPlaceholder": "Message subject",
+    "message": "Message",
+    "messagePlaceholder": "Your message...",
+    "send": "Send",
+    "loadingStudents": "Loading students...",
+    "totalStudents": "Total Students",
+    "totalStudentsDesc": "All your students",
+    "activeStudents": "Active Students",
+    "activeStudentsDesc": "Active this month",
+    "inactiveStudents": "Inactive Students",
+    "inactiveStudentsDesc": "Inactive +7 days",
+    "selected": "Selected",
+    "selectedDesc": "For bulk actions",
+    "filtersAndSearch": "Filters and Search",
+    "searchPlaceholder": "Search for a student...",
+    "status": "Status",
+    "statusPlaceholder": "Status",
+    "allStatuses": "All statuses",
+    "active": "Active",
+    "inactive": "Inactive",
+    "completed": "Completed",
+    "progress": "Progress",
+    "progressPlaceholder": "Progress",
+    "allProgress": "All progress",
+    "low": "Low (0-30%)",
+    "medium": "Medium (30-70%)",
+    "high": "High (70-100%)",
+    "studentsList": "Students List",
+    "selectedCount": "{count} selected",
+    "deselectAll": "Deselect all",
+    "templates": {
+      "welcome": {
+        "subject": "Welcome to your training!",
+        "content": "Hello,\n\nI welcome you to your new training. Feel free to contact me if you have any questions.\n\nBest regards,"
+      },
+      "reminder": {
+        "subject": "Reminder - Continue your training",
+        "content": "Hello,\n\nI notice that you haven't made progress recently in your training. Feel free to resume where you left off.\n\nBest regards,"
+      },
+      "congratulations": {
+        "subject": "Congratulations on your progress!",
+        "content": "Hello,\n\nCongratulations on your excellent progress in the training! Keep it up.\n\nBest regards,"
+      }
+    },
+    "table": {
+      "searchPlaceholder": "Search for a student...",
+      "filters": "Filters",
+      "export": "Export",
+      "filterLabels": {
+        "status": "Status",
+        "course": "Course",
+        "progress": "Progress"
+      },
+      "filterOptions": {
+        "status": {
+          "all": "All statuses",
+          "active": "Active",
+          "inactive": "Inactive",
+          "completed": "Completed"
+        },
+        "course": {
+          "all": "All courses"
+        },
+        "progress": {
+          "all": "All progress",
+          "low": "Low (0-33%)",
+          "medium": "Medium (33-66%)",
+          "high": "High (66-100%)"
+        }
+      },
+      "bulkActions": {
+        "selected": "{count} student selected | {count} students selected",
+        "sendMessage": "Send a message",
+        "exportData": "Export data",
+        "cancel": "Cancel"
+      },
+      "ariaLabel": "Students list",
+      "headers": {
+        "name": "Name",
+        "email": "Email",
+        "course": "Course",
+        "progress": "Progress",
+        "lastActivity": "Last Activity",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "completed": "Completed"
+      },
+      "timeSpent": "{hours}h {minutes}min",
+      "lastActivity": {
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{days} days ago"
+      },
+      "lessons": "{completed}/{total} lessons",
+      "actions": {
+        "sendMessage": "Send a message",
+        "viewDetails": "View details"
+      },
+      "empty": {
+        "title": "No student found",
+        "description": "Try modifying your search criteria."
+      },
+      "mobile": {
+        "course": "Course",
+        "progress": "Progress",
+        "lastActivity": "Last Activity",
+        "message": "Message",
+        "details": "Details"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "display": "Showing {from} to {to} of {total} results"
+      }
+    }
+  },
+  "analytics": {
+    "title": "Detailed Analytics",
+    "description": "In-depth analysis of your performance",
+    "period": {
+      "7d": "7 days",
+      "30d": "30 days",
+      "90d": "90 days",
+      "1y": "1 year"
+    },
+    "refresh": "Refresh",
+    "totalRevenue": "Total Revenue",
+    "commissions": "Commissions",
+    "activeStudents": "Active Students",
+    "completionRate": "Completion Rate",
+    "averageEngagement": "Average Engagement",
+    "tabs": {
+      "revenue": "Revenue",
+      "courses": "Courses",
+      "engagement": "Engagement",
+      "progress": "Progress"
+    },
+    "revenueEvolution": "Revenue Evolution",
+    "newStudents": "New Students",
+    "coursePerformance": "Course Performance",
+    "revenueByCourse": "Revenue by Course",
+    "studentDistribution": "Student Distribution",
+    "engagementMetrics": "Engagement Metrics",
+    "dailyConnections": "Daily connections",
+    "averageSessionTime": "Average session time",
+    "retentionRate": "Retention rate",
+    "averageSatisfaction": "Average satisfaction",
+    "weeklyProgress": "Weekly Progress",
+    "completions": "Completions",
+    "enrollments": "Enrollments",
+    "dropouts": "Dropouts",
+    "exportData": "Export Data",
+    "exportCSV": "Export CSV",
+    "exportExcel": "Export Excel",
+    "exportPDF": "PDF Report",
+    "maximum": "Maximum",
+    "growth": "Growth"
+  },
+  "commissions": {
+    "title": "My Commissions",
+    "description": "Track your commissions and payments",
+    "dashboard": {
+      "status": {
+        "pending": "Pending",
+        "paid": "Paid",
+        "canceled": "Canceled"
+      },
+      "empty": {
+        "title": "No commissions available",
+        "description": "Commissions will appear here when you have sales."
+      },
+      "currency": "FCFA",
+      "kpis": {
+        "pending": {
+          "title": "Pending",
+          "description": "To be received soon"
+        },
+        "received": {
+          "title": "Received",
+          "description": "Total collected"
+        },
+        "rate": {
+          "title": "Commission Rate",
+          "description": "On each sale"
+        }
+      },
+      "monthlyEvolution": {
+        "title": "Monthly Evolution",
+        "thisMonth": "This month",
+        "lastMonth": "Last month",
+        "growth": "Growth"
+      },
+      "history": {
+        "title": "Commission History"
+      },
+      "filters": {
+        "all": "All",
+        "pending": "Pending",
+        "paid": "Paid",
+        "canceled": "Canceled"
+      },
+      "sort": {
+        "byDate": "By date",
+        "byAmount": "By amount"
+      },
+      "export": "Export",
+      "table": {
+        "headers": {
+          "date": "Date",
+          "amount": "Amount",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "actions": {
+          "viewDetails": "Details"
+        },
+        "empty": {
+          "all": "No commission found",
+          "pending": "No pending commission",
+          "paid": "No paid commission",
+          "canceled": "No canceled commission"
+        }
+      }
+    }
+  },
+  "reports": {
+    "title": "Reports and Exports",
+    "description": "Configure and generate your automatic reports",
+    "newReport": "New Report",
+    "editReport": "Edit Report",
+    "createReport": "Create New Report",
+    "reportTitle": "Report title",
+    "reportTitlePlaceholder": "Ex: Monthly analytics report",
+    "frequency": "Frequency",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "quarterly": "Quarterly",
+    "annual": "Annual",
+    "recipients": "Recipients (one per line)",
+    "recipientsPlaceholder": "email@example.com",
+    "reportContent": "Report content",
+    "includeKPIs": "Include KPIs",
+    "includeRevenue": "Include revenue",
+    "includeStudents": "Include students",
+    "includeRecommendations": "Include recommendations",
+    "activateReport": "Activate this report",
+    "tabs": {
+      "configs": "Configurations",
+      "history": "History"
+    },
+    "active": "Active",
+    "inactive": "Inactive",
+    "generate": "Generate",
+    "recipientsLabel": "Recipients:",
+    "nextRun": "Next run:",
+    "generatedOn": "Generated on:",
+    "size": "Size:",
+    "downloads": "Downloads:",
+    "download": "Download"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your account and preferences",
+    "tabs": {
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "reports": "Reports",
+      "security": "Security",
+      "public": "Public profile"
+    },
+    "profile": {
+      "title": "Profile Information",
+      "displayName": "Display name",
+      "contactEmail": "Contact email",
+      "bio": "Biography",
+      "bioPlaceholder": "Tell us about yourself and your expertise...",
+      "website": "Website",
+      "websitePlaceholder": "https://your-site.com",
+      "socialLinks": "Social networks",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "github": "GitHub",
+      "saveProfile": "Save profile"
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "emailNotifications": "Email notifications",
+      "emailNotificationsDesc": "Receive notifications by email",
+      "pushNotifications": "Push notifications",
+      "pushNotificationsDesc": "Receive notifications in the browser",
+      "notificationTypes": "Notification types",
+      "newStudentEnrollment": "New student enrollment",
+      "newStudentEnrollmentDesc": "When a student enrolls in your courses",
+      "studentProgress": "Student progress",
+      "studentProgressDesc": "When a student completes a module",
+      "courseCompletion": "Course completion",
+      "courseCompletionDesc": "When a student completes a course",
+      "paymentReceived": "Payment received",
+      "paymentReceivedDesc": "When you receive a payment",
+      "lowEngagement": "Low engagement",
+      "lowEngagementDesc": "When a student becomes inactive",
+      "weeklyReport": "Weekly report",
+      "weeklyReportDesc": "Weekly summary of your statistics",
+      "monthlyReport": "Monthly report",
+      "monthlyReportDesc": "Monthly summary of your performance",
+      "saveNotifications": "Save notifications"
+    },
+    "reports": {
+      "title": "Automatic Reports Configuration",
+      "autoGenerate": "Auto generation",
+      "autoGenerateDesc": "Generate reports automatically",
+      "reportFrequency": "Report frequency",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "reportFormat": "Report format",
+      "pdfOnly": "PDF only",
+      "excelOnly": "Excel only",
+      "both": "PDF and Excel",
+      "reportContent": "Report content",
+      "includeAnalytics": "Include analytics",
+      "includeStudentData": "Include student data",
+      "includeFinancials": "Include financial data",
+      "emailRecipients": "Report recipients",
+      "emailRecipientsPlaceholder": "email@example.com (one per line)",
+      "saveReports": "Save reports"
+    },
+    "security": {
+      "title": "Security Settings",
+      "twoFactor": "Two-factor authentication",
+      "twoFactorDesc": "Add an extra layer of security",
+      "sessionTimeout": "Session timeout (hours)",
+      "1hour": "1 hour",
+      "8hours": "8 hours",
+      "24hours": "24 hours",
+      "7days": "7 days",
+      "allowedIPs": "Allowed IP addresses (optional)",
+      "allowedIPsPlaceholder": "192.168.1.1 (one per line)",
+      "allowedIPsDesc": "Leave empty to allow all IP addresses",
+      "saveSecurity": "Save security"
+    },
+    "public": {
+      "title": "Public profile visibility",
+      "makePublic": "Make my profile public",
+      "makePublicDesc": "Allows access to your profile without login",
+      "publicURL": "Public URL:"
+    }
+  },
+  "cohorts": {
+    "detail": {
+      "loading": "Loading cohort data...",
+      "breadcrumb": {
+        "cohorts": "Cohorts"
+      },
+      "actions": {
+        "export": "Export",
+        "edit": "Edit"
+      },
+      "status": {
+        "active": "Active",
+        "upcoming": "Upcoming",
+        "completed": "Completed"
+      },
+      "dateRange": "From {start} to {end}",
+      "participantsCount": "{count} enrolled participant | {count} enrolled participants",
+      "sessionType": "Hybrid session with content",
+      "tabs": {
+        "overview": "Overview",
+        "participants": "Participants",
+        "progression": "Progress",
+        "evaluations": "Evaluations",
+        "sessions": "Live Sessions",
+        "announcements": "News Feed",
+        "communication": "Communication"
+      },
+      "errors": {
+        "fetchError": "Error {status}",
+        "loadCohortsError": "Error loading cohorts",
+        "noCohortFound": "No cohort found for this course",
+        "loadingError": "Loading error",
+        "notFound": "Cohort not found"
+      },
+      "backToCourses": "Back to courses"
+    },
+    "content": {
+      "loading": "Loading content management...",
+      "back": "Back",
+      "contentManagement": "Content management",
+      "save": "Save",
+      "title": "Week planning - {cohortName}",
+      "description": "Set the opening dates and times for each week for this specific cohort",
+      "course": "Course: {courseTitle}",
+      "week": "Week {number}: {title}",
+      "weekActive": "Active week",
+      "openDateTime": "Week opening date and time",
+      "closeDateTime": "Closing date and time (optional)",
+      "weekContent": "This week's content ({count} lesson) | This week's content ({count} lessons)",
+      "noWeeks": "No weeks to plan",
+      "noWeeksDescription": "This course does not yet contain weeks (sections) or lessons.",
+      "addContent": "Add content",
+      "backToCohort": "Back to cohort",
+      "errors": {
+        "loadCourse": "Error loading course",
+        "loadCohort": "Error loading cohort",
+        "loadError": "Loading error",
+        "notFound": "Course or cohort not found",
+        "saveError": "Save error"
+      },
+      "success": {
+        "saved": "Planning saved successfully!"
+      },
+      "instructions": {
+        "title": "Instructions",
+        "weeklyPlanning": "Weekly planning",
+        "weeklyPlanningDescription": "Set when an entire week becomes available for students in this cohort.",
+        "closeDate": "Closing date",
+        "closeDateDescription": "Optional. If set, content will no longer be accessible after this date.",
+        "inactiveWeek": "Inactive week",
+        "inactiveWeekDescription": "Content will not be visible to students, regardless of dates.",
+        "security": "Security",
+        "securityDescription": "Only instructors assigned to this cohort can modify these schedules."
+      }
+    },
+    "components": {
+      "overviewKPIs": {
+        "labels": {
+          "activeParticipants": "Active Participants",
+          "averageProgress": "Average Progress",
+          "pendingExercises": "Submitted Exercises",
+          "participationRate": "Participation Rate"
+        },
+        "changes": {
+          "thisWeek": "+{count} this week",
+          "progressThisWeek": "+{percent}% this week"
+        },
+        "pendingCorrection": "Pending correction",
+        "participationTarget": "Target: {target}%"
+      },
+      "alerts": {
+        "title": "Priority Alerts",
+        "pendingExercises": {
+          "title": "Uncorrected Exercises",
+          "message": "exercises uncorrected for more than 3 days"
+        },
+        "inactiveParticipants": {
+          "title": "Inactive Participants",
+          "message": "participants inactive for more than 7 days"
+        },
+        "nextLiveSession": {
+          "title": "Next Live Session"
+        }
+      },
+      "recentActivity": {
+        "title": "Recent Activity",
+        "loading": "Loading...",
+        "empty": "No recent activity",
+        "errors": {
+          "loadError": "Unable to load activity",
+          "loadingError": "Loading error"
+        }
+      },
+      "sidebar": {
+        "stats": {
+          "title": "Statistics",
+          "enrolledParticipants": "Enrolled Participants",
+          "activeParticipants": "Active Participants",
+          "averageProgress": "Average Progress",
+          "createdDate": "Created on"
+        },
+        "quickActions": {
+          "title": "Quick Actions",
+          "manageContent": "Manage Content",
+          "closeSession": "Close Session"
+        },
+        "info": {
+          "title": "Information",
+          "format": "Format",
+          "formatValue": "Hybrid session with content",
+          "duration": "Duration",
+          "durationValue": "4 months",
+          "status": "Status",
+          "statusActive": "Active"
+        }
+      },
+      "participantsTable": {
+        "title": "Participants List ({count})",
+        "searchPlaceholder": "Search for a participant...",
+        "filters": {
+          "status": {
+            "all": "All statuses",
+            "active": "Active",
+            "late": "Late",
+            "inactive": "Inactive"
+          }
+        },
+        "status": {
+          "active": "Active",
+          "late": "Late",
+          "inactive": "Inactive"
+        },
+        "actions": {
+          "viewDetails": "View Details",
+          "remind": "Remind",
+          "contact": "Contact",
+          "default": "Actions"
+        },
+        "table": {
+          "headers": {
+            "participant": "Participant",
+            "status": "Status",
+            "progress": "Progress",
+            "lastActivity": "Last Activity",
+            "actions": "Actions"
+          }
+        },
+        "loading": "Loading participants...",
+        "errors": {
+          "loadingError": "Loading error",
+          "cannotLoad": "Unable to load participants",
+          "contactSupport": "Please try again or contact technical support."
+        },
+        "empty": {
+          "filtered": "No participant found with these criteria.",
+          "noParticipants": "No participants in this cohort."
+        }
+      },
+      "progressModules": {
+        "title": "Progress by Module",
+        "summary": "{total} modules • Average completion rate: {rate}%",
+        "loading": "Loading modules...",
+        "completed": "{completed}/{total} completed",
+        "errors": {
+          "loadingError": "Loading error",
+          "cannotLoad": "Unable to load modules",
+          "contactSupport": "Please try again or contact technical support."
+        },
+        "empty": {
+          "title": "No module found",
+          "description": "This cohort does not contain any modules yet."
+        }
+      },
+      "evaluations": {
+        "title": "Evaluations",
+        "exercises": {
+          "title": "Exercises",
+          "submissions": "{submitted}/{total} submissions",
+          "waiting": "{days} waiting",
+          "urgent": "Urgent",
+          "averageScore": "{score}% average",
+          "notYetRated": "Not yet rated",
+          "opening": "Opening",
+          "closing": "Closing"
+        },
+        "quizzes": {
+          "title": "Quizzes",
+          "averageScore": "Average score: {score}%",
+          "completed": "{completed} completed",
+          "excellent": "Excellent",
+          "satisfactory": "Satisfactory",
+          "toImprove": "To improve",
+          "viewDetails": "View results"
+        },
+        "actions": "Actions",
+        "editDeadline": "Edit deadline",
+        "defineDeadline": "Define deadline",
+        "correct": "Correct",
+        "viewResults": "View results",
+        "deadlineDialog": {
+          "title": "Set opening and closing dates",
+          "openAt": "Opening",
+          "closeAt": "Closing"
+        },
+        "cancel": "Cancel",
+        "save": "Save",
+        "loading": "Loading...",
+        "empty": "No evaluation available"
+      },
+      "liveSessions": {
+        "title": "Live Sessions",
+        "create": "Create Session",
+        "createTitle": "Create Live Session",
+        "editTitle": "Edit Session",
+        "form": {
+          "sessionTitle": "Session Title",
+          "sessionTitlePlaceholder": "E.g.: Introduction to React",
+          "startTime": "Start Time",
+          "endTime": "End Time",
+          "description": "Description",
+          "descriptionPlaceholder": "Session description..."
+        },
+        "saving": "Saving...",
+        "creating": "Creating...",
+        "save": "Save",
+        "createButton": "Create",
+        "cancel": "Cancel",
+        "stats": {
+          "total": "Total",
+          "upcoming": "Upcoming",
+          "completed": "Completed",
+          "attendance": "Attendance Rate"
+        },
+        "liveSession": {
+          "manageSession": "Manage Session",
+          "joinNow": "Join Now"
+        },
+        "upcoming": {
+          "title": "Upcoming Sessions",
+          "next": "Next Session",
+          "join": "Join",
+          "addToCalendar": "Add to Calendar",
+          "edit": "Edit",
+          "inDays": "In {days} days"
+        },
+        "past": {
+          "title": "Past Sessions",
+          "viewRecording": "View Recording",
+          "participationStats": "Participation Statistics"
+        },
+        "participationStats": "Participation Statistics",
+        "manage": "Manage",
+        "edit": "Edit",
+        "prepareQuestions": "Prepare My Questions",
+        "downloadNotes": "Download Notes",
+        "viewPrerequisites": "View Prerequisites",
+        "status": {
+          "live": "Live",
+          "upcoming": "Upcoming",
+          "completed": "Completed",
+          "scheduled": "Scheduled"
+        },
+        "loading": "Loading...",
+        "empty": "No live session scheduled",
+        "createFirst": "Schedule Your First Session",
+        "createFirstSession": "Schedule Your First Session",
+        "deleteConfirm": "Are you sure you want to delete the session \"{title}\"?",
+        "errors": {
+          "loadError": "Unable to load sessions",
+          "loadingError": "Loading error"
+        }
+      },
+      "announcements": {
+        "title": "News Feed",
+        "createAnnouncement": "Make an Announcement",
+        "create": {
+          "title": "New Announcement",
+          "titleLabel": "Title",
+          "titlePlaceholder": "Announcement title...",
+          "contentLabel": "Content",
+          "contentPlaceholder": "Announcement content...",
+          "typeLabel": "Announcement Type",
+          "type": {
+            "important": "Important",
+            "standard": "Standard"
+          },
+          "publish": "Publish Announcement",
+          "cancel": "Cancel"
+        },
+        "card": {
+          "published": "Published {time} by {author}"
+        },
+        "loading": "Loading...",
+        "empty": "No announcement",
+        "errors": {
+          "loadError": "Unable to load announcements",
+          "loadingError": "Loading error",
+          "publishError": "Publication failed"
+        }
+      },
+      "communication": {
+        "title": "Communication",
+        "tabs": {
+          "messages": "Messages",
+          "discussions": "Discussions"
+        },
+        "recentMessages": "Recent Messages",
+        "newMessageButton": "New Message",
+        "newMessage": {
+          "title": "New Public Message",
+          "placeholder": "Write your message to the cohort...",
+          "publish": "Publish",
+          "cancel": "Cancel"
+        },
+        "discussionSpace": "Discussion Space",
+        "discussionPlaceholder": "Ask a question or share your thoughts with the cohort...",
+        "publish": "Publish",
+        "cancel": "Cancel",
+        "instructor": "Instructor",
+        "replyButton": "Reply",
+        "repliesCount": "{count} message",
+        "repliesCount_plural": "{count} messages",
+        "replyTo": "Reply to {author}",
+        "reply": {
+          "placeholder": "Write your reply...",
+          "send": "Reply",
+          "cancel": "Cancel"
+        },
+        "loading": "Loading...",
+        "empty": "No message",
+        "errors": {
+          "loadError": "Unable to load messages",
+          "loadingError": "Loading error",
+          "sendError": "Send failed",
+          "replyError": "Reply send failed"
+        }
+      }
+    }
+  },
+  "exercises": {
+    "submissions": {
+        "loading": "Loading submissions...",
+        "back": "Back",
+        "backToEvaluations": "Back to evaluations",
+        "submissionsCount": "{count} submission | {count} submissions",
+        "toCorrectCount": "{count} to correct",
+        "submissions": "Submissions",
+        "noSubmissions": "No submission",
+        "submittedOn": "Submitted on",
+        "onTime": "On time",
+        "late": "Late",
+        "submittedFiles": "Submitted files",
+        "submittedLinks": "Submitted links",
+        "link": "Link",
+        "studentComments": "Student comments",
+        "evaluation": "Evaluation",
+        "gradeByCriteria": "Grade by criteria",
+        "max": "max",
+        "maxScore": "Max score",
+        "score": "Score (out of {max})",
+        "percentage": "Percentage",
+        "feedback": "Feedback",
+        "feedbackPlaceholder": "Comments and suggestions for the student...",
+        "publishing": "Publishing...",
+        "publishGrade": "Publish grade",
+        "requestRevision": "Request revision",
+        "evaluationCompleted": "Evaluation completed",
+        "gradedOn": "Graded on",
+        "selectSubmission": "Select a submission",
+        "noSubmissionsDescription": "Students have not yet submitted their work.",
+        "selectSubmissionDescription": "Click on a submission in the list to correct it.",
+        "points": "{score}/{max} points",
+        "status": {
+          "toCorrect": "To correct",
+          "corrected": "Corrected",
+          "revisionRequested": "Revision requested"
+        },
+        "errors": {
+          "loadError": "Error loading",
+          "unknownError": "Unknown error",
+          "scoreRange": "Score must be between 0 and 100",
+          "gradingError": "Error grading",
+          "filePathNotFound": "File path not found"
+        },
+        "confirmations": {
+          "publishGrade": "Publish the grade?",
+          "requestRevision": "Request a revision?"
+        },
+        "success": {
+          "gradePublished": "Grade published successfully!",
+          "revisionRequested": "Revision requested!"
+        }
+      }
+    }
+  }
+

@@ -1,0 +1,52 @@
+{
+  "title": "Progression et résultats",
+  "description": "Suivez la progression des apprenants sénégalais et analysez leurs résultats",
+  "exportButton": "Exporter les données",
+  "error": "Erreur!",
+
+  "stats": {
+    "successRate": "Taux de réussite",
+    "successRateDescription": "Étudiants ayant terminé leurs cours",
+    "activeStudents": "Étudiants actifs",
+    "activeStudentsDescription": "Étudiants en cours de formation",
+    "averageProgress": "Progression moyenne",
+    "averageProgressDescription": "Progression moyenne des étudiants",
+    "averageScore": "Score moyen",
+    "averageScoreDescription": "Sur tous les tests et quiz"
+  },
+
+  "tabs": {
+    "courses": "Performance des cours",
+    "students": "Progression des étudiants"
+  },
+
+  "searchPlaceholder": "Rechercher des cours...",
+  "searchPlaceholderStudents": "Rechercher des étudiants...",
+  "filterButton": "Filtrer",
+  "filterByCourse": "Filtrer par cours",
+  "allCourses": "Tous les cours",
+
+  "loading": "Chargement des données...",
+  "noCourse": "Aucun cours trouvé",
+  "noStudent": "Aucun étudiant trouvé",
+
+  "table": {
+    "course": "Cours",
+    "enrolled": "Inscrits",
+    "completed": "Complétés",
+    "successRate": "Taux de réussite",
+    "averageScore": "Note moyenne",
+    "actions": "Actions",
+    "details": "Détails",
+    "student": "Étudiant",
+    "progress": "Progression",
+    "status": "Statut",
+    "lastActivity": "Dernière activité"
+  },
+
+  "status": {
+    "completed": "Terminé",
+    "active": "En cours",
+    "inactive": "Inactif"
+  }
+}

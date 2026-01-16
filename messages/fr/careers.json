@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "Carrières | Edupro",
+    "description": "Rejoignez l'équipe Edupro et participez à la transformation de la formation professionnelle en Afrique."
+  },
+  "hero": {
+    "badge": "Nous recrutons",
+    "title": "Rejoignez l'équipe qui",
+    "titleHighlight": "transforme l'éducation en Afrique",
+    "subtitle": "Chez EduPro, nous construisons la plateforme qui démocratise l'accès aux compétences professionnelles de qualité. Rejoignez une équipe passionnée, innovante et engagée pour l'impact social.",
+    "cta": {
+      "viewPositions": "Voir les postes ouverts",
+      "spontaneous": "Candidature spontanée"
+    },
+    "stats": {
+      "employees": "Collaborateurs",
+      "countries": "Pays",
+      "remote": "Remote friendly"
+    },
+    "imageAlt": "Équipe EduPro"
+  },
+  "values": {
+    "title": "Nos valeurs",
+    "subtitle": "Ce qui nous guide au quotidien",
+    "innovation": {
+      "title": "Innovation",
+      "description": "Nous repoussons les limites pour créer des solutions d'apprentissage révolutionnaires adaptées au contexte africain."
+    },
+    "impact": {
+      "title": "Impact",
+      "description": "Chaque action que nous menons vise à créer un impact mesurable sur la vie des apprenants et des communautés."
+    },
+    "community": {
+      "title": "Communauté",
+      "description": "Nous croyons en la force du collectif et cultivons un environnement inclusif où chacun peut s'épanouir."
+    },
+    "excellence": {
+      "title": "Excellence",
+      "description": "Nous visons l'excellence dans tout ce que nous faisons, de nos produits à nos relations avec nos partenaires."
+    }
+  },
+  "positions": {
+    "title": "Postes ouverts",
+    "subtitle": "Trouvez votre place dans notre équipe",
+    "loading": "Chargement des postes...",
+    "empty": "Aucun poste ouvert pour le moment.",
+    "apply": "Postuler",
+    "noMatch": {
+      "title": "Vous ne trouvez pas le poste idéal ?",
+      "description": "Envoyez-nous une candidature spontanée. Nous sommes toujours à la recherche de talents exceptionnels !",
+      "button": "Candidature spontanée"
+    }
+  },
+  "detail": {
+    "loading": "Chargement du poste...",
+    "notFound": {
+      "title": "Poste non trouvé",
+      "description": "Le poste que vous recherchez n'existe pas ou n'est plus disponible.",
+      "back": "Retour aux postes"
+    },
+    "apply": "Postuler",
+    "applyNow": "Postuler maintenant",
+    "back": "Retour aux postes",
+    "share": "Partager",
+    "sections": {
+      "description": "Description du poste",
+      "requirements": "Exigences",
+      "benefits": "Avantages",
+      "closingDate": "Date de clôture",
+      "closingDateLabel": "Date de clôture :"
+    }
+  },
+  "spontaneous": {
+    "meta": {
+      "title": "Candidature spontanée | Edupro",
+      "description": "Postulez pour rejoindre l'équipe Edupro même si aucun poste ne correspond à votre profil."
+    },
+    "form": {
+      "title": "Candidature spontanée",
+      "subtitle": "Vous ne trouvez pas le poste idéal ? Envoyez-nous votre candidature spontanée.",
+      "fields": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "cv": "CV",
+        "cvPlaceholder": "Sélectionner un fichier (PDF, DOC, DOCX - max 10MB)",
+        "coverLetter": "Lettre de motivation",
+        "coverLetterPlaceholder": "Décrivez votre motivation et vos compétences...",
+        "interestDomain": "Domaine d'intérêt",
+        "interestDomainPlaceholder": "Sélectionner un domaine",
+        "availability": "Disponibilité",
+        "availabilityPlaceholder": "Sélectionner une option",
+        "additionalMessage": "Message additionnel",
+        "additionalMessagePlaceholder": "Tout autre information que vous souhaitez partager..."
+      },
+      "domains": {
+        "development": "Développement",
+        "design": "Design",
+        "marketing": "Marketing",
+        "sales": "Ventes",
+        "support": "Support client",
+        "management": "Management",
+        "other": "Autre"
+      },
+      "availabilityOptions": {
+        "immediate": "Immédiate",
+        "oneMonth": "Dans 1 mois",
+        "twoMonths": "Dans 2 mois",
+        "threeMonths": "Dans 3 mois",
+        "flexible": "Flexible"
+      },
+      "submit": "Envoyer ma candidature",
+      "submitting": "Envoi en cours...",
+      "validation": {
+        "firstNameRequired": "Le prénom est requis",
+        "lastNameRequired": "Le nom est requis",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "L'email n'est pas valide",
+        "cvRequired": "Le CV est requis",
+        "cvInvalidType": "Le fichier doit être un PDF, DOC ou DOCX",
+        "cvTooLarge": "Le fichier est trop volumineux (max 10MB)",
+        "phoneInvalid": "Le numéro de téléphone n'est pas valide"
+      },
+      "success": {
+        "title": "Candidature envoyée avec succès !",
+        "message": "Nous avons bien reçu votre candidature spontanée. Nous vous contacterons sous peu si votre profil correspond à nos besoins."
+      },
+      "error": {
+        "title": "Erreur lors de l'envoi",
+        "message": "Une erreur est survenue lors de l'envoi de votre candidature. Veuillez réessayer.",
+        "uploadError": "Erreur lors du téléchargement du CV"
+      }
+    },
+    "admin": {
+      "title": "Candidatures spontanées",
+      "subtitle": "Gérer les candidatures spontanées soumises via le formulaire public",
+      "filters": {
+        "status": "Statut",
+        "statusAll": "Tous les statuts",
+        "domain": "Domaine",
+        "domainAll": "Tous les domaines",
+        "date": "Date",
+        "search": "Rechercher par nom ou email..."
+      },
+      "status": {
+        "pending": "En attente",
+        "reviewed": "Consultée",
+        "contacted": "Contactée",
+        "rejected": "Rejetée"
+      },
+      "table": {
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "domain": "Domaine",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions",
+        "view": "Voir",
+        "downloadCv": "Télécharger le CV",
+        "noApplications": "Aucune candidature pour le moment"
+      },
+      "detail": {
+        "title": "Détails de la candidature",
+        "back": "Retour à la liste",
+        "personalInfo": "Informations personnelles",
+        "applicationInfo": "Informations de candidature",
+        "cv": "CV",
+        "coverLetter": "Lettre de motivation",
+        "additionalMessage": "Message additionnel",
+        "notes": "Notes internes",
+        "notesPlaceholder": "Ajouter des notes internes sur cette candidature...",
+        "updateStatus": "Mettre à jour le statut",
+        "saveNotes": "Enregistrer les notes",
+        "saving": "Enregistrement...",
+        "updated": "Candidature mise à jour avec succès"
+      }
+    }
+  }
+}
+

@@ -1,0 +1,334 @@
+{
+  "meta": {
+    "title": "EduPro | Plateforme de Formation Professionnelle pour l'Afrique",
+    "description": "Transformez vos compétences en opportunités concrètes. La première plateforme qui connecte entreprises, professionnels, formateurs et investisseurs autour d'un objectif commun : l'excellence des compétences en Afrique.",
+    "keywords": "formation professionnelle, e-learning, Afrique, développement des compétences, cours en ligne, certifications, formation d'entreprise"
+  },
+  "hero": {
+    "title": "Transformez vos compétences en",
+    "titleHighlight": "opportunités concrètes",
+    "subtitle": "La première plateforme qui connecte entreprises, professionnels, formateurs et investisseurs autour d'un objectif commun : l'excellence des compétences en Afrique.",
+    "cta": {
+      "primary": "Créer mon compte gratuit",
+      "secondary": "Réserver une démo"
+    },
+    "features": {
+      "trial": "Essai gratuit 14 jours",
+      "noCard": "Pas de carte bancaire requise"
+    },
+    "stats": {
+      "growth": "Croissance e-learning",
+      "learners": "Apprenants actifs",
+      "companies": "Entreprises intéressées",
+      "countries": "Pays couverts"
+    }
+  },
+  "problem": {
+    "title": "Le gap de compétences freine l'innovation africaine",
+    "subtitle": "97% des talents africains n'ont pas accès à la formation continue",
+    "problems": {
+      "limitedAccess": {
+        "title": "Accès limité",
+        "stat": "Seulement 3%",
+        "description": "des travailleurs africains accèdent à la formation continue professionnelle.",
+        "consequence": "Gap de compétences massif qui ralentit la croissance économique."
+      },
+      "inadequateSolutions": {
+        "title": "Solutions inadaptées",
+        "stat": "120,000-300,000 FCFA/mois",
+        "description": "Les plateformes internationales sont trop chères et non contextualisées aux réalités africaines.",
+        "consequence": "Contenus déconnectés des besoins réels du marché local."
+      },
+      "unexploitedExpertise": {
+        "title": "Expertise inexploitée",
+        "stat": "Milliers d'experts",
+        "description": "Des experts africains ne peuvent pas digitaliser et monétiser leur savoir-faire faute d'outils adaptés.",
+        "consequence": "Fuite des cerveaux et perte de connaissances locales."
+      },
+      "invisibleROI": {
+        "title": "ROI invisible",
+        "stat": "Budgets non optimisés",
+        "description": "Les entreprises investissent dans la formation sans pouvoir mesurer l'impact sur la performance.",
+        "consequence": "Résultats incertains et investissements non optimisés."
+      }
+    },
+    "closing": "Et si la solution venait d'Afrique, pour l'Afrique?"
+  },
+  "solution": {
+    "title": "Une plateforme, trois révolutions",
+    "subtitle": "EduPro est la première plateforme de formation professionnelle pensée pour les réalités africaines. Nous combinons qualité internationale et contexte local pour créer un écosystème où chacun trouve sa place.",
+    "differentiators": {
+      "premiumAccessible": {
+        "title": "Premium Accessible",
+        "subtitle": "Qualité internationale à prix africain",
+        "description": "Contenus de niveau mondial adaptés au contexte local, jusqu'à 70% moins cher que les plateformes internationales.",
+        "example": "Exemple: 15 000 FCFA/mois vs 200$/mois ailleurs"
+      },
+      "aiIntegrated": {
+        "title": "IA Intégrée",
+        "subtitle": "Créez du contenu 40% plus vite",
+        "description": "Assistant IA pour scénariser, créer des quiz, générer des exercices. La création de formation professionnelle n'a jamais été aussi simple.",
+        "example": "Démonstration disponible sur demande"
+      },
+      "mobileFirst": {
+        "title": "Mobile-First",
+        "subtitle": "Apprenez partout, même offline",
+        "description": "Optimisé pour faible bande passante, mode hors ligne natif, synchronisation intelligente. 78% de notre trafic est mobile.",
+        "example": "Téléchargez, apprenez, synchronisez"
+      }
+    }
+  },
+  "stats": {
+    "title": "Les chiffres qui prouvent notre traction",
+    "stats": {
+      "learners": {
+        "value": "500+",
+        "label": "APPRENANTS ACTIFS",
+        "sublabel": "Phase pilote (6 mois)"
+      },
+      "companies": {
+        "value": "25+",
+        "label": "ENTREPRISES",
+        "sublabel": "Contactées - 85% taux d'intérêt"
+      },
+      "trainers": {
+        "value": "150+",
+        "label": "FORMATEURS",
+        "sublabel": "Intéressés - Expertise validée"
+      },
+      "countries": {
+        "value": "3",
+        "label": "PAYS COUVERTS",
+        "sublabel": "Sénégal • Côte d'Ivoire • Rwanda"
+      },
+      "growth": {
+        "value": "+30%",
+        "label": "CROISSANCE",
+        "sublabel": "E-learning post-COVID"
+      },
+      "timeSavings": {
+        "value": "40%",
+        "label": "GAIN DE TEMPS",
+        "sublabel": "Création contenu avec IA"
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Ils transforment déjà avec EduPro",
+    "testimonials": {
+      "auger": {
+        "quote": "C'est une très bonne initiative d'avoir une plateforme qui répond aux besoins du continent africain. Plus on avançait, je me suis rendu compte qu'en tant que formateur, nous avons les connaissances mais nous ne savions pas comment les dispenser à l'ère du digital. J'ai pu acquérir beaucoup de compétences au cours de ce bootcamp surtout la structuration des cours. Je commence à les appliquer dans mes formations au niveau de mon entreprise.",
+        "name": "Auger MAYOUMA",
+        "role": "Expert Q-HSE | Consultant & Formateur",
+        "flag": "🇸🇳",
+        "results": {
+          "title": "Impact:",
+          "items": {
+            "0": "Acquisition de compétences digitales",
+            "1": "Structuration des cours améliorée",
+            "2": "Application immédiate en entreprise"
+          }
+        }
+      },
+      "ibrahima": {
+        "quote": "Je félicite toute l'équipe de Edupro pour leur disponibilité et leur suivi lors de ce bootcamp. J'ai vécu une expérience enrichissante et inspirante. J'y ai appris à utiliser les outils digitaux et l'IA pour moderniser mes cours. Surtout, j'ai su adapter mes formations jadis en présentiel au format digital : modules structurés, quiz, certificats et suivi des apprenants. Aujourd'hui, je pourrais déployer mes sessions en ligne avec une meilleure expérience pour tous.",
+        "name": "Ibrahima YADE",
+        "role": "COACH - FORMATEUR EN FORMATION | DIRECTEUR GENERAL ACA",
+        "flag": "🇸🇳",
+        "results": {
+          "title": "Transformation:",
+          "items": {
+            "0": "Formations adaptées au format digital",
+            "1": "Modules structurés avec quiz",
+            "2": "Suivi des apprenants optimisé"
+          }
+        }
+      },
+      "mariame": {
+        "quote": "Je tiens à remercier l'équipe pour l'initiative et l'accompagnement. Habituée aux wébinaires et aux sessions en présentiel, j'ai découvert un format entièrement nouveau... et j'en ressors avec de vraies compétences ! Grâce aux cours sous format vidéos visualisées en amont, la création de cours s'est faite facilement. Une collaboration inspirante que j'ai hâte de poursuivre.",
+        "name": "Mariame WONE",
+        "role": "COACH - FORMATRICE | Gestion de carrière et des dynamiques professionnelles",
+        "flag": "🇸🇳",
+        "results": {
+          "title": "Résultats:",
+          "items": {
+            "0": "Nouvelles compétences acquises",
+            "1": "Création de cours facilitée",
+            "2": "Collaboration inspirante"
+          }
+        }
+      }
+    }
+  },
+  "newsletter": {
+    "title": "Restez informés de nos actualités",
+    "subtitle": "Recevez nos actualités, conseils et offres",
+    "placeholder": "Votre email",
+    "cta": "S'inscrire",
+    "submitting": "Inscription...",
+    "success": "Merci pour votre inscription à la newsletter !",
+    "error": "Erreur lors de l'inscription",
+    "unsubscribe": "Désinscription possible à tout moment"
+  },
+  "nav": {
+    "home": "Accueil",
+    "forWhom": "Pour qui ?",
+    "about": "À propos",
+    "companies": "Entreprises",
+    "professionals": "Professionnels",
+    "trainers": "Formateurs",
+    "investors": "Investisseurs"
+  },
+  "cta": {
+    "getStarted": "Commencer",
+    "login": "Connexion",
+    "freeAccount": "Créer mon compte gratuit",
+    "bookDemo": "Réserver une démo",
+    "contactUs": "Nous contacter"
+  },
+  "audienceCards": {
+    "title": "Qui que vous soyez, EduPro accélère votre impact",
+    "enterprises": {
+      "title": "POUR LES ENTREPRISES & DRH",
+      "headline": "Formez vos équipes à la vitesse de l'innovation",
+      "benefits": {
+        "0": "Onboarding automatisé",
+        "1": "Académie digitale interne",
+        "2": "ROI mesurable en temps réel",
+        "3": "-60% de coûts vs présentiel"
+      },
+      "caseStudy": {
+        "title": "CAS CLIENT: Centre d'appel BPO",
+        "result": "-50% time-to-productivity"
+      },
+      "cta": "Découvrir la solution entreprise",
+      "ctaLink": "/fr/entreprises"
+    },
+    "professionals": {
+      "title": "POUR LES PROFESSIONNELS",
+      "headline": "Apprenez les compétences qui boostent votre carrière",
+      "benefits": {
+        "0": "Certifications co-créés avec des experts reconnus",
+        "1": "Parcours contextualisés",
+        "2": "Accessible 24/7 depuis mobile",
+        "3": "Compétences recherchées"
+      },
+      "caseStudy": {
+        "title": "SKILL PACKS DISPONIBLES:",
+        "result": "Tech • Business • Soft Skills"
+      },
+      "cta": "Booster votre carrière",
+      "ctaLink": "/fr/professionnels"
+    },
+    "trainers": {
+      "title": "POUR LES FORMATEURS & INSTITUTS",
+      "headline": "Digitalisez et monétisez votre expertise",
+      "benefits": {
+        "0": "Outils IA de création",
+        "1": "Audience panafricaine",
+        "2": "Support technique complet",
+        "3": "Marque blanche pour instituts"
+      },
+      "caseStudy": {
+        "title": "150+ FORMATEURS",
+        "result": "nous font déjà confiance"
+      },
+      "cta": "Devenir formateur partenaire",
+      "ctaLink": "/fr/formateurs"
+    },
+    "investors": {
+      "title": "POUR LES INVESTISSEURS",
+      "headline": "Investissez dans l'avenir de l'Afrique",
+      "benefits": {
+        "0": "Marché: 40-50Mds FCFA/an",
+        "1": "Croissance: +30% post-COVID",
+        "2": "ROI projeté: 206% sur 3 ans",
+        "3": "Expansion: 3 pays → 15+ pays"
+      },
+      "caseStudy": {
+        "title": "PHASE PILOTE EN COURS",
+        "result": "Expansion prévue sur 3 marchés"
+      },
+      "cta": "Pourquoi Investir",
+      "ctaLink": "/fr/investisseurs"
+    }
+  },
+  "geographicCoverage": {
+    "title": "Déjà présents dans 3 pays, bientôt chez vous",
+    "senegal": {
+      "name": "SÉNÉGAL",
+      "city": "Dakar (HQ)",
+      "stats": {
+        "0": "",
+        "1": ""
+      }
+    },
+    "ivoryCoast": {
+      "name": "CÔTE D'IVOIRE",
+      "city": "Abidjan",
+      "stats": {
+        "0": "",
+        "1": ""
+      }
+    },
+    "rwanda": {
+      "name": "RWANDA",
+      "city": "Kigali",
+      "stats": {
+        "0": "",
+        "1": ""
+      }
+    }
+  },
+  "finalCTA": {
+    "title": "Prêt à transformer vos talents?",
+    "ctas": {
+      "enterprises": {
+        "title": "JE SUIS UNE ENTREPRISE",
+        "cta": "Découvrir nos solutions",
+        "subtitle": "Configuration en 48h · Essai gratuit 14 jours",
+        "href": "/fr/entreprises"
+      },
+      "professionals": {
+        "title": "JE SUIS UN PROFESSIONNEL",
+        "cta": "Créer mon compte gratuit",
+        "subtitle": "Large catalogue . paiement mobile",
+        "href": "/fr/inscription"
+      },
+      "trainers": {
+        "title": "JE SUIS FORMATEUR/INSTITUT",
+        "cta": "Rejoindre la communauté",
+        "subtitle": "Outils IA inclus · Audience panafricaine",
+        "href": "/fr/formateurs"
+      },
+      "investors": {
+        "title": "JE SUIS INVESTISSEUR",
+        "cta": "Pourquoi Investir",
+        "subtitle": "ROI 206% sur 3 ans · Marché 40-50Mds",
+        "href": "/fr/investisseurs"
+      }
+    },
+    "reassurances": {
+      "0": "99.9% de disponibilité garantie",
+      "1": "Support francophone 7j/7",
+      "2": "Paiements sécurisés (Mobile Money, Visa, Mastercard)",
+      "3": "Données hébergées en conformité RGPD",
+      "4": "Optimisé pour faible bande passante"
+    }
+  },
+  "footer": {
+    "tagline": "La première plateforme de formation professionnelle pensée pour l'Afrique.",
+    "solutions": "Solutions",
+    "resources": "Ressources",
+    "company": "Entreprise",
+    "blog": "Blog",
+    "documentation": "Documentation",
+    "caseStudies": "Cas clients",
+    "support": "Support",
+    "careers": "Carrières",
+    "contact": "Contact",
+    "legal": "Mentions légales",
+    "copyright": "Tous droits réservés",
+    "presentIn": "Présent au"
+  }
+}

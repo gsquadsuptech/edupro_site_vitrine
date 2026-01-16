@@ -1,0 +1,52 @@
+{
+  "title": "Progress and Results",
+  "description": "Track learner progress and analyze their results",
+  "exportButton": "Export data",
+  "error": "Error!",
+
+  "stats": {
+    "successRate": "Success Rate",
+    "successRateDescription": "Students who completed their courses",
+    "activeStudents": "Active Students",
+    "activeStudentsDescription": "Students currently in training",
+    "averageProgress": "Average Progress",
+    "averageProgressDescription": "Average student progress",
+    "averageScore": "Average Score",
+    "averageScoreDescription": "Across all tests and quizzes"
+  },
+
+  "tabs": {
+    "courses": "Course Performance",
+    "students": "Student Progress"
+  },
+
+  "searchPlaceholder": "Search courses...",
+  "searchPlaceholderStudents": "Search students...",
+  "filterButton": "Filter",
+  "filterByCourse": "Filter by course",
+  "allCourses": "All courses",
+
+  "loading": "Loading data...",
+  "noCourse": "No courses found",
+  "noStudent": "No students found",
+
+  "table": {
+    "course": "Course",
+    "enrolled": "Enrolled",
+    "completed": "Completed",
+    "successRate": "Success Rate",
+    "averageScore": "Average Score",
+    "actions": "Actions",
+    "details": "Details",
+    "student": "Student",
+    "progress": "Progress",
+    "status": "Status",
+    "lastActivity": "Last Activity"
+  },
+
+  "status": {
+    "completed": "Completed",
+    "active": "In Progress",
+    "inactive": "Inactive"
+  }
+}

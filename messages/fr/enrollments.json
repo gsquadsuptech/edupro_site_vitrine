@@ -1,0 +1,69 @@
+{
+  "title": "Inscriptions",
+  "description": "Gérez les inscriptions des étudiants aux différents cours",
+  "newEnrollment": "Nouvelle inscription",
+  "searchPlaceholder": "Rechercher des inscriptions...",
+  "export": "Exporter",
+
+  "filters": {
+    "status": "Statut",
+    "all": "Tous"
+  },
+
+  "table": {
+    "student": "Étudiant",
+    "course": "Cours",
+    "cohort": "Cohorte",
+    "enrollmentDate": "Date d'inscription",
+    "status": "Statut",
+    "progress": "Progression",
+    "actions": "Actions",
+    "noEnrollments": "Aucune inscription trouvée",
+    "loading": "Chargement des données...",
+    "noCohort": "-"
+  },
+
+  "status": {
+    "active": "Active",
+    "completed": "Terminée",
+    "pending": "En attente",
+    "inactive": "Inactive"
+  },
+
+  "cohortStatus": {
+    "active": "Active",
+    "completed": "Terminée"
+  },
+
+  "actions": {
+    "changeStatus": "Changer le statut",
+    "viewDetails": "Voir les détails",
+    "cancelEnrollment": "Annuler l'inscription",
+    "openMenu": "Ouvrir menu",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
+  },
+
+  "changeStatusModal": {
+    "title": "Changer le statut de l'inscription",
+    "description": "Changer le statut de l'inscription de {studentName} pour le cours {courseTitle}.",
+    "newStatusLabel": "Nouveau statut",
+    "selectPlaceholder": "Sélectionner un statut",
+    "confirmButton": "Confirmer"
+  },
+
+  "cancelModal": {
+    "title": "Annuler l'inscription",
+    "description": "Êtes-vous sûr de vouloir annuler l'inscription de {studentName} pour le cours {courseTitle} ?",
+    "warning": "Cette action est irréversible.",
+    "confirmButton": "Confirmer l'annulation"
+  },
+
+  "messages": {
+    "loadError": "Erreur lors du chargement des inscriptions",
+    "statusUpdateSuccess": "Statut mis à jour avec succès",
+    "statusUpdateError": "Erreur lors de la mise à jour du statut",
+    "cancelSuccess": "Inscription annulée avec succès",
+    "cancelError": "Erreur lors de l'annulation de l'inscription"
+  }
+}

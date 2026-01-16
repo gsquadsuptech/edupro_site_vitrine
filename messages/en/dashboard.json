@@ -1,0 +1,1455 @@
+{
+  "title": "Dashboard",
+  "description": "Welcome to your EduPro Senegal admin dashboard.",
+  "greeting": "Hello {name} 👋",
+  "greetingDefault": "Hello Learner 👋",
+  "subtitle": "Continue your learning and achieve your goals",
+  "tabs": {
+    "overview": "Overview",
+    "analytics": "Analytics",
+    "reports": "Reports"
+  },
+  "analytics": {
+    "title": "Detailed Analytics",
+    "description": "Visualize usage trends and performance metrics.",
+    "comingSoon": "Analytics content coming soon"
+  },
+  "reports": {
+    "title": "Reports",
+    "description": "Generate and view reports on platform activity.",
+    "comingSoon": "Reports content coming soon"
+  },
+  "stats": {
+    "totalCourses": "Courses",
+    "activeCourses": "Active Courses",
+    "certificatesEarned": "Certificates Earned",
+    "learningTime": "Learning Time",
+    "completionRate": "Completion Rate",
+    "totalStudents": "Students",
+    "activeStudents": "Active Students",
+    "totalInstructors": "Total Instructors",
+    "activeInstructors": "Active Instructors",
+    "totalRevenue": "Revenue",
+    "monthlyRevenue": "Monthly Revenue",
+    "enrollments": "Enrollments",
+    "averageRating": "Average Rating",
+    "totalCertificates": "Total Certificates",
+    "total": "total",
+    "thisMonth": "this month"
+  },
+  "common": {
+    "loading": "Loading..."
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "myCourses": "My Courses",
+    "marketplace": "Course Catalog",
+    "certificates": "Certificates"
+  },
+  "sidebar": {
+    "home": "Home",
+    "myCourses": "My Courses",
+    "marketplace": "Course Catalog",
+    "certificates": "Certificates",
+    "achievements": "Achievements",
+    "progress": "Progress",
+    "feedback": "Feedback",
+    "calendar": "Calendar",
+    "settings": "Settings",
+    "instructorInterface": "Instructor Interface",
+    "adminInterface": "Admin Interface",
+    "logout": "Logout"
+  },
+  "continueLearning": {
+    "title": "Continue Learning",
+    "viewAll": "View all my courses",
+    "noCourses": "No courses in progress",
+    "noCoursesDescription": "Start your first course to see your progress here",
+    "discoverCourses": "Discover courses",
+    "continue": "Continue",
+    "completed": "{progress}% completed",
+    "module": "Module {completed}/{total}",
+    "remaining": "{time} remaining",
+    "by": "By {instructor}"
+  },
+  "achievements": {
+    "title": "Your Achievements",
+    "viewAll": "View all",
+    "pageTitle": "All Your Achievements",
+    "pageDescription": "Discover all your successes and milestones reached in your learning journey",
+    "count": "achievements",
+    "noAchievements": "No achievements yet",
+    "noAchievementsDescription": "Keep learning to unlock your first badges!",
+    "noAchievementsFound": "No achievements found",
+    "noAchievementsYet": "No achievements yet",
+    "tryModifyFilters": "Try modifying your search filters",
+    "continueLearning": "Keep learning to unlock your first achievements!",
+    "viewAllAchievements": "View all achievements",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "locked": "Locked",
+    "search": {
+      "placeholder": "Search for an achievement..."
+    },
+    "categories": {
+      "all": "All",
+      "completion": "Completion",
+      "milestone": "Milestones",
+      "streak": "Streak",
+      "learning": "Learning"
+    },
+    "periods": {
+      "all": "All Periods",
+      "week": "This Week",
+      "month": "This Month",
+      "quarter": "This Quarter",
+      "year": "This Year"
+    },
+    "filters": {
+      "active": "Active filters:",
+      "search": "Search: \"{query}\"",
+      "reset": "Reset"
+    },
+    "badge": {
+      "new": "New",
+      "general": "General"
+    },
+    "error": {
+      "title": "Loading Error",
+      "retry": "Retry"
+    }
+  },
+  "recentActivities": {
+    "title": "Recent Activities",
+    "noActivities": "No recent activities",
+    "loading": "Loading activities...",
+    "error": "Error loading activities",
+    "timeAgo": {
+      "justNow": "Just now",
+      "minutes": "{count} minute{plural} ago",
+      "hours": "{count} hour{plural} ago",
+      "days": "{count} day{plural} ago"
+    }
+  },
+  "activity": {
+    "types": {
+      "enrollment": "Enrollment",
+      "lesson_progress": "Progress",
+      "achievement": "Achievement",
+      "certificate": "Certificate",
+      "default": "Activity"
+    },
+    "completed": "{percentage}% completed",
+    "courseProgress": "{progress}% of course",
+    "points": "{points} points",
+    "course": "Course: {title}"
+  },
+  "learningJourney": {
+    "title": "Your Learning Journey",
+    "description": "Explore and manage your progress in your personalized learning paths",
+    "viewAll": "View all paths",
+    "noPathway": "No active pathway",
+    "startJourney": "Start a journey",
+    "backToDashboard": "Back to dashboard",
+    "error": {
+      "title": "Loading Error",
+      "retry": "Retry"
+    },
+    "completed": "courses completed",
+    "globalProgress": "Global Progress",
+    "otherPathways": "+{count} others",
+    "level": "Level {level}",
+    "estimatedDuration": "~{hours}h estimated",
+    "percentCompleted": "{percent}% completed",
+    "tabs": {
+      "current": "Current Path",
+      "available": "Available Paths",
+      "recommendations": "Recommendations"
+    },
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "notStarted": "Not Started"
+    },
+    "badge": {
+      "inProgress": "In Progress"
+    },
+    "skills": {
+      "title": "Skills Developed"
+    },
+    "courses": {
+      "title": "Path Courses",
+      "modules": "{completed} / {total} modules",
+      "duration": "~{hours}h",
+      "progress": "Progress",
+      "continue": "Continue",
+      "start": "Start",
+      "completed": "Completed"
+    },
+    "available": {
+      "title": "Available Paths",
+      "description": "This section will soon display available learning paths you can join.",
+      "explore": "Explore Paths"
+    },
+    "recommendations": {
+      "title": "Personalized Recommendations",
+      "description": "Based on your progress, we recommend these courses to improve your skills.",
+      "view": "View Recommendations"
+    },
+    "defaults": {
+      "pathName": "My Main Path",
+      "pathDescription": "Personalized learning path in web development and entrepreneurship",
+      "courseDescription": "Course description",
+      "instructor": "Instructor",
+      "difficulty": "Intermediate"
+    }
+  },
+  "courses": {
+    "title": "My Courses",
+    "description": "Manage and track your progress in your courses",
+    "tabs": {
+      "all": "All Courses",
+      "ongoing": "Ongoing",
+      "completed": "Completed",
+      "tostart": "To Start"
+    },
+    "stats": {
+      "totalCourses": "Total Courses",
+      "ongoing": "Ongoing",
+      "completed": "Completed",
+      "successRate": "Success Rate"
+    },
+    "search": {
+      "placeholder": "Search my courses..."
+    },
+    "view": {
+      "list": "List View",
+      "grid": "Grid View"
+    },
+    "empty": {
+      "title": "No Courses Found",
+      "description": "You don't have any courses matching these criteria yet.\nExplore our course catalog to discover new courses.",
+      "discoverMarketplace": "Discover Catalog"
+    },
+    "error": {
+      "title": "Loading Error",
+      "description": "Unable to load your courses. Please try again.",
+      "retry": "Retry"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "pending": "To Start",
+      "unknown": "Unknown"
+    },
+    "actions": {
+      "joinSession": "Join Session",
+      "start": "Start",
+      "viewSession": "View Session",
+      "viewCourse": "View Course",
+      "continueSession": "Continue Session",
+      "continue": "Continue"
+    },
+    "date": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "daysAgo": "{count} day{plural} ago"
+    },
+    "by": "By {instructor}",
+    "progress": "{progress}% completed",
+    "progressLabel": "Progress",
+    "modules": {
+      "total": "{count} modules",
+      "current": "Module {number}"
+    },
+    "students": "{count} student{plural}",
+    "lastActivity": "Last activity: {date}",
+    "expiresOn": "Expires on {date}",
+    "certificateObtained": "Certificate obtained"
+  },
+  "courseDetail": {
+    "breadcrumb": "My Courses",
+    "loading": "Loading course...",
+    "error": {
+      "title": "Loading Error",
+      "description": "Unable to load course details"
+    },
+    "accessDenied": {
+      "title": "Access Denied",
+      "message": "You do not have access to this course."
+    },
+    "header": {
+      "contentDuration": "{duration} of content",
+      "learners": "{count} learners",
+      "expiresOn": "Expires on {date}"
+    },
+    "expired": {
+      "title": "This course has expired",
+      "message": "Your access to this course expired on {date}. Contact support to renew your access."
+    },
+    "progress": {
+      "global": "Overall Progress",
+      "lastActivity": "Last activity: {date}"
+    },
+    "about": {
+      "title": "About this course"
+    },
+    "content": {
+      "title": "Course Content"
+    },
+    "instructor": {
+      "title": "Your Instructor"
+    },
+    "actions": {
+      "title": "Actions",
+      "continue": "Continue Course",
+      "viewCertificate": "View Certificate"
+    },
+    "stats": {
+      "title": "Your Statistics",
+      "modulesCompleted": "Modules Completed",
+      "timeSpent": "Time Spent",
+      "averageScore": "Average Score",
+      "totalPoints": "Total Points",
+      "outOf": "{completed} of {total}"
+    },
+    "duration": {
+      "hours": "{hours} hours",
+      "hoursMinutes": "{hours}h {minutes}min",
+      "minutes": "{minutes}min",
+      "notSpecified": "Not specified"
+    },
+    "date": {
+      "notSpecified": "Not specified"
+    },
+    "timeSpent": {
+      "hours": "{hours}h{minutes}",
+      "minutes": "{minutes}min"
+    },
+    "alerts": {
+      "certificateNotReady": "You must complete the course 100% to get your certificate",
+      "downloadResources": "Resource download will be available soon"
+    }
+  },
+  "coursePlayer": {
+    "loading": "Loading...",
+    "backToCourse": "Back to Course",
+    "backToCourseTitle": "Back to course page",
+    "notes": "Notes",
+    "downloadResources": "Download Resources",
+    "fullscreen": "Fullscreen",
+    "previousLesson": "Previous Lesson",
+    "nextLesson": "Next Lesson",
+    "completeCourse": "Complete Course",
+    "completeSession": "Complete Session",
+    "nextLessonTooltip": {
+      "watchVideo": "Watch the video to the end to proceed to the next lesson",
+      "completeLesson": "Complete this lesson to proceed to the next",
+      "ready": "Go to next lesson"
+    },
+    "completeTooltip": {
+      "watchVideo": {
+        "session": "Watch the video to the end to complete this session",
+        "course": "Watch the video to the end to complete the course"
+      },
+      "completeLesson": {
+        "session": "Complete this lesson to complete this session",
+        "course": "Complete this lesson to complete the course"
+      },
+      "ready": {
+        "session": "Complete this session",
+        "course": "Complete the course"
+      }
+    },
+    "celebration": {
+      "sessionTitle": "🎉 Session Completed Successfully!",
+      "courseTitle": "🎉 Course Completed Successfully!",
+      "sessionDescription": "Congratulations! You have successfully completed this session. You will be redirected to the cohort details page.",
+      "courseDescription": "Congratulations! You have successfully completed this course. You will be redirected to the course details page.",
+      "backToCohort": "Back to Cohort",
+      "viewProgress": "View Your Progress",
+      "sessionCertificate": "Session Certificate",
+      "courseCertificate": "Course Certificate"
+    }
+  },
+  "cohorts": {
+    "loading": "Loading content...",
+    "error": {
+      "title": "Loading Error",
+      "message": "Unable to load cohort data",
+      "checkConnection": "Check your connection and refresh the page."
+    },
+    "header": {
+      "breadcrumb": "My Courses",
+      "dateRange": "From {start} to {end}",
+      "activeParticipants": "{count} active participants",
+      "contentType": "Weekly content + Live sessions"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "content": "Course Content",
+      "practicals": "Practical Work",
+      "liveSessions": "Live Sessions",
+      "announcements": "Announcements",
+      "resources": "Resources",
+      "participants": "Participants",
+      "discussion": "Discussion"
+    },
+    "metadata": {
+      "title": "Cohort Details - EduPro",
+      "description": "Management and tracking interface for cohort {cohortId}"
+    },
+    "overview": {
+      "progressTitle": "Cohort Progress",
+      "weeksCompleted": "Weeks completed: {completed} of {total}",
+      "nextEvaluation": {
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "days": "{days} days",
+        "none": "—"
+      },
+      "instructor": {
+        "default": "Instructor"
+      }
+    },
+    "stats": {
+      "title": "Quick Statistics",
+      "attendanceRate": "Attendance Rate",
+      "averageScore": "Average Score",
+      "totalPoints": "Total Points",
+      "nextEvaluation": "Next Evaluation",
+      "endDate": "Cohort End Date",
+      "totalParticipants": "Total Participants"
+    },
+    "nextSession": {
+      "title": "Next Live Session",
+      "join": "Join",
+      "format": "{title} - {date} at {time}"
+    },
+    "currentWeek": {
+      "title": "This Week",
+      "error": {
+        "title": "Loading Error",
+        "noModule": "No module found for this week or for the cohort."
+      },
+      "module": "Module {number}: {title}",
+      "dateRange": "From {start} to {end}",
+      "status": {
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "notStarted": "Not Started"
+      },
+      "noActivities": "No activities scheduled for this week.",
+      "viewAll": "View all module activities"
+    },
+    "content": {
+      "title": "Course Content",
+      "refresh": "Refresh",
+      "loading": "Loading content...",
+      "section": "Section {number}",
+      "lessons": "lessons",
+      "lesson": "lesson",
+      "completed": "{completed}/{total} completed",
+      "stats": {
+        "totalSections": "Total Sections",
+        "totalLessons": "Total Lessons",
+        "completedLessons": "Completed Lessons",
+        "progress": "Progress"
+      },
+      "empty": "No content available at the moment.",
+      "actions": {
+        "review": "Review",
+        "continue": "Continue",
+        "preview": "Preview",
+        "view": "View",
+        "locked": "Locked"
+      },
+      "duration": {
+        "minutes": "{minutes} min",
+        "hours": "{hours}h",
+        "hoursMinutes": "{hours}h {minutes}min"
+      },
+      "status": {
+        "inProgress": "In Progress - {percentage}%",
+        "completed": "Completed",
+        "opening": "Opening: {date}"
+      }
+    },
+    "announcements": {
+      "title": "Announcements",
+      "refresh": "Refresh",
+      "latest": "Latest Announcements",
+      "empty": "No announcements at the moment.",
+      "badge": {
+        "important": "Important",
+        "standard": "Standard"
+      },
+      "timeAgo": {
+        "lessThanHour": "Less than an hour ago",
+        "oneHour": "1 hour ago",
+        "hours": "{hours} hours ago",
+        "yesterday": "Yesterday",
+        "days": "{days} days ago"
+      }
+    },
+    "resources": {
+      "title": "Resources",
+      "refresh": "Refresh",
+      "documents": {
+        "title": "Cohort Documents"
+      },
+      "recordings": {
+        "title": "Recordings"
+      },
+      "empty": "No resources available at the moment.",
+      "types": {
+        "pdf": "PDF",
+        "document": "Document",
+        "video": "Video",
+        "presentation": "Presentation",
+        "file": "File"
+      },
+      "actions": {
+        "watch": "Watch",
+        "download": "Download"
+      }
+    },
+    "participants": {
+      "title": "Participants",
+      "refresh": "Refresh",
+      "stats": {
+        "total": "Total",
+        "online": "Online",
+        "away": "Away",
+        "offline": "Offline"
+      },
+      "leaderboard": {
+        "title": "Leaderboard",
+        "points": "Points",
+        "empty": "No data available."
+      },
+      "showAll": "Show All",
+      "showLess": "Show Less",
+      "empty": "No participants to display.",
+      "progress": "{percentage}% completed",
+      "profile": {
+        "title": "Participant Profile",
+        "description": "Basic information and attendance",
+        "online": "Online",
+        "away": "Away",
+        "offline": "Offline",
+        "attendance": "Attendance",
+        "sessionsAttended": "Sessions Attended",
+        "lastActivity": "Last activity: {date}",
+        "close": "Close"
+      }
+    },
+    "discussion": {
+      "title": "Discussion",
+      "refresh": "Refresh",
+      "space": "Discussion Space",
+      "recentMessages": "Recent Messages ({count})",
+      "empty": "No messages at the moment.",
+      "loadMore": "Load More"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "timeAgo": {
+        "lessThanHour": "Less than an hour ago",
+        "oneHour": "{hours} hour ago",
+        "hours": "{hours} hours ago",
+        "yesterday": "Yesterday",
+        "days": "{days} days ago"
+      }
+    },
+    "instructor": {
+      "title": "Your Instructors",
+      "sendMessage": "Send Message",
+      "sendMessageLabel": "Send a message",
+      "comingSoon": {
+        "title": "Feature Coming Soon",
+        "description": "Messaging between learners and instructors is coming very soon. Stay tuned!"
+      }
+    },
+    "liveSessions": {
+      "title": "Live Sessions",
+      "refresh": "Refresh",
+      "completed": "Completed",
+      "prepareQuestions": "Prepare My Questions",
+      "downloadNotes": "Download Notes",
+      "stats": {
+        "total": "Total Sessions",
+        "upcoming": "Upcoming",
+        "attended": "Attended",
+        "attendance": "Attendance Rate"
+      },
+      "upcoming": {
+        "title": "Upcoming Sessions",
+        "next": "Next Session",
+        "join": "Join",
+        "addToCalendar": "Add to Calendar",
+        "inDays": "In {days} days",
+        "inFewDays": "In a few days"
+      },
+      "past": {
+        "title": "Past Sessions",
+        "viewRecording": "View Recording",
+        "attended": "You attended this session",
+        "notAttended": "You did not attend this session",
+        "viewPrerequisites": "View Prerequisites"
+      },
+      "status": {
+        "live": "Live",
+        "completed": "Completed"
+      },
+      "empty": "No sessions available at the moment."
+    },
+    "practicals": {
+      "title": "Practical Work",
+      "description": "Practical exercises to complete for this course",
+      "loading": "Loading exercises...",
+      "error": "Error loading exercises",
+      "empty": "No exercises available at the moment.",
+      "emptyDescription": "No practical exercises have been added to this course yet.",
+      "cohortNotFound": "Cohort not found",
+      "sectionsError": "Error retrieving sections",
+      "exercisesError": "Error retrieving exercises",
+      "section": "Section: {section}",
+      "noPoints": "— points",
+      "opening": "Opening: {date}",
+      "deadline": "Deadline",
+      "deadlinePassed": "Deadline passed",
+      "score": "Score: {score}/{max}",
+      "revisionRequested": "Revision Requested",
+      "submittedOn": "Submitted on {date}",
+      "notAvailable": "Not available",
+      "status": {
+        "notStarted": "Not Started",
+        "inProgress": "In Progress",
+        "submitted": "Submitted",
+        "graded": "Graded",
+        "overdue": "Overdue",
+        "revision": "Revision Requested"
+      },
+      "actions": {
+        "start": "Start",
+        "continue": "Continue",
+        "view": "View",
+        "submit": "Submit",
+        "viewInstructions": "View Instructions",
+        "viewResults": "View Results",
+        "resubmit": "Resubmit",
+        "viewSubmission": "View Submission"
+      },
+      "details": {
+        "points": "{points} points",
+        "deadline": "Deadline: {date}",
+        "attempts": "Attempts: {current}/{max}",
+        "estimatedTime": "Estimated time: {minutes} min"
+      },
+      "hours": "{hours}h",
+      "hoursMinutes": "{hours}h {minutes}min"
+    },
+    "discussionInput": {
+      "placeholder": "Ask a question or share your thoughts with the cohort...",
+      "cancel": "Cancel",
+      "publish": "Publish"
+    }
+  },
+  "progress": {
+    "title": "My Progress",
+    "description": "Track your evolution and achieve your learning goals",
+    "periods": {
+      "week": "This Week",
+      "month": "This Month",
+      "year": "This Year",
+      "all": "All"
+    },
+    "byCourse": {
+      "title": "Progress by Course",
+      "viewAll": "View All",
+      "noCourses": "No courses being followed at the moment.",
+      "browseCatalog": "Browse Catalog",
+      "loading": "Loading courses",
+      "module": "Module {completed}/{total}",
+      "completed": "{progress}% completed",
+      "status": {
+        "completed": "Completed",
+        "inProgress": "In Progress"
+      }
+    },
+    "goals": {
+      "title": "Monthly Goals",
+      "loading": "Loading...",
+      "error": {
+        "title": "Loading error",
+        "retry": "Retry"
+      },
+      "empty": {
+        "title": "No goals defined",
+        "description": "Start by defining your learning goals for this month",
+        "createFirst": "Create my first goal"
+      },
+      "new": "New",
+      "summary": {
+        "goals": "Goals",
+        "achieved": "Achieved",
+        "progress": "Progress",
+        "inProgress": "In Progress"
+      },
+      "status": {
+        "completed": "Goal achieved!",
+        "inProgress": "In progress...",
+        "onTime": "On time",
+        "late": "Late"
+      },
+      "createModal": {
+        "title": "Create a new goal",
+        "tabs": {
+          "templates": "From a template",
+          "custom": "Custom goal"
+        },
+        "categories": {
+          "learning": "Learning",
+          "time": "Time",
+          "progress": "Progress",
+          "social": "Social",
+          "general": "General"
+        },
+        "difficulty": {
+          "easy": "Easy",
+          "medium": "Medium",
+          "hard": "Hard"
+        },
+        "customize": {
+          "title": "Customize target",
+          "targetValue": "Target value ({unit})",
+          "min": "Min: {min}",
+          "max": "Max: {max}"
+        },
+        "custom": {
+          "title": "Goal title *",
+          "titlePlaceholder": "E.g.: Complete 3 courses this month",
+          "goalType": "Goal type *",
+          "goalTypePlaceholder": "Choose type",
+          "goalTypes": {
+            "courses_completion": "Courses completed",
+            "time_spent": "Learning time (hours)",
+            "streak_days": "Consecutive days",
+            "xp_points": "XP points",
+            "modules_completion": "Modules completed",
+            "skills_mastery": "Skills mastered"
+          },
+          "targetValue": "Target value *",
+          "priority": "Priority",
+          "priorityHigh": "High priority",
+          "priorityNormal": "Normal priority",
+          "priorityLow": "Low priority",
+          "description": "Description (optional)",
+          "descriptionPlaceholder": "Describe your goal in a few words..."
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create goal",
+          "creating": "Creating...",
+          "error": "Error creating goal",
+          "fillRequired": "Please fill in all required fields"
+        },
+        "rewards": {
+          "xp": "{xp} XP",
+          "days": "~{days} days"
+        }
+      },
+      "detailsModal": {
+        "title": "Goal Details",
+        "editTitle": "Edit Goal",
+        "status": {
+          "active": "Active",
+          "completed": "Completed",
+          "paused": "Paused",
+          "failed": "Failed"
+        },
+        "priority": {
+          "high": "High",
+          "normal": "Normal",
+          "low": "Low"
+        },
+        "progress": "Progress",
+        "fields": {
+          "title": "Title",
+          "description": "Description",
+          "targetValue": "Target Value",
+          "status": "Status",
+          "priority": "Priority"
+        },
+        "actions": {
+          "edit": "Edit",
+          "save": "Save",
+          "cancel": "Cancel",
+          "delete": "Delete",
+          "close": "Close",
+          "deleteConfirm": "Are you sure you want to delete this goal? This action is irreversible.",
+          "saving": "Saving...",
+          "deleting": "Deleting...",
+          "updateSuccess": "Goal updated successfully!",
+          "updateError": "Error updating",
+          "deleteSuccess": "Goal deleted successfully!",
+          "deleteError": "Error deleting"
+        },
+        "metrics": {
+          "completed": "Completed",
+          "remaining": "Remaining"
+        },
+        "info": {
+          "title": "Information",
+          "createdAt": "Created on:",
+          "updatedAt": "Updated on:",
+          "completedAt": "Completed on:",
+          "period": "Period:",
+          "estimation": "Estimation:",
+          "days": "{days} days",
+          "late": "Late"
+        },
+        "settings": {
+          "title": "Settings",
+          "target": "Target:",
+          "type": "Type:",
+          "difficulty": "Difficulty:",
+          "xpReward": "XP Reward:"
+        },
+        "history": {
+          "title": "Recent History"
+        }
+      }
+    },
+    "metrics": {
+      "loading": "Loading...",
+      "error": {
+        "title": "Error loading statistics",
+        "retry": "Retry"
+      },
+      "lastUpdated": "Last updated: {date}",
+      "stats": {
+        "learningTime": "Learning Time",
+        "completionRate": "Completion Rate",
+        "modulesCompleted": "Modules Completed",
+        "xpPoints": "XP Points Earned"
+      }
+    },
+    "activityChart": {
+      "title": "Learning Activity",
+      "loading": "Loading chart...",
+      "error": {
+        "title": "Error loading",
+        "retry": "Retry"
+      },
+      "periods": {
+        "week": "Last 7 days",
+        "month": "Last 30 days",
+        "year": "Last 3 months"
+      },
+      "stats": {
+        "totalTime": "TOTAL TIME",
+        "modules": "MODULES",
+        "avgTime": "AVG. TIME",
+        "avgModules": "AVG. MODULES"
+      },
+      "empty": "No activity for this period",
+      "legend": {
+        "time": "Time (minutes)",
+        "modules": "Modules completed"
+      },
+      "periodInfo": {
+        "week": "Daily data for the week",
+        "month": "Daily data for the month",
+        "year": "Monthly data for 3 months"
+      },
+      "tooltip": {
+        "learningTime": "{minutes} min of learning",
+        "modulesCompleted": "{count} module{plural} completed",
+        "activities": "{count} activit{plural}"
+      }
+    },
+    "skills": {
+      "title": "Acquired Skills",
+      "loading": "Loading...",
+      "error": {
+        "title": "Error loading",
+        "retry": "Retry"
+      },
+      "empty": {
+        "title": "No skills yet",
+        "description": "Enroll in courses to develop your skills"
+      },
+      "totalSkills": "{count} skill{plural}",
+      "globalProgress": "Overall Progress",
+      "proficiency": {
+        "expert": "Expert",
+        "advanced": "Advanced",
+        "intermediate": "Intermediate",
+        "beginner": "Beginner"
+      },
+      "topSkill": {
+        "title": "Top Skill: {skill}",
+        "mastery": "{percentage}% mastery"
+      },
+      "courses": "{completed}/{total} courses • {contributors} contributor{plural}"
+    },
+    "achievementsTimeline": {
+      "title": "Recent Achievements",
+      "loading": "Loading...",
+      "error": {
+        "title": "Error loading achievements",
+        "retry": "Retry"
+      },
+      "empty": {
+        "title": "No recent achievements",
+        "description": "Keep learning to unlock new achievements!"
+      }
+    }
+  },
+  "certificates": {
+    "title": "My Certificates",
+    "description": "Download, share and verify your certificates of completion",
+    "stats": {
+      "obtained": "Certificates Obtained",
+      "thisYear": "This Year",
+      "active": "Active",
+      "linkedinShares": "LinkedIn Shares"
+    },
+    "search": {
+      "placeholder": "Search for a certificate..."
+    },
+    "filters": {
+      "all": "All Certificates",
+      "sort": {
+        "recent": "Most Recent",
+        "oldest": "Oldest",
+        "byCourse": "By Course Name"
+      }
+    },
+    "loading": "Loading your certificates...",
+    "empty": {
+      "title": "No Certificates Yet",
+      "description": "Complete your first courses to earn your certificates!",
+      "explore": "Explore Courses"
+    },
+    "card": {
+      "certificateOfCompletion": "Certificate of Completion",
+      "obtainedOn": "Obtained on {date}",
+      "id": "ID: {id}",
+      "view": "View",
+      "download": "PDF",
+      "share": "Share"
+    },
+    "modal": {
+      "certificateOfCompletion": "Certificate of Completion",
+      "thisCertifies": "This certifies that",
+      "hasCompleted": "has successfully completed the course",
+      "issueDate": "Issue Date",
+      "verificationCode": "Verification Code",
+      "downloadPDF": "Download PDF",
+      "shareLinkedIn": "Share on LinkedIn",
+      "verifyPublicly": "Verify Publicly"
+    },
+    "share": {
+      "title": "Share Certificate",
+      "description": "Share your certificate on your social networks",
+      "linkedIn": "Share on LinkedIn",
+      "facebook": "Share on Facebook",
+      "twitter": "Share on Twitter",
+      "whatsapp": "Share on WhatsApp",
+      "copyLink": "Copy Link",
+      "shareText": "I just earned my certificate \"{title}\" on EduPro! 🎓"
+    },
+    "toasts": {
+      "downloadSuccess": "Certificate downloaded successfully",
+      "downloadError": "Error downloading certificate",
+      "linkCopied": "Link copied to clipboard",
+      "loadError": "Error loading certificates",
+      "connectionError": "Connection error"
+    }
+  },
+  "errors": {
+    "loadingError": "Error loading data",
+    "coursesError": "Error loading courses",
+    "tryLater": "Please try again later"
+  },
+  "charts": {
+    "enrollmentsOverTime": "Enrollments Over Time",
+    "revenueOverTime": "Revenue Over Time",
+    "courseCompletion": "Course Completion",
+    "topCourses": "Top Courses",
+    "topInstructors": "Top Instructors",
+    "performance": "Performance",
+    "performanceDescription": "Enrollment and revenue statistics",
+    "monthly": "Monthly",
+    "quarterly": "Quarterly",
+    "yearly": "Yearly",
+    "completion": "Completion",
+    "noData": "No data available",
+    "revenueLabel": "Revenue (XOF)"
+  },
+  "recentActivity": {
+    "title": "Recent Activity",
+    "description": "Latest activities on the platform",
+    "noActivity": "No recent activity",
+    "newEnrollment": "New enrollment",
+    "courseCompleted": "Course completed",
+    "certificateIssued": "Certificate issued",
+    "newReview": "New review",
+    "paymentReceived": "Payment received",
+    "lessThanHour": "less than an hour ago",
+    "hoursAgo": "{count} hour ago",
+    "hoursAgo_other": "{count} hours ago",
+    "daysAgo": "{count} day ago",
+    "daysAgo_other": "{count} days ago",
+    "enrolledInCourse": "enrolled in",
+    "paidForCourse": "paid for",
+    "createdCourse": "created course",
+    "joinedPlatform": "joined the platform",
+    "performedAction": "performed an action",
+    "course": "a course",
+    "newCourse": "a new course",
+    "user": "User"
+  },
+  "settings": {
+    "navigation": {
+      "title": "Settings",
+      "profile": "Profile",
+      "account": "Account",
+      "notifications": "Notifications",
+      "preferences": "Preferences",
+      "security": "Security",
+      "privacy": "Privacy",
+      "data": "My Data"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Manage your personal information and profile picture",
+      "memberSince": "Member since",
+      "firstName": "First name",
+      "firstNamePlaceholder": "Your first name",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Your last name",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us about yourself...",
+      "phone": "Phone",
+      "phonePlaceholder": "77 123 45 67",
+      "address": "Address",
+      "addressPlaceholder": "Your address",
+      "city": "City",
+      "cityPlaceholder": "Your city",
+      "country": "Country",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "Error updating profile"
+    },
+    "languagePreferences": {
+      "title": "Language Preferences",
+      "label": "Language",
+      "placeholder": "Select a language",
+      "french": "Français",
+      "english": "English",
+      "description": "The language will be updated when you save"
+    },
+    "account": {
+      "title": "Account",
+      "description": "Manage your login information and subscription",
+      "email": "Email",
+      "emailCannotChange": "Email cannot be changed at this time",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "passwordRequirements": "8+ characters, 1 uppercase, 1 number",
+      "updatePassword": "Update password",
+      "passwordUpdateSuccess": "Password updated successfully",
+      "passwordUpdateError": "Error changing password",
+      "dangerZone": "Danger zone",
+      "deleteAccount": "Delete my account",
+      "deleteAccountDescription": "Once your account is deleted, all your data will be permanently erased. This action is irreversible."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Choose how you want to receive your notifications",
+      "autoSaved": "Your preferences are automatically saved",
+      "email": {
+        "title": "Email notifications",
+        "newCourses": {
+          "label": "New courses available",
+          "description": "Receive an email when a new course is added in your favorite categories"
+        },
+        "courseReminders": {
+          "label": "Course reminders",
+          "description": "Receive reminders for your scheduled course sessions"
+        },
+        "instructorMessages": {
+          "label": "Instructor messages",
+          "description": "Notifications when an instructor sends you a message"
+        },
+        "promotions": {
+          "label": "Promotions and offers",
+          "description": "Receive special offers and discounts on courses"
+        }
+      },
+      "push": {
+        "title": "Push notifications",
+        "browserEnabled": {
+          "label": "Browser notifications",
+          "description": "Receive notifications directly in your browser"
+        }
+      }
+    },
+    "preferences": {
+      "title": "Learning preferences",
+      "description": "Customize your learning experience",
+      "timezone": "Timezone"
+    },
+    "security": {
+      "title": "Security",
+      "description": "Protect your account with advanced security options",
+      "twoFactor": {
+        "title": "Two-factor authentication",
+        "description": "Add an extra layer of security",
+        "disabled": "Disabled",
+        "configure": "Configure"
+      },
+      "activeSessions": {
+        "title": "Active sessions",
+        "description": "Manage your active connections",
+        "view": "View sessions",
+        "loading": "Loading...",
+        "current": "Current",
+        "disconnect": "Disconnect",
+        "location": "Unknown location",
+        "browser": "Unknown browser",
+        "connectedSince": "Connected since:"
+      },
+      "loginHistory": {
+        "title": "Login history",
+        "refresh": "Refresh",
+        "loading": "Loading...",
+        "lastConnections": "Last connections:"
+      }
+    },
+    "privacy": {
+      "title": "Privacy",
+      "description": "Control who can see your information",
+      "profilePublic": {
+        "label": "Public profile",
+        "description": "Allow other learners to see your profile"
+      },
+      "showProgress": {
+        "label": "Show my progress",
+        "description": "Others can see your completed courses and certificates"
+      }
+    },
+    "data": {
+      "title": "My Data",
+      "description": "Export or manage your personal data",
+      "export": {
+        "title": "Export my data",
+        "description": "Download all your data in JSON format",
+        "button": "Export",
+        "exporting": "Exporting..."
+      },
+      "deletion": {
+        "title": "Data deletion",
+        "requestTitle": "Request deletion of my data",
+        "description": "In accordance with GDPR, you can request complete deletion of your data. This request will be processed by our team within 30 days maximum. Your account will remain active while your request is being processed. Once validated, this action will permanently delete your account and all associated data.",
+        "button": "Request deletion"
+      }
+    },
+    "deleteModal": {
+      "title": "Confirm deletion",
+      "description": "Are you sure you want to delete your account? This action is irreversible and all your data will be lost.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "requestSent": "Your deletion request has been sent. You will receive a confirmation email.",
+      "requestError": "Error requesting deletion. Please try again.",
+      "logoutSuccess": "Session disconnected successfully",
+      "logoutError": "Error disconnecting session"
+    },
+    "errors": {
+      "title": "Error"
+    }
+  },
+  "exercises": {
+    "loading": "Loading exercise...",
+    "error": {
+      "title": "Error",
+      "notFound": "Exercise not found",
+      "back": "Back"
+    },
+    "detail": {
+      "backToExercises": "Back to exercises",
+      "estimatedDuration": "Estimated duration: {duration}",
+      "points": "Points: {points}",
+      "attempts": {
+        "one": "1 attempt",
+        "many": "{count} attempts"
+      },
+      "deadline": {
+        "title": "Deadline",
+        "passed": "Deadline passed",
+        "remaining": {
+          "days": "{days} day(s) remaining",
+          "hours": "{hours} hour(s) remaining",
+          "minutes": "{minutes} minute(s) remaining",
+          "lessThanMinute": "Less than 1 minute"
+        }
+      },
+      "instructions": {
+        "title": "Instructions",
+        "none": "No instructions provided."
+      },
+      "resources": {
+        "title": "Available resources",
+        "document": "Document"
+      },
+      "evaluationCriteria": {
+        "title": "Evaluation criteria",
+        "points": "{points} pts"
+      },
+      "submission": {
+        "title": "Your submission",
+        "status": {
+          "label": "Status:",
+          "submitted": "Pending correction",
+          "graded": "Graded",
+          "revisionRequested": "Revision requested"
+        },
+        "submittedOn": "Submitted on {date}",
+        "points": "points",
+        "filesSubmitted": "Submitted files:",
+        "comments": "Comments:",
+        "feedback": "Instructor feedback:"
+      },
+      "history": {
+        "title": "Submission history"
+      },
+      "actions": {
+        "readyToStart": {
+          "title": "Ready to start?",
+          "description": "Once started, you can save your progress and come back later."
+        },
+        "openingDate": {
+          "title": "Opening on {date}",
+          "description": "Instructions are visible, but you will be able to submit from the opening date."
+        },
+        "deadlinePassed": {
+          "title": "Deadline has passed",
+          "description": "You can no longer submit this exercise."
+        },
+        "startExercise": "Start exercise",
+        "resubmit": "Resubmit exercise",
+        "modifySubmission": "Modify submission",
+        "completed": {
+          "title": "Exercise completed and graded",
+          "description": "Your work has been evaluated by the instructor."
+        },
+        "pending": {
+          "title": "Pending correction",
+          "description": "Your submission has been sent to the instructor for evaluation."
+        }
+      }
+    },
+    "submit": {
+      "loading": "Loading...",
+      "error": {
+        "title": "Error",
+        "notFound": "Exercise not found",
+        "back": "Back",
+        "loading": "Error loading"
+      },
+      "backToExercises": "Back to exercises",
+      "title": "Exercise submission",
+      "deadline": {
+        "passed": "Deadline passed",
+        "timeRemaining": "Time remaining",
+        "deadline": "Deadline: {date}",
+        "remaining": {
+          "days": "{days} day(s) remaining",
+          "hours": "{hours} hour(s) remaining",
+          "minutes": "{minutes} minute(s) remaining",
+          "lessThanMinute": "Less than 1 minute"
+        }
+      },
+      "deadlinePassed": {
+        "title": "Deadline has passed",
+        "description": "You can no longer submit this exercise."
+      },
+      "work": {
+        "title": "Your work",
+        "description": "Summary of your analysis (optional)",
+        "placeholder": "You can add here a summary of your analysis or comments on your work...",
+        "characters": "{count}/2000 characters"
+      },
+      "files": {
+        "title": "Documents to submit *",
+        "dragDrop": "Drag your files here or click to browse",
+        "acceptedFormats": "Accepted formats: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, JPG, PNG, ZIP (Max 10MB per file)",
+        "selected": "Selected files:",
+        "fileTooLarge": "File \"{name}\" is too large (max 10MB)"
+      },
+      "links": {
+        "title": "External links",
+        "required": "External links *",
+        "optional": "External links (optional)",
+        "linkTitle": "Link title",
+        "linkTitlePlaceholder": "e.g.: My GitHub project",
+        "url": "URL",
+        "urlPlaceholder": "https://...",
+        "addLink": "Add a link"
+      },
+      "checklist": {
+        "title": "Pre-submission checklist:",
+        "warning": "Please check all items in the checklist before submitting."
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "submit": "Submit my work",
+        "submitting": "Submitting..."
+      },
+      "validation": {
+        "noFiles": "Please add at least one file",
+        "noLinks": "Please add at least one link",
+        "incompleteLinks": "Please complete at least one link with a URL and title"
+      },
+      "success": "Exercise submitted successfully!",
+      "errorSubmitting": "Error submitting",
+      "uploadError": "Upload error {name}: {message}"
+    },
+    "success": {
+      "title": "Exercise submitted successfully!",
+      "submissionDate": "Submission date",
+      "status": "Status",
+      "statusValue": "Under evaluation",
+      "summary": "Summary of your submission",
+      "noFiles": "No files listed",
+      "backToExercises": "Back to exercises"
+    }
+  },
+  "feedback": {
+    "title": "My Feedback",
+    "description": "Share your experience about your training",
+    "loading": "Loading...",
+    "newFeedback": "New Feedback",
+    "createModal": {
+      "title": "Give feedback",
+      "course": "Course",
+      "coursePlaceholder": "Select a course",
+      "rating": "Rating",
+      "comment": "Comment (optional)",
+      "commentPlaceholder": "Share your experience...",
+      "anonymous": "Publish anonymously",
+      "cancel": "Cancel",
+      "publish": "Publish",
+      "publishing": "Sending..."
+    },
+    "status": {
+      "published": "Published",
+      "pending": "Pending",
+      "flagged": "Flagged",
+      "hidden": "Hidden"
+    },
+    "badge": {
+      "anonymous": "Anonymous"
+    },
+    "empty": {
+      "title": "No feedback yet",
+      "description": "Share your opinion on your training to help improve them",
+      "createFirst": "Create my first feedback"
+    },
+    "responses": {
+      "title": "Responses:"
+    },
+    "toasts": {
+      "loadError": "Error loading feedbacks",
+      "loadGenericError": "Error loading",
+      "validationError": "Please select a course and a rating",
+      "submitSuccess": "Feedback submitted successfully!",
+      "submitError": "Error submitting"
+    }
+  },
+  "calendar": {
+    "today": "Today",
+    "views": {
+      "month": "Month",
+      "week": "Week",
+      "day": "Day"
+    },
+    "weekDays": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "addEvent": "Add event",
+    "categories": {
+      "title": "Event categories",
+      "sessions": "Course sessions",
+      "deadlines": "Deadlines",
+      "examens": "Exams",
+      "webinaires": "Webinars",
+      "etudes": "Study sessions"
+    },
+    "upcoming": {
+      "title": "Upcoming events",
+      "seeAll": "See all"
+    },
+    "dayView": {
+      "noEvents": "No events today",
+      "freeDay": "Enjoy this free day!",
+      "addForToday": "Add an event for today"
+    },
+    "eventTypes": {
+      "course": "Course session",
+      "deadline": "Deadline",
+      "exam": "Exam",
+      "webinar": "Webinar",
+      "study": "Study session",
+      "event": "Event"
+    },
+    "eventDetails": {
+      "title": "Event details",
+      "instructor": "Instructor",
+      "duration": "Duration",
+      "toSubmit": "To submit",
+      "deadline": "Deadline:",
+      "close": "Close",
+      "joinCourse": "Join course"
+    },
+    "createModal": {
+      "title": "Add event",
+      "eventTitle": "Event title",
+      "eventTitlePlaceholder": "e.g.: JavaScript study session",
+      "eventType": "Event type",
+      "personalStudy": "Personal study session",
+      "courseReminder": "Course reminder",
+      "personalDeadline": "Personal deadline",
+      "other": "Other",
+      "date": "Date",
+      "time": "Time",
+      "start": "Start",
+      "end": "End",
+      "description": "Description (optional)",
+      "descriptionPlaceholder": "Add details...",
+      "cancel": "Cancel",
+      "add": "Add event"
+    },
+    "errors": {
+      "loadTitle": "Loading error",
+      "retry": "Retry",
+      "authTokenMissing": "Authentication token missing",
+      "createError": "Error creating event"
+    },
+    "moreEvents": "+{count} more"
+  }
+}

@@ -1,0 +1,396 @@
+{
+  "meta": {
+    "title": "À propos d'EduPro | Transformer la Formation Professionnelle en Afrique",
+    "description": "Nous croyons au génie africain. EduPro est née d'une conviction simple : l'Afrique possède les talents, elle a juste besoin des bons outils pour les révéler. Depuis 2023, nous bâtissons la plateforme qui transforme cette vision en réalité, une compétence à la fois.",
+    "keywords": "à propos EduPro, éducation africaine, plateforme de formation professionnelle, développement des compétences, Afrique, mission, vision"
+  },
+  "hero": {
+    "title": "Nous croyons au génie africain",
+    "subtitle": "EduPro est née d'une conviction simple : l'Afrique possède les talents, elle a juste besoin des bons outils pour les révéler. Depuis 2023, nous bâtissons la plateforme qui transforme cette vision en réalité, une compétence à la fois.",
+    "stats": {
+      "learners": "Apprenants transformés",
+      "companies": "Entreprises partenaires",
+      "countries": "Pays présents",
+      "trainings": "Formations créées"
+    }
+  },
+  "mission": {
+    "title": "Notre mission : Accélérer la transformation des compétences en Afrique",
+    "observation": {
+      "title": "Le Constat",
+      "text": "Chaque année, des millions de professionnels africains voient leur potentiel inexploité. Non pas par manque de talent ou d'ambition, mais par manque d'accès à la formation continue de qualité. Les solutions internationales ? Trop chères, trop éloignées de nos réalités. Les solutions locales ? Souvent limitées en portée et en impact."
+    },
+    "approach": {
+      "title": "Notre Approche",
+      "intro": "Nous créons une plateforme qui répond à trois défis majeurs :",
+      "challenges": {
+        "accessibility": {
+          "label": "Accessibilité",
+          "description": "Formations de qualité à prix abordables, optimisées pour mobile et faible bande passante"
+        },
+        "interactivity": {
+          "label": "Interactivité",
+          "description": "Expériences d'apprentissage engageantes qui favorisent la rétention et l'application pratique"
+        },
+        "measurability": {
+          "label": "Mesurabilité",
+          "description": "Suivi précis de la progression et impact réel sur la performance professionnelle"
+        }
+      }
+    },
+    "ecosystem": {
+      "title": "L'Écosystème",
+      "text": "Nous ne créons pas seulement une plateforme. Nous construisons un écosystème où entreprises, formateurs, apprenants et investisseurs collaborent pour élever le niveau de compétences du continent. Chaque acteur trouve sa valeur, chaque interaction crée de l'impact. Car quand l'Afrique excelle, le monde entier en bénéficie."
+    },
+    "quote": {
+      "text": "J'ai grandi en voyant des talents extraordinaires limités par le manque d'opportunités de formation. EduPro est ma réponse à cette injustice. Nous ne cherchons pas à copier ce qui existe ailleurs - nous créons ce qui devrait exister ici.",
+      "author": "Boubacar I. Diallo, Fondateur et CEO"
+    }
+  },
+  "vision": {
+    "title": "Notre vision : Construire la prochaine génération de talents africains",
+    "main": "Construire la prochaine génération de talents africains grâce à la digitalisation de la formation professionnelle et l'accès équitable à la connaissance.",
+    "description": "L'Afrique regorge de talents exceptionnels. Notre vision est de leur donner des outils digitaux pour développer leurs compétences, quelle que soit leur localisation géographique ou leur situation économique.",
+    "future": {
+      "title": "Nous croyons en un avenir où :",
+      "items": {
+        "professional": "Chaque professionnel africain a accès aux mêmes opportunités de formation que ses pairs internationaux",
+        "digitalization": "La digitalisation élimine les barrières géographiques et financières",
+        "knowledge": "La connaissance circule librement à travers le continent",
+        "talents": "Les talents africains sont reconnus et valorisés à leur juste valeur sur la scène mondiale"
+      }
+    },
+    "ambition": "Notre ambition : Devenir la référence panafricaine en formation professionnelle digitale, touchant des millions d'apprenants dans les 10 prochaines années."
+  },
+  "pillars": {
+    "title": "Les 4 piliers qui nous guident",
+    "pillars": {
+      "accessibility": {
+        "title": "Accessibilité",
+        "subtitle": "Faire tomber toutes les barrières",
+        "meaning": "Ce que ça signifie concrètement :",
+        "features": [
+          "Prix adaptés aux réalités locales (jusqu'à 70% moins cher)",
+          "Mobile-first : 78% de notre trafic est mobile",
+          "Mode offline natif pour zones à faible connexion",
+          "Multilingue (FR, EN, + langues locales en phase 2)",
+          "Paiements locaux (Mobile Money, FCFA, Shilling)"
+        ],
+        "commitment": "Aucun talent ne doit être limité par sa géographie ou sa situation économique."
+      },
+      "inclusion": {
+        "title": "Inclusion",
+        "subtitle": "Chaque voix compte, chaque talent a sa place",
+        "meaning": "Ce que ça signifie concrètement :",
+        "features": [
+          "Contenus créés par des experts africains pour l'Afrique",
+          "Représentation équitable des genres et des régions",
+          "Parcours adaptés à tous les niveaux (débutant à expert)",
+          "Interface intuitive et accessible sur tous les appareils",
+          "Communauté inclusive et bienveillante pour tous les apprenants"
+        ],
+        "commitment": "Nous célébrons la diversité africaine comme notre plus grande richesse."
+      },
+      "contextualization": {
+        "title": "Contextualisation",
+        "subtitle": "Des solutions pensées pour nos réalités",
+        "meaning": "Ce que ça signifie concrètement :",
+        "features": [
+          "Cas d'usage basés sur des entreprises africaines réelles",
+          "Formateurs qui comprennent le contexte local",
+          "Intégration des spécificités réglementaires de chaque pays",
+          "Exemples et exercices ancrés dans la réalité africaine",
+          "Partenariats avec des entreprises locales leaders"
+        ],
+        "commitment": "Qualité internationale, pertinence locale. Le meilleur des deux mondes."
+      },
+      "sustainability": {
+        "title": "Durabilité",
+        "subtitle": "Construire pour les générations futures",
+        "meaning": "Ce que ça signifie concrètement :",
+        "features": [
+          "Modèle économique équilibré et rentable",
+          "Rémunération équitable des formateurs africains",
+          "Impact social mesurable et transparent",
+          "Développement de compétences critiques pour l'avenir",
+          "Partenariats avec des acteurs engagés pour le développement"
+        ],
+        "commitment": "Nous ne construisons pas une startup. Nous construisons une institution."
+      }
+    }
+  },
+  "values": {
+    "title": "Les valeurs qui nous unissent",
+    "subtitle": "Nos valeurs ne sont pas des mots sur un mur. Ce sont les principes qui guident chacune de nos décisions, de notre culture interne à nos interactions avec nos clients.",
+    "values": {
+      "excellence": {
+        "title": "Excellence Africaine",
+        "subtitle": "Nous visons l'excellence mondiale, ancrée en Afrique",
+        "description": "Nous refusons le compromis sur la qualité. Chaque formation, chaque fonctionnalité, chaque interaction doit être au niveau des meilleurs standards internationaux, tout en étant profondément pertinente pour le contexte africain.",
+        "practices": [
+          "Processus de sélection rigoureux des formateurs",
+          "Tests utilisateurs continus",
+          "Veille technologique permanente",
+          "Certifications internationales"
+        ]
+      },
+      "impact": {
+        "title": "Impact Avant Profit",
+        "subtitle": "Notre succès se mesure en vies transformées",
+        "description": "Nous construisons un modèle économique durable, mais jamais au détriment de notre mission. Chaque décision est évaluée d'abord sur son impact sur les apprenants, les formateurs et les entreprises africaines.",
+        "practices": [
+          "Tarifs accessibles pensés pour le contexte africain",
+          "Partenariats avec des organisations pour faciliter l'accès à la formation",
+          "Transparence totale sur notre vision et nos objectifs d'impact",
+          "Réinvestissement prioritaire en R&D et amélioration de la plateforme"
+        ]
+      },
+      "userOriented": {
+        "title": "Orientation Utilisateur",
+        "subtitle": "Chaque décision commence par l'apprenant",
+        "description": "Nous concevons chaque fonctionnalité, chaque contenu, chaque interaction en pensant d'abord à l'expérience de nos utilisateurs : apprenants, formateurs et entreprises. Leur succès est notre seul compas.",
+        "practices": [
+          "Tests utilisateurs réguliers avant chaque lancement",
+          "Support client réactif et bienveillant",
+          "Feedback continuellement intégré dans nos cycles de développement",
+          "Formations co-créées avec les utilisateurs finaux",
+          "Interface conçue pour le contexte africain (mobile-first, faible bande passante)"
+        ]
+      },
+      "agility": {
+        "title": "Agilité et Innovation",
+        "subtitle": "Le statu quo n'est pas une option",
+        "description": "L'Afrique évolue rapidement, et nous aussi. Nous testons, itérons, apprenons et améliorons constamment. L'échec intelligent est encouragé, la stagnation est inacceptable.",
+        "practices": [
+          "Sprints d'innovation trimestriels",
+          "Culture du test & learn",
+          "Adoption rapide des nouvelles technologies pertinentes",
+          "Feedback utilisateurs intégré en continu"
+        ]
+      }
+    }
+  },
+  "join": {
+    "title": "Vous voulez faire partie de l'histoire ?",
+    "subtitle": "EduPro n'est pas qu'une entreprise. C'est un mouvement pour transformer l'éducation professionnelle en Afrique. Et nous recherchons des personnes passionnées pour nous rejoindre.",
+    "opportunities": {
+      "careers": {
+        "title": "Opportunités de Carrière",
+        "subtitle": "Construisez avec nous la plateforme de demain",
+        "description": "Rejoindre EduPro signifie participer à la transformation de la formation professionnelle en Afrique. Nous recherchons des talents passionnés qui partagent notre vision et veulent avoir un impact mesurable.",
+        "benefits": [
+          "Mission inspirante avec impact social direct",
+          "Environnement de travail stimulant et bienveillant",
+          "Télétravail-friendly avec flexibilité",
+          "Formation continue et développement des compétences",
+          "Équipe multiculturelle et dynamique"
+        ],
+        "note": "Nous recrutons régulièrement en développement, design, pédagogie, business development et support client.",
+        "cta": "Contactez-nous pour explorer les opportunités",
+        "ctaLink": "/fr/carrieres"
+      },
+      "trainer": {
+        "title": "Devenir Formateur Partenaire",
+        "subtitle": "Partagez votre expertise, touchez des milliers d'apprenants",
+        "description": "Vous êtes expert dans votre domaine et voulez avoir de l'impact à grande échelle ?",
+        "benefits": [
+          "Outils IA pour créer vos formations 40% plus vite",
+          "Visibilité panafricaine auprès de milliers d'apprenants",
+          "Rémunération transparente et équitable",
+          "Support technique complet",
+          "Communauté d'excellents formateurs africains"
+        ],
+        "note": "Domaines recherchés: Tech, Business, Leadership, Construction, Santé, Agriculture",
+        "cta": "Rejoindre la communauté formateurs",
+        "ctaLink": "/formateurs"
+      },
+      "partner": {
+        "title": "Devenir Partenaire",
+        "subtitle": "Construisons ensemble l'écosystème de demain",
+        "description": "Nous sommes ouverts aux partenariats stratégiques avec :",
+        "benefits": [
+          "Entreprises - Formations sur mesure pour vos équipes",
+          "Instituts - Solution marque blanche",
+          "Médias - Co-création de contenu",
+          "ONG & Donateurs - Programmes d'impact social",
+          "Investisseurs - Rejoignez notre mission"
+        ],
+        "cta": "Discuter d'un partenariat",
+        "ctaLink": "#contact"
+      }
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact | EduPro",
+      "description": "Contactez l'équipe EduPro pour vos besoins en formation professionnelle."
+    },
+    "title": "Entrons en contact",
+    "subtitle": "On répond à tous vos messages (promis!)",
+    "hero": {
+      "title": "Entrons en",
+      "titleHighlight": "contact",
+      "subtitle": "Une question, un projet, une collaboration ? Notre équipe est là pour vous accompagner."
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "fields": {
+        "firstname": {
+          "label": "Prénom",
+          "placeholder": "Jean"
+        },
+        "lastname": {
+          "label": "Nom",
+          "placeholder": "Dupont"
+        },
+        "email": {
+          "label": "Email professionnel",
+          "placeholder": "jean@entreprise.com"
+        },
+        "subject": {
+          "label": "Sujet",
+          "placeholder": "Sélectionnez un sujet",
+          "options": {
+            "Demande de formation": "Demande de formation",
+            "Partenariat": "Partenariat",
+            "Support technique": "Support technique",
+            "Autre": "Autre"
+          }
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Comment pouvons-nous vous aider ?"
+        }
+      },
+      "submit": {
+        "sending": "Envoi en cours...",
+        "send": "Envoyer le message"
+      },
+      "success": {
+        "title": "Message envoyé !",
+        "message": "Merci de nous avoir contactés. Notre équipe reviendra vers vous dans les plus brefs délais.",
+        "sendAnother": "Envoyer un autre message"
+      },
+      "errors": {
+        "subjectRequired": "Veuillez sélectionner un sujet",
+        "recaptchaNotLoaded": "reCAPTCHA n'est pas encore chargé. Veuillez patienter quelques instants.",
+        "recaptchaError": "Erreur lors de la vérification de sécurité. Veuillez réessayer.",
+        "submitError": "Erreur lors de l'envoi du message",
+        "genericError": "Une erreur est survenue"
+      }
+    },
+    "offices": {
+      "title": "Nos Bureaux",
+      "dakar": {
+        "location": "🇸🇳 Dakar, Sénégal (Siège)",
+        "address1": "Immeuble Antalya, 6e étage",
+        "address2": "Dakar, Sénégal",
+        "email": "contact@edupro.africa",
+        "phone": "+221 76 665 17 17"
+      },
+      "abidjan": {
+        "location": "🇨🇮 Abidjan, Côte d'Ivoire",
+        "address1": "Plateau, Immeuble SCIAM",
+        "address2": "Abidjan, Côte d'Ivoire",
+        "email": "ci@edupro.africa",
+        "phone": "+2250554040707"
+      }
+    },
+    "writeUs": {
+      "title": "Nous Écrire",
+      "enterprises": {
+        "label": "Pour les entreprises:",
+        "email": "entreprises@edupro.africa"
+      },
+      "trainers": {
+        "label": "Pour les formateurs ou instituts:",
+        "email": "formateurs@edupro.africa"
+      },
+      "learners": {
+        "label": "Pour les apprenants:",
+        "email": "contact@edupro.africa"
+      },
+      "investors": {
+        "label": "Pour les investisseurs:",
+        "email": "contact@edupro.africa"
+      },
+      "press": {
+        "label": "Presse & Partenaires:",
+        "email": "partenariats@edupro.africa"
+      }
+    },
+    "social": {
+      "title": "Réseaux Sociaux",
+      "subtitle": "Suivez notre aventure au quotidien :",
+      "linkedin": "LinkedIn - Actualités entreprise & insights",
+      "twitter": "Twitter/X - News & conversations",
+      "instagram": "Instagram - Coulisses & communauté",
+      "facebook": "Facebook - Événements & success stories",
+      "youtube": "YouTube - Tutoriels & témoignages",
+      "newsletter": {
+        "title": "Newsletter mensuelle:",
+        "placeholder": "Votre email",
+        "button": "OK",
+        "success": "Merci pour votre inscription à la newsletter !",
+        "description": "Un email par mois, zéro spam, 100% valeur ajoutée"
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Prêt à transformer l'Afrique ?",
+    "subtitle": "Que vous soyez entreprise, formateur, talent ou investisseur, il y a une place pour vous dans l'aventure EduPro.",
+    "ctas": {
+      "solutions": "Découvrir nos solutions",
+      "join": "Rejoindre l'équipe",
+      "trainer": "Devenir formateur"
+    },
+    "reassurance": {
+      "response": "Réponse sous 24h",
+      "support": "Support en FR/EN"
+    }
+  },
+  "contactInfo": {
+    "title": "Contactez-nous",
+    "subtitle": "Une question ? Un projet de formation ? Notre équipe est là pour vous accompagner.",
+    "sections": {
+      "email": {
+        "title": "Email",
+        "description": "Notre équipe vous répond sous 24h.",
+        "dakar": {
+          "label": "🇸🇳 Dakar (Siège)",
+          "email": "contact@edupro.africa"
+        },
+        "abidjan": {
+          "label": "🇨🇮 Abidjan",
+          "email": "ci@edupro.africa"
+        }
+      },
+      "phone": {
+        "title": "Téléphone",
+        "description": "Du lundi au vendredi, 9h-18h GMT.",
+        "dakar": {
+          "label": "🇸🇳 Dakar (Siège)",
+          "phone": "+221 76 665 17 17"
+        },
+        "abidjan": {
+          "label": "🇨🇮 Abidjan",
+          "phone": "+225 05 54 04 07 07"
+        }
+      },
+      "offices": {
+        "title": "Bureaux",
+        "dakar": {
+          "label": "🇸🇳 Dakar, Sénégal (Siège)",
+          "address1": "Immeuble Antalya, 6e étage",
+          "address2": "Dakar, Sénégal"
+        },
+        "abidjan": {
+          "label": "🇨🇮 Abidjan, Côte d'Ivoire",
+          "address1": "Plateau, Immeuble SCIAM",
+          "address2": "Abidjan, Côte d'Ivoire"
+        }
+      }
+    }
+  }
+}
+

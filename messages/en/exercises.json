@@ -1,0 +1,254 @@
+{
+  "title": "Practical Exercises",
+  "description": "Create and manage your practical exercises",
+  "newExercise": "New exercise",
+  "searchPlaceholder": "Search for an exercise...",
+
+  "filters": {
+    "status": "Status",
+    "allStatuses": "All statuses",
+    "drafts": "Drafts",
+    "published": "Published",
+    "archived": "Archived",
+    "difficulty": "Difficulty",
+    "allDifficulties": "All difficulties",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+
+  "table": {
+    "exercise": "Exercise",
+    "status": "Status",
+    "difficulty": "Difficulty",
+    "points": "Points",
+    "duration": "Duration",
+    "type": "Type",
+    "createdOn": "Created on",
+    "actions": "Actions"
+  },
+
+  "status": {
+    "draft": "Draft",
+    "published": "Published",
+    "archived": "Archived"
+  },
+
+  "submissionTypes": {
+    "files": "Files",
+    "links": "Links",
+    "both": "Mixed"
+  },
+
+  "actions": {
+    "preview": "Preview",
+    "edit": "Edit",
+    "publish": "Publish",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "unpublish": "Revert to draft",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+
+  "loading": "Loading exercises...",
+  "noExercises": "No exercises created",
+  "noExercisesFiltered": "No exercises found with these filters",
+  "createFirst": "Create your first exercise",
+
+  "dialogs": {
+    "deleteTitle": "Delete Exercise",
+    "deleteDescription": "Are you sure you want to delete the exercise \"{title}\"? This action is irreversible.",
+    "deleting": "Deleting...",
+    "publishTitle": "Publish Exercise",
+    "publishDescription": "Are you sure you want to publish the exercise \"{title}\"? Once published, it will be visible to learners.",
+    "publishing": "Publishing...",
+    "unpublishTitle": "Revert to Draft",
+    "unpublishDescription": "Are you sure you want to revert the exercise \"{title}\" to draft? It will no longer be visible to learners.",
+    "unpublishing": "Reverting to draft...",
+    "archiveTitle": "Archive Exercise",
+    "archiveDescription": "Are you sure you want to archive the exercise \"{title}\"? It will be moved to archives and will no longer be visible to learners.",
+    "archiving": "Archiving...",
+    "duplicateTitle": "Duplicate Exercise",
+    "duplicateDescription": "Do you want to create a copy of the exercise \"{title}\"? The copy will be created as a draft and can be modified.",
+    "duplicating": "Duplicating..."
+  },
+
+  "messages": {
+    "deleteSuccess": "Exercise deleted successfully",
+    "publishSuccess": "Exercise published successfully",
+    "unpublishSuccess": "Exercise reverted to draft successfully",
+    "archiveSuccess": "Exercise archived successfully",
+    "unarchiveSuccess": "Exercise unarchived successfully",
+    "duplicateSuccess": "Exercise duplicated successfully",
+    "error": "An error occurred"
+  },
+
+  "create": {
+    "title": "Create a practical exercise",
+    "description": "Define your exercise settings",
+    "back": "Back",
+    "generalInfo": "General information",
+    "titleLabel": "Title *",
+    "titlePlaceholder": "Exercise title",
+    "descriptionLabel": "Short description",
+    "descriptionPlaceholder": "Short description for list view",
+    "pointsLabel": "Points awarded *",
+    "durationLabel": "Estimated duration (minutes)",
+    "difficultyLabel": "Difficulty level",
+    "submissionTypeLabel": "Submission type",
+    "maxAttemptsLabel": "Number of attempts",
+    "instructions": "Instructions *",
+    "instructionsPlaceholder": "Describe the detailed instructions for the exercise...",
+    "resources": "Available resources",
+    "resourceTitlePlaceholder": "Resource title",
+    "resourceUrlPlaceholder": "Resource URL",
+    "addResource": "Add a resource",
+    "evaluationCriteria": "Evaluation criteria",
+    "criterionDescriptionPlaceholder": "Criterion description",
+    "criterionPointsPlaceholder": "Points",
+    "addCriterion": "Add a criterion",
+    "actions": "Actions",
+    "saveDraft": "Save as draft",
+    "saving": "Saving...",
+    "createAndPublish": "Create and publish",
+    "creating": "Creating...",
+    "summary": "Summary",
+    "points": "Points:",
+    "duration": "Estimated duration:",
+    "submission": "Submission:",
+    "attempts": "Attempts:",
+    "resourcesCount": "Resources:",
+    "criteriaCount": "Criteria:",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "submissionTypes": {
+      "files": "Files only",
+      "links": "Links only",
+      "mixed": "Files and links"
+    },
+    "attempts": {
+      "1": "1 attempt",
+      "2": "2 attempts",
+      "3": "3 attempts",
+      "999": "Unlimited"
+    },
+    "errors": {
+      "titleRequired": "Title is required",
+      "instructionsRequired": "Instructions are required",
+      "pointsInvalid": "Points must be greater than 0",
+      "createError": "Error creating",
+      "genericError": "Error creating"
+    },
+    "success": {
+      "createdDraft": "Exercise created as draft",
+      "createdPublished": "Exercise created and published!"
+    }
+  },
+
+  "preview": {
+    "title": "Exercise Preview",
+    "back": "Back",
+    "edit": "Edit",
+    "loading": "Loading preview...",
+    "error": "Error loading",
+    "notFound": "Exercise not found",
+    "description": "Description",
+    "instructions": "Instructions",
+    "resources": "Available resources",
+    "resource": "Resource",
+    "evaluationCriteria": "Evaluation criteria",
+    "totalPoints": "Total points",
+    "points": "pts",
+    "settings": "Settings",
+    "pointsAwarded": "Points awarded",
+    "estimatedDuration": "Estimated duration",
+    "submissionType": "Submission type",
+    "attempts": "Number of attempts",
+    "attempt": "attempt",
+    "attemptsPlural": "attempts",
+    "deadlines": "Deadlines",
+    "deadlineType": "Type:",
+    "deadlineNone": "No deadline",
+    "deadlineFixed": "Fixed date",
+    "deadlineRelative": "Relative to start",
+    "deadlineDate": "Date:",
+    "deadlineDelay": "Delay:",
+    "day": "day",
+    "days": "days",
+    "info": "Information",
+    "status": "Status:",
+    "createdAt": "Created on:",
+    "updatedAt": "Updated on:"
+  },
+
+  "edit": {
+    "title": "Edit Exercise",
+    "description": "Modify your exercise settings",
+    "back": "Back",
+    "preview": "Preview",
+    "loading": "Loading exercise...",
+    "error": "Error loading",
+    "notFound": "Exercise not found",
+    "generalInfo": "General information",
+    "titleLabel": "Title *",
+    "titlePlaceholder": "Exercise title",
+    "descriptionLabel": "Short description",
+    "descriptionPlaceholder": "Short description for list view",
+    "pointsLabel": "Points awarded *",
+    "durationLabel": "Estimated duration (minutes)",
+    "difficultyLabel": "Difficulty level",
+    "submissionTypeLabel": "Submission type",
+    "maxAttemptsLabel": "Number of attempts",
+    "instructions": "Instructions *",
+    "instructionsPlaceholder": "Describe the detailed instructions for the exercise...",
+    "resources": "Available resources",
+    "resourceTitlePlaceholder": "Resource title",
+    "resourceUrlPlaceholder": "Resource URL",
+    "addResource": "Add a resource",
+    "evaluationCriteria": "Evaluation criteria",
+    "criterionDescriptionPlaceholder": "Criterion description",
+    "criterionPointsPlaceholder": "Points",
+    "addCriterion": "Add a criterion",
+    "actions": "Actions",
+    "save": "Save",
+    "saving": "Saving...",
+    "summary": "Summary",
+    "points": "Points:",
+    "duration": "Estimated duration:",
+    "submission": "Submission:",
+    "attempts": "Attempts:",
+    "resourcesCount": "Resources:",
+    "criteriaCount": "Criteria:",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "submissionTypes": {
+      "files": "Files only",
+      "links": "Links only",
+      "mixed": "Files and links"
+    },
+    "attempts": {
+      "1": "1 attempt",
+      "2": "2 attempts",
+      "3": "3 attempts",
+      "999": "Unlimited"
+    },
+    "errors": {
+      "titleRequired": "Title is required",
+      "instructionsRequired": "Instructions are required",
+      "pointsInvalid": "Points must be greater than 0",
+      "updateError": "Error updating",
+      "genericError": "Error updating"
+    },
+    "success": {
+      "updated": "Exercise updated successfully!"
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "title": "Catégories",
+  "description": "Gérez les catégories de vos cours",
+  "newCategory": "Nouvelle catégorie",
+  "createCategory": "Créer une nouvelle catégorie",
+  "searchPlaceholder": "Rechercher une catégorie...",
+
+  "sortBy": {
+    "label": "Trier par",
+    "nameAsc": "Nom (A-Z)",
+    "nameDesc": "Nom (Z-A)",
+    "orderAsc": "Ordre (croissant)",
+    "orderDesc": "Ordre (décroissant)",
+    "recent": "Plus récent",
+    "oldest": "Plus ancien"
+  },
+
+  "form": {
+    "name": "Nom",
+    "namePlaceholder": "Ex: Développement Web",
+    "nameDescription": "Le nom de la catégorie",
+    "slug": "Slug",
+    "slugPlaceholder": "Ex: developpement-web",
+    "slugDescription": "Ceci est l'URL de votre catégorie. Généré automatiquement.",
+    "description": "Description",
+    "descriptionPlaceholder": "Décrivez brièvement la catégorie",
+    "descriptionDescription": "Une brève description de la catégorie",
+    "parentCategory": "Catégorie parente",
+    "selectParentCategory": "Sélectionner une catégorie parente",
+    "noParent": "Aucune (catégorie principale)",
+    "icon": "Icône",
+    "selectIcon": "Sélectionner une icône",
+    "featured": "Mettre en avant",
+    "featuredDescription": "La catégorie apparaîtra sur la page d'accueil.",
+    "active": "Actif",
+    "activeDescription": "Rendre la catégorie visible sur le site.",
+    "order": "Ordre",
+    "color": "Couleur"
+  },
+
+  "table": {
+    "name": "Nom",
+    "slug": "Slug",
+    "description": "Description",
+    "order": "Ordre",
+    "status": "Statut",
+    "actions": "Actions"
+  },
+
+  "status": {
+    "featured": "En avant",
+    "active": "Actif",
+    "inactive": "Inactif"
+  },
+
+  "actions": {
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "create": "Créer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "moveUp": "Monter",
+    "moveDown": "Descendre"
+  },
+
+  "viewMode": {
+    "grid": "Grille",
+    "list": "Liste"
+  },
+
+  "details": {
+    "title": "Détails de la catégorie",
+    "parent": "Catégorie parente",
+    "noParent": "Aucune",
+    "coursesCount": "Nombre de cours",
+    "createdAt": "Créé le",
+    "updatedAt": "Mis à jour le"
+  },
+
+  "messages": {
+    "noCategories": "Aucune catégorie trouvée",
+    "loadError": "Erreur lors du chargement des catégories",
+    "createSuccess": "Catégorie créée avec succès",
+    "createError": "Erreur lors de la création de la catégorie",
+    "updateSuccess": "Catégorie mise à jour avec succès",
+    "updateError": "Erreur lors de la mise à jour de la catégorie",
+    "deleteSuccess": "Catégorie supprimée avec succès",
+    "deleteError": "Erreur lors de la suppression de la catégorie",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette catégorie ?",
+    "noOrganization": "Aucune organisation trouvée pour cet utilisateur.",
+    "supabaseError": "Client Supabase non initialisé.",
+    "validationError": "Erreur de validation",
+    "nameTooLong": "Le nom ne doit pas dépasser 100 caractères.",
+    "slugTooLong": "Le slug ne doit pas dépasser 100 caractères.",
+    "descriptionTooLong": "La description ne doit pas dépasser 500 caractères.",
+    "errorOccurred": "Une erreur est survenue",
+    "saving": "Enregistrement...",
+    "success": "Succès"
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "templates": {
+    "title": "Modèles de certificats",
+    "description": "Créez et gérez les modèles de certificats pour vos cours",
+    "newTemplate": "Nouveau modèle",
+    "searchPlaceholder": "Rechercher des modèles...",
+    "category": "Catégorie",
+    "allCategories": "Toutes les catégories",
+    "status": "Statut",
+    "all": "Tous",
+    "loading": "Chargement des modèles de certificats...",
+    "error": "Erreur",
+    "errorMessage": "Veuillez réessayer plus tard ou contacter le support.",
+    "noTemplates": "Aucun modèle de certificat trouvé",
+    "noTemplatesDescription": "Essayez d'ajuster vos filtres ou de créer un nouveau modèle",
+    "preview": "Aperçu",
+    "edit": "Modifier",
+    "editDisabled": "Non disponible pour les modèles publiés",
+    "duplicate": "Dupliquer",
+    "publish": "Publier",
+    "setDraft": "Mettre en brouillon",
+    "delete": "Supprimer",
+    "categoryLabel": "Catégorie:",
+    "createdAt": "Créé le:",
+    "updatedAt": "Mis à jour:",
+    "previewTitle": "Aperçu du Template: {name}",
+    "statusBadges": {
+      "published": "Publié",
+      "draft": "Brouillon"
+    },
+    "errors": {
+      "authError": "Erreur d'authentification",
+      "userNotConnected": "Utilisateur non connecté",
+      "profileError": "Impossible de récupérer le profil de l'utilisateur",
+      "noOrganization": "Aucune organisation associée à votre compte",
+      "fetchError": "Erreur lors de la récupération des modèles de certificats",
+      "unexpectedError": "Une erreur est survenue",
+      "previewDataMissing": "Impossible d'afficher l'aperçu: données du template manquantes",
+      "invalidSession": "Session non valide. Veuillez vous reconnecter.",
+      "organizationError": "Impossible de récupérer les informations de votre organisation",
+      "duplicateError": "Erreur lors de la duplication du modèle",
+      "noDataAfterDuplicate": "Aucune donnée retournée après la duplication",
+      "statusUpdateError": "Erreur lors de la mise à jour du statut",
+      "noDataAfterUpdate": "Aucune donnée retournée après la mise à jour",
+      "deleteError": "Erreur lors de la suppression du modèle",
+      "deleteUnexpectedError": "Une erreur est survenue lors de la suppression"
+    },
+    "success": {
+      "duplicated": "Modèle dupliqué avec succès",
+      "deleted": "Modèle supprimé avec succès",
+      "statusUpdated": "Modèle {status} avec succès"
+    },
+    "statusMessages": {
+      "draft": "mis en brouillon",
+      "published": "publié",
+      "archived": "archivé"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce modèle de certificat ?"
+  },
+
+  "new": {
+    "title": "Nouveau modèle de certificat",
+    "description": "Créez un nouveau modèle de certificat pour vos cours",
+    "back": "Retour",
+    "modelTitle": "Titre du modèle",
+    "modelTitlePlaceholder": "Entrez le titre du modèle",
+    "preview": "Aperçu",
+    "save": "Enregistrer le modèle",
+    "saving": "Enregistrement...",
+    "previewTitle": "Aperçu du modèle de certificat",
+    "defaultTitle": "Nouveau modèle de certificat",
+    "defaultDescription": "Modèle de certificat créé avec l'éditeur",
+    "defaultDirectorTitle": "Directeur",
+    "errors": {
+      "supabaseNotInitialized": "Client Supabase non initialisé ou utilisateur non connecté.",
+      "noOrganization": "Vous devez être associé à une organisation pour créer un modèle de certificat",
+      "saveError": "Erreur lors de l'enregistrement du modèle",
+      "unexpectedError": "Une erreur est survenue",
+      "directorsError": "Erreur lors de la récupération des directeurs"
+    },
+    "success": {
+      "saved": "Modèle de certificat enregistré avec succès"
+    }
+  },
+
+  "edit": {
+    "title": "Modifier le modèle de certificat",
+    "description": "Modifiez les paramètres de votre modèle de certificat",
+    "back": "Retour",
+    "backToTemplates": "Retour aux modèles",
+    "modelTitle": "Titre du modèle",
+    "modelTitlePlaceholder": "Entrez le titre du modèle",
+    "preview": "Aperçu",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement...",
+    "previewTitle": "Aperçu du modèle de certificat",
+    "loading": "Chargement...",
+    "notFound": {
+      "title": "Modèle non trouvé",
+      "description": "Le modèle de certificat que vous recherchez n'existe pas ou a été supprimé."
+    },
+    "publishedError": {
+      "title": "Modification non autorisée",
+      "description": "Vous ne pouvez pas modifier un modèle de certificat qui est déjà publié. Veuillez d'abord le mettre en brouillon avant de le modifier.",
+      "setDraftAndEdit": "Mettre en brouillon et modifier"
+    },
+    "errors": {
+      "fetchError": "Erreur lors de la récupération du modèle de certificat",
+      "userNotConnected": "Utilisateur non connecté",
+      "profileError": "Impossible de récupérer le profil de l'utilisateur",
+      "directorsError": "Erreur lors de la récupération des directeurs",
+      "templateNotLoaded": "Impossible de sauvegarder : le template n'est pas chargé",
+      "noData": "Aucune donnée à sauvegarder",
+      "saveError": "Erreur lors de la sauvegarde des modifications",
+      "statusUpdateError": "Erreur lors de la mise à jour du statut",
+      "unexpectedError": "Une erreur est survenue"
+    },
+    "success": {
+      "saved": "Modifications enregistrées avec succès",
+      "setDraft": "Modèle mis en brouillon avec succès"
+    },
+    "defaultDirectorTitle": "Directeur",
+    "defaultValues": {
+      "certificateTitle": "CERTIFICAT",
+      "certificateSubtitle": "de complétion",
+      "studentIntroText": "Ce certificat est décerné à",
+      "courseIntroText": "pour avoir complété avec succès le cours",
+      "gradeIntroText": "avec une note de"
+    }
+  },
+
+  "editor": {
+    "tabs": {
+      "model": "Modèle",
+      "background": "Arrière-plan"
+    },
+    "distinction": {
+      "show": "Afficher la distinction",
+      "showLabel": "Afficher la distinction",
+      "thresholds": "Mentions selon les notes",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "threshold": "Seuil (%)",
+      "text": "Texte",
+      "addThreshold": "Ajouter un seuil de distinction",
+      "newMention": "Nouvelle mention",
+      "andMore": "et plus:"
+    },
+    "texts": {
+      "title": "Textes du modèle",
+      "certificateTitle": "Titre du certificat",
+      "certificateSubtitle": "Sous-titre du certificat",
+      "studentIntro": "Texte d'introduction pour l'étudiant",
+      "courseIntro": "Texte d'introduction pour le cours",
+      "gradeIntro": "Texte d'introduction pour la note",
+      "saveChanges": "Enregistrer les modifications",
+      "display": {
+        "title": "Titre:",
+        "subtitle": "Sous-titre:",
+        "studentIntro": "Intro étudiant:",
+        "courseIntro": "Intro cours:",
+        "gradeIntro": "Intro note:"
+      }
+    },
+    "signatures": {
+      "title": "Signatures",
+      "showDirector": "Afficher la signature du responsable",
+      "selectDirector": "Sélectionner le responsable",
+      "selectDirectorPlaceholder": "Sélectionner un responsable",
+      "noDirectors": "Aucun responsable disponible",
+      "showInstructor": "Afficher la signature de l'instructeur"
+    },
+    "background": {
+      "type": "Type d'arrière-plan",
+      "color": "Couleur",
+      "image": "Image",
+      "gradient": "Dégradé",
+      "colorLabel": "Couleur d'arrière-plan",
+      "imageLabel": "Image d'arrière-plan",
+      "imageUrl": "URL de l'image",
+      "browse": "Parcourir",
+      "imageFormats": "Formats supportés : JPG, PNG, GIF. Taille maximale : 5MB.",
+      "gradientStart": "Couleur de début",
+      "gradientEnd": "Couleur de fin",
+      "clientLogoSize": "Taille du logo du client",
+      "eduproLogoSize": "Taille du logo EduPro"
+    },
+    "preview": {
+      "date": "Date",
+      "clientLogoAlt": "Logo du client",
+      "eduproLogoAlt": "Logo EduPro"
+    }
+  },
+
+  "issued": {
+    "title": "Certificats émis",
+    "description": "Gérez les certificats accordés aux apprenants ayant terminé leurs cours",
+    "issueCertificate": "Émettre un certificat",
+    "searchPlaceholder": "Rechercher par ID, apprenant ou cours...",
+    "export": "Exporter",
+    "course": {
+      "label": "Cours",
+      "all": "Tous les cours",
+      "devFrontend": "Développement Web Frontend",
+      "jsAdvanced": "JavaScript Avancé",
+      "uxUi": "UX/UI Design",
+      "reactNative": "React Native",
+      "pythonData": "Python Data Science"
+    },
+    "table": {
+      "certificateId": "Certificat ID",
+      "student": "Apprenant",
+      "course": "Cours",
+      "template": "Modèle",
+      "issuedAt": "Date d'émission",
+      "expiration": "Expiration",
+      "status": "Statut",
+      "actions": "Actions",
+      "openMenu": "Ouvrir menu"
+    },
+    "status": {
+      "active": "Actif",
+      "revoked": "Révoqué",
+      "expired": "Expiré"
+    },
+    "actions": {
+      "view": "Voir",
+      "details": "Détails",
+      "downloadPdf": "Télécharger PDF",
+      "sendEmail": "Envoyer par email",
+      "shareLink": "Partager le lien",
+      "print": "Imprimer",
+      "revoke": "Révoquer"
+    },
+    "verification": {
+      "title": "Processus de vérification",
+      "description": "Chaque certificat possède un code de vérification unique qui peut être utilisé pour confirmer son authenticité. Les apprenants peuvent vérifier leurs certificats sur la page dédiée :",
+      "link": "edupro.com/verify"
+    }
+  }
+}
+

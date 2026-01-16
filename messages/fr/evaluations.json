@@ -1,0 +1,171 @@
+{
+  "results": {
+    "title": "Résultats d'évaluation",
+    "description": "Consultez et analysez les résultats des évaluations des apprenants",
+    "searchPlaceholder": "Rechercher par nom d'apprenant ou quiz...",
+    "filterCourse": "Cours",
+    "allCourses": "Tous les cours",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "noResults": "Aucun résultat",
+
+    "table": {
+      "learner": "Apprenant",
+      "quiz": "Quiz / Évaluation",
+      "course": "Cours",
+      "score": "Score",
+      "time": "Temps",
+      "date": "Date",
+      "status": "Statut",
+      "actions": "Actions",
+      "viewDetails": "Voir les détails",
+      "openMenu": "Ouvrir menu",
+      "minutes": "min"
+    },
+
+    "status": {
+      "passed": "Réussi",
+      "failed": "Échoué"
+    }
+  },
+
+  "details": {
+    "title": "Détails de la tentative",
+    "back": "Retour",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "notFound": "Introuvable",
+    "learner": "Apprenant",
+    "course": "Cours",
+    "date": "Date",
+    "score": "Score",
+    "passed": "Réussi",
+    "failed": "Échoué",
+    "questionsAndAnswers": "Questions et réponses",
+    "submittedAnswers": "Réponses soumises par l'apprenant",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "expectedAnswer": "Réponse attendue",
+    "yourChoice": "Votre choix",
+    "your": "Votre",
+    "yourAnswer": "Votre réponse",
+    "reference": "Référence",
+    "noQuestions": "Aucune question trouvée.",
+    "quizTypes": {
+      "exam": "Évaluation",
+      "assessment_ungraded": "Évaluation non notée",
+      "quiz": "Quiz"
+    }
+  },
+
+  "feedback": {
+    "title": "Feedback des apprenants",
+    "description": "Consultez et gérez les avis et commentaires des apprenants sur vos cours",
+    "searchPlaceholder": "Rechercher par commentaire ou apprenant...",
+    "analysisButton": "Analyse des feedbacks",
+    "export": "Exporter",
+    "refresh": "Actualiser",
+    "loading": "Chargement des feedbacks...",
+
+    "filters": {
+      "status": "Statut",
+      "allStatuses": "Tous les statuts",
+      "published": "Publié",
+      "flagged": "Signalé",
+      "hidden": "Masqué",
+      "rating": "Note",
+      "allRatings": "Toutes les notes",
+      "fiveStars": "5 étoiles",
+      "fourPlus": "4+ étoiles",
+      "threePlus": "3+ étoiles",
+      "lowRating": "Moins de 3",
+      "sortBy": "Trier par",
+      "newest": "Plus récents",
+      "oldest": "Plus anciens",
+      "ratingHigh": "Note décroissante",
+      "ratingLow": "Note croissante"
+    },
+
+    "table": {
+      "learner": "Apprenant",
+      "course": "Cours",
+      "rating": "Évaluation",
+      "comment": "Commentaire",
+      "date": "Date",
+      "status": "Statut",
+      "actions": "Actions",
+      "responded": "Répondu",
+      "openMenu": "Ouvrir menu",
+      "viewDetails": "Voir les détails",
+      "reply": "Répondre",
+      "report": "Signaler"
+    },
+
+    "status": {
+      "published": "Publié",
+      "flagged": "Signalé",
+      "hidden": "Masqué"
+    },
+
+    "noFeedback": {
+      "title": "Aucun feedback trouvé",
+      "description": "Modifiez vos filtres ou attendez que les apprenants donnent leurs avis."
+    },
+
+    "detailsModal": {
+      "title": "Détails du feedback",
+      "learner": "Apprenant",
+      "course": "Cours",
+      "rating": "Note",
+      "status": "Statut",
+      "date": "Date",
+      "responded": "Répondu",
+      "yes": "Oui",
+      "no": "Non",
+      "comment": "Commentaire",
+      "instructorResponse": "Réponse de l'instructeur",
+      "respondedOn": "Répondu le"
+    },
+
+    "responseModal": {
+      "title": "Répondre au feedback",
+      "feedbackFrom": "Feedback de {name}",
+      "yourResponse": "Votre réponse",
+      "yourResponsePlaceholder": "Rédigez votre réponse au feedback...",
+      "publicResponse": "Réponse publique (visible par l'apprenant)",
+      "cancel": "Annuler",
+      "send": "Envoyer la réponse",
+      "sending": "Envoi...",
+      "required": "Veuillez saisir une réponse"
+    },
+
+    "reportModal": {
+      "title": "Signaler le feedback",
+      "feedbackFrom": "Feedback de {name}",
+      "reason": "Motif du signalement",
+      "reasonPlaceholder": "Précisez la raison pour laquelle vous signalez ce feedback (contenu inapproprié, faux avis, etc.)...",
+      "warning": "Note :",
+      "warningText": "Le feedback sera temporairement masqué en attendant la modération par un superadmin qui décidera de le garder masqué ou de le publier à nouveau.",
+      "cancel": "Annuler",
+      "report": "Signaler",
+      "reporting": "Signalement...",
+      "required": "Veuillez saisir un motif de signalement"
+    },
+
+    "confirmModal": {
+      "title": "Confirmer l'action",
+      "cancel": "Annuler",
+      "confirm": "Confirmer"
+    },
+
+    "messages": {
+      "responseSuccess": "Réponse envoyée avec succès",
+      "responseError": "Erreur lors de l'envoi de la réponse",
+      "reportSuccess": "Feedback signalé avec succès",
+      "reportError": "Erreur lors du signalement",
+      "actionSuccess": "Action effectuée avec succès",
+      "actionError": "Erreur lors de l'action",
+      "loadError": "Erreur lors du chargement des feedbacks"
+    }
+  }
+}

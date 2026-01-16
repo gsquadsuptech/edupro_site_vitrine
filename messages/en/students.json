@@ -1,0 +1,174 @@
+{
+  "title": "Students",
+  "description": "Manage platform students",
+  "createStudent": "Add a student",
+  "editStudent": "Edit student",
+  "deleteStudent": "Delete student",
+  "viewProfile": "View profile",
+  "noStudents": "No students",
+  "searchPlaceholder": "Search students...",
+
+  "stats": {
+    "total": "Total students",
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "newThisMonth": "New this month"
+  },
+
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "suspended": "Suspended",
+    "graduated": "Graduated"
+  },
+
+  "fields": {
+    "name": "Full name",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "city": "City",
+    "country": "Country",
+    "dateOfBirth": "Date of birth",
+    "registrationDate": "Registration date",
+    "status": "Status",
+    "avatar": "Profile picture",
+    "bio": "Biography",
+    "enrolledCourses": "Enrolled courses",
+    "completedCourses": "Completed courses",
+    "certificates": "Certificates",
+    "lastActivity": "Last activity"
+  },
+
+  "form": {
+    "title": "Add a student",
+    "firstNamePlaceholder": "Student's first name",
+    "lastNamePlaceholder": "Student's last name",
+    "emailPlaceholder": "email@example.com",
+    "phonePlaceholder": "+221 77 123 45 67",
+    "submit": "Add student",
+    "submitting": "Adding...",
+    "cancel": "Cancel"
+  },
+
+  "validation": {
+    "firstNameMin": "First name must be at least 2 characters",
+    "firstNameMax": "First name cannot exceed 50 characters",
+    "firstNameInvalid": "First name must only contain letters and numbers",
+    "lastNameMin": "Last name must be at least 2 characters",
+    "lastNameMax": "Last name cannot exceed 50 characters",
+    "lastNameInvalid": "Last name must only contain letters and numbers",
+    "emailInvalid": "Invalid email format",
+    "emailMin": "Email must be at least 5 characters",
+    "emailMax": "Email cannot exceed 100 characters",
+    "emailExists": "This email is already in use",
+    "phoneInvalid": "Phone number must be in format +2217XXXXXXXX",
+    "phoneExists": "This phone number is already in use",
+    "uniqueCheckError": "Error checking uniqueness",
+    "emailAlreadyUsed": "This email address is already used by another account.",
+    "notAuthorized": "You are not authorized to perform this action",
+    "serverError": "An error occurred, please try again",
+    "genericError": "An error occurred",
+    "organizationNotFound": "Organization not found"
+  },
+
+  "profile": {
+    "title": "Student profile",
+    "personalInfo": "Personal information",
+    "enrollments": "Enrollments",
+    "progress": "Progress",
+    "certificates": "Certificates",
+    "activity": "Activity",
+    "statistics": "Statistics"
+  },
+
+  "enrollments": {
+    "title": "Course enrollments",
+    "noEnrollments": "No enrollments",
+    "courseName": "Course name",
+    "enrollmentDate": "Enrollment date",
+    "progress": "Progress",
+    "status": "Status",
+    "completed": "Completed",
+    "inProgress": "In progress",
+    "notStarted": "Not started"
+  },
+
+  "progress": {
+    "overallProgress": "Overall progress",
+    "coursesCompleted": "Courses completed",
+    "lessonsCompleted": "Lessons completed",
+    "quizzesPassed": "Quizzes passed",
+    "certificatesEarned": "Certificates earned",
+    "studyTime": "Study time",
+    "averageScore": "Average score"
+  },
+
+  "messages": {
+    "createSuccess": "Student added successfully",
+    "createError": "Error adding student",
+    "updateSuccess": "Student updated successfully",
+    "updateError": "Error updating student",
+    "deleteSuccess": "Student deleted successfully",
+    "deleteError": "Error deleting student",
+    "confirmDelete": "Are you sure you want to delete this student?",
+    "suspendSuccess": "Student suspended successfully",
+    "suspendError": "Error suspending student",
+    "activateSuccess": "Student activated successfully",
+    "activateError": "Error activating student",
+    "fetchError": "Error fetching students",
+    "loadError": "Unable to load student list",
+    "error": "Error"
+  },
+
+  "actions": {
+    "suspend": "Suspend",
+    "activate": "Activate",
+    "sendEmail": "Send email",
+    "resetPassword": "Reset password",
+    "viewCourses": "View courses",
+    "exportData": "Export data",
+    "refreshList": "Refresh list",
+    "refresh": "Refresh",
+    "viewProfile": "View profile",
+    "resendActivationEmail": "Resend activation email",
+    "delete": "Delete",
+    "back": "Back"
+  },
+
+  "viewMode": {
+    "grid": "Grid view",
+    "list": "List view"
+  },
+
+  "list": {
+    "defaultName": "Student",
+    "notSpecified": "Not specified",
+    "invalidDate": "Invalid date",
+    "noStudents": "No students found",
+    "addFirstStudent": "Start by adding your first student.",
+    "actions": "Actions",
+    "openMenu": "Open menu",
+    "showing": "Showing {start} to {end} of {total} students",
+    "previous": "Previous",
+    "next": "Next",
+    "registeredOn": "Registered on",
+    "rateLimitWithTime": "Please wait {minutes} minute(s) before retrying.",
+    "rateLimit": "Too many attempts. Please wait a few minutes before retrying.",
+    "resetPasswordError": "Error resetting password",
+    "resetPasswordSuccess": "A reset email has been sent to {name}.",
+    "resetPasswordFailed": "Unable to reset password",
+    "emailRateLimitWithTime": "Please wait {minutes} minute(s) before resending an email.",
+    "emailRateLimit": "Too many emails have been sent recently. Please retry in a few minutes.",
+    "sendEmailError": "Error sending activation email",
+    "sendEmailSuccess": "An activation email has been sent to {name}.",
+    "sendEmailFailed": "Unable to send activation email",
+    "confirmDelete": "Are you sure you want to delete the student {name}?",
+    "deleteError": "Error deleting student",
+    "deleteSuccess": "{name} has been deleted successfully.",
+    "deleteFailed": "Unable to delete student"
+  }
+}

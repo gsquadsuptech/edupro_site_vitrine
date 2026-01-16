@@ -1,0 +1,88 @@
+{
+  "title": "My Profile",
+  "subtitle": "Manage your personal information and account",
+  "loading": "Loading profile...",
+  "loadError": "Unable to load profile",
+  "superAdmin": "Super Admin",
+  "fields": {
+    "firstName": {
+      "label": "First Name",
+      "placeholder": "Your first name"
+    },
+    "lastName": {
+      "label": "Last Name",
+      "placeholder": "Your last name"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "phone": {
+      "label": "Phone",
+      "placeholder": "+1 234 567 8900"
+    },
+    "gender": {
+      "label": "Gender",
+      "placeholder": "Select",
+      "male": "Male",
+      "female": "Female"
+    },
+    "dateOfBirth": {
+      "label": "Date of Birth"
+    },
+    "title": {
+      "label": "Job Title",
+      "placeholder": "e.g., Trainer, Education Coordinator..."
+    },
+    "address": {
+      "label": "Address",
+      "placeholder": "Your full address"
+    },
+    "city": {
+      "label": "City",
+      "placeholder": "Your city"
+    },
+    "country": {
+      "label": "Country",
+      "placeholder": "Your country"
+    },
+    "language": {
+      "label": "Preferred Language",
+      "placeholder": "Select a language",
+      "options": {
+        "fr": "Français",
+        "en": "English"
+      },
+      "description": "Interface display language"
+    }
+  },
+  "sections": {
+    "basicInfo": "Basic Information",
+    "address": "Address",
+    "organization": "Organization",
+    "accountInfo": "Account Information"
+  },
+  "organization": {
+    "website": "Website",
+    "phone": "Phone"
+  },
+  "account": {
+    "role": "Role",
+    "memberSince": "Member Since",
+    "lastModified": "Last Modified",
+    "superAdministrator": "Super Administrator",
+    "user": "User"
+  },
+  "actions": {
+    "changeAvatar": "Change Avatar",
+    "saveChanges": "Save Changes",
+    "saving": "Saving..."
+  },
+  "messages": {
+    "saveSuccess": "Profile updated successfully",
+    "saveError": "Error saving profile",
+    "avatarUploadSuccess": "Avatar updated successfully",
+    "avatarUploadError": "Error uploading avatar",
+    "avatarSizeError": "Image must not exceed 5MB",
+    "avatarTypeError": "Please select an image file"
+  }
+}

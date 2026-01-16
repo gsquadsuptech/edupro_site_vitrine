@@ -1,0 +1,549 @@
+{
+  "users": {
+    "title": "Utilisateurs et Rôles",
+    "tabs": {
+      "users": "Utilisateurs",
+      "roles": "Rôles et Permissions"
+    },
+    "usersList": {
+      "title": "Liste des utilisateurs",
+      "description": "Gérez les utilisateurs de votre organisation et leurs accès.",
+      "searchPlaceholder": "Rechercher par nom ou email...",
+      "inviteUser": "Inviter un utilisateur",
+      "table": {
+        "avatar": "Avatar",
+        "name": "Nom",
+        "email": "Email",
+        "role": "Rôle",
+        "status": "Statut",
+        "lastLogin": "Dernière connexion",
+        "actions": "Actions"
+      },
+      "empty": {
+        "title": "Aucun utilisateur trouvé",
+        "description": "Vérifiez vos logs ou invitez de nouveaux utilisateurs si la liste est vide."
+      },
+      "actions": {
+        "viewProfile": "Voir le profil",
+        "editRole": "Modifier le rôle",
+        "resetPassword": "Réinitialiser le mot de passe",
+        "resendInvitation": "Renvoyer l'invitation",
+        "reactivateAccount": "Réactiver le compte",
+        "deactivateAccount": "Désactiver le compte"
+      },
+      "status": {
+        "active": "Actif",
+        "inactive": "Inactif",
+        "pending": "En attente"
+      },
+      "unknownUser": "Utilisateur Inconnu",
+      "unknownEmail": "Email Inconnu"
+    },
+    "invite": {
+      "title": "Inviter un nouvel utilisateur",
+      "description": "Entrez les informations de l'utilisateur et sélectionnez son rôle dans l'organisation.",
+      "firstName": "Prénom",
+      "firstNamePlaceholder": "Cheikh",
+      "lastName": "Nom",
+      "lastNamePlaceholder": "Ndiaye",
+      "email": "Email",
+      "emailPlaceholder": "utilisateur@example.com",
+      "role": "Rôle",
+      "rolePlaceholder": "Sélectionnez un rôle",
+      "loadingRoles": "Chargement des rôles...",
+      "noRoles": "Aucun rôle disponible",
+      "cancel": "Annuler",
+      "invite": "Inviter l'utilisateur",
+      "inviting": "Invitation en cours..."
+    },
+    "roles": {
+      "title": "Rôles",
+      "description": "Définissez les rôles du système et leurs permissions",
+      "newRole": "Nouveau rôle",
+      "newRoleDescription": "Définissez un code et un nom. Le code doit être unique dans votre organisation.",
+      "name": "Nom",
+      "namePlaceholder": "Responsable",
+      "description": "Description",
+      "descriptionPlaceholder": "Gestion des cours et des apprenants",
+      "create": "Créer",
+      "creating": "Création...",
+      "usersCount": "{count} utilisateur",
+      "usersCountPlural": "{count} utilisateurs",
+      "selectRole": "Sélectionnez un rôle",
+      "selectRoleDescription": "Cliquez sur un rôle pour voir et modifier ses permissions",
+      "duplicate": "Dupliquer",
+      "duplicating": "Duplication...",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "delete": "Supprimer",
+      "deleting": "Suppression...",
+      "roleName": "Nom du rôle",
+      "permissions": "Permissions",
+      "loadingPermissions": "Chargement des permissions...",
+      "adminAllPermissions": "Les administrateurs ont toutes les permissions par défaut.",
+      "selectRoleMessage": "Veuillez sélectionner un rôle pour voir ses détails et permissions"
+    },
+    "deleteConfirm": {
+      "title": "Confirmer la suppression",
+      "description": "Êtes-vous sûr de vouloir supprimer le rôle \"{name}\" ? Cette action est irréversible et supprimera également toutes les permissions associées.",
+      "cancel": "Annuler",
+      "confirm": "Supprimer"
+    },
+    "categories": {
+      "main": "Menu Principal",
+      "catalogue": "Catalogue de Formation",
+      "learners": "Apprenants",
+      "instructors": "Instructeurs",
+      "evaluations": "Évaluations",
+      "certifications": "Certifications",
+      "finance": "Ventes & Finances",
+      "config": "Configuration",
+      "support": "Aide & Support"
+    },
+    "modules": {
+      "dashboard": "Tableau de bord",
+      "courses": "Cours",
+      "learning_paths": "Parcours de formations",
+      "microlearning": "Micro-Learning",
+      "categories": "Catégories",
+      "tags": "Tags",
+      "content": "Contenu du cours",
+      "students": "Apprenants",
+      "cohorts": "Cohortes/Groupes",
+      "enrollments": "Inscriptions",
+      "progress": "Progression & résultats",
+      "instructors": "Instructeurs",
+      "assignments": "Attribution de cours",
+      "commissions": "Commissions",
+      "quizzes": "Quiz et tests",
+      "evaluations": {
+        "results": "Résultats d'évaluation",
+        "feedback": "Feedback"
+      },
+      "certificates": {
+        "templates": "Modèles de certificats",
+        "issued": "Certificats émis"
+      },
+      "payments": "Paiements",
+      "transactions": "Transactions",
+      "subscriptions": "Abonnements",
+      "invoices": "Factures",
+      "discounts": "Remises & promotions",
+      "organization": "Profil institut",
+      "users": "Utilisateurs & rôles",
+      "roles": "Rôles",
+      "notifications": "Email & notifications",
+      "settings": "Paramètres",
+      "email": "Email",
+      "help": "Centre d'aide",
+      "tickets": "Tickets support",
+      "support": "Support"
+    },
+    "messages": {
+      "error": "Erreur",
+      "success": "Succès",
+      "information": "Information",
+      "loadUsersError": "Erreur de chargement des utilisateurs",
+      "checkConsole": "Vérifiez la console pour les détails techniques.",
+      "unknownError": "Une erreur inconnue est survenue lors de la récupération des utilisateurs.",
+      "noOrganization": "Aucune organisation sélectionnée ou trouvée pour afficher les utilisateurs.",
+      "loadPermissionsError": "Impossible de charger les permissions",
+      "loadRolesError": "Impossible de charger les rôles",
+      "supabaseNotInitialized": "Client Supabase non initialisé ou utilisateur non connecté.",
+      "organizationIdMissing": "L'identifiant de l'organisation est manquant.",
+      "requiredFields": "Champs requis",
+      "emailRoleRequired": "L'email et le rôle sont obligatoires pour inviter un utilisateur.",
+      "invalidRole": "Rôle invalide",
+      "roleNotExists": "Le rôle sélectionné n'existe pas.",
+      "inviteSuccess": "Utilisateur invité avec succès.",
+      "inviteError": "Erreur d'invitation",
+      "inviteUserError": "Erreur lors de l'invitation de l'utilisateur.",
+      "errorOccurred": "Une erreur est survenue.",
+      "loadRolePermissionsError": "Impossible de charger les permissions du rôle",
+      "roleUpdated": "Rôle mis à jour",
+      "roleUpdatedSuccess": "Le rôle \"{name}\" a été mis à jour avec succès.",
+      "saveRoleError": "Impossible d'enregistrer le rôle",
+      "roleDuplicated": "Rôle dupliqué",
+      "roleDuplicatedSuccess": "Le rôle \"{original}\" a été dupliqué en \"{new}\".",
+      "duplicateRoleError": "Impossible de dupliquer le rôle",
+      "roleDeleted": "Rôle supprimé",
+      "roleDeletedSuccess": "Le rôle a été supprimé avec succès.",
+      "deleteRoleError": "Impossible de supprimer le rôle",
+      "roleNameRequired": "Le nom du rôle est obligatoire",
+      "roleCreated": "Rôle créé avec succès",
+      "createRoleError": "Impossible de créer le rôle"
+    }
+  },
+
+  "institute": {
+    "title": "Profil de l'institut",
+    "description": "Gérez les informations de votre établissement de formation qui apparaîtront sur la plateforme",
+    "logo": {
+      "title": "Logo et informations visuelles",
+      "description": "Personnalisez l'identité visuelle de votre institut",
+      "changeLogo": "Changer le logo",
+      "formats": "Formats acceptés: PNG, JPG, SVG. Taille max: 2MB",
+      "invalidType": "Type de fichier invalide",
+      "invalidTypeDescription": "Veuillez sélectionner un fichier PNG, JPG, ou SVG.",
+      "fileTooLarge": "Fichier trop volumineux",
+      "fileTooLargeDescription": "La taille maximale du logo est de 2MB.",
+      "uploadError": "Erreur de téléversement du logo",
+      "uploadErrorDescription": "Un problème est survenu lors du téléversement.",
+      "uploadErrorDetails": "Erreur lors du téléversement du logo: {message}",
+      "publicUrlError": "Impossible d'obtenir l'URL publique du logo téléversé."
+    },
+    "publicProfile": {
+      "title": "Profil public",
+      "description": "Rendre le profil de l'institut public",
+      "enabled": "Profil public activé",
+      "enabledDescription": "Votre institut est maintenant visible publiquement",
+      "disabled": "Profil public désactivé",
+      "disabledDescription": "Votre institut n'est plus visible publiquement",
+      "updateError": "Impossible de modifier la visibilité du profil",
+      "share": "Partager mon profil",
+      "linkCopied": "Lien copié",
+      "linkCopiedDescription": "Lien du profil copié dans le presse-papiers",
+      "copyError": "Impossible de copier le lien",
+      "copyErrorDescription": "Veuillez réessayer.",
+      "linkCopiedShort": "Lien copié !"
+    },
+    "social": {
+      "title": "Réseaux sociaux",
+      "none": "Aucun réseau social configuré.",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "facebookPlaceholder": "URL Facebook",
+      "twitterPlaceholder": "URL Twitter",
+      "linkedinPlaceholder": "URL LinkedIn",
+      "instagramPlaceholder": "https://instagram.com/votreinstitut"
+    },
+    "legal": {
+      "title": "Documents légaux",
+      "upload": "Téléverser des documents (Bientôt disponible)"
+    },
+    "info": {
+      "title": "Informations de l'institut",
+      "description": "Ces informations seront affichées publiquement sur votre plateforme de formation",
+      "name": "Nom de l'institut",
+      "namePlaceholder": "Nom de l'institut",
+      "legalName": "Raison sociale",
+      "legalNamePlaceholder": "Raison sociale",
+      "foundedYear": "Année de fondation",
+      "foundedYearPlaceholder": "Année de fondation",
+      "website": "Site web",
+      "websitePlaceholder": "https://...",
+      "description": "Description",
+      "descriptionPlaceholder": "Description de votre institut"
+    },
+    "contact": {
+      "title": "Coordonnées",
+      "email": "Email",
+      "emailPlaceholder": "contact@example.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+221 xx xxx xx xx",
+      "address": "Adresse",
+      "addressPlaceholder": "Adresse",
+      "city": "Ville",
+      "cityPlaceholder": "Ville",
+      "postalCode": "Code postal (optionnel)",
+      "postalCodePlaceholder": "Code postal",
+      "country": "Pays",
+      "countryPlaceholder": "Sélectionnez un pays"
+    },
+    "legalInfo": {
+      "title": "Informations légales",
+      "registrationNumber": "Numéro d'enregistrement",
+      "registrationNumberPlaceholder": "N° RCCM",
+      "taxId": "Numéro d'identification fiscale (NINEA)",
+      "taxIdPlaceholder": "NINEA"
+    },
+    "actions": {
+      "save": "Enregistrer les modifications",
+      "saving": "Enregistrement...",
+      "retry": "Réessayer"
+    },
+    "errors": {
+      "loadError": "Erreur lors du chargement des informations de l'institut.",
+      "notFound": "Aucune information d'institut trouvée.",
+      "notFoundDescription": "Veuillez vérifier votre configuration ou contacter le support.",
+      "organizationIdMissing": "Impossible de trouver l'identifiant de l'organisation.",
+      "updateError": "Erreur lors de la mise à jour",
+      "updateErrorDescription": "Un problème est survenu.",
+      "updateFailed": "Échec de la mise à jour du profil"
+    },
+    "success": {
+      "updated": "Profil mis à jour",
+      "updatedDescription": "Les informations de l'institut ont été enregistrées avec succès."
+    },
+    "validation": {
+      "nameMin": "Le nom doit contenir au moins 2 caractères",
+      "legalNameMin": "La raison sociale doit contenir au moins 2 caractères",
+      "descriptionMin": "La description doit contenir au moins 10 caractères",
+      "foundedYearInvalid": "L'année de fondation doit être valide",
+      "addressMin": "L'adresse doit contenir au moins 5 caractères",
+      "cityMin": "La ville doit contenir au moins 2 caractères",
+      "countryRequired": "Le pays doit être sélectionné",
+      "emailInvalid": "Email invalide",
+      "phoneInvalid": "Numéro de téléphone invalide",
+      "websiteInvalid": "L'URL du site web doit commencer par http://, https:// ou www.",
+      "registrationNumberInvalid": "Numéro d'enregistrement invalide",
+      "taxIdInvalid": "Numéro d'identification fiscale invalide",
+      "facebookUrlInvalid": "URL Facebook invalide",
+      "twitterUrlInvalid": "URL Twitter invalide",
+      "linkedinUrlInvalid": "URL LinkedIn invalide",
+      "instagramUrlInvalid": "URL Instagram invalide",
+      "logoUrlInvalid": "URL du logo invalide"
+    }
+  },
+
+  "branding": {
+    "title": "Branding & Site Public",
+    "description": "Centre de contrôle de votre identité visuelle et de votre site public",
+    "backToSettings": "Retour aux paramètres",
+    "reset": "Réinitialiser",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "errors": {
+      "tableNotFound": "Erreur: La table des paramètres de marque n'existe pas.",
+      "tableNotFoundDescription": "Veuillez contacter l'administrateur pour résoudre ce problème.",
+      "noPermission": "Erreur: Vous n'avez pas les permissions nécessaires.",
+      "noPermissionDescription": "Veuillez contacter l'administrateur pour obtenir les permissions nécessaires.",
+      "loadError": "Erreur",
+      "loadErrorDescription": "Impossible de charger les paramètres de marque.",
+      "saveError": "Erreur",
+      "saveErrorDescription": "Impossible d'enregistrer les paramètres. Veuillez réessayer.",
+      "organizationNotReady": "Organisation ou utilisateur non identifié, ou client Supabase non prêt.",
+      "logoUploadError": "Erreur lors de l'upload du logo: {message}",
+      "faviconUploadError": "Erreur lors de l'upload du favicon: {message}",
+      "bannerUploadError": "Erreur lors de l'upload de la bannière: {message}"
+    },
+    "success": {
+      "saved": "Succès",
+      "savedDescription": "Les paramètres ont été enregistrés avec succès.",
+      "themeApplied": "Thème appliqué",
+      "themeAppliedDescription": "Le thème \"{name}\" a été appliqué avec succès.",
+      "colorsReset": "Couleurs réinitialisées",
+      "colorsResetDescription": "Toutes les couleurs ont été réinitialisées aux valeurs par défaut."
+    },
+    "tabs": {
+      "visualIdentity": "Identité Visuelle",
+      "logoAssets": "Logo & Assets",
+      "content": "Contenu",
+      "analytics": "Analytics"
+    },
+    "colors": {
+      "title": "Couleurs principales",
+      "description": "Définissez les couleurs principales qui seront utilisées dans toute l'interface",
+      "headerFooterTitle": "En-tête et pied de page",
+      "headerFooterDescription": "Personnalisez l'apparence de l'en-tête et du pied de page",
+      "primary": "Couleur primaire",
+      "primaryForeground": "Texte sur primaire",
+      "secondary": "Couleur secondaire",
+      "secondaryForeground": "Texte sur secondaire",
+      "accent": "Couleur d'accent",
+      "accentForeground": "Texte sur accent",
+      "background": "Arrière-plan",
+      "foreground": "Texte principal",
+      "headerBackground": "Arrière-plan de l'en-tête",
+      "headerForeground": "Texte de l'en-tête",
+      "footerBackground": "Arrière-plan du pied de page",
+      "footerForeground": "Texte du pied de page"
+    },
+    "typography": {
+      "title": "Typographie",
+      "description": "Configurez les polices et tailles de texte pour votre site",
+      "headingFont": "Police des titres",
+      "bodyFont": "Police du texte",
+      "h1Size": "Taille H1",
+      "h2Size": "Taille H2",
+      "h3Size": "Taille H3",
+      "bodySize": "Taille du texte",
+      "lineHeight": "Hauteur de ligne",
+      "letterSpacing": "Espacement des lettres",
+      "selectFont": "Choisir une police"
+    },
+    "logo": {
+      "title": "Logo de l'organisation",
+      "description": "Téléchargez le logo de votre organisation. Format recommandé : PNG ou SVG, taille minimale 200x200px",
+      "noLogo": "Aucun logo",
+      "formats": "Formats acceptés : PNG, SVG. Taille maximale : 2MB"
+    },
+    "favicon": {
+      "title": "Favicon",
+      "description": "Téléchargez le favicon de votre site. Format recommandé : ICO ou PNG, taille 32x32px",
+      "formats": "Formats acceptés : ICO, PNG. Taille maximale : 1MB"
+    },
+    "sitePublic": {
+      "publicUrl": "URL publique de l'institut:"
+    },
+    "analytics": {
+      "title": "Analytics du Site Public",
+      "description": "Suivez les performances de votre site public (fonctionnalité à venir)",
+      "comingSoon": "Analytics du site public",
+      "comingSoonDescription": "Les statistiques de votre site public seront disponibles ici une fois activé"
+    },
+    "preview": {
+      "title": "Prévisualisation",
+      "description": "Aperçu de vos modifications en temps réel",
+      "desktop": "Desktop",
+      "tablet": "Tablette",
+      "mobile": "Mobile",
+      "descriptionText": "Cette prévisualisation montre comment vos modifications seront appliquées sur la plateforme.",
+      "guideTitle": "Guide de personnalisation",
+      "tips": "Conseils",
+      "tip1": "Utilisez des couleurs en accord avec votre logo et identité visuelle",
+      "tip2": "Assurez un contraste suffisant entre le texte et l'arrière-plan",
+      "tip3": "Limitez-vous à 2-3 couleurs principales pour une interface épurée",
+      "tip4": "Testez sur différents appareils pour garantir la lisibilité",
+      "tip5": "N'oubliez pas d'enregistrer vos modifications",
+      "note": "Les modifications apportées affecteront l'apparence de l'interface administrateur et de l'interface apprenant.",
+      "interfaceTitle": "Prévisualisation Interface",
+      "interfaceDescription": "Aperçu de l'interface administrateur avec vos couleurs"
+    },
+    "previewElements": {
+      "buttons": "Boutons",
+      "primary": "Primaire",
+      "secondary": "Secondaire",
+      "outline": "Contour",
+      "ghost": "Fantôme",
+      "card": "Carte",
+      "cardTitle": "Exemple de carte",
+      "cardDescription": "Ceci est une prévisualisation d'une carte",
+      "cardContent": "Voici à quoi ressemblera le contenu de vos cartes.",
+      "cancel": "Annuler",
+      "confirm": "Confirmer",
+      "header": "En-tête",
+      "instituteName": "Nom de votre institut",
+      "home": "Accueil",
+      "courses": "Cours",
+      "profile": "Profil",
+      "footer": "Pied de page",
+      "copyright": "© 2023 Votre Institut",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Confidentialité",
+      "contact": "Contact"
+    }
+  },
+
+  "notifications": {
+    "title": "Emails et notifications",
+    "description": "Configurez les messages envoyés aux utilisateurs de votre plateforme",
+    "tabs": {
+      "emailTemplates": "Modèles d'emails",
+      "notificationSettings": "Notifications",
+      "systemMessages": "Messages système"
+    },
+    "emailTemplates": {
+      "title": "Modèles d'emails",
+      "description": "Gérez les modèles d'emails envoyés aux utilisateurs",
+      "new": "Nouveau",
+      "filterPlaceholder": "Filtrer par catégorie",
+      "allCategories": "Toutes les catégories",
+      "account": "Compte",
+      "course": "Cours",
+      "transaction": "Transactions",
+      "system": "Système",
+      "selectTemplate": "Sélectionnez un modèle",
+      "selectTemplateDescription": "Cliquez sur un modèle pour voir et modifier son contenu",
+      "preview": "Aperçu",
+      "save": "Enregistrer",
+      "subject": "Sujet",
+      "content": "Contenu de l'email",
+      "insertVariable": "Insérer variable",
+      "availableVariables": "Variables disponibles",
+      "tips": {
+        "title": "Conseils pour l'envoi d'emails au Sénégal",
+        "tip1": "Assurez-vous que tous les emails contiennent les coordonnées de l'entreprise",
+        "tip2": "La langue principale est le français, mais prévoyez des options pour le wolof si possible",
+        "tip3": "Respectez les fuseaux horaires locaux pour l'envoi d'emails (UTC+0)",
+        "tip4": "Tenez compte des possibles problèmes de connexion mobile"
+      },
+      "empty": "Veuillez sélectionner un modèle d'email à éditer",
+      "lastEdited": "Modifié le {date}"
+    },
+    "notificationSettings": {
+      "title": "Paramètres de notification",
+      "description": "Configurez quand et comment les notifications sont envoyées aux utilisateurs",
+      "notification": "Notification",
+      "email": "Email",
+      "push": "Push",
+      "sms": "SMS"
+    },
+    "sms": {
+      "title": "Paramètres SMS",
+      "description": "Configurer l'envoi de SMS pour les notifications critiques (Adapté au Sénégal)",
+      "provider": "Prestataire SMS",
+      "providerPlaceholder": "Sélectionner un prestataire",
+      "providerDescription": "Choisissez votre prestataire de services SMS.",
+      "providers": {
+        "orange": "Orange Business Services",
+        "free": "Free Sénégal",
+        "expresso": "Expresso",
+        "teranga": "Teranga SMS",
+        "custom": "Autre"
+      },
+      "senderId": "Identifiant d'expéditeur",
+      "senderIdPlaceholder": "ex: JANGALTECH",
+      "senderIdDescription": "Limité à 11 caractères, sans espaces ni caractères spéciaux.",
+      "monthlyLimit": "Limite mensuelle SMS",
+      "monthlyLimitDescription": "Maximum de SMS que vous pouvez envoyer par mois.",
+      "optOut": "Inclure option de désabonnement",
+      "quietHours": "Respecter les heures de silence (21h-8h)",
+      "specifics": {
+        "title": "Spécificités des SMS au Sénégal",
+        "tip1": "Format des numéros: Format international +221 XX XXX XX XX",
+        "tip2": "Limite de caractères: 160 pour un SMS standard (70 en Unicode)",
+        "tip3": "Optimisez pour le réseau mobile local qui peut être parfois instable",
+        "tip4": "Envoyez de préférence en français pour assurer la compréhension"
+      }
+    },
+    "systemMessages": {
+      "title": "Messages système",
+      "description": "Configurez les messages qui s'affichent dans l'interface utilisateur",
+      "intro": "Cette section vous permet de personnaliser les messages affichés aux utilisateurs dans l'interface.",
+      "comingSoon": "Fonctionnalité en cours de développement",
+      "comingSoonDescription": "Cette fonctionnalité sera disponible prochainement. Vous pourrez personnaliser tous les messages système de la plateforme."
+    }
+  },
+
+  "main": {
+    "title": "Paramètres",
+    "description": "Configurez les paramètres globaux de votre plateforme de formation",
+    "tabs": {
+      "general": "Général",
+      "institute": "Institut",
+      "users": "Utilisateurs",
+      "finance": "Finance",
+      "branding": "Apparence",
+      "notifications": "Notifications"
+    },
+    "general": {
+      "title": "Paramètres généraux",
+      "description": "Cette section contiendra les paramètres généraux de l'application."
+    },
+    "institute": {
+      "title": "Paramètres de l'institut",
+      "description": "Cette section contiendra les informations relatives à votre institut de formation."
+    },
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "description": "Cette section contiendra les paramètres liés aux utilisateurs et aux permissions."
+    },
+    "finance": {
+      "title": "Paramètres financiers",
+      "description": "D'autres paramètres financiers seront ajoutés ici (méthodes de paiement, taxes, etc.)."
+    },
+    "branding": {
+      "title": "Personnalisation de l'apparence",
+      "description": "Cette section vous permet de personnaliser les couleurs et l'apparence de votre plateforme selon votre charte graphique.",
+      "accessLink": "Accéder à la personnalisation →"
+    },
+    "notifications": {
+      "title": "Paramètres de notifications",
+      "description": "Cette section contiendra les paramètres de notifications (email, SMS, in-app)."
+    }
+  }
+}
+

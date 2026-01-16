@@ -1,0 +1,72 @@
+{
+  "comingSoon": {
+    "badge": "Coming soon",
+    "title": "The Marketplace for African professional training",
+    "subtitle": "Coming soon: a unique platform bringing together the best certified trainings to grow your skills and transform your career.",
+    "launch": {
+      "label": "Planned launch",
+      "date": "December 2025"
+    },
+    "notify": {
+      "title": "Be the first to know",
+      "subtitle": "Sign up to get notified as soon as the marketplace launches.",
+      "success": "Thank you! You'll be notified at launch.",
+      "emailPlaceholder": "Your email",
+      "button": {
+        "sending": "Sending...",
+        "default": "Notify me"
+      },
+      "errors": {
+        "recaptchaNotLoaded": "reCAPTCHA is not loaded yet. Please wait a moment.",
+        "recaptchaError": "Security verification error. Please try again.",
+        "saveError": "Error while saving",
+        "generic": "Something went wrong"
+      }
+    },
+    "stats": {
+      "trainings": "Available trainings",
+      "trainers": "Expert trainers",
+      "domains": "Domains covered"
+    },
+    "preview": {
+      "title": "What’s coming",
+      "subtitle": "A complete experience to develop your professional skills",
+      "cards": {
+        "certifications": {
+          "title": "Certified trainings",
+          "description": "Access professional pathways recognized by leading international organizations."
+        },
+        "experts": {
+          "title": "African experts",
+          "description": "Learn from experienced trainers who understand African market realities."
+        },
+        "tracking": {
+          "title": "Personalized tracking",
+          "description": "Get guidance adapted to your goals and your pace."
+        },
+        "community": {
+          "title": "Active community",
+          "description": "Join a network of ambitious professionals who share the same values."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to transform your career?",
+      "subtitle": "While waiting for the marketplace launch, discover our flagship learning paths already available.",
+      "button": "Create my account now"
+    },
+    "ctaSection": {
+      "title": "Ready to transform your career?",
+      "subtitle": "Join 50,000+ professionals who develop their skills with EduPro",
+      "primary": "Start your training",
+      "secondary": "Become a trainer",
+      "bullets": {
+        "unlimited": "Unlimited access",
+        "certificates": "Recognized certificates",
+        "trainerSupport": "Trainer support"
+      }
+    }
+  }
+}
+
+

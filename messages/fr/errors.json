@@ -1,0 +1,44 @@
+{
+  "general": {
+    "unknown": "Une erreur inconnue est survenue",
+    "network": "Erreur de connexion réseau",
+    "serverError": "Erreur serveur",
+    "notFound": "Ressource introuvable",
+    "unauthorized": "Non autorisé",
+    "unauthorizedAccess": "Accès non autorisé",
+    "unauthorizedAccessDescription": "Vous n'avez pas les permissions nécessaires pour accéder à cette page.",
+    "forbidden": "Accès refusé",
+    "timeout": "Délai d'attente dépassé",
+    "badRequest": "Requête invalide"
+  },
+  "notFound": {
+    "title": "Page non trouvée",
+    "description": "Désolé, la page que vous recherchez n'existe pas.",
+    "backHome": "Retour à l'accueil"
+  },
+  "auth": {
+    "invalid": "Email ou mot de passe invalide",
+    "emailNotVerified": "Email non vérifié",
+    "sessionExpired": "Session expirée",
+    "logoutFailed": "Échec de la déconnexion"
+  },
+  "form": {
+    "required": "Ce champ est requis",
+    "invalidEmail": "Email invalide",
+    "invalidPhone": "Numéro de téléphone invalide",
+    "invalidUrl": "URL invalide",
+    "minLength": "Minimum {min} caractères",
+    "maxLength": "Maximum {max} caractères",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "invalidDate": "Date invalide",
+    "invalidFile": "Fichier invalide",
+    "fileTooLarge": "Fichier trop volumineux (max {size}MB)",
+    "invalidFileType": "Type de fichier non autorisé"
+  },
+  "api": {
+    "loadFailed": "Échec du chargement des données",
+    "saveFailed": "Échec de la sauvegarde",
+    "deleteFailed": "Échec de la suppression",
+    "uploadFailed": "Échec du téléchargement"
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "results": {
+    "title": "Evaluation Results",
+    "description": "View and analyze learner evaluation results",
+    "searchPlaceholder": "Search by learner name or quiz...",
+    "filterCourse": "Course",
+    "allCourses": "All courses",
+    "loading": "Loading...",
+    "error": "Error",
+    "noResults": "No results",
+
+    "table": {
+      "learner": "Learner",
+      "quiz": "Quiz / Assessment",
+      "course": "Course",
+      "score": "Score",
+      "time": "Time",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions",
+      "viewDetails": "View details",
+      "openMenu": "Open menu",
+      "minutes": "min"
+    },
+
+    "status": {
+      "passed": "Passed",
+      "failed": "Failed"
+    }
+  },
+
+  "details": {
+    "title": "Attempt Details",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": "Not found",
+    "learner": "Learner",
+    "course": "Course",
+    "date": "Date",
+    "score": "Score",
+    "passed": "Passed",
+    "failed": "Failed",
+    "questionsAndAnswers": "Questions and Answers",
+    "submittedAnswers": "Answers submitted by the learner",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "expectedAnswer": "Expected answer",
+    "yourChoice": "Your choice",
+    "your": "Your",
+    "yourAnswer": "Your answer",
+    "reference": "Reference",
+    "noQuestions": "No questions found.",
+    "quizTypes": {
+      "exam": "Assessment",
+      "assessment_ungraded": "Ungraded assessment",
+      "quiz": "Quiz"
+    }
+  },
+
+  "feedback": {
+    "title": "Learner Feedback",
+    "description": "View and manage learner reviews and comments on your courses",
+    "searchPlaceholder": "Search by comment or learner...",
+    "analysisButton": "Feedback Analysis",
+    "export": "Export",
+    "refresh": "Refresh",
+    "loading": "Loading feedback...",
+
+    "filters": {
+      "status": "Status",
+      "allStatuses": "All statuses",
+      "published": "Published",
+      "flagged": "Flagged",
+      "hidden": "Hidden",
+      "rating": "Rating",
+      "allRatings": "All ratings",
+      "fiveStars": "5 stars",
+      "fourPlus": "4+ stars",
+      "threePlus": "3+ stars",
+      "lowRating": "Less than 3",
+      "sortBy": "Sort by",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "ratingHigh": "Rating descending",
+      "ratingLow": "Rating ascending"
+    },
+
+    "table": {
+      "learner": "Learner",
+      "course": "Course",
+      "rating": "Rating",
+      "comment": "Comment",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions",
+      "responded": "Responded",
+      "openMenu": "Open menu",
+      "viewDetails": "View details",
+      "reply": "Reply",
+      "report": "Report"
+    },
+
+    "status": {
+      "published": "Published",
+      "flagged": "Flagged",
+      "hidden": "Hidden"
+    },
+
+    "noFeedback": {
+      "title": "No feedback found",
+      "description": "Adjust your filters or wait for learners to provide their feedback."
+    },
+
+    "detailsModal": {
+      "title": "Feedback Details",
+      "learner": "Learner",
+      "course": "Course",
+      "rating": "Rating",
+      "status": "Status",
+      "date": "Date",
+      "responded": "Responded",
+      "yes": "Yes",
+      "no": "No",
+      "comment": "Comment",
+      "instructorResponse": "Instructor Response",
+      "respondedOn": "Responded on"
+    },
+
+    "responseModal": {
+      "title": "Reply to Feedback",
+      "feedbackFrom": "Feedback from {name}",
+      "yourResponse": "Your response",
+      "yourResponsePlaceholder": "Write your response to the feedback...",
+      "publicResponse": "Public response (visible to the learner)",
+      "cancel": "Cancel",
+      "send": "Send response",
+      "sending": "Sending...",
+      "required": "Please enter a response"
+    },
+
+    "reportModal": {
+      "title": "Report Feedback",
+      "feedbackFrom": "Feedback from {name}",
+      "reason": "Report reason",
+      "reasonPlaceholder": "Specify the reason for reporting this feedback (inappropriate content, fake review, etc.)...",
+      "warning": "Note:",
+      "warningText": "The feedback will be temporarily hidden pending moderation by a superadmin who will decide whether to keep it hidden or publish it again.",
+      "cancel": "Cancel",
+      "report": "Report",
+      "reporting": "Reporting...",
+      "required": "Please enter a report reason"
+    },
+
+    "confirmModal": {
+      "title": "Confirm Action",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+
+    "messages": {
+      "responseSuccess": "Response sent successfully",
+      "responseError": "Error sending response",
+      "reportSuccess": "Feedback reported successfully",
+      "reportError": "Error reporting feedback",
+      "actionSuccess": "Action performed successfully",
+      "actionError": "Error performing action",
+      "loadError": "Error loading feedback"
+    }
+  }
+}

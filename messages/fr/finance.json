@@ -1,0 +1,420 @@
+{
+  "common": {
+    "export": "Exporter",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "noData": "Aucune donnée trouvée",
+    "filters": "Filtres",
+    "actions": "Actions",
+    "status": "Statut",
+    "type": "Type",
+    "all": "Tous",
+    "openMenu": "Ouvrir menu"
+  },
+
+  "transactions": {
+    "title": "Transactions",
+    "description": "Suivez toutes les transactions financières sur votre plateforme",
+    "searchPlaceholder": "Rechercher par ID, nom ou description...",
+
+    "filters": {
+      "allTypes": "Tous les types",
+      "allStatuses": "Tous les statuts"
+    },
+
+    "types": {
+      "coursePurchase": "Achat de cours",
+      "subscription": "Abonnement",
+      "bundlePurchase": "Pack de cours"
+    },
+
+    "status": {
+      "completed": "Complétée",
+      "pending": "En attente",
+      "failed": "Échouée",
+      "refunded": "Remboursée"
+    },
+
+    "table": {
+      "id": "ID",
+      "dateTime": "Date & Heure",
+      "client": "Client",
+      "type": "Type",
+      "description": "Description",
+      "method": "Méthode",
+      "amount": "Montant",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+
+    "actions": {
+      "viewDetails": "Voir les détails",
+      "viewInvoice": "Voir la facture",
+      "refund": "Rembourser",
+      "markAsPaid": "Marquer comme payée",
+      "cancel": "Annuler"
+    },
+
+    "empty": {
+      "title": "Aucune transaction trouvée",
+      "description": "Essayez d'ajuster vos filtres de recherche"
+    }
+  },
+
+  "discounts": {
+    "title": "Remises",
+    "description": "Gérez les codes de réduction et promotions",
+    "createDiscount": "Créer une remise",
+    "searchPlaceholder": "Rechercher par code ou description...",
+    "loading": "Chargement des remises...",
+
+    "stats": {
+      "totalDiscounts": "Total des remises",
+      "activePromotions": "Promotions actives",
+      "codesUsed": "Codes utilisés",
+      "upcomingExpiration": "Prochaine expiration",
+      "none": "Aucune"
+    },
+
+    "filters": {
+      "allTypes": "Tous les types",
+      "allStatuses": "Tous les statuts"
+    },
+
+    "types": {
+      "percentage": "Pourcentage",
+      "fixed": "Montant fixe",
+      "freeShipping": "Livraison gratuite"
+    },
+
+    "status": {
+      "active": "Active",
+      "scheduled": "Programmée",
+      "expired": "Expirée",
+      "disabled": "Désactivée"
+    },
+
+    "table": {
+      "code": "Code",
+      "description": "Description",
+      "type": "Type",
+      "value": "Valeur",
+      "applicableTo": "Applicable à",
+      "allCourses": "Tous les cours",
+      "validity": "Validité",
+      "usage": "Utilisation",
+      "validPeriod": "Période de validité",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+
+    "usage": {
+      "used": "{used} / {limit} utilisé(s)",
+      "unlimited": "Illimité",
+      "usages": "utilisations",
+      "percentUsed": "{percent}% utilisé",
+      "maxPerUser": "Max {max}/utilisateur"
+    },
+
+    "validity": {
+      "from": "Du",
+      "to": "au",
+      "start": "Début:",
+      "end": "Fin:",
+      "noLimit": "Pas de limite",
+      "expires": "Expire",
+      "expiresIn": "Expire dans {days} jours",
+      "expiresToday": "Expire aujourd'hui",
+      "expiresTomorrow": "Expire demain",
+      "daysRemaining": "{days} jours restants",
+      "expired": "Expiré",
+      "invalidDate": "Date invalide",
+      "notStarted": "Commence le {date}"
+    },
+
+    "value": {
+      "minPurchase": "Min. achat: {amount}",
+      "maxDiscount": "Max. remise: {amount}"
+    },
+
+    "actions": {
+      "view": "Voir les détails",
+      "copy": "Copier le code",
+      "edit": "Modifier",
+      "duplicate": "Dupliquer",
+      "disable": "Désactiver",
+      "enable": "Activer",
+      "delete": "Supprimer",
+      "openMenu": "Ouvrir menu"
+    },
+
+    "messages": {
+      "loadError": "Impossible de charger les remises",
+      "codeCopied": "Code copié dans le presse-papiers",
+      "copyError": "Impossible de copier le code",
+      "createSuccess": "Remise créée avec succès",
+      "createError": "Erreur lors de la création de la remise",
+      "updateSuccess": "Remise mise à jour avec succès",
+      "updateError": "Impossible de mettre à jour la remise",
+      "deleteSuccess": "Remise supprimée avec succès",
+      "deleteError": "Impossible de supprimer la remise",
+      "duplicateSuccess": "Remise dupliquée avec succès",
+      "duplicateError": "Impossible de dupliquer la remise",
+      "disableSuccess": "Remise désactivée avec succès",
+      "disableError": "Erreur lors de la désactivation de la remise",
+      "enableSuccess": "Remise activée avec succès",
+      "enableError": "Erreur lors de l'activation de la remise",
+      "activatedSuccess": "Remise activée avec succès",
+      "deactivatedSuccess": "Remise désactivée avec succès",
+      "confirmActivate": "Êtes-vous sûr de vouloir activer cette remise ?",
+      "confirmDeactivate": "Êtes-vous sûr de vouloir désactiver cette remise ?",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette remise ?",
+      "error": "Erreur",
+      "success": "Succès"
+    },
+
+    "empty": {
+      "title": "Aucune promotion trouvée",
+      "description": "Essayez d'ajuster vos filtres de recherche",
+      "createButton": "Créer une remise",
+      "noOrganization": "Organisation non trouvée",
+      "noOrganizationDescription": "Veuillez vous reconnecter ou contacter l'administrateur"
+    },
+
+    "modal": {
+      "createTitle": "Nouvelle remise",
+      "editTitle": "Modifier la remise",
+      "code": "Code de réduction *",
+      "codePlaceholder": "PROMO2024",
+      "name": "Nom",
+      "namePlaceholder": "Nom de la promotion",
+      "description": "Description",
+      "descriptionPlaceholder": "Description de la promotion",
+      "type": "Type *",
+      "typePercentage": "Pourcentage (%)",
+      "typeFixed": "Montant fixe (FCFA)",
+      "value": "Valeur *",
+      "minPurchase": "Montant minimum d'achat (FCFA)",
+      "minPurchasePlaceholder": "0",
+      "maxDiscount": "Remise maximum (FCFA)",
+      "maxDiscountPlaceholder": "Pas de limite",
+      "applicableTo": "Applicable à *",
+      "applicableAllCourses": "Tous les cours",
+      "applicableAllPaths": "Tous les parcours",
+      "applicableAllCategories": "Toutes les catégories",
+      "applicableSpecificCourse": "Cours spécifique",
+      "applicableCategory": "Catégorie",
+      "applicableLearningPath": "Parcours de formation",
+      "applicableSpecificCohort": "Cohorte spécifique",
+      "selectCourse": "Sélectionnez le cours *",
+      "selectCategory": "Sélectionnez la catégorie *",
+      "selectPath": "Sélectionnez le parcours *",
+      "selectCohort": "Sélectionnez la cohorte *",
+      "selectItem": "Sélectionnez un élément",
+      "loadingOptions": "Chargement des options...",
+      "validFrom": "Valide à partir du *",
+      "validUntil": "Valide jusqu'au",
+      "validUntilHint": "Laissez vide pour aucune date limite",
+      "maxUsage": "Nombre maximum d'utilisations",
+      "maxUsagePlaceholder": "Illimité",
+      "maxUsagePerUser": "Maximum par utilisateur *",
+      "isStackable": "Remise cumulable avec d'autres codes",
+      "cancel": "Annuler",
+      "create": "Créer",
+      "update": "Mettre à jour",
+      "codeRequired": "Le code est requis",
+      "saveError": "Erreur lors de la sauvegarde"
+    },
+
+    "details": {
+      "title": "Détails de la remise",
+      "value": "Valeur de la remise",
+      "constraints": "Contraintes",
+      "minPurchase": "Achat minimum:",
+      "maxDiscount": "Remise max:",
+      "noConstraints": "Aucune contrainte",
+      "applicableTo": "Applicable à",
+      "validity": "Période de validité",
+      "start": "Début",
+      "end": "Fin",
+      "noLimit": "Pas de limite",
+      "usage": "Statistiques d'utilisation",
+      "usages": "Utilisations",
+      "maxPerUser": "Max/utilisateur",
+      "stackable": "Cumulable",
+      "yes": "Oui",
+      "no": "Non",
+      "createdAt": "Créée le:",
+      "updatedAt": "Dernière modification:",
+      "close": "Fermer",
+      "duplicate": "Dupliquer",
+      "invalidDate": "Date invalide",
+      "expired": "Expiré",
+      "expiresToday": "Expire aujourd'hui",
+      "expiresTomorrow": "Expire demain",
+      "expiresIn": "Expire dans {days} jours",
+      "daysRemaining": "{days} jours restants"
+    }
+  },
+
+  "invoices": {
+    "title": "Factures",
+    "description": "Consultez et gérez toutes les factures émises aux clients",
+    "newInvoice": "Nouvelle facture",
+    "export": "Exporter",
+    "searchPlaceholder": "Rechercher par numéro, référence ou client...",
+    "status": {
+      "label": "Statut",
+      "all": "Tous les statuts",
+      "paid": "Payée",
+      "pending": "En attente",
+      "overdue": "En retard",
+      "draft": "Brouillon",
+      "cancelled": "Annulée"
+    },
+    "period": {
+      "label": "Période",
+      "all": "Toutes les périodes",
+      "thisMonth": "Ce mois-ci",
+      "lastMonth": "Mois dernier",
+      "thisYear": "Cette année"
+    },
+    "table": {
+      "reference": "Référence",
+      "client": "Client",
+      "issueDate": "Date d'émission",
+      "dueDate": "Échéance",
+      "amount": "Montant",
+      "status": "Statut",
+      "actions": "Actions",
+      "overdue": "En retard"
+    },
+    "actions": {
+      "openMenu": "Ouvrir menu",
+      "view": "Voir la facture",
+      "downloadPdf": "Télécharger PDF",
+      "publicLink": "Lien public",
+      "sendEmail": "Envoyer par email",
+      "print": "Imprimer",
+      "edit": "Modifier",
+      "finalize": "Finaliser et envoyer",
+      "markAsPaid": "Marquer comme payée",
+      "sendReminder": "Envoyer un rappel",
+      "duplicate": "Dupliquer"
+    },
+    "empty": {
+      "title": "Aucune facture trouvée",
+      "description": "Essayez d'ajuster vos filtres de recherche"
+    }
+  },
+
+  "subscriptions": {
+    "title": "Abonnements",
+    "description": "Gérez tous les abonnements actifs et historiques",
+    "export": "Exporter",
+    "searchPlaceholder": "Rechercher par ID ou nom...",
+    "status": {
+      "label": "Statut",
+      "all": "Tous les statuts",
+      "active": "Actif",
+      "trial": "Essai",
+      "past_due": "Paiement en retard",
+      "canceled": "Annulé"
+    },
+    "plan": {
+      "label": "Plan",
+      "all": "Tous les plans",
+      "standard": "Standard",
+      "premium": "Premium",
+      "pro": "Pro"
+    },
+    "table": {
+      "id": "ID",
+      "client": "Client",
+      "plan": "Plan",
+      "startDate": "Date de début",
+      "nextRenewal": "Prochain renouvellement",
+      "paymentMethod": "Méthode de paiement",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "renewal": {
+      "canceled": "Abonnement résilié",
+      "missed": "Renouvellement manqué",
+      "today": "Aujourd'hui",
+      "inDays": "Dans {days} jours"
+    },
+    "actions": {
+      "openMenu": "Ouvrir menu",
+      "viewDetails": "Voir les détails",
+      "billingHistory": "Historique de facturation",
+      "changePlan": "Changer de plan",
+      "updatePayment": "Mettre à jour le paiement",
+      "cancel": "Annuler l'abonnement",
+      "renewManually": "Renouveler manuellement",
+      "reactivate": "Réactiver"
+    },
+    "empty": {
+      "title": "Aucun abonnement trouvé",
+      "description": "Essayez d'ajuster vos filtres de recherche"
+    }
+  },
+
+  "payments": {
+    "title": "Paiements",
+    "description": "Gérez les transactions et paiements",
+    "refresh": "Actualiser",
+    "export": "Exporter",
+    "searchPlaceholder": "Rechercher par utilisateur ou cours...",
+    "stats": {
+      "totalTransactions": "Total des transactions",
+      "successfulPayments": "Paiements réussis",
+      "pending": "En attente",
+      "failed": "Échoués"
+    },
+    "filters": {
+      "status": {
+        "label": "Filtrer par statut",
+        "all": "Tous les statuts",
+        "success": "Réussi",
+        "pending": "En attente",
+        "failed": "Échoué",
+        "refunded": "Remboursé"
+      },
+      "method": {
+        "label": "Méthode de paiement",
+        "all": "Toutes les méthodes",
+        "stripe": "Stripe",
+        "paypal": "PayPal",
+        "bank_transfer": "Virement bancaire",
+        "mobile_money": "Mobile Money"
+      },
+      "dateFrom": "Date de début",
+      "dateTo": "Date de fin",
+      "clearDates": "Effacer les dates"
+    },
+    "status": {
+      "success": "Réussi",
+      "pending": "En attente",
+      "failed": "Échoué",
+      "refunded": "Remboursé"
+    },
+    "table": {
+      "title": "Transactions",
+      "user": "Utilisateur",
+      "course": "Cours",
+      "amount": "Montant",
+      "method": "Méthode",
+      "status": "Statut",
+      "date": "Date",
+      "actions": "Actions",
+      "deletedUser": "Utilisateur supprimé",
+      "deletedCourse": "Cours supprimé",
+      "emailNotAvailable": "Email non disponible"
+    },
+    "loading": "Chargement...",
+    "errors": {
+      "loadError": "Erreur lors du chargement des paiements"
+    }
+  }
+}

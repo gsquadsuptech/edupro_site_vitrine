@@ -1,0 +1,44 @@
+{
+  "general": {
+    "unknown": "An unknown error occurred",
+    "network": "Network connection error",
+    "serverError": "Server error",
+    "notFound": "Resource not found",
+    "unauthorized": "Unauthorized",
+    "unauthorizedAccess": "Unauthorized Access",
+    "unauthorizedAccessDescription": "You do not have the necessary permissions to access this page.",
+    "forbidden": "Access denied",
+    "timeout": "Request timeout",
+    "badRequest": "Bad request"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "Sorry, the page you are looking for does not exist.",
+    "backHome": "Back to home"
+  },
+  "auth": {
+    "invalid": "Invalid email or password",
+    "emailNotVerified": "Email not verified",
+    "sessionExpired": "Session expired",
+    "logoutFailed": "Logout failed"
+  },
+  "form": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email",
+    "invalidPhone": "Invalid phone number",
+    "invalidUrl": "Invalid URL",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters",
+    "passwordMismatch": "Passwords do not match",
+    "invalidDate": "Invalid date",
+    "invalidFile": "Invalid file",
+    "fileTooLarge": "File too large (max {size}MB)",
+    "invalidFileType": "File type not allowed"
+  },
+  "api": {
+    "loadFailed": "Failed to load data",
+    "saveFailed": "Failed to save",
+    "deleteFailed": "Failed to delete",
+    "uploadFailed": "Failed to upload"
+  }
+}

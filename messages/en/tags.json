@@ -1,0 +1,97 @@
+{
+  "title": "Course Tags",
+  "description": "Manage tags to organize and filter your courses",
+  "createTag": "Create a tag",
+  "searchPlaceholder": "Search for a tag...",
+
+  "sortBy": {
+    "label": "Sort by",
+    "recent": "Most recent",
+    "oldest": "Oldest",
+    "nameAsc": "Name (A-Z)",
+    "nameDesc": "Name (Z-A)"
+  },
+
+  "form": {
+    "name": "Tag name",
+    "namePlaceholder": "Ex: JavaScript",
+    "slug": "Slug (URL)",
+    "slugPlaceholder": "Ex: javascript",
+    "slugDescription": "Generated automatically from the name. Used in URLs.",
+    "slugModifiable": "You can manually modify the slug",
+    "slugGeneratedTooltip": "The slug is automatically generated from the name",
+    "description": "Description",
+    "descriptionPlaceholder": "A brief description of the tag",
+    "color": "Color"
+  },
+
+  "table": {
+    "name": "Name",
+    "description": "Description",
+    "slug": "Slug",
+    "courses": "Courses",
+    "actions": "Actions"
+  },
+
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "cancel": "Cancel",
+    "save": "Save",
+    "viewCourses": "View courses",
+    "update": "Update"
+  },
+
+  "viewMode": {
+    "grid": "Grid",
+    "list": "List"
+  },
+
+  "messages": {
+    "noTags": "No tags found",
+    "loadError": "Error loading tags",
+    "loadingTags": "Loading tags...",
+    "supabaseNotInitialized": "Supabase client not initialized.",
+    "unableToLoad": "Unable to load tags. Please try again.",
+    "noTagsCreate": "No tags found. Create a new one.",
+    "errorLoading": "An error occurred while loading tags.",
+    "noResults": "No results match your search",
+    "createNewTag": "Create a new tag to get started",
+    "nameRequired": "Tag name is required",
+    "slugExists": "This slug is already used by another tag. Please choose another one.",
+    "organizationError": "Unable to retrieve organization ID. Please reconnect.",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "tagUpdated": "Tag updated",
+    "tagUpdatedDesc": "The tag \"{name}\" has been successfully updated.",
+    "tagCreated": "New tag created",
+    "tagCreatedDesc": "The tag \"{name}\" has been successfully added to your organization.",
+    "connectionError": "Connection error",
+    "connectionErrorDesc": "Unable to connect to the database. Please refresh the page.",
+    "tagDeleted": "Tag deleted",
+    "tagDeletedDesc": "The tag \"{name}\" has been permanently deleted.",
+    "deleteConfirmMessage": "Are you sure you want to delete this tag? This action is irreversible.",
+    "createSuccess": "Tag created successfully",
+    "createError": "Error creating tag",
+    "updateSuccess": "Tag updated successfully",
+    "updateError": "Error updating tag",
+    "deleteSuccess": "Tag deleted successfully",
+    "deleteError": "Error deleting tag",
+    "deleteConfirm": "Are you sure you want to delete this tag?",
+    "authRequired": "Authentication required to load tags."
+  },
+
+  "dialog": {
+    "editTitle": "Edit tag",
+    "createTitle": "Create a new tag"
+  },
+
+  "badge": {
+    "courses": "courses"
+  },
+
+  "colorPicker": {
+    "title": "Select a color"
+  }
+}

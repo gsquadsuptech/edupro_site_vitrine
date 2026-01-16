@@ -1,0 +1,621 @@
+{
+  "title": "Cours",
+  "description": "Gérez les cours de la plateforme",
+  "createCourse": "Créer un cours",
+  "editCourse": "Modifier le cours",
+  "deleteCourse": "Supprimer le cours",
+  "noCourses": "Aucun cours disponible",
+  "searchPlaceholder": "Rechercher des cours...",
+  "stats": {
+    "total": "Total des cours",
+    "published": "Publiés",
+    "draft": "Brouillons",
+    "review": "En révision",
+    "enrollments": "Inscriptions"
+  },
+  "status": {
+    "published": "Publié",
+    "draft": "Brouillon",
+    "review": "En révision",
+    "pending_review": "En attente de validation",
+    "needs_revision": "Révision demandée",
+    "archived": "Archivé"
+  },
+  "filters": {
+    "title": "Filtrer les cours",
+    "status": "Statut",
+    "category": "Catégorie",
+    "instructor": "Instructeur",
+    "allStatuses": "Tous les statuts",
+    "allCategories": "Toutes les catégories",
+    "apply": "Appliquer",
+    "reset": "Réinitialiser"
+  },
+  "sorting": {
+    "lastUpdated": "Dernière mise à jour",
+    "title": "Titre",
+    "status": "Statut",
+    "category": "Catégorie",
+    "instructor": "Instructeur"
+  },
+  "details": {
+    "title": "Détails du cours",
+    "generalInfo": "Informations générales",
+    "content": "Contenu",
+    "pricing": "Tarification",
+    "settings": "Paramètres",
+    "preview": "Prévisualisation"
+  },
+  "fields": {
+    "title": "Titre du cours",
+    "subtitle": "Sous-titre",
+    "description": "Description",
+    "category": "Catégorie",
+    "instructor": "Instructeur",
+    "price": "Prix",
+    "duration": "Durée",
+    "level": "Niveau",
+    "language": "Langue",
+    "thumbnail": "Image de couverture",
+    "video": "Vidéo de présentation",
+    "tags": "Étiquettes",
+    "prerequisites": "Prérequis",
+    "learningObjectives": "Objectifs d'apprentissage",
+    "targetAudience": "Public cible"
+  },
+  "levels": {
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé",
+    "expert": "Expert"
+  },
+  "messages": {
+    "createSuccess": "Cours créé avec succès",
+    "createError": "Erreur lors de la création du cours",
+    "updateSuccess": "Cours mis à jour avec succès",
+    "updateError": "Erreur lors de la mise à jour du cours",
+    "deleteSuccess": "Cours supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression du cours",
+    "publishSuccess": "Cours publié avec succès",
+    "publishError": "Erreur lors de la publication du cours",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce cours ?",
+    "noCategory": "Sans catégorie",
+    "noInstructor": "Sans instructeur"
+  },
+  "content": {
+    "modules": "Modules",
+    "addModule": "Ajouter un module",
+    "editModule": "Modifier le module",
+    "deleteModule": "Supprimer le module",
+    "lessons": "Leçons",
+    "addLesson": "Ajouter une leçon",
+    "editLesson": "Modifier la leçon",
+    "deleteLesson": "Supprimer la leçon",
+    "noModules": "Aucun module ajouté",
+    "noLessons": "Aucune leçon ajoutée",
+    "moduleName": "Nom du module",
+    "moduleDescription": "Description du module",
+    "lessonName": "Nom de la leçon",
+    "lessonType": "Type de leçon",
+    "lessonContent": "Contenu de la leçon"
+  },
+  "pricing": {
+    "free": "Gratuit",
+    "paid": "Payant",
+    "price": "Prix",
+    "currency": "Devise",
+    "discount": "Réduction",
+    "subscriptionOnly": "Abonnement uniquement"
+  },
+  "list": {
+    "loading": "Chargement des cours...",
+    "noCourses": "Aucun cours trouvé",
+    "image": "Image",
+    "title": "Titre",
+    "description": "Description",
+    "status": "Statut",
+    "category": "Catégorie",
+    "instructor": "Instructeur",
+    "lastUpdate": "Dernière mise à jour",
+    "actions": "Actions",
+    "noDescription": "Pas de description courte",
+    "noCategory": "Sans catégorie",
+    "notAssigned": "Non assigné",
+    "imageLoading": "Chargement...",
+    "imageUnavailable": "Image non disponible"
+  },
+  "actions": {
+    "edit": "Modifier",
+    "editContent": "Modifier le contenu",
+    "preview": "Prévisualiser",
+    "publicLink": "Lien public",
+    "publicLinkTooltip": "Cliquez pour copier. Clic milieu/droit pour ouvrir dans un onglet.",
+    "content": "Contenu",
+    "publish": "Publier",
+    "unpublish": "Remettre en brouillon",
+    "delete": "Supprimer",
+    "duplicate": "Dupliquer",
+    "cancel": "Annuler",
+    "tooltips": {
+      "editDisabled": "Impossible de modifier un cours publié. Dépubliez d'abord le cours.",
+      "deleteDisabled": "Impossible de supprimer un cours publié. Dépubliez d'abord le cours."
+    }
+  },
+  "confirmDialog": {
+    "publishTitle": "Confirmer la publication",
+    "unpublishTitle": "Confirmer la dépublication",
+    "deleteTitle": "Confirmer la suppression",
+    "duplicateTitle": "Confirmer la duplication",
+    "publishMessage": "Voulez-vous vraiment publier ce cours ?",
+    "unpublishMessage": "Voulez-vous vraiment remettre en brouillon ce cours ?",
+    "deleteMessage": "Voulez-vous vraiment supprimer ce cours ?",
+    "duplicateMessage": "Voulez-vous vraiment dupliquer ce cours ?"
+  },
+  "toasts": {
+    "publishSuccess": "Le cours est maintenant public.",
+    "publishError": "Erreur lors de la publication du cours",
+    "unpublishError": "Erreur lors de la dépublication du cours",
+    "deleteSuccess": "Cours supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression",
+    "deleteErrorUnexpected": "Une erreur inattendue s'est produite",
+    "deleteErrorAccess": "Accès refusé",
+    "deleteErrorAccessDescription": "Vous n'avez pas les permissions pour supprimer ce cours",
+    "deleteErrorNotFound": "Cours non trouvé",
+    "deleteErrorNotFoundDescription": "Le cours que vous tentez de supprimer n'existe pas",
+    "deleteErrorConnection": "Erreur de connexion",
+    "deleteErrorConnectionDescription": "Impossible de contacter le serveur. Veuillez réessayer.",
+    "duplicateSuccess": "Cours dupliqué avec succès",
+    "duplicateError": "Erreur lors de la duplication du cours",
+    "linkCopied": "Lien copié dans le presse-papiers",
+    "linkCopyError": "Impossible de copier le lien"
+  },
+  "create": {
+    "title": "Créer un nouveau cours",
+    "loading": "Chargement...",
+    "loadingDescription": "Préparation de l'interface d'édition",
+    "backToCourses": "Retour à la liste des cours",
+    "steps": {
+      "format": "Format",
+      "details": "Détails",
+      "pricing": "Tarification",
+      "content": "Contenu",
+      "stepProgress": "Étape {current} sur {total}"
+    },
+    "actions": {
+      "preview": "Prévisualiser",
+      "previewSoon": "Prévisualisation - Cette fonctionnalité sera bientôt disponible.",
+      "save": "Sauvegarder",
+      "saving": "Sauvegarde en cours...",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "create": "Créer le cours",
+      "creating": "Création en cours...",
+      "reload": "Recharger"
+    },
+    "validation": {
+      "title": "Veuillez corriger les erreurs suivantes :",
+      "titleRequired": "Le titre du cours est requis",
+      "titleMinLength": "Le titre doit contenir au moins 5 caractères",
+      "shortDescriptionRequired": "La description courte est requise",
+      "shortDescriptionMinLength": "La description courte doit contenir au moins 10 caractères",
+      "descriptionRequired": "La description complète est requise",
+      "descriptionMinLength": "La description complète doit contenir au moins 20 caractères",
+      "categoryRequired": "La catégorie est requise"
+    },
+    "errors": {
+      "applicationError": "Erreur de l'application",
+      "notAuthenticated": "Utilisateur non authentifié ou client Supabase non disponible",
+      "noOrganization": "Votre compte n'est pas associé à une organisation. Contactez l'administrateur.",
+      "profileError": "Erreur lors de la récupération du profil utilisateur",
+      "invalidVideoUrl": "La leçon \"{lessonTitle}\" de la section \"{sectionTitle}\" a une URL vidéo invalide. Seuls les liens YouTube ou Vimeo sont autorisés.",
+      "invalidFile": "Fichier invalide ou type de fichier non défini.",
+      "invalidImage": "Le fichier sélectionné n'est pas une image valide.",
+      "imageTooLarge": "L'image est trop volumineuse. Taille maximale autorisée : 10MB.",
+      "emptyFile": "Le fichier image est vide.",
+      "unsupportedFormat": "Format d'image non supporté. Formats acceptés : JPG, JPEG, PNG, WebP, GIF.",
+      "insufficientPermissions": "Permissions insuffisantes pour uploader l'image. Contactez l'administrateur.",
+      "uploadError": "Erreur d'upload : {message}",
+      "createError": "Impossible de créer le cours : {message}",
+      "invalidData": "Erreur lors de la création du cours : données invalides",
+      "sectionsError": "Le cours a été créé mais il y a eu un problème avec les sections ou les tags.",
+      "unknownError": "Une erreur inconnue est survenue",
+      "fixErrors": "Veuillez corriger les erreurs dans le formulaire"
+    },
+    "messages": {
+      "loginRequired": "Veuillez vous connecter pour créer un cours.",
+      "sectionCreationError": "Erreur lors de la création de la section \"{title}\".",
+      "lessonCreationError": "Erreur lors de la création de la leçon \"{title}\".",
+      "tagsAddError": "Le cours a été créé mais certains tags n'ont pas pu être ajoutés.",
+      "success": "Le cours a été créé avec succès."
+    },
+    "formatSection": {
+      "title": "Format du cours",
+      "autoFormation": "Auto-formation",
+      "session": "Session/Cohorte",
+      "instructor": {
+        "title": "Instructeur",
+        "placeholder": "Sélectionner un instructeur (optionnel)",
+        "description": "Sélectionnez l'instructeur principal"
+      },
+      "category": {
+        "title": "Catégorie",
+        "placeholder": "Sélectionner une catégorie"
+      },
+      "language": {
+        "title": "Langue",
+        "placeholder": "Langue du cours",
+        "options": {
+          "fr": "Français",
+          "en": "Anglais",
+          "es": "Espagnol",
+          "de": "Allemand",
+          "other": "Autre"
+        }
+      },
+      "level": {
+        "title": "Niveau de difficulté",
+        "placeholder": "Niveau du cours",
+        "options": {
+          "beginner": {
+            "label": "Débutant",
+            "description": "Aucun prérequis spécifique"
+          },
+          "intermediate": {
+            "label": "Intermédiaire",
+            "description": "Connaissances de base dans le domaine"
+          },
+          "advanced": {
+            "label": "Avancé",
+            "description": "Maîtrise avancée de concepts connexes"
+          }
+        }
+      },
+      "duration": {
+        "title": "Durée totale (heures)",
+        "calculating": "Calcul...",
+        "recalculate": "Recalculer",
+        "placeholder": "Calculée automatiquement",
+        "calculatingInProgress": "Calcul en cours...",
+        "noLessons": "Aucune leçon ajoutée",
+        "willBeCalculated": "Sera calculée après création",
+        "auto": "Auto",
+        "description": "Durée calculée automatiquement en fonction du contenu des leçons (vidéo, audio, article, document, quiz)",
+        "lessonsCount": "{count} leçon",
+        "lessonsCount_plural": "{count} leçons",
+        "realTimeUpdate": "Mise à jour en temps réel"
+      },
+      "tags": {
+        "title": "Tags",
+        "noTags": "Aucun tag sélectionné. Ajoutez des tags pour mieux organiser votre cours.",
+        "addTag": "Ajouter un tag",
+        "searchPlaceholder": "Rechercher un tag...",
+        "noTagsFound": "Aucun tag trouvé.",
+        "availableTags": "Tags disponibles"
+      },
+      "options": {
+        "title": "Options du cours",
+        "subtitle": "Options affichées dans \"Ce cours inclut\"",
+        "description": "Ces options seront affichées sur la page de détail du cours dans la section \"Ce cours inclut\".",
+        "accessDuration": {
+          "label": "Accès au cours",
+          "days": "Jours",
+          "daysLabel": "jours",
+          "definedBySession": "Défini par la session",
+          "description1": "Durée d'accès au cours après inscription. Si vide ou 0, l'accès sera illimité ('à vie').",
+          "description2": "Pour les cours en format session, la durée d'accès est définie au niveau de la session."
+        },
+        "community": {
+          "label": "Communauté d'entraide",
+          "description": "Activer la communauté d'entraide pour les apprenants de ce cours."
+        },
+        "certificate": {
+          "label": "Certificat d'achèvement",
+          "description": "Délivrer un certificat d'achèvement aux apprenants qui terminent le cours.",
+          "templateLabel": "Modèle de certificat",
+          "loading": "Chargement...",
+          "selectPlaceholder": "Sélectionner un modèle de certificat",
+          "required": "Le choix du modèle de certificat est obligatoire."
+        }
+      },
+      "thumbnail": {
+        "title": "Image du cours",
+        "change": "Changer l'image",
+        "select": "Sélectionner une image",
+        "preview": "Aperçu de l'image du cours",
+        "noImage": "Aucune image sélectionnée",
+        "maxSize": "JPG, PNG, GIF jusqu'à 10MB"
+      },
+      "video": {
+        "title": "Vidéo de présentation (YouTube)",
+        "placeholder": "URL de la vidéo YouTube",
+        "noVideo": "Aucune vidéo ajoutée",
+        "pasteUrl": "Coller l'URL YouTube ci-dessus"
+      }
+    },
+    "detailsSection": {
+      "courseTitle": "Titre du cours",
+      "courseTitlePlaceholder": "Titre du cours",
+      "shortDescription": "Description courte",
+      "shortDescriptionPlaceholder": "Une brève description de votre cours (160 caractères max)",
+      "charactersCount": "{count}/160 caractères",
+      "fullDescription": "Description complète",
+      "fullDescriptionPlaceholder": "Description détaillée de votre cours",
+      "learningObjectives": "Objectifs d'apprentissage",
+      "addObjective": "Ajouter un objectif d'apprentissage",
+      "addButton": "Ajouter",
+      "objectiveRequired": "Veuillez saisir un objectif",
+      "prerequisites": "Prérequis",
+      "addPrerequisite": "Ajouter un prérequis",
+      "prerequisiteRequired": "Veuillez saisir un prérequis",
+      "expectedResults": "Résultats attendus",
+      "addResult": "Ajouter un résultat attendu",
+      "resultRequired": "Veuillez saisir un résultat attendu"
+    },
+    "pricingSection": {
+      "accessType": "Type d'accès",
+      "free": "Gratuit",
+      "paid": "Payant",
+      "invitation": "Sur invitation uniquement",
+      "pricingOptions": "Options de tarification",
+      "oneTimePayment": "Paiement Unique",
+      "totalAmount": "Montant total",
+      "amount": "Montant",
+      "currency": "FCFA",
+      "discount": "Réduction",
+      "discountPlaceholder": "Réduction",
+      "percent": "%",
+      "finalPrice": "Prix final:",
+      "installmentPayment": "Paiement Échelonné",
+      "installments": "Versements",
+      "installmentAmount": "Montant",
+      "dueDate": "Échéance (jours)",
+      "daysAfterEnrollment": "Jours après inscription",
+      "addInstallment": "Ajouter un versement",
+      "total": "Total:",
+      "monthlyPayment": "Mensualités",
+      "monthlyAmount": "Montant mensuel",
+      "monthlyAmountPlaceholder": "Montant mensuel",
+      "perMonth": "FCFA/mois",
+      "registrationAndMonthly": "Inscription + Mensualités",
+      "registrationFee": "Frais d'inscription",
+      "registrationFeePlaceholder": "Frais d'inscription",
+      "monthlyPaymentAmount": "Montant des mensualités",
+      "monthlyPaymentPlaceholder": "Montant mensuel"
+    },
+    "contentSection": {
+      "newSectionTitle": "Nouveau titre de {label}",
+      "addSection": "Ajouter une {label}",
+      "noSections": "Aucune {label} ajoutée pour le moment",
+      "sectionTitle": "Titre de la {label}",
+      "sectionContent": "Contenu de la {label}",
+      "noSectionContent": "Aucune leçon dans cette {label}",
+      "confirmRemoveSection": "Êtes-vous sûr de vouloir supprimer cette {label} ?",
+      "lessonTitle": "Titre de la leçon",
+      "lessonTitlePlaceholder": "Titre de la leçon",
+      "lessonType": "Type de contenu",
+      "selectType": "Sélectionnez un type",
+      "video": "Vidéo",
+      "article": "Article",
+      "document": "Document",
+      "audio": "Audio",
+      "quiz": "Quiz",
+      "exercise": "Exercice pratique",
+      "previewLabel": "Disponible en aperçu gratuit",
+      "videoUrl": "URL de la vidéo (YouTube ou Vimeo)",
+      "videoUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+      "articleContent": "Contenu de l'article",
+      "documentFile": "Fichier document",
+      "selectFile": "Sélectionner un fichier",
+      "documentUrl": "Ou entrer une URL de document",
+      "documentUrlPlaceholder": "https://...",
+      "documentInfo": "Informations du document",
+      "lessonTitleLabel": "Titre de la leçon :",
+      "notDefined": "Non défini",
+      "documentTitleNote": "Le titre de la leçon peut être modifié ou sera automatiquement défini par le nom du fichier",
+      "audioFile": "Fichier audio",
+      "audioUrl": "Ou entrer une URL audio",
+      "audioUrlPlaceholder": "https://...",
+      "selectQuiz": "Sélectionner un quiz",
+      "selectQuizPlaceholder": "Choisir un quiz",
+      "noQuizAvailable": "Aucun quiz publié disponible",
+      "quizInfo": "Informations du quiz",
+      "quizTitleNote": "Le titre de la leçon est automatiquement défini à partir du quiz sélectionné",
+      "selectExercise": "Sélectionner un exercice pratique",
+      "selectExercisePlaceholder": "Choisir un exercice",
+      "noExerciseAvailable": "Aucun exercice publié disponible",
+      "exerciseInfo": "Informations de l'exercice",
+      "exerciseTitleNote": "Le titre de la leçon est automatiquement défini à partir de l'exercice sélectionné",
+      "urlNotRecognized": "URL non reconnue comme YouTube ou Vimeo",
+      "preview": "Aperçu",
+      "duration": "Durée",
+      "lesson": "Leçon",
+      "lessonWithCount": "Leçon {count}",
+      "previewNotAvailable": "Aperçu non disponible pour cette URL.",
+      "documentFileDescription": "Fichier du document (PDF, Word, etc.) ou URL externe",
+      "maxFileSizeFormats": "Taille maximum : {size} Mo. Formats acceptés : {formats}",
+      "pendingUploadNote": "⏳ En attente d'upload lors de la sauvegarde",
+      "viewDocument": "Voir le document :",
+      "audioFileDescription": "Fichier audio (MP3, WAV, etc.) ou URL externe",
+      "audioNotSupported": "Votre navigateur ne supporte pas l'élément audio.",
+      "questions": "questions",
+      "points": "points",
+      "sizeUnknown": "Taille inconnue",
+      "mb": "Mo",
+      "structureTitle": "Structure du cours",
+      "dragDropMessage": "Glissez et déposez les sections et leçons pour réorganiser le contenu",
+      "unsavedChangesMessage": "Vous avez des modifications non sauvegardées",
+      "pendingUploadsMessage": "{count} fichier(s) en attente d'upload",
+      "loadingMessage": "Chargement du contenu du cours...",
+      "section": {
+        "label": "section",
+        "labelPlural": "sections",
+        "title": "Titre de la section",
+        "add": "Ajouter une section",
+        "newTitle": "Titre de la nouvelle section",
+        "content": "Contenu de la section",
+        "remove": "Supprimer la section",
+        "noContent": "Aucune leçon dans cette section",
+        "confirmRemove": "Êtes-vous sûr de vouloir supprimer cette section et toutes ses leçons ?",
+        "noSections": "Aucune section de cours. Ajoutez une section pour commencer."
+      },
+      "week": {
+        "label": "semaine",
+        "labelPlural": "semaines",
+        "title": "Titre de la semaine",
+        "add": "Ajouter une semaine",
+        "newTitle": "Titre de la nouvelle semaine",
+        "content": "Contenu de la semaine",
+        "remove": "Supprimer la semaine",
+        "noContent": "Aucune leçon dans cette semaine",
+        "confirmRemove": "Êtes-vous sûr de vouloir supprimer cette semaine et toutes ses leçons ?",
+        "noSections": "Aucune semaine de cours. Ajoutez une semaine pour commencer."
+      },
+      "lesson": {
+        "label": "leçon",
+        "labelPlural": "leçons",
+        "title": "Titre de la leçon",
+        "type": "Type de contenu",
+        "add": "Ajouter une leçon",
+        "remove": "Supprimer la leçon",
+        "confirmRemove": "Êtes-vous sûr de vouloir supprimer cette leçon ?",
+        "types": {
+          "video": "Ajouter une leçon vidéo",
+          "article": "Ajouter un article",
+          "document": "Ajouter un document",
+          "audio": "Ajouter une leçon audio",
+          "quiz": "Ajouter un quiz",
+          "exercise": "Ajouter un exercice pratique"
+        }
+      }
+    }
+  },
+  "preview": {
+    "title": "Aperçu du cours",
+    "subtitle": "Visualisation avant publication",
+    "loading": "Chargement de l'aperçu du cours...",
+    "notFound": "Cours non trouvé",
+    "backToCatalog": "Retour au catalogue",
+    "editCourse": "Modifier ce cours",
+    "unpublish": "Remettre en brouillon",
+    "publicLink": "Lien public",
+    "publicLinkTooltip": "Cliquez pour copier. Clic milieu/droit pour ouvrir dans un onglet.",
+    "videoNotSupported": "Votre navigateur ne prend pas en charge la lecture vidéo.",
+    "notSpecified": "Non spécifié",
+    "format": {
+      "label": "Format:",
+      "session": "Session/Cohorte",
+      "autoFormation": "Auto-formation"
+    },
+    "tabs": {
+      "details": "Détails",
+      "program": "Programme"
+    },
+    "sections": {
+      "detailedDescription": "Description détaillée",
+      "noDescription": "Aucune description",
+      "objectives": "Objectifs",
+      "noObjectives": "Aucun objectif défini",
+      "prerequisites": "Prérequis",
+      "noPrerequisites": "Aucun prérequis",
+      "expectedResults": "Résultats attendus",
+      "noExpectedResults": "Aucun résultat attendu spécifié",
+      "courseContent": "Contenu du cours",
+      "noSections": "Aucune section de cours définie",
+      "noLessons": "Aucune leçon",
+      "preview": "Aperçu",
+      "noPreviewAvailable": "Aucun aperçu disponible pour ce type de contenu."
+    },
+    "info": {
+      "title": "Informations du cours",
+      "language": "Langue",
+      "level": "Niveau",
+      "duration": "Durée",
+      "format": "Format",
+      "status": "Statut",
+      "access": "Accès"
+    },
+    "pricing": {
+      "title": "Tarification",
+      "free": "Gratuit",
+      "oneTime": "Paiement unique",
+      "subscription": "Abonnement mensuel",
+      "installments": "Paiement échelonné",
+      "installmentsCount": "{count} versements",
+      "perMonth": "/mois"
+    },
+    "status": {
+      "published": "Publié",
+      "draft": "Brouillon"
+    },
+    "languages": {
+      "fr": "Français",
+      "en": "Anglais",
+      "es": "Espagnol",
+      "de": "Allemand"
+    },
+    "levels": {
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé"
+    },
+    "messages": {
+      "linkCopied": "Lien copié dans le presse-papiers",
+      "linkCopyError": "Impossible de copier le lien",
+      "unpublishError": "Erreur lors de la remise en brouillon",
+      "unpublishSuccess": "Cours remis en brouillon",
+      "unpublishUnavailable": "Impossible de remettre en brouillon pour le moment"
+    }
+  },
+  "edit": {
+    "title": "Modifier le cours",
+    "subtitle": "Modifier les détails de ce cours",
+    "newCourse": "Nouveau Cours",
+    "backToCatalog": "Retour au catalogue",
+    "loading": "Chargement...",
+    "notFound": "Cours non trouvé",
+    "tabs": {
+      "format": "Format",
+      "details": "Détails",
+      "pricing": "Tarification",
+      "certification": "Certification",
+      "content": "Contenu"
+    },
+    "actions": {
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "publish": "Publier",
+      "publishing": "Publication...",
+      "cancel": "Annuler",
+      "continue": "Continuer"
+    },
+    "status": {
+      "unsavedChanges": "Modifications non enregistrées"
+    },
+    "errors": {
+      "loadError": "Impossible de charger le cours.",
+      "loadErrorGeneric": "Une erreur s'est produite lors du chargement du cours.",
+      "notFound": "Cours non trouvé ou aucune donnée reçue.",
+      "saveErrorMissing": "Impossible de sauvegarder: informations essentielles manquantes.",
+      "contentSaveError": "Échec de l'enregistrement du contenu: {message}",
+      "imageUploadError": "Upload image échec: {message}",
+      "imageUrlError": "Récupération URL image échec.",
+      "imagePathError": "Récupération info image échec (path manquant).",
+      "saveFailed": "Sauvegarde échouée: {message}",
+      "publishError": "Impossible de publier le cours.",
+      "publishErrorGeneric": "Erreur lors de la publication: {message}",
+      "unexpectedError": "Une erreur s'est produite: {message}"
+    },
+    "messages": {
+      "saveSuccess": "Modifications enregistrées avec succès.",
+      "contentSaved": "Contenu du cours enregistré.",
+      "contentUpdated": "Le contenu du cours a été mis à jour.",
+      "publishSuccess": "Le cours est maintenant public."
+    },
+    "confirmDialog": {
+      "unsavedTitle": "Modifications non sauvegardées",
+      "unsavedMessage": "Vous avez des modifications non sauvegardées. Voulez-vous continuer sans sauvegarder?",
+      "publishTitle": "Publier le cours",
+      "publishMessage": "Êtes-vous sûr de vouloir publier ce cours ? Il sera visible par tous les utilisateurs et les étudiants pourront s'y inscrire."
+    }
+  }
+}

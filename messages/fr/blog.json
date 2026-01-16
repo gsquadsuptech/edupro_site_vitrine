@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "title": "Blog & Actualités | EduPro",
+    "description": "Découvrez nos articles, conseils pratiques et tendances sur la formation professionnelle en Afrique."
+  },
+  "hero": {
+    "title": "Blog & Actualités",
+    "subtitle": "Découvrez nos derniers articles, conseils pratiques et tendances sur la formation professionnelle en Afrique"
+  },
+  "articles": {
+    "loading": "Chargement des articles...",
+    "empty": "Aucun article disponible pour le moment.",
+    "readArticle": "Lire l'article"
+  }
+}
+
+

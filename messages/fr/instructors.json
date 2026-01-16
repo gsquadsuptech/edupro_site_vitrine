@@ -1,0 +1,294 @@
+{
+  "title": "Instructeurs",
+  "description": "Gérez les instructeurs de votre plateforme",
+  "createInstructor": "Ajouter un instructeur",
+  "searchPlaceholder": "Rechercher des instructeurs...",
+
+  "stats": {
+    "totalInstructors": "Total Instructeurs",
+    "coursesCreated": "Cours Créés",
+    "averageRating": "Note Moyenne",
+    "newThisMonth": "ce mois",
+    "newThisWeek": "cette semaine",
+    "loading": "..."
+  },
+
+  "viewMode": {
+    "label": "Affichage :",
+    "cards": "Cartes",
+    "table": "Tableau"
+  },
+
+  "fields": {
+    "name": "Nom",
+    "email": "Email",
+    "specialization": "Spécialisation",
+    "status": "Statut",
+    "courses": "Cours",
+    "students": "Étudiants",
+    "registrationDate": "Date d'inscription",
+    "actions": "Actions",
+    "noSpecialization": "-"
+  },
+
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  },
+
+  "list": {
+    "courses": "cours",
+    "students": "étudiants"
+  },
+
+  "actions": {
+    "view": "Voir",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "resendInvitation": "Renvoyer l'invitation",
+    "sending": "Envoi…",
+    "cancel": "Annuler"
+  },
+
+  "confirmDialog": {
+    "deleteTitle": "Êtes-vous sûr ?",
+    "deleteDescription": "Cette action est irréversible. Cela supprimera définitivement l'instructeur et toutes ses données associées.",
+    "deleteButton": "Supprimer"
+  },
+
+  "messages": {
+    "loadError": "Impossible de charger les instructeurs",
+    "deleteSuccess": "Instructeur supprimé avec succès",
+    "deleteError": "Impossible de supprimer l'instructeur",
+    "resendInvitationSuccess": "Invitation renvoyée avec succès",
+    "resendInvitationError": "Échec du renvoi de l'invitation",
+    "resendInvitationErrorGeneric": "Impossible d'envoyer l'invitation"
+  },
+
+  "new": {
+    "title": "Nouvel Instructeur",
+    "description": "Ajoutez un nouvel instructeur à votre plateforme et créez son compte utilisateur",
+    "backToList": "Retour à la liste",
+    "loadingOrg": "Chargement de l'organisation...",
+    "avatar": {
+      "label": "Photo de l'instructeur",
+      "clickToSelect": "Cliquez pour choisir une image",
+      "orDragDrop": "ou glissez-déposez",
+      "formats": "PNG, JPG, GIF jusqu'à 5MB",
+      "preview": "Aperçu",
+      "invalidFile": "Veuillez sélectionner un fichier image valide",
+      "fileTooLarge": "La taille de l'image ne doit pas dépasser 5MB",
+      "uploadError": "Erreur lors de l'upload de l'avatar",
+      "uploadPermissionsError": "Permissions insuffisantes pour uploader l'avatar. Contactez l'administrateur.",
+      "uploadDuplicateError": "Un fichier avec ce nom existe déjà. Veuillez réessayer.",
+      "uploadGenericError": "Erreur d'upload",
+      "noDataReturned": "Aucune donnée retournée après l'upload"
+    },
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "specialization": "Spécialisation",
+      "status": "Statut",
+      "statusPlaceholder": "Sélectionnez un statut",
+      "bio": "Biographie",
+      "commission": {
+        "title": "Configuration de la commission",
+        "enable": "Activer la commission",
+        "enableDescription": "Permettre à cet instructeur de recevoir des commissions sur les ventes de cours",
+        "percentage": "Pourcentage de commission (%)",
+        "percentagePlaceholder": "Ex: 15.5",
+        "percentageDescription": "Pourcentage de commission que l'instructeur recevra sur chaque vente de cours",
+        "invalidPercentage": "Le pourcentage de commission doit être entre 0.1 et 100%"
+      }
+    },
+    "errors": {
+      "orgNotFound": "Organisation non trouvée",
+      "serverError": "Erreur de réponse du serveur",
+      "createError": "Erreur lors de la création",
+      "createGenericError": "Impossible de créer l'instructeur"
+    },
+    "success": {
+      "created": "Instructeur et compte utilisateur créés avec succès. Un email d'invitation sera envoyé."
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "create": "Créer l'instructeur",
+      "creating": "Création en cours..."
+    }
+  },
+
+  "commissions": {
+    "title": "Commissions",
+    "description": "Gérez les commissions versées aux formateurs",
+    "export": "Exporter",
+    "period": {
+      "thisMonth": "Ce mois-ci",
+      "lastMonth": "Mois dernier",
+      "lastQuarter": "Dernier trimestre",
+      "thisYear": "Cette année"
+    },
+    "stats": {
+      "totalCommissions": "Commissions totales",
+      "pendingCommissions": "En attente",
+      "averageCommission": "Commission moyenne",
+      "activeInstructors": "Formateurs actifs",
+      "vsPreviousMonth": "vs mois précédent",
+      "toPayThisMonth": "À payer ce mois-ci",
+      "perInstructorThisMonth": "Par formateur ce mois-ci",
+      "receivingCommissions": "Recevant des commissions"
+    },
+    "tabs": {
+      "all": "Toutes les commissions",
+      "pending": "En attente",
+      "history": "Historique des paiements"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher formateur ou cours...",
+      "status": "Statut",
+      "statusPlaceholder": "Statut",
+      "all": "Tous",
+      "paid": "Payée",
+      "pending": "En attente",
+      "canceled": "Annulée"
+    },
+    "table": {
+      "instructor": "Formateur",
+      "course": "Cours",
+      "enrollments": "Inscriptions",
+      "amount": "Montant",
+      "date": "Date",
+      "status": "Statut",
+      "actions": "Actions",
+      "dueDate": "Date d'échéance",
+      "transactionId": "Transaction ID",
+      "paymentDate": "Date de paiement",
+      "method": "Méthode",
+      "noData": "Aucune donnée de commission disponible",
+      "noResults": "Aucun résultat trouvé pour les critères sélectionnés",
+      "noPending": "Aucune commission en attente",
+      "noHistory": "Aucun paiement dans l'historique"
+    },
+    "actions": {
+      "pay": "Payer",
+      "details": "Détails",
+      "payAll": "Payer toutes",
+      "processing": "Traitement...",
+      "receipt": "Reçu"
+    },
+    "pending": {
+      "title": "Commissions en attente de paiement"
+    },
+    "history": {
+      "title": "Historique des paiements",
+      "period": "Période",
+      "periodPlaceholder": "Période"
+    },
+    "paymentModal": {
+      "title": "Confirmer le paiement",
+      "description": "Paiement de la commission pour {name}",
+      "instructor": "Instructeur:",
+      "course": "Cours:",
+      "amount": "Montant:",
+      "method": "Méthode de paiement",
+      "reference": "Référence de transaction",
+      "referencePlaceholder": "Référence du paiement",
+      "date": "Date de paiement",
+      "notes": "Notes (optionnel)",
+      "notesPlaceholder": "Notes sur le paiement...",
+      "proof": {
+        "label": "Preuve de paiement",
+        "required": "*",
+        "description": "Joindre un reçu, capture d'écran ou tout justificatif de paiement (JPG, PNG, PDF - max 5MB)",
+        "clickToSelect": "Cliquez pour sélectionner",
+        "orDragFile": "ou glissez un fichier",
+        "formats": "JPG, PNG, WebP ou PDF jusqu'à 5MB",
+        "preview": "Prévisualisation",
+        "invalidFormat": "Format non supporté",
+        "invalidFormatDescription": "Veuillez sélectionner un fichier image (JPG, PNG, WebP) ou PDF.",
+        "fileTooLarge": "Fichier trop volumineux",
+        "fileTooLargeDescription": "La taille du fichier ne doit pas dépasser 5 MB.",
+        "requiredError": "Preuve de paiement requise",
+        "requiredErrorDescription": "Veuillez joindre une preuve de paiement (reçu, capture d'écran, etc.)",
+        "uploadError": "Erreur d'upload",
+        "uploadPermissionsError": "Permissions insuffisantes pour uploader la preuve de paiement. Contactez l'administrateur.",
+        "uploadGenericError": "Erreur d'upload",
+        "viewProof": "Voir la preuve"
+      },
+      "cancel": "Annuler",
+      "confirm": "Confirmer le paiement",
+      "processing": "Traitement..."
+    },
+    "detailsModal": {
+      "title": "Détails de la commission",
+      "description": "Informations complètes sur cette commission",
+      "instructor": "Instructeur:",
+      "email": "Email:",
+      "course": "Cours:",
+      "saleAmount": "Montant de vente:",
+      "commissionRate": "Taux de commission:",
+      "commission": "Commission:",
+      "date": "Date:",
+      "status": "Statut:",
+      "paymentInfo": "Informations de paiement",
+      "method": "Méthode:",
+      "reference": "Référence:",
+      "paidAt": "Payé le:",
+      "close": "Fermer"
+    },
+    "messages": {
+      "loading": "Chargement des données de commission...",
+      "loadError": "Impossible de charger les données de commission",
+      "genericError": "Une erreur est survenue lors du chargement des données",
+      "payAllDisabled": "Fonctionnalité temporairement désactivée",
+      "payAllDisabledDescription": "Le paiement en lot nécessite une preuve de paiement pour chaque commission. Veuillez traiter les paiements individuellement.",
+      "paymentSuccess": "Paiement effectué",
+      "paymentSuccessDescription": "Commission de {amount} payée avec succès.",
+      "paymentError": "Erreur",
+      "paymentErrorDescription": "Impossible de traiter le paiement"
+    }
+  },
+
+  "assignments": {
+    "title": "Attribution de cours",
+    "description": "Gérez les affectations de formateurs aux cours adaptés au contexte sénégalais",
+    "newAssignment": "Nouvelle attribution",
+    "searchPlaceholder": "Rechercher des attributions...",
+    "export": "Exporter",
+    "status": {
+      "label": "Statut",
+      "all": "Tous",
+      "active": "En cours",
+      "completed": "Terminé",
+      "pending": "À venir"
+    },
+    "stats": {
+      "activeAssignments": "Attributions actives",
+      "activeAssignmentsDescription": "Cours en cours d'enseignement",
+      "instructors": "Formateurs",
+      "instructorsDescription": "Actuellement assignés",
+      "upcomingAssignments": "Prochaines attributions",
+      "upcomingAssignmentsDescription": "Démarrant dans les 30 prochains jours"
+    },
+    "table": {
+      "instructor": "Formateur",
+      "course": "Cours assigné",
+      "students": "Étudiants",
+      "period": "Période",
+      "status": "Statut",
+      "actions": "Actions",
+      "openMenu": "Ouvrir menu",
+      "noAssignments": "Aucune attribution trouvée"
+    },
+    "actions": {
+      "viewDetails": "Voir les détails",
+      "editAssignment": "Modifier l'attribution",
+      "deleteAssignment": "Supprimer l'attribution"
+    },
+    "loading": "Chargement des attributions...",
+    "errors": {
+      "loadError": "Impossible de charger les attributions",
+      "genericError": "Erreur de chargement"
+    },
+    "retry": "Réessayer"
+  }
+}

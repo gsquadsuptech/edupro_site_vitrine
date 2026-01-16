@@ -1,0 +1,88 @@
+{
+  "title": "Mon Profil",
+  "subtitle": "Gérez vos informations personnelles et votre compte",
+  "loading": "Chargement du profil...",
+  "loadError": "Impossible de charger le profil",
+  "superAdmin": "Super Admin",
+  "fields": {
+    "firstName": {
+      "label": "Prénom",
+      "placeholder": "Votre prénom"
+    },
+    "lastName": {
+      "label": "Nom de famille",
+      "placeholder": "Votre nom"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "phone": {
+      "label": "Téléphone",
+      "placeholder": "+33 1 23 45 67 89"
+    },
+    "gender": {
+      "label": "Genre",
+      "placeholder": "Sélectionner",
+      "male": "Homme",
+      "female": "Femme"
+    },
+    "dateOfBirth": {
+      "label": "Date de naissance"
+    },
+    "title": {
+      "label": "Titre/Poste",
+      "placeholder": "Ex: Formateur, Coordinateur pédagogique..."
+    },
+    "address": {
+      "label": "Adresse",
+      "placeholder": "Votre adresse complète"
+    },
+    "city": {
+      "label": "Ville",
+      "placeholder": "Votre ville"
+    },
+    "country": {
+      "label": "Pays",
+      "placeholder": "Votre pays"
+    },
+    "language": {
+      "label": "Langue préférée",
+      "placeholder": "Sélectionner une langue",
+      "options": {
+        "fr": "Français",
+        "en": "English"
+      },
+      "description": "Langue d'affichage de l'interface"
+    }
+  },
+  "sections": {
+    "basicInfo": "Informations de base",
+    "address": "Adresse",
+    "organization": "Organisation",
+    "accountInfo": "Informations du compte"
+  },
+  "organization": {
+    "website": "Site web",
+    "phone": "Téléphone"
+  },
+  "account": {
+    "role": "Rôle",
+    "memberSince": "Membre depuis",
+    "lastModified": "Dernière modification",
+    "superAdministrator": "Super Administrateur",
+    "user": "Utilisateur"
+  },
+  "actions": {
+    "changeAvatar": "Changer l'avatar",
+    "saveChanges": "Sauvegarder les modifications",
+    "saving": "Sauvegarde..."
+  },
+  "messages": {
+    "saveSuccess": "Profil mis à jour avec succès",
+    "saveError": "Erreur lors de la sauvegarde",
+    "avatarUploadSuccess": "Avatar mis à jour avec succès",
+    "avatarUploadError": "Erreur lors de l'upload de l'avatar",
+    "avatarSizeError": "L'image ne doit pas dépasser 5MB",
+    "avatarTypeError": "Veuillez sélectionner un fichier image"
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "title": "Exercices pratiques",
+  "description": "Créez et gérez vos exercices pratiques",
+  "newExercise": "Nouvel exercice",
+  "searchPlaceholder": "Rechercher un exercice...",
+
+  "filters": {
+    "status": "Statut",
+    "allStatuses": "Tous les statuts",
+    "drafts": "Brouillons",
+    "published": "Publiés",
+    "archived": "Archivés",
+    "difficulty": "Difficulté",
+    "allDifficulties": "Toutes difficultés",
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé"
+  },
+
+  "table": {
+    "exercise": "Exercice",
+    "status": "Statut",
+    "difficulty": "Difficulté",
+    "points": "Points",
+    "duration": "Durée",
+    "type": "Type",
+    "createdOn": "Créé le",
+    "actions": "Actions"
+  },
+
+  "status": {
+    "draft": "Brouillon",
+    "published": "Publié",
+    "archived": "Archivé"
+  },
+
+  "submissionTypes": {
+    "files": "Fichiers",
+    "links": "Liens",
+    "both": "Mixte"
+  },
+
+  "actions": {
+    "preview": "Aperçu",
+    "edit": "Modifier",
+    "publish": "Publier",
+    "archive": "Archiver",
+    "unarchive": "Désarchiver",
+    "unpublish": "Remettre en brouillon",
+    "duplicate": "Dupliquer",
+    "delete": "Supprimer",
+    "cancel": "Annuler"
+  },
+
+  "loading": "Chargement des exercices...",
+  "noExercises": "Aucun exercice créé",
+  "noExercisesFiltered": "Aucun exercice trouvé avec ces filtres",
+  "createFirst": "Créer votre premier exercice",
+
+  "dialogs": {
+    "deleteTitle": "Supprimer l'exercice",
+    "deleteDescription": "Êtes-vous sûr de vouloir supprimer l'exercice \"{title}\" ? Cette action est irréversible.",
+    "deleting": "Suppression...",
+    "publishTitle": "Publier l'exercice",
+    "publishDescription": "Êtes-vous sûr de vouloir publier l'exercice \"{title}\" ? Une fois publié, il sera visible par les apprenants.",
+    "publishing": "Publication...",
+    "unpublishTitle": "Remettre en brouillon",
+    "unpublishDescription": "Êtes-vous sûr de vouloir remettre en brouillon l'exercice \"{title}\" ? Il ne sera plus visible par les apprenants.",
+    "unpublishing": "Remise en brouillon...",
+    "archiveTitle": "Archiver l'exercice",
+    "archiveDescription": "Êtes-vous sûr de vouloir archiver l'exercice \"{title}\" ? Il sera déplacé vers les archives et ne sera plus visible par les apprenants.",
+    "archiving": "Archivage...",
+    "duplicateTitle": "Dupliquer l'exercice",
+    "duplicateDescription": "Voulez-vous créer une copie de l'exercice \"{title}\" ? La copie sera créée en tant que brouillon et pourra être modifiée.",
+    "duplicating": "Duplication..."
+  },
+
+  "messages": {
+    "deleteSuccess": "Exercice supprimé avec succès",
+    "publishSuccess": "Exercice publié avec succès",
+    "unpublishSuccess": "Exercice remis en brouillon avec succès",
+    "archiveSuccess": "Exercice archivé avec succès",
+    "unarchiveSuccess": "Exercice désarchivé avec succès",
+    "duplicateSuccess": "Exercice dupliqué avec succès",
+    "error": "Une erreur est survenue"
+  },
+
+  "create": {
+    "title": "Créer un exercice pratique",
+    "description": "Définissez les paramètres de votre exercice",
+    "back": "Retour",
+    "generalInfo": "Informations générales",
+    "titleLabel": "Titre *",
+    "titlePlaceholder": "Titre de l'exercice",
+    "descriptionLabel": "Description courte",
+    "descriptionPlaceholder": "Description courte pour la vue liste",
+    "pointsLabel": "Points attribués *",
+    "durationLabel": "Durée estimée (minutes)",
+    "difficultyLabel": "Niveau de difficulté",
+    "submissionTypeLabel": "Type de soumission",
+    "maxAttemptsLabel": "Nombre de tentatives",
+    "instructions": "Instructions *",
+    "instructionsPlaceholder": "Décrivez les consignes détaillées de l'exercice...",
+    "resources": "Ressources disponibles",
+    "resourceTitlePlaceholder": "Titre de la ressource",
+    "resourceUrlPlaceholder": "URL de la ressource",
+    "addResource": "Ajouter une ressource",
+    "evaluationCriteria": "Critères d'évaluation",
+    "criterionDescriptionPlaceholder": "Description du critère",
+    "criterionPointsPlaceholder": "Points",
+    "addCriterion": "Ajouter un critère",
+    "actions": "Actions",
+    "saveDraft": "Sauvegarder comme brouillon",
+    "saving": "Sauvegarde...",
+    "createAndPublish": "Créer et publier",
+    "creating": "Création...",
+    "summary": "Résumé",
+    "points": "Points:",
+    "duration": "Durée estimée:",
+    "submission": "Soumission:",
+    "attempts": "Tentatives:",
+    "resourcesCount": "Ressources:",
+    "criteriaCount": "Critères:",
+    "difficulty": {
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé"
+    },
+    "submissionTypes": {
+      "files": "Fichiers uniquement",
+      "links": "Liens uniquement",
+      "mixed": "Fichiers et liens"
+    },
+    "attempts": {
+      "1": "1 tentative",
+      "2": "2 tentatives",
+      "3": "3 tentatives",
+      "999": "Illimité"
+    },
+    "errors": {
+      "titleRequired": "Le titre est obligatoire",
+      "instructionsRequired": "Les instructions sont obligatoires",
+      "pointsInvalid": "Les points doivent être supérieurs à 0",
+      "createError": "Erreur lors de la création",
+      "genericError": "Erreur lors de la création"
+    },
+    "success": {
+      "createdDraft": "Exercice créé comme brouillon",
+      "createdPublished": "Exercice créé et publié!"
+    }
+  },
+
+  "preview": {
+    "title": "Aperçu de l'exercice pratique",
+    "back": "Retour",
+    "edit": "Modifier",
+    "loading": "Chargement de l'aperçu...",
+    "error": "Erreur lors du chargement",
+    "notFound": "Exercice non trouvé",
+    "description": "Description",
+    "instructions": "Instructions",
+    "resources": "Ressources disponibles",
+    "resource": "Ressource",
+    "evaluationCriteria": "Critères d'évaluation",
+    "totalPoints": "Total des points",
+    "points": "pts",
+    "settings": "Paramètres",
+    "pointsAwarded": "Points attribués",
+    "estimatedDuration": "Durée estimée",
+    "submissionType": "Type de soumission",
+    "attempts": "Nombre de tentatives",
+    "attempt": "tentative",
+    "attemptsPlural": "tentatives",
+    "deadlines": "Échéances",
+    "deadlineType": "Type:",
+    "deadlineNone": "Pas d'échéance",
+    "deadlineFixed": "Date fixe",
+    "deadlineRelative": "Relative au démarrage",
+    "deadlineDate": "Date:",
+    "deadlineDelay": "Délai:",
+    "day": "jour",
+    "days": "jours",
+    "info": "Informations",
+    "status": "Statut:",
+    "createdAt": "Créé le:",
+    "updatedAt": "Modifié le:"
+  },
+
+  "edit": {
+    "title": "Modifier l'exercice",
+    "description": "Modifiez les paramètres de votre exercice",
+    "back": "Retour",
+    "preview": "Aperçu",
+    "loading": "Chargement de l'exercice...",
+    "error": "Erreur lors du chargement",
+    "notFound": "Exercice non trouvé",
+    "generalInfo": "Informations générales",
+    "titleLabel": "Titre *",
+    "titlePlaceholder": "Titre de l'exercice",
+    "descriptionLabel": "Description courte",
+    "descriptionPlaceholder": "Description courte pour la vue liste",
+    "pointsLabel": "Points attribués *",
+    "durationLabel": "Durée estimée (minutes)",
+    "difficultyLabel": "Niveau de difficulté",
+    "submissionTypeLabel": "Type de soumission",
+    "maxAttemptsLabel": "Nombre de tentatives",
+    "instructions": "Instructions *",
+    "instructionsPlaceholder": "Décrivez les consignes détaillées de l'exercice...",
+    "resources": "Ressources disponibles",
+    "resourceTitlePlaceholder": "Titre de la ressource",
+    "resourceUrlPlaceholder": "URL de la ressource",
+    "addResource": "Ajouter une ressource",
+    "evaluationCriteria": "Critères d'évaluation",
+    "criterionDescriptionPlaceholder": "Description du critère",
+    "criterionPointsPlaceholder": "Points",
+    "addCriterion": "Ajouter un critère",
+    "actions": "Actions",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "summary": "Résumé",
+    "points": "Points:",
+    "duration": "Durée estimée:",
+    "submission": "Soumission:",
+    "attempts": "Tentatives:",
+    "resourcesCount": "Ressources:",
+    "criteriaCount": "Critères:",
+    "difficulty": {
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé"
+    },
+    "submissionTypes": {
+      "files": "Fichiers uniquement",
+      "links": "Liens uniquement",
+      "mixed": "Fichiers et liens"
+    },
+    "attempts": {
+      "1": "1 tentative",
+      "2": "2 tentatives",
+      "3": "3 tentatives",
+      "999": "Illimité"
+    },
+    "errors": {
+      "titleRequired": "Le titre est obligatoire",
+      "instructionsRequired": "Les instructions sont obligatoires",
+      "pointsInvalid": "Les points doivent être supérieurs à 0",
+      "updateError": "Erreur lors de la mise à jour",
+      "genericError": "Erreur lors de la mise à jour"
+    },
+    "success": {
+      "updated": "Exercice mis à jour avec succès!"
+    }
+  }
+}

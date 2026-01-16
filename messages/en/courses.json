@@ -1,0 +1,621 @@
+{
+  "title": "Courses",
+  "description": "Manage platform courses",
+  "createCourse": "Create a course",
+  "editCourse": "Edit course",
+  "deleteCourse": "Delete course",
+  "noCourses": "No courses available",
+  "searchPlaceholder": "Search courses...",
+  "stats": {
+    "total": "Total courses",
+    "published": "Published",
+    "draft": "Drafts",
+    "review": "Under review",
+    "enrollments": "Enrollments"
+  },
+  "status": {
+    "published": "Published",
+    "draft": "Draft",
+    "review": "Under review",
+    "pending_review": "Pending approval",
+    "needs_revision": "Revision requested",
+    "archived": "Archived"
+  },
+  "filters": {
+    "title": "Filter courses",
+    "status": "Status",
+    "category": "Category",
+    "instructor": "Instructor",
+    "allStatuses": "All statuses",
+    "allCategories": "All categories",
+    "apply": "Apply",
+    "reset": "Reset"
+  },
+  "sorting": {
+    "lastUpdated": "Last updated",
+    "title": "Title",
+    "status": "Status",
+    "category": "Category",
+    "instructor": "Instructor"
+  },
+  "details": {
+    "title": "Course details",
+    "generalInfo": "General information",
+    "content": "Content",
+    "pricing": "Pricing",
+    "settings": "Settings",
+    "preview": "Preview"
+  },
+  "fields": {
+    "title": "Course title",
+    "subtitle": "Subtitle",
+    "description": "Description",
+    "category": "Category",
+    "instructor": "Instructor",
+    "price": "Price",
+    "duration": "Duration",
+    "level": "Level",
+    "language": "Language",
+    "thumbnail": "Thumbnail image",
+    "video": "Presentation video",
+    "tags": "Tags",
+    "prerequisites": "Prerequisites",
+    "learningObjectives": "Learning objectives",
+    "targetAudience": "Target audience"
+  },
+  "levels": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "expert": "Expert"
+  },
+  "messages": {
+    "createSuccess": "Course created successfully",
+    "createError": "Error creating course",
+    "updateSuccess": "Course updated successfully",
+    "updateError": "Error updating course",
+    "deleteSuccess": "Course deleted successfully",
+    "deleteError": "Error deleting course",
+    "publishSuccess": "Course published successfully",
+    "publishError": "Error publishing course",
+    "confirmDelete": "Are you sure you want to delete this course?",
+    "noCategory": "No category",
+    "noInstructor": "No instructor"
+  },
+  "content": {
+    "modules": "Modules",
+    "addModule": "Add module",
+    "editModule": "Edit module",
+    "deleteModule": "Delete module",
+    "lessons": "Lessons",
+    "addLesson": "Add lesson",
+    "editLesson": "Edit lesson",
+    "deleteLesson": "Delete lesson",
+    "noModules": "No modules added",
+    "noLessons": "No lessons added",
+    "moduleName": "Module name",
+    "moduleDescription": "Module description",
+    "lessonName": "Lesson name",
+    "lessonType": "Lesson type",
+    "lessonContent": "Lesson content"
+  },
+  "pricing": {
+    "free": "Free",
+    "paid": "Paid",
+    "price": "Price",
+    "currency": "Currency",
+    "discount": "Discount",
+    "subscriptionOnly": "Subscription only"
+  },
+  "list": {
+    "loading": "Loading courses...",
+    "noCourses": "No courses found",
+    "image": "Image",
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "category": "Category",
+    "instructor": "Instructor",
+    "lastUpdate": "Last update",
+    "actions": "Actions",
+    "noDescription": "No short description",
+    "noCategory": "No category",
+    "notAssigned": "Not assigned",
+    "imageLoading": "Loading...",
+    "imageUnavailable": "Image unavailable"
+  },
+  "actions": {
+    "edit": "Edit",
+    "editContent": "Edit content",
+    "preview": "Preview",
+    "publicLink": "Public link",
+    "publicLinkTooltip": "Click to copy. Middle/right click to open in a new tab.",
+    "content": "Content",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "delete": "Delete",
+    "duplicate": "Duplicate",
+    "cancel": "Cancel",
+    "tooltips": {
+      "editDisabled": "Cannot edit a published course. Unpublish the course first.",
+      "deleteDisabled": "Cannot delete a published course. Unpublish the course first."
+    }
+  },
+  "confirmDialog": {
+    "publishTitle": "Confirm publication",
+    "unpublishTitle": "Confirm unpublication",
+    "deleteTitle": "Confirm deletion",
+    "duplicateTitle": "Confirm duplication",
+    "publishMessage": "Do you really want to publish this course?",
+    "unpublishMessage": "Do you really want to unpublish this course?",
+    "deleteMessage": "Do you really want to delete this course?",
+    "duplicateMessage": "Do you really want to duplicate this course?"
+  },
+  "toasts": {
+    "publishSuccess": "The course is now public.",
+    "publishError": "Error publishing course",
+    "unpublishError": "Error unpublishing course",
+    "deleteSuccess": "Course deleted successfully",
+    "deleteError": "Error deleting course",
+    "deleteErrorUnexpected": "An unexpected error occurred",
+    "deleteErrorAccess": "Access denied",
+    "deleteErrorAccessDescription": "You don't have permission to delete this course",
+    "deleteErrorNotFound": "Course not found",
+    "deleteErrorNotFoundDescription": "The course you're trying to delete doesn't exist",
+    "deleteErrorConnection": "Connection error",
+    "deleteErrorConnectionDescription": "Unable to contact the server. Please try again.",
+    "duplicateSuccess": "Course duplicated successfully",
+    "duplicateError": "Error duplicating course",
+    "linkCopied": "Link copied to clipboard",
+    "linkCopyError": "Unable to copy link"
+  },
+  "create": {
+    "title": "Create a new course",
+    "loading": "Loading...",
+    "loadingDescription": "Preparing the editing interface",
+    "backToCourses": "Back to course list",
+    "steps": {
+      "format": "Format",
+      "details": "Details",
+      "pricing": "Pricing",
+      "content": "Content",
+      "stepProgress": "Step {current} of {total}"
+    },
+    "actions": {
+      "preview": "Preview",
+      "previewSoon": "Preview - This feature will be available soon.",
+      "save": "Save",
+      "saving": "Saving...",
+      "previous": "Previous",
+      "next": "Next",
+      "create": "Create course",
+      "creating": "Creating...",
+      "reload": "Reload"
+    },
+    "validation": {
+      "title": "Please correct the following errors:",
+      "titleRequired": "Course title is required",
+      "titleMinLength": "Title must contain at least 5 characters",
+      "shortDescriptionRequired": "Short description is required",
+      "shortDescriptionMinLength": "Short description must contain at least 10 characters",
+      "descriptionRequired": "Full description is required",
+      "descriptionMinLength": "Full description must contain at least 20 characters",
+      "categoryRequired": "Category is required"
+    },
+    "errors": {
+      "applicationError": "Application error",
+      "notAuthenticated": "User not authenticated or Supabase client not available",
+      "noOrganization": "Your account is not associated with an organization. Contact the administrator.",
+      "profileError": "Error retrieving user profile",
+      "invalidVideoUrl": "Lesson \"{lessonTitle}\" in section \"{sectionTitle}\" has an invalid video URL. Only YouTube or Vimeo links are allowed.",
+      "invalidFile": "Invalid file or file type not defined.",
+      "invalidImage": "Selected file is not a valid image.",
+      "imageTooLarge": "Image is too large. Maximum allowed size: 10MB.",
+      "emptyFile": "Image file is empty.",
+      "unsupportedFormat": "Unsupported image format. Accepted formats: JPG, JPEG, PNG, WebP, GIF.",
+      "insufficientPermissions": "Insufficient permissions to upload image. Contact the administrator.",
+      "uploadError": "Upload error: {message}",
+      "createError": "Unable to create course: {message}",
+      "invalidData": "Error creating course: invalid data",
+      "sectionsError": "Course was created but there was a problem with sections or tags.",
+      "unknownError": "An unknown error occurred",
+      "fixErrors": "Please correct errors in the form"
+    },
+    "messages": {
+      "loginRequired": "Please log in to create a course.",
+      "sectionCreationError": "Error creating section \"{title}\".",
+      "lessonCreationError": "Error creating lesson \"{title}\".",
+      "tagsAddError": "Course was created but some tags could not be added.",
+      "success": "Course created successfully."
+    },
+    "formatSection": {
+      "title": "Course format",
+      "autoFormation": "Self-paced",
+      "session": "Session/Cohort",
+      "instructor": {
+        "title": "Instructor",
+        "placeholder": "Select an instructor (optional)",
+        "description": "Select the main instructor"
+      },
+      "category": {
+        "title": "Category",
+        "placeholder": "Select a category"
+      },
+      "language": {
+        "title": "Language",
+        "placeholder": "Course language",
+        "options": {
+          "fr": "French",
+          "en": "English",
+          "es": "Spanish",
+          "de": "German",
+          "other": "Other"
+        }
+      },
+      "level": {
+        "title": "Difficulty level",
+        "placeholder": "Course level",
+        "options": {
+          "beginner": {
+            "label": "Beginner",
+            "description": "No specific prerequisites"
+          },
+          "intermediate": {
+            "label": "Intermediate",
+            "description": "Basic knowledge in the field"
+          },
+          "advanced": {
+            "label": "Advanced",
+            "description": "Advanced mastery of related concepts"
+          }
+        }
+      },
+      "duration": {
+        "title": "Total duration (hours)",
+        "calculating": "Calculating...",
+        "recalculate": "Recalculate",
+        "placeholder": "Calculated automatically",
+        "calculatingInProgress": "Calculating...",
+        "noLessons": "No lessons added",
+        "willBeCalculated": "Will be calculated after creation",
+        "auto": "Auto",
+        "description": "Duration calculated automatically based on lesson content (video, audio, article, document, quiz)",
+        "lessonsCount": "{count} lesson",
+        "lessonsCount_plural": "{count} lessons",
+        "realTimeUpdate": "Real-time update"
+      },
+      "tags": {
+        "title": "Tags",
+        "noTags": "No tags selected. Add tags to better organize your course.",
+        "addTag": "Add a tag",
+        "searchPlaceholder": "Search for a tag...",
+        "noTagsFound": "No tags found.",
+        "availableTags": "Available tags"
+      },
+      "options": {
+        "title": "Course options",
+        "subtitle": "Options displayed in \"This course includes\"",
+        "description": "These options will be displayed on the course detail page in the \"This course includes\" section.",
+        "accessDuration": {
+          "label": "Course access",
+          "days": "Days",
+          "daysLabel": "days",
+          "definedBySession": "Defined by the session",
+          "description1": "Course access duration after enrollment. If empty or 0, access will be unlimited ('lifetime').",
+          "description2": "For session-based courses, access duration is defined at the session level."
+        },
+        "community": {
+          "label": "Support community",
+          "description": "Enable the support community for learners of this course."
+        },
+        "certificate": {
+          "label": "Completion certificate",
+          "description": "Issue a completion certificate to learners who complete the course.",
+          "templateLabel": "Certificate template",
+          "loading": "Loading...",
+          "selectPlaceholder": "Select a certificate template",
+          "required": "Certificate template selection is required."
+        }
+      },
+      "thumbnail": {
+        "title": "Course image",
+        "change": "Change image",
+        "select": "Select an image",
+        "preview": "Course image preview",
+        "noImage": "No image selected",
+        "maxSize": "JPG, PNG, GIF up to 10MB"
+      },
+      "video": {
+        "title": "Presentation video (YouTube)",
+        "placeholder": "YouTube video URL",
+        "noVideo": "No video added",
+        "pasteUrl": "Paste YouTube URL above"
+      }
+    },
+    "detailsSection": {
+      "courseTitle": "Course title",
+      "courseTitlePlaceholder": "Course title",
+      "shortDescription": "Short description",
+      "shortDescriptionPlaceholder": "A brief description of your course (160 characters max)",
+      "charactersCount": "{count}/160 characters",
+      "fullDescription": "Full description",
+      "fullDescriptionPlaceholder": "Detailed description of your course",
+      "learningObjectives": "Learning objectives",
+      "addObjective": "Add a learning objective",
+      "addButton": "Add",
+      "objectiveRequired": "Please enter an objective",
+      "prerequisites": "Prerequisites",
+      "addPrerequisite": "Add a prerequisite",
+      "prerequisiteRequired": "Please enter a prerequisite",
+      "expectedResults": "Expected results",
+      "addResult": "Add an expected result",
+      "resultRequired": "Please enter an expected result"
+    },
+    "pricingSection": {
+      "accessType": "Access type",
+      "free": "Free",
+      "paid": "Paid",
+      "invitation": "Invitation only",
+      "pricingOptions": "Pricing options",
+      "oneTimePayment": "One-time Payment",
+      "totalAmount": "Total amount",
+      "amount": "Amount",
+      "currency": "FCFA",
+      "discount": "Discount",
+      "discountPlaceholder": "Discount",
+      "percent": "%",
+      "finalPrice": "Final price:",
+      "installmentPayment": "Installment Payment",
+      "installments": "Installments",
+      "installmentAmount": "Amount",
+      "dueDate": "Due date (days)",
+      "daysAfterEnrollment": "Days after enrollment",
+      "addInstallment": "Add an installment",
+      "total": "Total:",
+      "monthlyPayment": "Monthly Payment",
+      "monthlyAmount": "Monthly amount",
+      "monthlyAmountPlaceholder": "Monthly amount",
+      "perMonth": "FCFA/month",
+      "registrationAndMonthly": "Registration + Monthly Payments",
+      "registrationFee": "Registration fee",
+      "registrationFeePlaceholder": "Registration fee",
+      "monthlyPaymentAmount": "Monthly payment amount",
+      "monthlyPaymentPlaceholder": "Monthly amount"
+    },
+    "contentSection": {
+      "newSectionTitle": "New {label} title",
+      "addSection": "Add a {label}",
+      "noSections": "No {label} added yet",
+      "sectionTitle": "{label} title",
+      "sectionContent": "{label} content",
+      "noSectionContent": "No lessons in this {label}",
+      "confirmRemoveSection": "Are you sure you want to delete this {label}?",
+      "lessonTitle": "Lesson title",
+      "lessonTitlePlaceholder": "Lesson title",
+      "lessonType": "Content type",
+      "selectType": "Select a type",
+      "video": "Video",
+      "article": "Article",
+      "document": "Document",
+      "audio": "Audio",
+      "quiz": "Quiz",
+      "exercise": "Practical exercise",
+      "previewLabel": "Available as free preview",
+      "videoUrl": "Video URL (YouTube or Vimeo)",
+      "videoUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+      "articleContent": "Article content",
+      "documentFile": "Document file",
+      "selectFile": "Select a file",
+      "documentUrl": "Or enter a document URL",
+      "documentUrlPlaceholder": "https://...",
+      "documentInfo": "Document information",
+      "lessonTitleLabel": "Lesson title:",
+      "notDefined": "Not defined",
+      "documentTitleNote": "The lesson title can be modified or will be automatically set from the file name",
+      "audioFile": "Audio file",
+      "audioUrl": "Or enter an audio URL",
+      "audioUrlPlaceholder": "https://...",
+      "selectQuiz": "Select a quiz",
+      "selectQuizPlaceholder": "Choose a quiz",
+      "noQuizAvailable": "No published quiz available",
+      "quizInfo": "Quiz information",
+      "quizTitleNote": "The lesson title is automatically set from the selected quiz",
+      "selectExercise": "Select a practical exercise",
+      "selectExercisePlaceholder": "Choose an exercise",
+      "noExerciseAvailable": "No published exercise available",
+      "exerciseInfo": "Exercise information",
+      "exerciseTitleNote": "The lesson title is automatically set from the selected exercise",
+      "urlNotRecognized": "URL not recognized as YouTube or Vimeo",
+      "preview": "Preview",
+      "duration": "Duration",
+      "lesson": "Lesson",
+      "lessonWithCount": "Lesson {count}",
+      "previewNotAvailable": "Preview not available for this URL.",
+      "documentFileDescription": "Document file (PDF, Word, etc.) or external URL",
+      "maxFileSizeFormats": "Max size: {size} MB. Accepted formats: {formats}",
+      "pendingUploadNote": "⏳ Pending upload on save",
+      "viewDocument": "View document:",
+      "audioFileDescription": "Audio file (MP3, WAV, etc.) or external URL",
+      "audioNotSupported": "Your browser does not support the audio element.",
+      "questions": "questions",
+      "points": "points",
+      "sizeUnknown": "Unknown size",
+      "mb": "MB",
+      "structureTitle": "Course structure",
+      "dragDropMessage": "Drag and drop sections and lessons to reorganize the content",
+      "unsavedChangesMessage": "You have unsaved changes",
+      "pendingUploadsMessage": "{count} file(s) pending upload",
+      "loadingMessage": "Loading course content...",
+      "section": {
+        "label": "section",
+        "labelPlural": "sections",
+        "title": "Section title",
+        "add": "Add a section",
+        "newTitle": "New section title",
+        "content": "Section content",
+        "remove": "Delete section",
+        "noContent": "No lessons in this section",
+        "confirmRemove": "Are you sure you want to delete this section and all its lessons?",
+        "noSections": "No course sections. Add a section to get started."
+      },
+      "week": {
+        "label": "week",
+        "labelPlural": "weeks",
+        "title": "Week title",
+        "add": "Add a week",
+        "newTitle": "New week title",
+        "content": "Week content",
+        "remove": "Delete week",
+        "noContent": "No lessons in this week",
+        "confirmRemove": "Are you sure you want to delete this week and all its lessons?",
+        "noSections": "No course weeks. Add a week to get started."
+      },
+      "lesson": {
+        "label": "lesson",
+        "labelPlural": "lessons",
+        "title": "Lesson title",
+        "type": "Content type",
+        "add": "Add a lesson",
+        "remove": "Delete lesson",
+        "confirmRemove": "Are you sure you want to delete this lesson?",
+        "types": {
+          "video": "Add a video lesson",
+          "article": "Add an article",
+          "document": "Add a document",
+          "audio": "Add an audio lesson",
+          "quiz": "Add a quiz",
+          "exercise": "Add a practical exercise"
+        }
+      }
+    }
+  },
+  "preview": {
+    "title": "Course preview",
+    "subtitle": "Preview before publication",
+    "loading": "Loading course preview...",
+    "notFound": "Course not found",
+    "backToCatalog": "Back to catalog",
+    "editCourse": "Edit this course",
+    "unpublish": "Set back to draft",
+    "publicLink": "Public link",
+    "publicLinkTooltip": "Click to copy. Middle/right click to open in a tab.",
+    "videoNotSupported": "Your browser does not support video playback.",
+    "notSpecified": "Not specified",
+    "format": {
+      "label": "Format:",
+      "session": "Session/Cohort",
+      "autoFormation": "Self-paced"
+    },
+    "tabs": {
+      "details": "Details",
+      "program": "Program"
+    },
+    "sections": {
+      "detailedDescription": "Detailed description",
+      "noDescription": "No description",
+      "objectives": "Objectives",
+      "noObjectives": "No objectives defined",
+      "prerequisites": "Prerequisites",
+      "noPrerequisites": "No prerequisites",
+      "expectedResults": "Expected results",
+      "noExpectedResults": "No expected results specified",
+      "courseContent": "Course content",
+      "noSections": "No course sections defined",
+      "noLessons": "No lessons",
+      "preview": "Preview",
+      "noPreviewAvailable": "No preview available for this type of content."
+    },
+    "info": {
+      "title": "Course information",
+      "language": "Language",
+      "level": "Level",
+      "duration": "Duration",
+      "format": "Format",
+      "status": "Status",
+      "access": "Access"
+    },
+    "pricing": {
+      "title": "Pricing",
+      "free": "Free",
+      "oneTime": "One-time payment",
+      "subscription": "Monthly subscription",
+      "installments": "Installment plan",
+      "installmentsCount": "{count} installments",
+      "perMonth": "/month"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "languages": {
+      "fr": "French",
+      "en": "English",
+      "es": "Spanish",
+      "de": "German"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "messages": {
+      "linkCopied": "Link copied to clipboard",
+      "linkCopyError": "Unable to copy link",
+      "unpublishError": "Error setting back to draft",
+      "unpublishSuccess": "Course set back to draft",
+      "unpublishUnavailable": "Unable to set back to draft at the moment"
+    }
+  },
+  "edit": {
+    "title": "Edit course",
+    "subtitle": "Modify the details of this course",
+    "newCourse": "New Course",
+    "backToCatalog": "Back to catalog",
+    "loading": "Loading...",
+    "notFound": "Course not found",
+    "tabs": {
+      "format": "Format",
+      "details": "Details",
+      "pricing": "Pricing",
+      "certification": "Certification",
+      "content": "Content"
+    },
+    "actions": {
+      "save": "Save",
+      "saving": "Saving...",
+      "publish": "Publish",
+      "publishing": "Publishing...",
+      "cancel": "Cancel",
+      "continue": "Continue"
+    },
+    "status": {
+      "unsavedChanges": "Unsaved changes"
+    },
+    "errors": {
+      "loadError": "Unable to load course.",
+      "loadErrorGeneric": "An error occurred while loading the course.",
+      "notFound": "Course not found or no data received.",
+      "saveErrorMissing": "Unable to save: essential information missing.",
+      "contentSaveError": "Content save failed: {message}",
+      "imageUploadError": "Image upload failed: {message}",
+      "imageUrlError": "Failed to retrieve image URL.",
+      "imagePathError": "Failed to retrieve image info (path missing).",
+      "saveFailed": "Save failed: {message}",
+      "publishError": "Unable to publish course.",
+      "publishErrorGeneric": "Error during publication: {message}",
+      "unexpectedError": "An error occurred: {message}"
+    },
+    "messages": {
+      "saveSuccess": "Changes saved successfully.",
+      "contentSaved": "Course content saved.",
+      "contentUpdated": "Course content has been updated.",
+      "publishSuccess": "The course is now public."
+    },
+    "confirmDialog": {
+      "unsavedTitle": "Unsaved changes",
+      "unsavedMessage": "You have unsaved changes. Do you want to continue without saving?",
+      "publishTitle": "Publish course",
+      "publishMessage": "Are you sure you want to publish this course? It will be visible to all users and students will be able to enroll."
+    }
+  }
+}

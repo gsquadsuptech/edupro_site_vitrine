@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "title": "Blog & News | EduPro",
+    "description": "Discover our latest articles, practical tips and trends on professional training in Africa."
+  },
+  "hero": {
+    "title": "Blog & News",
+    "subtitle": "Discover our latest articles, practical tips and trends on professional training in Africa"
+  },
+  "articles": {
+    "loading": "Loading articles...",
+    "empty": "No articles available at the moment.",
+    "readArticle": "Read the article"
+  }
+}
+
+

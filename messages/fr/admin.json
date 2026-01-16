@@ -1,0 +1,175 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "noData": "Aucune donnée disponible",
+    "error": "Une erreur s'est produite",
+    "success": "Opération réussie"
+  },
+  "actions": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer",
+    "refresh": "Actualiser",
+    "apply": "Appliquer",
+    "reset": "Réinitialiser",
+    "view": "Voir",
+    "preview": "Prévisualiser",
+    "duplicate": "Dupliquer",
+    "archive": "Archiver",
+    "restore": "Restaurer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "finish": "Terminer",
+    "submit": "Soumettre",
+    "download": "Télécharger",
+    "upload": "Téléverser"
+  },
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "pending": "En attente",
+    "completed": "Terminé",
+    "cancelled": "Annulé",
+    "draft": "Brouillon",
+    "published": "Publié",
+    "archived": "Archivé",
+    "review": "En révision"
+  },
+  "filters": {
+    "all": "Tout",
+    "allStatuses": "Tous les statuts",
+    "allCategories": "Toutes les catégories",
+    "allTypes": "Tous les types",
+    "date": "Date",
+    "status": "Statut",
+    "category": "Catégorie",
+    "type": "Type"
+  },
+  "sorting": {
+    "sortBy": "Trier par",
+    "lastUpdated": "Dernière mise à jour",
+    "createdAt": "Date de création",
+    "title": "Titre",
+    "name": "Nom",
+    "ascending": "Croissant",
+    "descending": "Décroissant"
+  },
+  "viewModes": {
+    "grid": "Grille",
+    "list": "Liste",
+    "table": "Tableau"
+  },
+  "fields": {
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "country": "Pays",
+    "description": "Description",
+    "title": "Titre",
+    "subtitle": "Sous-titre",
+    "price": "Prix",
+    "date": "Date",
+    "time": "Heure",
+    "duration": "Durée",
+    "category": "Catégorie",
+    "tags": "Étiquettes",
+    "status": "Statut",
+    "type": "Type",
+    "image": "Image",
+    "thumbnail": "Miniature",
+    "url": "URL"
+  },
+  "placeholders": {
+    "search": "Rechercher...",
+    "searchByName": "Rechercher par nom...",
+    "searchByEmail": "Rechercher par email...",
+    "selectCategory": "Sélectionner une catégorie",
+    "selectStatus": "Sélectionner un statut",
+    "selectType": "Sélectionner un type",
+    "enterName": "Entrer un nom",
+    "enterEmail": "Entrer un email",
+    "enterDescription": "Entrer une description"
+  },
+  "messages": {
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+    "confirmArchive": "Êtes-vous sûr de vouloir archiver cet élément ?",
+    "deleteSuccess": "Élément supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression",
+    "saveSuccess": "Enregistré avec succès",
+    "saveError": "Erreur lors de l'enregistrement",
+    "updateSuccess": "Mis à jour avec succès",
+    "updateError": "Erreur lors de la mise à jour",
+    "createSuccess": "Créé avec succès",
+    "createError": "Erreur lors de la création",
+    "loadError": "Erreur lors du chargement des données",
+    "noResults": "Aucun résultat trouvé",
+    "requiredField": "Ce champ est obligatoire",
+    "invalidEmail": "Email invalide",
+    "invalidUrl": "URL invalide"
+  },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page",
+    "of": "sur",
+    "showing": "Affichage",
+    "results": "résultats",
+    "perPage": "par page"
+  },
+  "cohorts": {
+    "sessions": {
+      "title": "Gérer les sessions",
+      "back": "Retour",
+      "save": "Enregistrer",
+      "sessions": "Sessions",
+      "add": "Ajouter",
+      "loading": "Chargement...",
+      "empty": "Aucune session. Cliquez \"Ajouter\".",
+      "form": {
+        "title": "Titre",
+        "titleAria": "Titre de la séance",
+        "titlePlaceholder": "Titre",
+        "date": "Date",
+        "dateAria": "Date de la séance",
+        "startTime": "Heure de début",
+        "startTimeAria": "Heure de début",
+        "endTime": "Heure de fin",
+        "endTimeAria": "Heure de fin",
+        "description": "Description",
+        "descriptionAria": "Description de la séance",
+        "descriptionPlaceholder": "Description",
+        "meetingUrl": "Lien de réunion (optionnel)",
+        "meetingUrlAria": "Lien de réunion",
+        "meetingUrlPlaceholder": "Lien de réunion (optionnel)",
+        "willBeRecorded": "Cette séance sera enregistrée",
+        "recordingUrl": "URL de l'enregistrement (optionnel)",
+        "recordingUrlAria": "URL de l'enregistrement",
+        "recordingUrlPlaceholder": "URL de l'enregistrement (optionnel)"
+      },
+      "errors": {
+        "loadError": "Erreur de chargement",
+        "deleteError": "Erreur lors de la suppression",
+        "saveError": "Enregistrement impossible",
+        "savePartial": "{failures} échec, {successes} succès. Réessayez pour les éléments en erreur."
+      },
+      "success": {
+        "delete": "Session supprimée",
+        "save": "Sessions enregistrées"
+      },
+      "warnings": {
+        "incompleteSessions": "{count} session incomplète ignorée. Renseignez le titre, la date et les horaires. | {count} sessions incomplètes ignorées. Renseignez le titre, la date et les horaires."
+      }
+    }
+  }
+}

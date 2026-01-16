@@ -1,0 +1,174 @@
+{
+  "title": "Apprenants",
+  "description": "Gérez les apprenants de la plateforme",
+  "createStudent": "Ajouter un apprenant",
+  "editStudent": "Modifier l'apprenant",
+  "deleteStudent": "Supprimer l'apprenant",
+  "viewProfile": "Voir le profil",
+  "noStudents": "Aucun apprenant",
+  "searchPlaceholder": "Rechercher des apprenants...",
+
+  "stats": {
+    "total": "Total des apprenants",
+    "active": "Actifs",
+    "inactive": "Inactifs",
+    "pending": "En attente",
+    "newThisMonth": "Nouveaux ce mois"
+  },
+
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "pending": "En attente",
+    "suspended": "Suspendu",
+    "graduated": "Diplômé"
+  },
+
+  "fields": {
+    "name": "Nom complet",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "city": "Ville",
+    "country": "Pays",
+    "dateOfBirth": "Date de naissance",
+    "registrationDate": "Date d'inscription",
+    "status": "Statut",
+    "avatar": "Photo de profil",
+    "bio": "Biographie",
+    "enrolledCourses": "Cours suivis",
+    "completedCourses": "Cours terminés",
+    "certificates": "Certificats",
+    "lastActivity": "Dernière activité"
+  },
+
+  "form": {
+    "title": "Ajouter un apprenant",
+    "firstNamePlaceholder": "Prénom de l'apprenant",
+    "lastNamePlaceholder": "Nom de l'apprenant",
+    "emailPlaceholder": "email@exemple.com",
+    "phonePlaceholder": "+221 77 123 45 67",
+    "submit": "Ajouter l'apprenant",
+    "submitting": "Ajout en cours...",
+    "cancel": "Annuler"
+  },
+
+  "validation": {
+    "firstNameMin": "Le prénom doit contenir au moins 2 caractères",
+    "firstNameMax": "Le prénom ne peut pas dépasser 50 caractères",
+    "firstNameInvalid": "Le prénom ne doit contenir que des lettres et des chiffres",
+    "lastNameMin": "Le nom doit contenir au moins 2 caractères",
+    "lastNameMax": "Le nom ne peut pas dépasser 50 caractères",
+    "lastNameInvalid": "Le nom ne doit contenir que des lettres et des chiffres",
+    "emailInvalid": "Format d'email invalide",
+    "emailMin": "L'email doit contenir au moins 5 caractères",
+    "emailMax": "L'email ne peut pas dépasser 100 caractères",
+    "emailExists": "Cet email est déjà utilisé",
+    "phoneInvalid": "Le numéro doit être au format +2217XXXXXXXX",
+    "phoneExists": "Ce numéro est déjà utilisé",
+    "uniqueCheckError": "Erreur lors de la vérification d'unicité",
+    "emailAlreadyUsed": "Cette adresse email est déjà utilisée par un autre compte.",
+    "notAuthorized": "Vous n'êtes pas autorisé à effectuer cette action",
+    "serverError": "Une erreur est survenue, veuillez réessayer",
+    "genericError": "Une erreur est survenue",
+    "organizationNotFound": "Organisation non trouvée"
+  },
+
+  "profile": {
+    "title": "Profil de l'apprenant",
+    "personalInfo": "Informations personnelles",
+    "enrollments": "Inscriptions",
+    "progress": "Progression",
+    "certificates": "Certificats",
+    "activity": "Activité",
+    "statistics": "Statistiques"
+  },
+
+  "enrollments": {
+    "title": "Inscriptions aux cours",
+    "noEnrollments": "Aucune inscription",
+    "courseName": "Nom du cours",
+    "enrollmentDate": "Date d'inscription",
+    "progress": "Progression",
+    "status": "Statut",
+    "completed": "Terminé",
+    "inProgress": "En cours",
+    "notStarted": "Non démarré"
+  },
+
+  "progress": {
+    "overallProgress": "Progression globale",
+    "coursesCompleted": "Cours terminés",
+    "lessonsCompleted": "Leçons terminées",
+    "quizzesPassed": "Quiz réussis",
+    "certificatesEarned": "Certificats obtenus",
+    "studyTime": "Temps d'étude",
+    "averageScore": "Score moyen"
+  },
+
+  "messages": {
+    "createSuccess": "Apprenant ajouté avec succès",
+    "createError": "Erreur lors de l'ajout de l'apprenant",
+    "updateSuccess": "Apprenant mis à jour avec succès",
+    "updateError": "Erreur lors de la mise à jour de l'apprenant",
+    "deleteSuccess": "Apprenant supprimé avec succès",
+    "deleteError": "Erreur lors de la suppression de l'apprenant",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet apprenant ?",
+    "suspendSuccess": "Apprenant suspendu avec succès",
+    "suspendError": "Erreur lors de la suspension de l'apprenant",
+    "activateSuccess": "Apprenant activé avec succès",
+    "activateError": "Erreur lors de l'activation de l'apprenant",
+    "fetchError": "Erreur lors de la récupération des étudiants",
+    "loadError": "Impossible de charger la liste des étudiants",
+    "error": "Erreur"
+  },
+
+  "actions": {
+    "suspend": "Suspendre",
+    "activate": "Activer",
+    "sendEmail": "Envoyer un email",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "viewCourses": "Voir les cours",
+    "exportData": "Exporter les données",
+    "refreshList": "Rafraîchir la liste",
+    "refresh": "Rafraîchir",
+    "viewProfile": "Voir le profil",
+    "resendActivationEmail": "Renvoyer l'email d'activation",
+    "delete": "Supprimer",
+    "back": "Retour"
+  },
+
+  "viewMode": {
+    "grid": "Afficher en grille",
+    "list": "Afficher en liste"
+  },
+
+  "list": {
+    "defaultName": "Apprenant",
+    "notSpecified": "Non spécifié",
+    "invalidDate": "Date invalide",
+    "noStudents": "Aucun apprenant trouvé",
+    "addFirstStudent": "Commencez par ajouter votre premier apprenant.",
+    "actions": "Actions",
+    "openMenu": "Ouvrir le menu",
+    "showing": "Affichage de {start} à {end} sur {total} apprenants",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "registeredOn": "Inscrit le",
+    "rateLimitWithTime": "Veuillez attendre {minutes} minute(s) avant de réessayer.",
+    "rateLimit": "Trop de tentatives. Veuillez attendre quelques minutes avant de réessayer.",
+    "resetPasswordError": "Erreur lors de la réinitialisation du mot de passe",
+    "resetPasswordSuccess": "Un email de réinitialisation a été envoyé à {name}.",
+    "resetPasswordFailed": "Impossible de réinitialiser le mot de passe",
+    "emailRateLimitWithTime": "Veuillez attendre {minutes} minute(s) avant de renvoyer un email.",
+    "emailRateLimit": "Trop d'emails ont été envoyés récemment. Veuillez réessayer dans quelques minutes.",
+    "sendEmailError": "Erreur lors de l'envoi de l'email d'activation",
+    "sendEmailSuccess": "Un email d'activation a été envoyé à {name}.",
+    "sendEmailFailed": "Impossible d'envoyer l'email d'activation",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer l'apprenant {name} ?",
+    "deleteError": "Erreur lors de la suppression de l'apprenant",
+    "deleteSuccess": "{name} a été supprimé avec succès.",
+    "deleteFailed": "Impossible de supprimer l'apprenant"
+  }
+}

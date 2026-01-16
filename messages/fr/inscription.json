@@ -1,0 +1,231 @@
+{
+  "hero": {
+    "title": "Rejoignez EduPro",
+    "subtitle": "L'Éveil des Talents Africains"
+  },
+  "tabs": {
+    "apprenant": "Professionnel",
+    "formateur": "Formateur",
+    "institut": "Institut de formation",
+    "entreprise": "Entreprise"
+  },
+  "apprenant": {
+    "title": "Créer mon compte",
+    "subtitle": "Commencez votre parcours d'apprentissage en 2 minutes",
+    "form": {
+      "fullname": {
+        "label": "Nom complet *",
+        "placeholder": "Votre nom complet"
+      },
+      "email": {
+        "label": "Email *",
+        "placeholder": "votre.email@exemple.com"
+      },
+      "password": {
+        "label": "Mot de passe *",
+        "placeholder": "••••••••",
+        "strength": {
+          "label": "Force:",
+          "weak": "Faible",
+          "medium": "Moyen",
+          "strong": "Fort"
+        }
+      },
+      "terms": {
+        "label": "J'accepte les",
+        "termsLink": "conditions d'utilisation",
+        "and": "et la",
+        "privacyLink": "politique de confidentialité"
+      },
+      "submit": {
+        "creating": "Création en cours...",
+        "create": "Créer mon compte gratuitement"
+      },
+      "divider": "Ou continuer avec",
+      "google": "Google",
+      "facebook": "Facebook",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "login": "Se connecter"
+    },
+    "errors": {
+      "allFieldsRequired": "Tous les champs sont requis",
+      "termsRequired": "Vous devez accepter les conditions d'utilisation",
+      "emailAlreadyUsed": "Cet email est déjà utilisé. Veuillez vous connecter ou utiliser un autre email.",
+      "accountCreationError": "Erreur lors de la création du compte",
+      "genericError": "Une erreur est survenue lors de la création du compte"
+    },
+    "success": {
+      "accountCreated": "Compte créé avec succès !"
+    }
+  },
+  "formateur": {
+    "title": "Devenir Formateur",
+    "subtitle": "Partagez votre expertise et formez des milliers d'apprenants africains",
+    "benefits": {
+      "visibility": {
+        "title": "Visibilité panafricaine",
+        "description": "Atteignez des milliers d'apprenants"
+      },
+      "aiTools": {
+        "title": "Outils IA de création",
+        "description": "Créez vos cours facilement"
+      },
+      "commission": {
+        "title": "Jusqu'à 85% de commission",
+        "description": "Revenus attractifs"
+      },
+      "support": {
+        "title": "Support dédié",
+        "description": "Formation et accompagnement"
+      }
+    },
+    "process": {
+      "title": "Le processus",
+      "steps": {
+        "application": {
+          "title": "Candidature",
+          "description": "Remplissez le formulaire (5 min)"
+        },
+        "qualification": {
+          "title": "Qualification",
+          "description": "Échange avec notre équipe (48h)"
+        },
+        "onboarding": {
+          "title": "Onboarding",
+          "description": "Formation aux outils (1 semaine)"
+        },
+        "launch": {
+          "title": "Lancement",
+          "description": "Publiez et commencez à former"
+        }
+      }
+    },
+    "cta": {
+      "button": "Postuler comme formateur",
+      "acceptanceRate": "Taux d'acceptation : 85% des candidats qualifiés"
+    }
+  },
+  "entreprise": {
+    "title": "Solution Entreprise",
+    "subtitle": "Formez vos équipes avec une plateforme clé en main",
+    "benefits": {
+      "deployment": {
+        "title": "Déploiement rapide",
+        "description": "Opérationnel en 48h"
+      },
+      "whiteLabel": {
+        "title": "Marque blanche",
+        "description": "Votre académie à vos couleurs"
+      },
+      "catalog": {
+        "title": "Catalogue riche",
+        "description": "180+ formations prêtes"
+      },
+      "reporting": {
+        "title": "Reporting complet",
+        "description": "Suivez la progression de vos équipes"
+      }
+    },
+    "useCases": {
+      "title": "Ils nous font confiance",
+      "callCenters": {
+        "title": "Centres d'appel",
+        "description": "Formation soft skills pour agents"
+      },
+      "techCompanies": {
+        "title": "Entreprises tech",
+        "description": "Upskilling équipes digitales"
+      },
+      "industries": {
+        "title": "Industries",
+        "description": "Sécurité et conformité"
+      },
+      "institutes": {
+        "title": "Instituts",
+        "description": "Solution marque blanche"
+      }
+    },
+    "process": {
+      "title": "Comment ça marche",
+      "steps": {
+        "demoRequest": {
+          "title": "Demande de démo",
+          "description": "Remplissez le formulaire"
+        },
+        "personalizedDemo": {
+          "title": "Démo personnalisée",
+          "description": "Présentation adaptée (48h)"
+        },
+        "freeTrial": {
+          "title": "Essai gratuit",
+          "description": "Testez pendant 14 jours"
+        },
+        "deployment": {
+          "title": "Déploiement",
+          "description": "Configuration et formation (48h)"
+        }
+      }
+    },
+    "cta": {
+      "button": "Demander une démo",
+      "response": "Réponse sous 24h - Sans engagement"
+    }
+  },
+  "institut": {
+    "title": "Solution Institut de Formation",
+    "subtitle": "Transformez votre institut avec une plateforme de formation digitale complète",
+    "benefits": {
+      "personalizedAcademy": {
+        "title": "Académie digitale personnalisée à vos couleurs",
+        "description": "Votre plateforme avec votre identité visuelle"
+      },
+      "domain": {
+        "title": "Votre nom de domaine",
+        "description": "Plateforme accessible via votre propre domaine"
+      },
+      "learnerManagement": {
+        "title": "Gestion complète des apprenants",
+        "description": "Suivi et administration de tous vos apprenants"
+      },
+      "analytics": {
+        "title": "Analytics et reporting avancés",
+        "description": "Tableaux de bord et rapports détaillés sur la progression"
+      }
+    },
+    "process": {
+      "title": "Comment ça marche",
+      "steps": {
+        "demoRequest": {
+          "title": "Demande de démo",
+          "description": "Remplissez le formulaire"
+        },
+        "personalizedDemo": {
+          "title": "Démo personnalisée",
+          "description": "Présentation adaptée (48h)"
+        },
+        "freeTrial": {
+          "title": "Essai gratuit",
+          "description": "Testez pendant 14 jours"
+        },
+        "deployment": {
+          "title": "Déploiement",
+          "description": "Configuration et formation (48h)"
+        }
+      }
+    },
+    "cta": {
+      "button": "Demander une démo",
+      "response": "Réponse sous 24h - Sans engagement"
+    }
+  },
+  "footer": {
+    "needHelp": "Besoin d'aide ?",
+    "cgu": "CGU",
+    "privacy": "Politique de confidentialité"
+  },
+  "oauth": {
+    "googleError": "Erreur lors de la connexion avec Google",
+    "facebookError": "Erreur lors de la connexion avec Facebook"
+  }
+}
+

@@ -1,0 +1,189 @@
+{
+  "tickets": {
+    "title": "Support tickets",
+    "description": "Manage assistance requests from your learners",
+    "newTicket": "New ticket",
+    "createTicket": "Create a new support ticket",
+    "searchPlaceholder": "Search for a ticket...",
+    "status": "Status",
+    "priority": "Priority",
+    "category": "Category",
+    "sortBy": "Sort by",
+    "allStatuses": "All statuses",
+    "allPriorities": "All priorities",
+    "allCategories": "All categories",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "updated": "Last update",
+    "ticketsFound": "tickets found",
+    "loadingTickets": "Loading tickets...",
+    "noTickets": "No tickets found",
+    "noTicketsDescription": "Modify your filters or create a new ticket.",
+    "table": {
+      "title": "Ticket list",
+      "reference": "Reference",
+      "client": "Client",
+      "status": "Status",
+      "priority": "Priority",
+      "category": "Category",
+      "assignedAgent": "Assigned agent",
+      "lastUpdate": "Last update",
+      "actions": "Actions",
+      "escalated": "Escalated",
+      "messages": "message",
+      "messagesPlural": "messages",
+      "notAssigned": "Not assigned",
+      "openMenu": "Open menu"
+    },
+    "statuses": {
+      "open": "Open",
+      "inProgress": "In progress",
+      "waiting": "Waiting",
+      "resolved": "Resolved",
+      "closed": "Closed"
+    },
+    "priorities": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "categories": {
+      "technical": "Technical",
+      "billing": "Billing",
+      "account": "Account",
+      "course": "Course",
+      "other": "Other"
+    },
+    "create": {
+      "title": "Ticket title",
+      "titlePlaceholder": "Briefly describe your problem",
+      "description": "Detailed description",
+      "descriptionPlaceholder": "Describe your problem in detail",
+      "category": "Category",
+      "categoryPlaceholder": "Select a category",
+      "priority": "Priority",
+      "escalate": "Escalate directly to technical support (for system bugs)",
+      "cancel": "Cancel",
+      "create": "Create ticket",
+      "requiredFields": "Please fill in all required fields"
+    },
+    "details": {
+      "title": "Ticket details",
+      "ticketInfo": "Ticket information",
+      "titleLabel": "Title",
+      "categoryLabel": "Category",
+      "clientLabel": "Client",
+      "assignedAgentLabel": "Assigned agent",
+      "notAssigned": "Not assigned",
+      "createdAt": "Created on",
+      "lastUpdate": "Last update",
+      "messageHistory": "Message history",
+      "loadingMessages": "Loading messages...",
+      "addMessage": "Add a message",
+      "messagePlaceholder": "Type your message...",
+      "send": "Send",
+      "system": "System",
+      "client": "Client",
+      "agent": "Agent"
+    },
+    "actions": {
+      "viewDetails": "View details",
+      "escalate": "Escalate to technical support",
+      "markResolved": "Mark as resolved",
+      "changePriority": "Change priority",
+      "changeCategory": "Change category",
+      "closeTicket": "Close ticket",
+      "reopenTicket": "Reopen ticket",
+      "managedBySupport": "Ticket managed by technical support"
+    },
+    "modals": {
+      "escalate": {
+        "title": "Confirm escalation",
+        "message": "Are you sure you want to escalate this ticket to technical support? This action will transfer the ticket to the superadmin team for advanced resolution.",
+        "note": "This action is recommended for system bugs or complex technical issues.",
+        "cancel": "Cancel",
+        "confirm": "Confirm escalation"
+      },
+      "resolve": {
+        "title": "Confirm resolution",
+        "message": "Are you sure you want to mark this ticket as resolved? This action indicates that your problem has been resolved satisfactorily.",
+        "note": "You can always reopen the ticket later if necessary.",
+        "cancel": "Cancel",
+        "confirm": "Confirm resolution"
+      },
+      "priority": {
+        "title": "Change priority",
+        "label": "Select a new priority:",
+        "cancel": "Cancel"
+      },
+      "category": {
+        "title": "Change category",
+        "label": "Select a new category:",
+        "cancel": "Cancel"
+      }
+    },
+    "messages": {
+      "loadingError": "Error loading tickets",
+      "createSuccess": "Ticket created successfully",
+      "createError": "Error creating ticket",
+      "loadMessagesError": "Error loading messages",
+      "sendSuccess": "Message sent",
+      "sendError": "Error sending message",
+      "priorityChanged": "Priority changed successfully",
+      "categoryChanged": "Category changed successfully",
+      "actionSuccess": "Action completed successfully",
+      "actionError": "Error performing action on ticket",
+      "escalated": "Ticket escalated to technical support",
+      "closed": "Ticket closed",
+      "reopened": "Ticket reopened"
+    }
+  },
+
+  "help": {
+    "title": "Help Center",
+    "description": "Find answers to your questions and learn how to use the platform",
+    "searchPlaceholder": "Search the help center...",
+    "loading": "Loading help center...",
+    "categories": "Categories",
+    "allCategories": "All categories",
+    "needHelp": "Need personalized help?",
+    "contactWhatsapp": "Contact us via Whatsapp",
+    "submitTicket": "Submit a support ticket",
+    "tabs": {
+      "faqs": "FAQs",
+      "videos": "Video tutorials",
+      "articles": "Articles"
+    },
+    "faqs": {
+      "title": "Frequently asked questions",
+      "description": "Answers to the most common questions",
+      "noFaqs": "No FAQs found",
+      "noFaqsDescription": "Try adjusting your search or changing category.",
+      "views": "views",
+      "helpful": "helpful",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "videos": {
+      "title": "Video tutorials",
+      "description": "Learn how to use the platform through our tutorials",
+      "noVideos": "No videos found",
+      "noVideosDescription": "Try adjusting your search or changing category.",
+      "playVideo": "Playing video",
+      "videoUnavailable": "Video unavailable."
+    },
+    "articles": {
+      "title": "Support articles",
+      "description": "Detailed guides and documentation",
+      "noArticles": "No articles found",
+      "noArticlesDescription": "Try adjusting your search or changing category."
+    },
+    "errors": {
+      "loadError": "Error loading help center",
+      "feedbackError": "Error saving your feedback",
+      "feedbackSuccess": "Thank you for your feedback!"
+    }
+  }
+}
+

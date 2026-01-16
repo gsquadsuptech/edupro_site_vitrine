@@ -1,0 +1,189 @@
+{
+  "tickets": {
+    "title": "Tickets de support",
+    "description": "Gérez les demandes d'assistance de vos apprenants",
+    "newTicket": "Nouveau ticket",
+    "createTicket": "Créer un nouveau ticket de support",
+    "searchPlaceholder": "Rechercher un ticket...",
+    "status": "Statut",
+    "priority": "Priorité",
+    "category": "Catégorie",
+    "sortBy": "Trier par",
+    "allStatuses": "Tous les statuts",
+    "allPriorities": "Toutes les priorités",
+    "allCategories": "Toutes les catégories",
+    "newest": "Plus récents",
+    "oldest": "Plus anciens",
+    "updated": "Dernière mise à jour",
+    "ticketsFound": "tickets trouvés",
+    "loadingTickets": "Chargement des tickets...",
+    "noTickets": "Aucun ticket trouvé",
+    "noTicketsDescription": "Modifiez vos filtres ou créez un nouveau ticket.",
+    "table": {
+      "title": "Liste des tickets",
+      "reference": "Référence",
+      "client": "Client",
+      "status": "Statut",
+      "priority": "Priorité",
+      "category": "Catégorie",
+      "assignedAgent": "Agent assigné",
+      "lastUpdate": "Dernière mise à jour",
+      "actions": "Actions",
+      "escalated": "Escaladé",
+      "messages": "message",
+      "messagesPlural": "messages",
+      "notAssigned": "Non assigné",
+      "openMenu": "Ouvrir menu"
+    },
+    "statuses": {
+      "open": "Ouvert",
+      "inProgress": "En cours",
+      "waiting": "En attente",
+      "resolved": "Résolu",
+      "closed": "Fermé"
+    },
+    "priorities": {
+      "low": "Basse",
+      "medium": "Moyenne",
+      "high": "Haute",
+      "urgent": "Urgente"
+    },
+    "categories": {
+      "technical": "Technique",
+      "billing": "Facturation",
+      "account": "Compte",
+      "course": "Cours",
+      "other": "Autre"
+    },
+    "create": {
+      "title": "Titre du ticket",
+      "titlePlaceholder": "Décrivez brièvement votre problème",
+      "description": "Description détaillée",
+      "descriptionPlaceholder": "Décrivez votre problème en détail",
+      "category": "Catégorie",
+      "categoryPlaceholder": "Sélectionner une catégorie",
+      "priority": "Priorité",
+      "escalate": "Escalader directement vers le support technique (pour les bugs système)",
+      "cancel": "Annuler",
+      "create": "Créer le ticket",
+      "requiredFields": "Veuillez remplir tous les champs obligatoires"
+    },
+    "details": {
+      "title": "Détails du ticket",
+      "ticketInfo": "Informations du ticket",
+      "titleLabel": "Titre",
+      "categoryLabel": "Catégorie",
+      "clientLabel": "Client",
+      "assignedAgentLabel": "Agent assigné",
+      "notAssigned": "Non assigné",
+      "createdAt": "Créé le",
+      "lastUpdate": "Dernière mise à jour",
+      "messageHistory": "Historique des messages",
+      "loadingMessages": "Chargement des messages...",
+      "addMessage": "Ajouter un message",
+      "messagePlaceholder": "Tapez votre message...",
+      "send": "Envoyer",
+      "system": "Système",
+      "client": "Client",
+      "agent": "Agent"
+    },
+    "actions": {
+      "viewDetails": "Voir les détails",
+      "escalate": "Escalader vers support technique",
+      "markResolved": "Marquer comme résolu",
+      "changePriority": "Modifier la priorité",
+      "changeCategory": "Modifier la catégorie",
+      "closeTicket": "Fermer le ticket",
+      "reopenTicket": "Rouvrir le ticket",
+      "managedBySupport": "Ticket géré par le support technique"
+    },
+    "modals": {
+      "escalate": {
+        "title": "Confirmer l'escalade",
+        "message": "Êtes-vous sûr de vouloir escalader ce ticket vers le support technique ? Cette action transfèrera le ticket vers l'équipe superadmin pour une résolution avancée.",
+        "note": "Cette action est recommandée pour les bugs système ou les problèmes techniques complexes.",
+        "cancel": "Annuler",
+        "confirm": "Confirmer l'escalade"
+      },
+      "resolve": {
+        "title": "Confirmer la résolution",
+        "message": "Êtes-vous sûr de vouloir marquer ce ticket comme résolu ? Cette action indique que votre problème a été résolu de manière satisfaisante.",
+        "note": "Vous pourrez toujours rouvrir le ticket plus tard si nécessaire.",
+        "cancel": "Annuler",
+        "confirm": "Confirmer la résolution"
+      },
+      "priority": {
+        "title": "Modifier la priorité",
+        "label": "Sélectionner une nouvelle priorité :",
+        "cancel": "Annuler"
+      },
+      "category": {
+        "title": "Modifier la catégorie",
+        "label": "Sélectionner une nouvelle catégorie :",
+        "cancel": "Annuler"
+      }
+    },
+    "messages": {
+      "loadingError": "Erreur lors du chargement des tickets",
+      "createSuccess": "Ticket créé avec succès",
+      "createError": "Erreur lors de la création du ticket",
+      "loadMessagesError": "Erreur lors du chargement des messages",
+      "sendSuccess": "Message envoyé",
+      "sendError": "Erreur lors de l'envoi du message",
+      "priorityChanged": "Priorité modifiée avec succès",
+      "categoryChanged": "Catégorie modifiée avec succès",
+      "actionSuccess": "Action effectuée avec succès",
+      "actionError": "Erreur lors de l'action sur le ticket",
+      "escalated": "Ticket escaladé vers le support technique",
+      "closed": "Ticket fermé",
+      "reopened": "Ticket rouvert"
+    }
+  },
+
+  "help": {
+    "title": "Centre d'aide",
+    "description": "Trouvez des réponses à vos questions et apprenez à utiliser la plateforme",
+    "searchPlaceholder": "Rechercher dans le centre d'aide...",
+    "loading": "Chargement du centre d'aide...",
+    "categories": "Catégories",
+    "allCategories": "Toutes les catégories",
+    "needHelp": "Besoin d'aide personnalisée?",
+    "contactWhatsapp": "Nous contacter par Whatsapp",
+    "submitTicket": "Soumettre un ticket de support",
+    "tabs": {
+      "faqs": "FAQs",
+      "videos": "Tutoriels vidéo",
+      "articles": "Articles"
+    },
+    "faqs": {
+      "title": "Questions fréquemment posées",
+      "description": "Les réponses aux questions les plus courantes",
+      "noFaqs": "Aucune FAQ trouvée",
+      "noFaqsDescription": "Essayez d'ajuster votre recherche ou de changer de catégorie.",
+      "views": "vues",
+      "helpful": "utiles",
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "videos": {
+      "title": "Tutoriels vidéo",
+      "description": "Apprenez à utiliser la plateforme à travers nos tutoriels",
+      "noVideos": "Aucune vidéo trouvée",
+      "noVideosDescription": "Essayez d'ajuster votre recherche ou de changer de catégorie.",
+      "playVideo": "Lecture de la vidéo",
+      "videoUnavailable": "Vidéo non disponible."
+    },
+    "articles": {
+      "title": "Articles de support",
+      "description": "Guides détaillés et documentation",
+      "noArticles": "Aucun article trouvé",
+      "noArticlesDescription": "Essayez d'ajuster votre recherche ou de changer de catégorie."
+    },
+    "errors": {
+      "loadError": "Erreur lors du chargement du centre d'aide",
+      "feedbackError": "Erreur lors de l'enregistrement de votre feedback",
+      "feedbackSuccess": "Merci pour votre feedback!"
+    }
+  }
+}
+

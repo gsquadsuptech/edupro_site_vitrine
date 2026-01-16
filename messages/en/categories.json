@@ -1,0 +1,101 @@
+{
+  "title": "Categories",
+  "description": "Manage your course categories",
+  "newCategory": "New category",
+  "createCategory": "Create a new category",
+  "searchPlaceholder": "Search for a category...",
+
+  "sortBy": {
+    "label": "Sort by",
+    "nameAsc": "Name (A-Z)",
+    "nameDesc": "Name (Z-A)",
+    "orderAsc": "Order (ascending)",
+    "orderDesc": "Order (descending)",
+    "recent": "Most recent",
+    "oldest": "Oldest"
+  },
+
+  "form": {
+    "name": "Name",
+    "namePlaceholder": "Ex: Web Development",
+    "nameDescription": "The category name",
+    "slug": "Slug (URL)",
+    "slugPlaceholder": "Ex: web-development",
+    "slugDescription": "This is your category's URL. Generated automatically.",
+    "description": "Description",
+    "descriptionPlaceholder": "Briefly describe the category",
+    "descriptionDescription": "A brief description of the category",
+    "parentCategory": "Parent category",
+    "selectParentCategory": "Select a parent category",
+    "noParent": "None (main category)",
+    "icon": "Icon",
+    "selectIcon": "Select an icon",
+    "featured": "Featured",
+    "featuredDescription": "The category will appear on the homepage.",
+    "active": "Active",
+    "activeDescription": "Make the category visible on the site.",
+    "order": "Order",
+    "color": "Color"
+  },
+
+  "table": {
+    "name": "Name",
+    "slug": "Slug",
+    "description": "Description",
+    "order": "Order",
+    "status": "Status",
+    "actions": "Actions"
+  },
+
+  "status": {
+    "featured": "Featured",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "cancel": "Cancel",
+    "save": "Save",
+    "moveUp": "Move up",
+    "moveDown": "Move down"
+  },
+
+  "viewMode": {
+    "grid": "Grid",
+    "list": "List"
+  },
+
+  "details": {
+    "title": "Category details",
+    "parent": "Parent category",
+    "noParent": "None",
+    "coursesCount": "Number of courses",
+    "createdAt": "Created on",
+    "updatedAt": "Updated on"
+  },
+
+  "messages": {
+    "noCategories": "No categories found",
+    "loadError": "Error loading categories",
+    "createSuccess": "Category created successfully",
+    "createError": "Error creating category",
+    "updateSuccess": "Category updated successfully",
+    "updateError": "Error updating category",
+    "deleteSuccess": "Category deleted successfully",
+    "deleteError": "Error deleting category",
+    "deleteConfirm": "Are you sure you want to delete this category?",
+    "noOrganization": "No organization found for this user.",
+    "supabaseError": "Supabase client not initialized.",
+    "validationError": "Validation error",
+    "nameTooLong": "Name must not exceed 100 characters.",
+    "slugTooLong": "Slug must not exceed 100 characters.",
+    "descriptionTooLong": "Description must not exceed 500 characters.",
+    "errorOccurred": "An error occurred",
+    "saving": "Saving...",
+    "success": "Success"
+  }
+}
