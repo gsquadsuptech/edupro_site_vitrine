@@ -28,12 +28,15 @@ export default function CheckoutPage({
         "pending" | "success" | "failed"
     >("pending");
     const [paymentData, setPaymentData] = useState<any>(null);
-    const [skipSessionStep, setSkipSessionStep] = useState(true); // Skip session as we don't have real sessions yet
+    const [skipSessionStep, setSkipSessionStep] = useState(true); // Default to true, enable if cohorts found
 
     useEffect(() => {
-        const fetchCourse = async () => {
+        const fetchData = async () => {
             try {
-                const fetchedCourse = await CourseService.getCourseById(courseId);
+                const [fetchedCourse, fetchedCohorts] = await Promise.all([
+                    CourseService.getCourseById(courseId),
+                    CourseService.getCohortsByCourseId(courseId)
+                ]);
 
                 if (fetchedCourse) {
                     // Adapt Course to PaymentPlan expectations
@@ -48,14 +51,24 @@ export default function CheckoutPage({
                     };
                     setCourse(adaptedCourse);
                 }
+
+                if (fetchedCohorts && fetchedCohorts.length > 0) {
+                    setSkipSessionStep(false);
+                    // If cohorts exist, we might want to start at step 1
+                    setCurrentStep(1);
+                } else {
+                    setSkipSessionStep(true);
+                    setCurrentStep(2);
+                }
+
             } catch (error) {
-                console.error("Failed to fetch course", error);
+                console.error("Failed to fetch data", error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchCourse();
+        fetchData();
     }, [courseId]);
 
     const handleSessionSelect = (session: any) => {

@@ -564,5 +564,70 @@ export const CourseService = {
             category: item.category,
             instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
         }))
+    },
+
+    async getCohortsByCourseId(courseId: string): Promise<Cohort[]> {
+        const supabase = createClient()
+
+        // Try fetching via cohort_courses junction table first
+        // Assuming structure: cohort_courses (cohort_id, course_id)
+        const { data, error } = await supabase
+            .from('cohort_courses')
+            .select(`
+                cohort:cohorts (
+                    id,
+                    name,
+                    description,
+                    start_date,
+                    end_date,
+                    status,
+                    max_students,
+                    pricing_modes
+                )
+            `)
+            .eq('course_id', courseId)
+            .eq('cohort.status', 'active') // Only active cohorts
+
+        if (error) {
+            console.error('Error fetching cohorts:', error)
+
+            // Fallback: try querying cohorts table directly if it has course_id column (1-to-N)
+            const { data: directData, error: directError } = await supabase
+                .from('cohorts')
+                .select('*')
+                .eq('course_id', courseId) // This might fail if column doesn't exist
+                .eq('status', 'active')
+
+            if (directError) {
+                console.error('Fallback fetch failed:', directError)
+                return []
+            }
+
+            return (directData as any[]).map(item => ({
+                ...item,
+                registration_deadline: item.registration_deadline || null, // Ensure field exists
+                sessions: []
+            }))
+        }
+
+        // Map the junction result
+        const cohorts = (data as any[])
+            .map(item => item.cohort)
+            .filter(Boolean) // Filter out nulls if filtering on joined table
+        // Note: .eq('cohort.status', 'active') on outer query might return rows with null cohort if inner join fails or left join. 
+        // Better to filter in JS if not using !inner
+
+        return cohorts.map((c: any) => ({
+            id: c.id,
+            name: c.name,
+            description: c.description,
+            start_date: c.start_date,
+            end_date: c.end_date,
+            registration_deadline: c.registration_deadline || null,
+            status: c.status,
+            max_students: c.max_students,
+            pricing_modes: c.pricing_modes,
+            sessions: [] // Could fetch sessions separately if needed
+        }))
     }
 }

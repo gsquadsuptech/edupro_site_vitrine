@@ -12,46 +12,28 @@ interface SessionSelectionProps {
     onPrevious?: () => void;
 }
 
+import { CourseService } from '@/services/course-service';
+
 export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSelectionProps) => {
     const [loading, setLoading] = useState(true);
     const [sessions, setSessions] = useState<any[]>([]);
     const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
 
     useEffect(() => {
-        // Mock data fetching
         const fetchSessions = async () => {
-            // Simulate delay
-            await new Promise(resolve => setTimeout(resolve, 800));
-
-            const mockSessions = [
-                {
-                    id: 'sess_1',
-                    name: 'Session de Février',
-                    description: 'Cohorte intensive avec mentorat',
-                    start_date: new Date(2026, 1, 1).toISOString(),
-                    end_date: new Date(2026, 3, 30).toISOString(),
-                    registration_deadline: new Date(2026, 0, 31).toISOString(),
-                    // Use a different mock field or ignore participants for now
-                    max_participants: 20,
-                    students_count: [{ count: 12 }],
-                },
-                {
-                    id: 'sess_2',
-                    name: 'Session de Mars',
-                    description: 'Cohorte standard',
-                    start_date: new Date(2026, 2, 1).toISOString(),
-                    end_date: new Date(2026, 4, 30).toISOString(),
-                    registration_deadline: new Date(2026, 1, 28).toISOString(),
-                    max_participants: 25,
-                    students_count: [{ count: 5 }],
-                }
-            ];
-
-            setSessions(mockSessions);
-            setLoading(false);
+            try {
+                const fetchedCohorts = await CourseService.getCohortsByCourseId(courseId);
+                setSessions(fetchedCohorts);
+            } catch (error) {
+                console.error("Failed to fetch cohorts", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
-        fetchSessions();
+        if (courseId) {
+            fetchSessions();
+        }
     }, [courseId]);
 
     const handleSelect = (session: any) => {

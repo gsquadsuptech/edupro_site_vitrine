@@ -88,3 +88,26 @@ export type LearningPath = {
         sequence_order: number
     }[]
 }
+
+export type Cohort = {
+    id: string
+    name: string
+    description: string | null
+    start_date: string
+    end_date: string
+    registration_deadline: string | null
+    status: 'active' | 'draft' | 'completed' | 'archived'
+    max_students: number | null
+    current_students_count?: number
+    pricing_modes?: any
+    // Relations
+    sessions?: CohortSession[]
+}
+
+export type CohortSession = {
+    id: string
+    cohort_id: string
+    day: string
+    start_time: string
+    end_time: string
+}
