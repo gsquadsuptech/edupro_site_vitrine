@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { Course } from '@/lib/supabase/types'
+import { Course, Cohort } from '@/lib/supabase/types'
 
 export interface CourseFilters {
     searchTerm?: string
@@ -28,6 +28,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url),
@@ -68,6 +69,7 @@ export const CourseService = {
 
         const courses = data.map((item: any) => ({
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -77,6 +79,7 @@ export const CourseService = {
             currency: 'FCFA',
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
             level: item.level,
+
             is_featured: item.marketplace?.featured || false,
             published_at: item.created_at,
             category: item.category,
@@ -119,6 +122,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url),
@@ -139,6 +143,7 @@ export const CourseService = {
         // MAPPING
         return data.map((item: any) => ({
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -170,6 +175,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url),
@@ -186,6 +192,7 @@ export const CourseService = {
 
         return data.map((item: any) => ({
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -217,6 +224,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url),
@@ -233,6 +241,7 @@ export const CourseService = {
 
         return data.map((item: any) => ({
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -264,6 +273,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         preview_video,
         expected_results,
         objectives,
@@ -350,6 +360,7 @@ export const CourseService = {
 
         return {
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -398,6 +409,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         preview_video,
         expected_results,
         objectives,
@@ -486,6 +498,7 @@ export const CourseService = {
 
         return {
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -532,6 +545,7 @@ export const CourseService = {
         duration,
         level,
         status,
+        format,
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url),
@@ -550,6 +564,7 @@ export const CourseService = {
 
         return data.map((item: any) => ({
             id: item.id,
+            format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -569,65 +584,38 @@ export const CourseService = {
     async getCohortsByCourseId(courseId: string): Promise<Cohort[]> {
         const supabase = createClient()
 
-        // Try fetching via cohort_courses junction table first
-        // Assuming structure: cohort_courses (cohort_id, course_id)
         const { data, error } = await supabase
-            .from('cohort_courses')
+            .from('cohorts')
             .select(`
-                cohort:cohorts (
-                    id,
-                    name,
-                    description,
-                    start_date,
-                    end_date,
-                    status,
-                    max_students,
-                    pricing_modes
-                )
+                id,
+                name,
+                description,
+                start_date,
+                end_date,
+                status,
+                max_students,
+                pricing_modes,
+                registration_deadline
             `)
             .eq('course_id', courseId)
-            .eq('cohort.status', 'active') // Only active cohorts
+            .eq('status', 'active')
 
         if (error) {
             console.error('Error fetching cohorts:', error)
-
-            // Fallback: try querying cohorts table directly if it has course_id column (1-to-N)
-            const { data: directData, error: directError } = await supabase
-                .from('cohorts')
-                .select('*')
-                .eq('course_id', courseId) // This might fail if column doesn't exist
-                .eq('status', 'active')
-
-            if (directError) {
-                console.error('Fallback fetch failed:', directError)
-                return []
-            }
-
-            return (directData as any[]).map(item => ({
-                ...item,
-                registration_deadline: item.registration_deadline || null, // Ensure field exists
-                sessions: []
-            }))
+            return []
         }
 
-        // Map the junction result
-        const cohorts = (data as any[])
-            .map(item => item.cohort)
-            .filter(Boolean) // Filter out nulls if filtering on joined table
-        // Note: .eq('cohort.status', 'active') on outer query might return rows with null cohort if inner join fails or left join. 
-        // Better to filter in JS if not using !inner
-
-        return cohorts.map((c: any) => ({
-            id: c.id,
-            name: c.name,
-            description: c.description,
-            start_date: c.start_date,
-            end_date: c.end_date,
-            registration_deadline: c.registration_deadline || null,
-            status: c.status,
-            max_students: c.max_students,
-            pricing_modes: c.pricing_modes,
-            sessions: [] // Could fetch sessions separately if needed
+        return (data as any[]).map(item => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            start_date: item.start_date,
+            end_date: item.end_date,
+            registration_deadline: item.registration_deadline || null,
+            status: item.status,
+            max_students: item.max_participants || item.max_students, // Handle potential mapping mismatch if schema differs
+            pricing_modes: item.pricing_modes,
+            sessions: []
         }))
     }
 }

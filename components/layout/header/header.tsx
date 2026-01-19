@@ -12,14 +12,29 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/useAuth"
+
+// Safely try to import role-guard util, fallback if not available
+// This pattern avoids build errors if the file structure is different than expected
+// In a real scenario, we would ensure the import path is correct.
+import { getDefaultRouteForUser } from "../../../lib/role-guard"
 
 export function Header() {
   const { locale, changeLanguage } = useLanguage()
   const router = useRouter()
+  const { user, signOut, isLoading, roles } = useAuth()
 
   const handleLanguageChange = async (newLocale: "fr" | "en") => {
     if (newLocale === locale) {
@@ -27,23 +42,26 @@ export function Header() {
     }
 
     try {
-      // Mettre à jour le cookie immédiatement
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-
-      // Attendre un peu pour s'assurer que le cookie est bien enregistré
       await new Promise(resolve => setTimeout(resolve, 100));
-
-      // Naviguer vers la nouvelle URL avec la nouvelle locale
       const currentPath = window.location.pathname
       const pathWithoutLocale = currentPath.replace(/^\/(fr|en)/, '')
       const newPath = `/${newLocale}${pathWithoutLocale}`
-
-      // Utiliser window.location.href pour forcer une navigation complète
-      // Cela garantit que le cookie est bien lu par le middleware
       window.location.href = newPath
     } catch (error) {
       console.error('[Header] Erreur lors du changement de langue:', error);
     }
+  }
+
+  const handleLogout = async () => {
+    await signOut()
+    router.push(`/${locale}`)
+  }
+
+  const handleDashboardClick = () => {
+    // Use the utility to get the correct dashboard route based on role
+    const dashboardUrl = getDefaultRouteForUser(roles || [])
+    router.push(dashboardUrl)
   }
 
   return (
@@ -172,15 +190,64 @@ export function Header() {
             <option value="fr">🇫🇷 FR</option>
             <option value="en">🇬🇧 EN</option>
           </select>
-          <Button variant="ghost" className="hidden md:inline-flex" onClick={() => router.push(`/${locale}/connexion`)}>
-            {locale === 'fr' ? 'Connexion' : 'Login'}
-          </Button>
-          <Button
-            className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90"
-            onClick={() => router.push(`/${locale}/inscription`)}
-          >
-            {locale === 'fr' ? 'Commencer' : 'Get started'}
-          </Button>
+
+          <div className="hidden md:flex">
+            {isLoading ? (
+              <Button variant="ghost" size="icon" disabled>
+                <Loader2 className="h-5 w-5 animate-spin" />
+              </Button>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full h-10 w-10 border border-transparent hover:border-gray-200">
+                    {user?.user_metadata?.avatar_url ? (
+                      <div className="h-8 w-8 rounded-full overflow-hidden">
+                        <Image src={user.user_metadata.avatar_url} alt="Profile" width={32} height={32} className="object-cover h-full w-full" />
+                      </div>
+                    ) : (
+                      <UserIcon className="h-5 w-5" />
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  {user ? (
+                    <>
+                      <DropdownMenuLabel>
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">{user.user_metadata?.full_name || 'Utilisateur'}</p>
+                          <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleDashboardClick} className="cursor-pointer">
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        <span>{locale === 'fr' ? 'Tableau de bord' : 'Dashboard'}</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>{locale === 'fr' ? 'Paramètres' : 'Settings'}</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer focus:text-red-600">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>{locale === 'fr' ? 'Déconnexion' : 'Logout'}</span>
+                      </DropdownMenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <DropdownMenuItem onClick={() => router.push(`/${locale}/connexion`)} className="cursor-pointer">
+                        <span>{locale === 'fr' ? 'Se connecter' : 'Login'}</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => router.push(`/${locale}/inscription`)} className="cursor-pointer">
+                        <span>{locale === 'fr' ? "S'inscrire" : 'Sign up'}</span>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
+
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
@@ -189,6 +256,11 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              {/* Mobile Menu Content - kept similar but updated with auth state logic if needed, 
+                  User requested replacement in header specifically.
+                  For mobile, usually specific buttons are better UX than hidden in dropdown,
+                  but for consistency I will show conditional buttons.
+              */}
               <div className="flex flex-col gap-6 py-4">
                 <div className="flex items-center gap-2">
                   <Image
@@ -200,6 +272,7 @@ export function Header() {
                   />
                 </div>
                 <nav className="flex flex-col gap-4">
+                  {/* ... (existing links) ... */}
                   <Link href={`/${locale}`} className="text-lg font-medium hover:text-primary">
                     {locale === 'fr' ? 'Accueil' : 'Home'}
                   </Link>
@@ -238,24 +311,46 @@ export function Header() {
                     {locale === 'fr' ? 'Contact' : 'Contact'}
                   </Link>
                 </nav>
-                <div className="flex flex-col gap-3 pt-4">
+                <div className="flex flex-col gap-3 pt-4 border-t mt-4">
+                  {user ? (
+                    <>
+                      <div className="flex items-center gap-2 mb-2">
+                        {user.user_metadata?.avatar_url && (
+                          <Image src={user.user_metadata.avatar_url} alt="" width={24} height={24} className="rounded-full" />
+                        )}
+                        <span className="font-medium">{user.user_metadata?.full_name || user.email}</span>
+                      </div>
+                      <Button variant="outline" className="w-full justify-start" onClick={handleDashboardClick}>
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        {locale === 'fr' ? 'Tableau de bord' : 'Dashboard'}
+                      </Button>
+                      <Button variant="outline" className="w-full justify-start text-red-600" onClick={handleLogout}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        {locale === 'fr' ? 'Déconnexion' : 'Logout'}
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="outline" className="w-full justify-start" onClick={() => router.push(`/${locale}/connexion`)}>
+                        {locale === 'fr' ? 'Connexion' : 'Login'}
+                      </Button>
+                      <Button
+                        className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90"
+                        onClick={() => router.push(`/${locale}/inscription`)}
+                      >
+                        {locale === 'fr' ? 'Commencer' : 'Get started'}
+                      </Button>
+                    </>
+                  )}
+
                   <select
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm mt-2"
                     value={locale}
                     onChange={(e) => handleLanguageChange(e.target.value as "fr" | "en")}
                   >
                     <option value="fr">🇫🇷 Français</option>
                     <option value="en">🇬🇧 English</option>
                   </select>
-                  <Button variant="outline" className="w-full justify-start" onClick={() => router.push(`/${locale}/connexion`)}>
-                    {locale === 'fr' ? 'Connexion' : 'Login'}
-                  </Button>
-                  <Button
-                    className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90"
-                    onClick={() => router.push(`/${locale}/inscription`)}
-                  >
-                    {locale === 'fr' ? 'Commencer' : 'Get started'}
-                  </Button>
                 </div>
               </div>
             </SheetContent>

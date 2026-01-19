@@ -9,6 +9,7 @@ export type Course = {
     currency: string
     duration: string | null // mapped from duration (int minutes) -> string
     level: string | null
+    format: 'auto-formation' | 'session' | null // Added format field
     rating?: number
     reviewCount?: number
     category: {

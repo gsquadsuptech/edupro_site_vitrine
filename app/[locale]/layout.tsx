@@ -9,6 +9,7 @@ import { Footer } from "@/components/layout/footer/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { RecaptchaProvider } from "@/components/marketing/recaptcha-provider";
 import { FloatingActions } from "@/components/ui/floating-actions";
+import { AuthProvider } from "@/hooks/useAuth";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -37,22 +38,24 @@ export default async function LocaleLayout({
         <html lang={locale} suppressHydrationWarning>
             <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="light"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        <RecaptchaProvider>
-                            <div className="flex min-h-screen flex-col">
-                                <Header />
-                                <main className="flex-1">{children}</main>
-                                <Footer />
-                            </div>
-                            <Toaster />
-                            <FloatingActions />
-                        </RecaptchaProvider>
-                    </ThemeProvider>
+                    <AuthProvider>
+                        <ThemeProvider
+                            attribute="class"
+                            defaultTheme="light"
+                            enableSystem
+                            disableTransitionOnChange
+                        >
+                            <RecaptchaProvider>
+                                <div className="flex min-h-screen flex-col">
+                                    <Header />
+                                    <main className="flex-1">{children}</main>
+                                    <Footer />
+                                </div>
+                                <Toaster />
+                                <FloatingActions />
+                            </RecaptchaProvider>
+                        </ThemeProvider>
+                    </AuthProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

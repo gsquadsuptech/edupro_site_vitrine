@@ -4,8 +4,11 @@ import { createContext, useContext, useState, useEffect, ReactNode, useCallback,
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { type User } from '@supabase/supabase-js';
-import { supabase } from '@/utils/supabase/client';
-import { canAccessRoute, getDefaultRouteForUser } from '@/lib/role-guard';
+import { createClient } from '@/lib/supabase/client';
+import { canAccessRoute, getDefaultRouteForUser } from '../lib/role-guard';
+
+const supabase = createClient();
+
 
 // Token storage keys
 const AUTH_BYPASS_KEY = 'auth-bypass';

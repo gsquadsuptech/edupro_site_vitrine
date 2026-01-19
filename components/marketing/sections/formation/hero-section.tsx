@@ -1,18 +1,20 @@
 "use client"
 
-import { Star, Users, CheckCircle2, Heart, Bookmark, Share2 } from "lucide-react"
+import { Star, Users, CheckCircle2, Heart, Bookmark, Share2, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { Course } from "@/lib/supabase/types"
+import { Course, Cohort } from "@/lib/supabase/types"
+import { WaitlistDialog } from "./waitlist-dialog"
 
 interface FormationHeroProps {
   course: Course
+  cohorts?: Cohort[]
 }
 
-export function FormationHero({ course }: FormationHeroProps) {
+export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
   // Safe access / Fallbacks
-  const instructorName = course.instructor?.full_name || "Instructeur"
+  const instructorName = course.instructor?.name || "Instructeur"
   const categoryName = course.category?.name || "Général"
   const price = course.price || 0
 
@@ -21,12 +23,19 @@ export function FormationHero({ course }: FormationHeroProps) {
 
   const reviews = course.reviews || []
   const reviewCount = reviews.length
-  const rating = reviewCount > 0
+  // Fallback rating if no reviews
+  const rating = course.rating || (reviewCount > 0
     ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviewCount
-    : 4.8 // Fallback if no reviews
+    : 4.8)
 
   // Parsing duration string to hours if possible, else 20h default
-  const durationHours = course.duration ? parseInt(course.duration) : 20
+  // course.duration is usually string like "20h" or "120 min".
+  // Display as is if string.
+
+  // Smart CTA Logic
+  const isAutoFormation = course.format === 'auto-formation' || !course.format
+  const hasAvailableCohort = cohorts.some(c => c.status === 'active')
+  const showWaitlist = !isAutoFormation && !hasAvailableCohort;
 
   return (
     <section className="py-8">
@@ -91,6 +100,10 @@ export function FormationHero({ course }: FormationHeroProps) {
                 <Badge variant="outline">{course.level || "Tous niveaux"}</Badge>
               </div>
             </div>
+
+            <p className="text-lg text-muted-foreground mb-6">
+              {course.description}
+            </p>
           </div>
 
           {/* Right Column - Purchase Sidebar */}
@@ -105,11 +118,15 @@ export function FormationHero({ course }: FormationHeroProps) {
                 )}
               </div>
 
-              <Link href={`/fr/checkout/${course.id}`}>
-                <Button className="mb-4 w-full bg-gradient-to-r from-primary to-chart-2 text-lg text-primary-foreground hover:opacity-90">
-                  S'inscrire maintenant
-                </Button>
-              </Link>
+              {showWaitlist ? (
+                <WaitlistDialog courseId={course.id} courseTitle={course.title} />
+              ) : (
+                <Link href={`/checkout/${course.id}`}>
+                  <Button className="mb-4 w-full bg-gradient-to-r from-primary to-chart-2 text-lg text-primary-foreground hover:opacity-90">
+                    S'inscrire maintenant
+                  </Button>
+                </Link>
+              )}
 
               <div className="mb-4 flex gap-2">
                 <Button variant="outline" size="sm" className="flex-1 bg-transparent">

@@ -28,11 +28,13 @@ export default async function FormationPage({
         ? await CourseService.getSimilarCourses(course.category.slug, course.id)
         : [];
 
+    const cohorts = await CourseService.getCohortsByCourseId(course.id);
+
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
                 <FormationBreadcrumb />
-                <FormationHero course={course} />
+                <FormationHero course={course} cohorts={cohorts} />
                 <FormationTabs course={course} />
                 <SimilarCourses courses={similarCourses} />
             </main>
