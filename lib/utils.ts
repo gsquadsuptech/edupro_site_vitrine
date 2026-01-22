@@ -83,3 +83,17 @@ export function sanitizeFileName(fileName: string): string {
   return `${sanitizedName}-${timestamp}${extension}`;
 }
 
+
+// Uses NEXT_PUBLIC_APP_URL environment variable, defaults to https://edupro.africa.
+
+export function getAppUrl(path: string = ''): string {
+  let baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://edupro.africa';
+
+  // Force ignoring localhost:3000 if set in env, as it causes 404s when redirected to from vitrine (which is also 3000)
+  if (baseUrl.includes('localhost:3000')) {
+    baseUrl = 'https://edupro.africa';
+  }
+
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${baseUrl}${cleanPath}`;
+}

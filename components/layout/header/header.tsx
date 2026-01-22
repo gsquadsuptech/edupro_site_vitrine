@@ -29,7 +29,11 @@ import { useAuth } from "@/hooks/useAuth"
 // Safely try to import role-guard util, fallback if not available
 // This pattern avoids build errors if the file structure is different than expected
 // In a real scenario, we would ensure the import path is correct.
+// Safely try to import role-guard util, fallback if not available
+// This pattern avoids build errors if the file structure is different than expected
+// In a real scenario, we would ensure the import path is correct.
 import { getDefaultRouteForUser } from "../../../lib/role-guard"
+import { getAppUrl } from "@/lib/utils"
 
 export function Header() {
   const { locale, changeLanguage } = useLanguage()
@@ -55,13 +59,13 @@ export function Header() {
 
   const handleLogout = async () => {
     await signOut()
-    router.push(`/${locale}`)
+    window.location.href = `/${locale}`
   }
 
   const handleDashboardClick = () => {
     // Use the utility to get the correct dashboard route based on role
-    const dashboardUrl = getDefaultRouteForUser(roles || [])
-    router.push(dashboardUrl)
+    const dashboardRoute = getDefaultRouteForUser(roles || [])
+    window.location.href = getAppUrl(dashboardRoute)
   }
 
   return (
@@ -221,7 +225,7 @@ export function Header() {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleDashboardClick} className="cursor-pointer">
                         <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>{locale === 'fr' ? 'Tableau de bord' : 'Dashboard'}</span>
+                        <span>{locale === 'fr' ? 'Mon espace' : 'My Space'}</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem className="cursor-pointer">
                         <Settings className="mr-2 h-4 w-4" />
@@ -230,17 +234,19 @@ export function Header() {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer focus:text-red-600">
                         <LogOut className="mr-2 h-4 w-4" />
-                        <span>{locale === 'fr' ? 'Déconnexion' : 'Logout'}</span>
+                        <span>{locale === 'fr' ? 'Se déconnecter' : 'Log out'}</span>
                       </DropdownMenuItem>
                     </>
                   ) : (
                     <>
-                      <DropdownMenuItem onClick={() => router.push(`/${locale}/connexion`)} className="cursor-pointer">
-                        <span>{locale === 'fr' ? 'Se connecter' : 'Login'}</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => router.push(`/${locale}/inscription`)} className="cursor-pointer">
-                        <span>{locale === 'fr' ? "S'inscrire" : 'Sign up'}</span>
-                      </DropdownMenuItem>
+                      <>
+                        <DropdownMenuItem onClick={() => router.push(`/${locale}/connexion`)} className="cursor-pointer">
+                          <span>{locale === 'fr' ? 'Se connecter' : 'Login'}</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => router.push(`/${locale}/inscription`)} className="cursor-pointer">
+                          <span>{locale === 'fr' ? "S'inscrire" : 'Sign up'}</span>
+                        </DropdownMenuItem>
+                      </>
                     </>
                   )}
                 </DropdownMenuContent>
@@ -322,11 +328,11 @@ export function Header() {
                       </div>
                       <Button variant="outline" className="w-full justify-start" onClick={handleDashboardClick}>
                         <LayoutDashboard className="mr-2 h-4 w-4" />
-                        {locale === 'fr' ? 'Tableau de bord' : 'Dashboard'}
+                        {locale === 'fr' ? 'Mon espace' : 'My Space'}
                       </Button>
                       <Button variant="outline" className="w-full justify-start text-red-600" onClick={handleLogout}>
                         <LogOut className="mr-2 h-4 w-4" />
-                        {locale === 'fr' ? 'Déconnexion' : 'Logout'}
+                        {locale === 'fr' ? 'Se déconnecter' : 'Log out'}
                       </Button>
                     </>
                   ) : (

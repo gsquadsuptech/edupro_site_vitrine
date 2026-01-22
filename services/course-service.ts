@@ -593,7 +593,7 @@ export const CourseService = {
                 start_date,
                 end_date,
                 status,
-                max_students,
+                max_participants,
                 pricing_modes,
                 registration_deadline
             `)

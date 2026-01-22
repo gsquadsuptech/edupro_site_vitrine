@@ -429,12 +429,12 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
         description: "Vous avez été déconnecté avec succès.",
       });
 
-      // Rediriger vers la page de connexion
+      // Rediriger vers la page d'accueil
       setTimeout(() => {
         if (typeof window !== 'undefined') {
-          window.location.href = '/auth/login';
+          window.location.href = '/';
         } else {
-          router.push('/auth/login');
+          router.push('/');
         }
       }, 300);
     } catch (err: any) {

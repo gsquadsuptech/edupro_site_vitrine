@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useAuth } from "@/hooks/useAuth"
 
 interface LoginFormProps {
     onRegisterClick: () => void;
@@ -40,14 +41,25 @@ export function LoginForm({ onRegisterClick }: LoginFormProps) {
         },
     })
 
+    const [error, setError] = useState<string | null>(null)
+    const { signIn } = useAuth()
+
     const handleSubmit = async (data: FormValues) => {
         try {
             setIsLoadingForm(true)
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1500))
+            setError(null)
 
-            toast.success("Connexion réussie")
-            router.push('/')
+            const { success, error } = await signIn(data.email, data.password)
+
+            if (success) {
+                toast.success("Connexion réussie")
+                // Redirect is handled by useAuth or header logic, but we can force home
+                router.push('/')
+            } else {
+                toast.error("Erreur de connexion", {
+                    description: error?.message || "Identifiants invalides"
+                })
+            }
 
         } catch (err: any) {
             console.error("Erreur de connexion:", err)

@@ -20,8 +20,8 @@ export const getDefaultRouteForUser = (roles: string[]): string => {
         return '/admin';
     }
     if (roles.includes('instructor')) {
-        return '/app/instructor';
+        return '/instructor';
     }
     // Default for students or users with no specific role
-    return '/app/dashboard';
+    return '/dashboard';
 }
