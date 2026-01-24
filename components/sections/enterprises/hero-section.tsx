@@ -1,9 +1,15 @@
+"use client"
+
 import { Container } from "@/components/marketing/layout/container"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Check } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export function EnterprisesHeroSection() {
+    const { locale } = useLanguage()
+
     return (
         <section className="relative py-20 md:py-32">
             <Container>
@@ -23,9 +29,12 @@ export function EnterprisesHeroSection() {
                             <Button
                                 size="lg"
                                 className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90"
+                                asChild
                             >
-                                Réserver une démo personnalisée
-                                <ArrowRight className="ml-2 h-4 w-4" />
+                                <Link href={`/${locale}/demande-demo`}>
+                                    Réserver une démo personnalisée
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
                             </Button>
                             <Button size="lg" variant="outline">
                                 Demander un devis

@@ -89,33 +89,34 @@ export function WhyEduProSection() {
                     ))}
                 </div>
 
-                <div className="mb-16">
-                    <h3 className="mb-8 text-center text-2xl font-bold">Notre Solution: Le Marketplace à 4 Faces</h3>
-                    <div className="flex justify-center mb-8">
-                        <Image
-                            src="/marketplace-architecture-diagram.jpg"
-                            alt="EduPro Marketplace Architecture"
-                            width={600}
-                            height={300}
-                            className="rounded-lg border border-border"
-                        />
-                    </div>
-                    <p className="text-center text-lg font-semibold text-primary">
-                        Nous sommes les seuls à connecter tout l'écosystème.
-                    </p>
-                </div>
 
+                <div className="mb-16">
+                  <h3 className="mb-8 text-center text-2xl font-bold">Notre Solution: Le Marketplace à 4 Faces</h3>
+                  <div className="flex justify-center mb-8">
+                    <Image
+                      src="/marketplace-architecture-diagram.jpg"
+                      alt="EduPro Marketplace Architecture"
+                      width={600}
+                      height={300}
+                      className="rounded-lg border border-border"
+                    />
+                  </div>
+                  <p className="text-center text-lg font-semibold text-primary">
+                    Nous sommes les seuls à connecter tout l'écosystème.
+                  </p>
+                </div>
+                        
                 <div className="mb-12">
-                    <h3 className="mb-8 text-center text-2xl font-bold">4 Piliers de Différenciation</h3>
-                    <div className="grid gap-6 md:grid-cols-2">
-                        {differentiators.map((diff, index) => (
-                            <div key={index} className="rounded-lg border border-primary/20 bg-primary/5 p-6">
-                                <div className="mb-3 text-3xl">{diff.icon}</div>
-                                <h4 className="mb-2 font-bold text-foreground">{diff.title}</h4>
-                                <p className="text-sm text-muted-foreground">{diff.description}</p>
-                            </div>
-                        ))}
-                    </div>
+                  <h3 className="mb-8 text-center text-2xl font-bold">4 Piliers de Différenciation</h3>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {differentiators.map((diff, index) => (
+                      <div key={index} className="rounded-lg border border-primary/20 bg-primary/5 p-6">
+                        <div className="mb-3 text-3xl">{diff.icon}</div>
+                        <h4 className="mb-2 font-bold text-foreground">{diff.title}</h4>
+                        <p className="text-sm text-muted-foreground">{diff.description}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
             </Container>
         </section>

@@ -1,8 +1,14 @@
+"use client"
+
 import { Container } from "@/components/marketing/layout/container"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
+import Link from "next/link"
+import { useLanguage } from "@/hooks/useLanguage"
 
 export function PricingSection() {
+    const { locale } = useLanguage()
+
     const included = [
         "Plateforme complète et personnalisée",
         "Accès à la marketplace de formations",
@@ -71,8 +77,10 @@ export function PricingSection() {
                         essentielles et un calendrier de déploiement réaliste.
                     </p>
                     <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                        <Button size="lg" className="bg-gradient-to-r from-primary to-chart-2">
-                            Réserver une démo personnalisée
+                        <Button size="lg" className="bg-gradient-to-r from-primary to-chart-2" asChild>
+                            <Link href={`/${locale}/demande-demo`}>
+                                Réserver une démo personnalisée
+                            </Link>
                         </Button>
                         <Button size="lg" variant="outline">
                             Demander un devis
