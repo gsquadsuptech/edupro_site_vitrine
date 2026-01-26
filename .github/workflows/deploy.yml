@@ -112,11 +112,13 @@ jobs:
 
       - name: Execute Deployment via SSH
         run: |
-          # Diagnostics
-          echo "🔍 Vérification de l'agent SSH..."
-          ssh-add -l
-          
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -v ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
+          # SSH command with specific options to avoid interactive prompts
+          ssh -i ~/.ssh/id_rsa \
+              -o StrictHostKeyChecking=no \
+              -o PasswordAuthentication=no \
+              -o BatchMode=yes \
+              -o ConnectTimeout=30 \
+              -v ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
             set -euo pipefail
             
             # Login to GHCR
