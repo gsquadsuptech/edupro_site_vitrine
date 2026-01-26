@@ -122,20 +122,20 @@ jobs:
             set -euo pipefail
             
             # Login to GHCR
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
             # Stop and remove old container
             echo "🛑 Stopping old container..."
-            docker stop edupro-site || true
-            docker rm edupro-site || true
+            sudo docker stop edupro-site || true
+            sudo docker rm edupro-site || true
             
             # Pull new image
             echo "📥 Pulling new image..."
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+            sudo docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
             
             # Run new container with ENV vars
             echo "🚀 Starting new container..."
-            docker run -d \
+            sudo docker run -d \
               --name edupro-site \
               --restart always \
               -p 3000:3000 \
@@ -161,7 +161,7 @@ jobs:
               echo "✅ Deployment successful and service is UP!"
             else
               echo "❌ Healthcheck failed! Checking logs..."
-              docker logs edupro-site | tail -n 20
+              sudo docker logs edupro-site | tail -n 20
               exit 1
             fi
           EOF
