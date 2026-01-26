@@ -9,7 +9,7 @@ interface InstructorTabProps {
 }
 
 export function InstructorTab({ course }: InstructorTabProps) {
-  const instructor = course.instructor || { full_name: "Instructeur Inconnu", avatar_url: null };
+  const instructor = course.instructor || { name: "Instructeur Inconnu", avatar_url: null };
   // Static placeholders for missing DB fields
   const otherCourses: any[] = [];
 
@@ -20,11 +20,11 @@ export function InstructorTab({ course }: InstructorTabProps) {
         <div className="mb-6 flex flex-col gap-6 md:flex-row">
           <img
             src={instructor.avatar_url || "/placeholder.svg?key=rvqxh"}
-            alt={instructor.full_name}
+            alt={instructor.name}
             className="h-32 w-32 rounded-full object-cover"
           />
           <div className="flex-1">
-            <h3 className="mb-2 text-2xl font-bold">{instructor.full_name}</h3>
+            <h3 className="mb-2 text-2xl font-bold">{instructor.name}</h3>
             <p className="mb-3 text-muted-foreground">
               Formateur EduPro
             </p>

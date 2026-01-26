@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Course } from "@/lib/supabase/types"
 
 interface FormationCardProps {
-  course: Course & {
+  course: Pick<Course, 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration'> & {
     // Add missing properties that might be computed or hardcoded for now
     rating?: number
     reviewCount?: number
@@ -26,7 +26,7 @@ export function FormationCard({ course }: FormationCardProps) {
   // Derived/Fallback values
   const imageUrl = course.image_url || "/placeholder.svg"
   const categoryName = course.category?.name || "Général"
-  const instructorName = course.instructor?.full_name || "Instructeur"
+  const instructorName = course.instructor?.name || "Instructeur"
   const rating = course.rating || 4.5
   const reviewCount = course.reviewCount || 0
   const enrolledCount = course.enrolledCount || 0

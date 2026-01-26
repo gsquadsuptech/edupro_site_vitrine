@@ -19,8 +19,37 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-    title: "EduPro - Formation Professionnelle en Afrique",
-    description: "Plateforme de formation professionnelle leader en Afrique",
+    title: {
+        template: '%s | EduPro',
+        default: 'EduPro - Plateforme de formation professionnelle adaptée à l\'Afrique. Entreprises, professionnels, formateurs : transformez vos talents. 🇸🇳 🇨🇮 🇰🇪',
+    },
+    description: 'Plateforme d\'éducation en ligne pour l\'Afrique',
+    manifest: '/icons/site.webmanifest',
+    icons: {
+        icon: [
+            { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+            { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
+        ],
+        apple: [
+            { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+        ],
+        other: [
+            {
+                rel: 'mask-icon',
+                url: '/icons/safari-pinned-tab.svg',
+                color: '#4f46e5'
+            }
+        ]
+    },
+    other: {
+        'apple-mobile-web-app-capable': 'yes',
+        'apple-mobile-web-app-status-bar-style': 'default',
+        'apple-mobile-web-app-title': 'EduPro',
+        'mobile-web-app-capable': 'yes',
+        'msapplication-TileColor': '#4f46e5',
+        'msapplication-tap-highlight': 'no',
+        'format-detection': 'telephone=no',
+    }
 };
 
 export default async function LocaleLayout({

@@ -34,7 +34,7 @@ export function TestimonialCard({ quote, name, role, company, flag, results, ima
         </div>
       </div>
 
-      <p className="mb-6 leading-relaxed text-muted-foreground">"{quote}"</p>
+      <p className="mb-6 leading-relaxed text-muted-foreground">&quot;{quote}&quot;</p>
 
       <div className="rounded-lg bg-muted/50 p-4">
         <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{results.title}</p>

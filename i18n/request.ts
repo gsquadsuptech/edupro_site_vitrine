@@ -1,24 +1,10 @@
 import { getRequestConfig } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { routing } from './routing'; // Does not exist yet, but let's check args first
+import { routing } from '@/i18n/routing';
 
-const locales = ['fr', 'en'];
-
-export default getRequestConfig(async (args) => {
-    console.log('[i18n/request] RequestConfig called with args:', args);
-
-    // Try to find locale in args
-    let locale = args?.locale;
-    // If undefined, maybe it's requestLocale (Promise)
-    if (!locale && args?.requestLocale) {
-        console.log('[i18n/request] Awaiting requestLocale...');
-        locale = await args.requestLocale;
-    }
-
-    console.log('[i18n/request] Resolved locale:', locale);
-
+export default getRequestConfig(async ({ locale }) => {
     // Validate that the incoming `locale` parameter is valid
-    if (!locale || !locales.includes(locale as any)) {
+    if (!routing.locales.includes(locale as any)) {
         console.error(`[i18n] Invalid locale: ${locale}`);
         notFound();
     }
@@ -43,6 +29,6 @@ export default getRequestConfig(async (args) => {
 
     return {
         messages,
-        locale // Return the resolved locale
+        locale: locale as string
     };
 });

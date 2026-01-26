@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
 // Adjusted imports for Vitrine structure
 import { Header } from "@/components/layout/header/header"
 import { Footer } from "@/components/layout/footer/footer"
@@ -28,6 +28,8 @@ export default function InscriptionPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+    const params = useParams()
+    const locale = params.locale
     const supabase = createClient()
 
     const [formData, setFormData] = useState({

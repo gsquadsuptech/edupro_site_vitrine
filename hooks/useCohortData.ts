@@ -28,10 +28,11 @@ const mockCourses: Course[] = [
     status: "published",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    user_id: "demo-user-1",
+    instructor_id: "demo-user-1",
     level: "beginner",
     duration: 10,
-    format: "session"
+    format: "session",
+    sections: []
   },
   {
     id: "2",
@@ -42,10 +43,11 @@ const mockCourses: Course[] = [
     status: "published",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    user_id: "demo-user-1",
+    instructor_id: "demo-user-1",
     level: "beginner",
     duration: 12,
-    format: "session"
+    format: "session",
+    sections: []
   },
   {
     id: "3",
@@ -56,10 +58,11 @@ const mockCourses: Course[] = [
     status: "draft",
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    user_id: "demo-user-2",
+    instructor_id: "demo-user-2",
     level: "advanced",
     duration: 15,
-    format: "session"
+    format: "session",
+    sections: []
   }
 ];
 
@@ -106,11 +109,11 @@ const EMPTY_INSTRUCTORS_ARRAY: Instructor[] = [];
 export function useCohortData() {
   const [debugInfo, setDebugInfo] = useState<Record<string, any>>({});
   const [isCheckingAuth, setIsCheckingAuth] = useState(false);
-  
+
   // Utiliser notre hook d'authentification amélioré
   const { isAuthenticated, bypassEnabled } = useAuth();
   const router = useRouter();
-  
+
   // Mise à jour du debug info
   const updateDebugInfo = (updater: (prev: Record<string, any>) => Record<string, any>) => {
     setDebugInfo(prev => updater(prev));
@@ -179,7 +182,7 @@ export function useCohortData() {
       if (useCourseMockData) {
         return;
       }
-      
+
       updateDebugInfo(prev => ({
         ...prev,
         instructors_fetch: {

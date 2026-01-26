@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { NotificationService, Notification, NotificationSettings } from '@/lib/services/notification-service';
+import { NotificationService, Notification, NotificationSettings } from '@/services/notification-service';
 
 interface UseNotificationsOptions {
   instructorId?: string;
@@ -47,7 +47,7 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
   const [settings, setSettings] = useState<NotificationSettings | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
-  
+
   const notificationService = useRef<NotificationService>();
   const navigationCallback = useRef<((route: string, notification: Notification) => void) | null>(null);
   const newNotificationCallback = useRef<((notification: Notification) => void) | null>(null);
@@ -56,7 +56,7 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
   // Initialize notification service
   useEffect(() => {
     notificationService.current = new NotificationService();
-    
+
     return () => {
       if (notificationService.current) {
         notificationService.current.stopRealtimeNotifications();
@@ -79,7 +79,7 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
         notificationService.current!.addEventListener('notification:new', (notification: Notification) => {
           setNotifications(prev => [notification, ...prev]);
           setUnreadCount(prev => prev + 1);
-          
+
           if (newNotificationCallback.current) {
             newNotificationCallback.current(notification);
           }
@@ -87,13 +87,13 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
 
         notificationService.current!.addEventListener('notification:updated', (notification: Notification) => {
           setNotifications(prev => prev.map(n => n.id === notification.id ? notification : n));
-          
+
           if (notification.read) {
             setUnreadCount(prev => Math.max(0, prev - 1));
           }
         });
 
-        notificationService.current!.addEventListener('notification:navigate', ({ route, notification }) => {
+        notificationService.current!.addEventListener('notification:navigate', ({ route, notification }: { route: string; notification: Notification }) => {
           if (navigationCallback.current) {
             navigationCallback.current(route, notification);
           }
@@ -199,11 +199,11 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
 
     try {
       await notificationService.current.markAsRead(notificationId);
-      
-      setNotifications(prev => prev.map(n => 
+
+      setNotifications(prev => prev.map(n =>
         n.id === notificationId ? { ...n, read: true } : n
       ));
-      
+
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch (error) {
       console.error('Error marking notification as read:', error);
@@ -216,7 +216,7 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
 
     try {
       await notificationService.current.markAllAsRead(instructorId);
-      
+
       setNotifications(prev => prev.map(n => ({ ...n, read: true })));
       setUnreadCount(0);
     } catch (error) {
@@ -230,10 +230,10 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
 
     try {
       await notificationService.current.deleteNotification(notificationId);
-      
+
       const notification = notifications.find(n => n.id === notificationId);
       setNotifications(prev => prev.filter(n => n.id !== notificationId));
-      
+
       if (notification && !notification.read) {
         setUnreadCount(prev => Math.max(0, prev - 1));
       }
@@ -245,7 +245,7 @@ export function useNotifications(options: UseNotificationsOptions = {}): UseNoti
 
   const loadMore = useCallback(async () => {
     if (!hasMore || loading) return;
-    
+
     setPage(prev => prev + 1);
     await fetchNotifications();
   }, [hasMore, loading, fetchNotifications]);

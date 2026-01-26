@@ -9,6 +9,7 @@ import { PaymentPlan } from "@/components/payment/payment-plan";
 import { PaymentProcess } from "@/components/payment/payment-process";
 import { PaymentConfirmation } from "@/components/payment/payment-confirmation";
 import { CourseService } from "@/services/course-service";
+import { Button } from "@/components/ui/button";
 
 
 export default function CheckoutPage({

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { createCourseDurationService, CourseDurationService } from '@/lib/services/course-duration.service';
+import { createCourseDurationService, CourseDurationService } from '@/services/course-duration.service';
 import { useAuth } from '@/hooks/useAuth';
 
 /**
@@ -66,7 +66,7 @@ export function useCourseDuration(courseId?: string) {
 
   // Formatage de la durée
   const formattedDuration = CourseDurationService.formatDuration(duration);
-  
+
   // Durée en heures décimales
   const durationInHours = CourseDurationService.minutesToHours(duration);
 

@@ -12,7 +12,7 @@ import {
   useId,
   useMemo,
 } from "react";
-import { Legend, LegendProps, ResponsiveContainer, Tooltip } from "recharts";
+import { Legend, LegendProps, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -89,13 +89,13 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
             ([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
 ${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
-  })
-  .join("\n")}
+                .map(([key, itemConfig]) => {
+                  const color =
+                    itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+                    itemConfig.color;
+                  return color ? `  --color-${key}: ${color};` : null;
+                })
+                .join("\n")}
 }
 `
           )
@@ -109,14 +109,18 @@ const ChartTooltip = Tooltip;
 
 const ChartTooltipContent = forwardRef<
   HTMLDivElement,
-  ComponentProps<typeof Tooltip> &
-    ComponentProps<"div"> & {
-      hideLabel?: boolean;
-      hideIndicator?: boolean;
-      indicator?: "line" | "dot" | "dashed";
-      nameKey?: string;
-      labelKey?: string;
-    }
+  TooltipProps<any, any> &
+  ComponentProps<"div"> & {
+    hideLabel?: boolean;
+    hideIndicator?: boolean;
+    indicator?: "line" | "dot" | "dashed";
+    nameKey?: string;
+    labelKey?: string;
+    // Helper to fix types passing
+    payload?: any[];
+    active?: boolean;
+    label?: any;
+  }
 >(
   (
     {
@@ -266,10 +270,11 @@ const ChartLegend = Legend;
 const ChartLegendContent = forwardRef<
   HTMLDivElement,
   ComponentProps<"div"> &
-    Pick<LegendProps, "payload" | "verticalAlign"> & {
-      hideIcon?: boolean;
-      nameKey?: string;
-    }
+  Pick<LegendProps, "verticalAlign"> & {
+    hideIcon?: boolean;
+    nameKey?: string;
+    payload?: any[];
+  }
 >(
   (
     { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
@@ -333,8 +338,8 @@ function getPayloadConfigFromPayload(
 
   const payloadPayload =
     "payload" in payload &&
-    typeof payload.payload === "object" &&
-    payload.payload !== null
+      typeof payload.payload === "object" &&
+      payload.payload !== null
       ? payload.payload
       : undefined;
 
