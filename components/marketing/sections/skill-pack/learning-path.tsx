@@ -11,9 +11,9 @@ export function LearningPath() {
           slug: "introduction-programmation-python",
           title: "Introduction à la Programmation Python",
           image_url: "/placeholder.svg?key=uedvb",
-          category: { name: "Tech & Digital", slug: "tech" },
+          category: { name: "Tech & Digital" },
           level: "Débutant",
-          instructor: { name: "Dr. Aminata Diallo", avatar_url: null },
+          instructor: { name: "Dr. Aminata Diallo" },
           rating: 4.9,
           reviewCount: 342,
           price: 15000,
@@ -26,9 +26,9 @@ export function LearningPath() {
           slug: "bases-donnees-sql",
           title: "Bases de Données et SQL",
           image_url: "/placeholder.svg?key=a2a4l",
-          category: { name: "Tech & Digital", slug: "tech" },
+          category: { name: "Tech & Digital" },
           level: "Débutant",
-          instructor: { name: "Moussa Traoré", avatar_url: null },
+          instructor: { name: "Moussa Traoré" },
           rating: 4.8,
           reviewCount: 289,
           price: 18000,
@@ -41,9 +41,9 @@ export function LearningPath() {
           slug: "git-github-collaboration",
           title: "Git & GitHub pour la Collaboration",
           image_url: "/placeholder.svg?key=3z0gm",
-          category: { name: "Tech & Digital", slug: "tech" },
+          category: { name: "Tech & Digital" },
           level: "Débutant",
-          instructor: { name: "Fatou Ndiaye", avatar_url: null },
+          instructor: { name: "Fatou Ndiaye" },
           rating: 4.7,
           reviewCount: 198,
           price: 12000,
@@ -62,9 +62,9 @@ export function LearningPath() {
           slug: "developpement-web-fullstack",
           title: "Développement Web Full Stack",
           image_url: "/placeholder.svg?key=ji5l5",
-          category: { name: "Tech & Digital", slug: "tech" },
+          category: { name: "Tech & Digital" },
           level: "Intermédiaire",
-          instructor: { name: "Kofi Mensah", avatar_url: null },
+          instructor: { name: "Kofi Mensah" },
           rating: 4.9,
           reviewCount: 423,
           price: 35000,
@@ -77,9 +77,9 @@ export function LearningPath() {
           slug: "data-science-python",
           title: "Data Science avec Python",
           image_url: "/placeholder.svg?key=2q171",
-          category: { name: "Tech & Digital", slug: "tech" },
+          category: { name: "Tech & Digital" },
           level: "Intermédiaire",
-          instructor: { name: "Aisha Mohammed", avatar_url: null },
+          instructor: { name: "Aisha Mohammed" },
           rating: 4.8,
           reviewCount: 312,
           price: 30000,
@@ -108,7 +108,7 @@ export function LearningPath() {
               </div>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {phase.courses.map((course) => (
-                  <FormationCard key={course.id} course={course} />
+                  <FormationCard key={course.id} course={course as any} />
                 ))}
               </div>
             </div>

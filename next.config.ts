@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ['@formatjs/intl-localematcher'],
+  output: 'standalone',
 };
 
 export default withNextIntl(nextConfig);

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Stepper } from "@/components/payment/stepper";
 import { SessionSelection } from "@/components/payment/session-selection";
