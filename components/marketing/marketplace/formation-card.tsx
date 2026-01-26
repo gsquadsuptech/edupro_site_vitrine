@@ -26,7 +26,7 @@ export function FormationCard({ course }: FormationCardProps) {
   // Derived/Fallback values
   const imageUrl = course.image_url || "/placeholder.svg"
   const categoryName = course.category?.name || "Général"
-  const instructorName = course.instructor?.full_name || "Instructeur"
+  const instructorName = course.instructor?.name || "Instructeur"
   const rating = course.rating || 4.5
   const reviewCount = course.reviewCount || 0
   const enrolledCount = course.enrolledCount || 0
