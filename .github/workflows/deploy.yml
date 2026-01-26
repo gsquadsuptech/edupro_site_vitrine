@@ -79,6 +79,7 @@ jobs:
         shell: bash
         env:
           DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+          DO_SSH_PASSPHRASE: ${{ secrets.DO_SSH_PASSPHRASE }}
         run: |
           set -euo pipefail
           [ -n "$DO_SSH_KEY" ] || { echo "::error::DO_SSH_KEY manquant"; exit 1; }
@@ -89,8 +90,24 @@ jobs:
 
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          # Use printf to handle potential newline issues in the key
-          printf "%s" "$DO_SSH_KEY" | tr -d '\r' | ssh-add -
+          
+          # Nettoyage et création du fichier de clé
+          echo "$DO_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Gestion de la passphrase si elle existe
+          if [ -n "${DO_SSH_PASSPHRASE:-}" ]; then
+            echo "🔓 Ajout de la clé avec passphrase..."
+            echo -e "#!/bin/bash\necho \"$DO_SSH_PASSPHRASE\"" > ~/.ssh/askpass
+            chmod +x ~/.ssh/askpass
+            export DISPLAY=:0
+            export SSH_ASKPASS=~/.ssh/askpass
+            setsid ssh-add ~/.ssh/id_rsa < /dev/null
+          else
+            echo "🔑 Ajout de la clé sans passphrase..."
+            ssh-add ~/.ssh/id_rsa
+          fi
+
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
 
       - name: Execute Deployment via SSH
