@@ -124,8 +124,16 @@ jobs:
             # Login to GHCR
             echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
-            # Stop and remove old container
-            echo "🛑 Stopping old container..."
+            # Stop and remove any container using port 3000
+            echo "🧹 Cleaning up port 3000 (Docker)..."
+            sudo docker ps -q --filter "publish=3000" | xargs -r sudo docker stop || true
+            sudo docker ps -aq --filter "publish=3000" | xargs -r sudo docker rm || true
+            
+            # Kill any other process on port 3000 (PM2, Node, etc.)
+            echo "💀 Killing any other process on port 3000..."
+            sudo fuser -k 3000/tcp || true
+            
+            # Also stop by name if it exists (backup)
             sudo docker stop edupro-site || true
             sudo docker rm edupro-site || true
             
