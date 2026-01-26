@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { UserCourse, UserCoursesStats } from '@/lib/services/user-courses-service';
+import { UserCourse, UserCoursesStats } from '@/services/user-courses-service';
 
 export interface UseUserCoursesOptions {
   status?: string;
