@@ -10,6 +10,7 @@ interface InstructorTabProps {
 
 export function InstructorTab({ course }: InstructorTabProps) {
   const instructor = course.instructor || { name: "Instructeur Inconnu", avatar_url: null };
+  // Static placeholders for missing DB fields
   const otherCourses: any[] = [];
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Editor as TinyMCEEditor } from 'tinymce';
+import type { Editor as TinyMCEEditor } from 'tinymce';
 
 declare global {
   interface Window {
@@ -43,12 +43,12 @@ export default function Editor({ value, onChange, placeholder }: EditorProps) {
         branding: false,
         setup: (editor: TinyMCEEditor) => {
           editorRef.current = editor;
-          
+
           editor.on('init', () => {
             setEditorInitialized(true);
             editor.setContent(value || '');
           });
-          
+
           editor.on('change', () => {
             const newContent = editor.getContent();
             setInternalValue(newContent);
@@ -66,6 +66,7 @@ export default function Editor({ value, onChange, placeholder }: EditorProps) {
       }
       document.body.removeChild(script);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Mettre à jour le contenu uniquement si la valeur externe change
@@ -75,10 +76,10 @@ export default function Editor({ value, onChange, placeholder }: EditorProps) {
       // Sauvegarder la position du curseur
       const editor = editorRef.current;
       const bookmark = editor.selection.getBookmark(2, true);
-      
+
       // Mettre à jour le contenu
       editor.setContent(value || '');
-      
+
       // Restaurer la position du curseur
       try {
         editor.selection.moveToBookmark(bookmark);
@@ -87,14 +88,14 @@ export default function Editor({ value, onChange, placeholder }: EditorProps) {
         // Si la restauration échoue, ne rien faire
         console.log("Impossible de restaurer la position du curseur");
       }
-      
+
       setInternalValue(value || '');
     }
   }, [value, editorInitialized, internalValue]);
 
   return (
-    <textarea 
-      id="tiny-editor" 
+    <textarea
+      id="tiny-editor"
       placeholder={placeholder}
       style={{ visibility: 'hidden' }}
     />

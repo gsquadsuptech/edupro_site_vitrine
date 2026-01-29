@@ -55,28 +55,121 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Deploy to Digital Ocean
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USER }}
-          key: ${{ secrets.DO_SSH_KEY }}
-          script: |
-             # Login to GHCR
-             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-             
-             # Stop running container
-             docker stop edupro-site || true
-             docker rm edupro-site || true
-             
-             # Pull new image
-             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
-             
-             # Run new container with ENV vars
-             docker run -d \
-               --name edupro-site \
-               --restart always \
-               -p 3000:3000 \
-               -e SUPABASE_SERVICE_ROLE_KEY='${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
-               -e RECAPTCHA_SECRET_KEY='${{ secrets.RECAPTCHA_SECRET_KEY }}' \
-               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+      - name: Validate Secrets
+        run: |
+          set -euo pipefail
+          missing=0
+          # DO_SSH_PASSPHRASE is optional
+          for v in DO_HOST DO_USER DO_SSH_KEY NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Secret $v is missing."
+              missing=1
+            fi
+          done
+          [ "$missing" -eq 0 ] || exit 1
+        env:
+          DO_HOST: ${{ secrets.DO_HOST }}
+          DO_USER: ${{ secrets.DO_USER }}
+          DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+          DO_SSH_PASSPHRASE: ${{ secrets.DO_SSH_PASSPHRASE }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Setup SSH
+        shell: bash
+        env:
+          DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+          DO_SSH_PASSPHRASE: ${{ secrets.DO_SSH_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          [ -n "$DO_SSH_KEY" ] || { echo "::error::DO_SSH_KEY manquant"; exit 1; }
+
+          eval "$(ssh-agent -s)"
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$GITHUB_ENV"
+          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> "$GITHUB_ENV"
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          
+          # Nettoyage et création du fichier de clé
+          echo "$DO_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Gestion de la passphrase si elle existe
+          if [ -n "${DO_SSH_PASSPHRASE:-}" ]; then
+            echo "🔓 Ajout de la clé avec passphrase..."
+            echo -e "#!/bin/bash\necho \"$DO_SSH_PASSPHRASE\"" > ~/.ssh/askpass
+            chmod +x ~/.ssh/askpass
+            export DISPLAY=:0
+            export SSH_ASKPASS=~/.ssh/askpass
+            setsid ssh-add ~/.ssh/id_rsa < /dev/null
+          else
+            echo "🔑 Ajout de la clé sans passphrase..."
+            ssh-add ~/.ssh/id_rsa
+          fi
+
+          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Execute Deployment via SSH
+        run: |
+          # SSH command with specific options to avoid interactive prompts
+          ssh -i ~/.ssh/id_rsa \
+              -o StrictHostKeyChecking=no \
+              -o PasswordAuthentication=no \
+              -o BatchMode=yes \
+              -o ConnectTimeout=30 \
+              -v ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} << 'EOF'
+            set -euo pipefail
+            
+            # Login to GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Stop and remove any container using port 3000
+            echo "🧹 Cleaning up port 3000 (Docker)..."
+            sudo docker ps -q --filter "publish=3000" | xargs -r sudo docker stop || true
+            sudo docker ps -aq --filter "publish=3000" | xargs -r sudo docker rm || true
+            
+            # Kill any other process on port 3000 (PM2, Node, etc.)
+            echo "💀 Killing any other process on port 3000..."
+            sudo fuser -k 3000/tcp || true
+            
+            # Also stop by name if it exists (backup)
+            sudo docker stop edupro-site || true
+            sudo docker rm edupro-site || true
+            
+            # Pull new image
+            echo "📥 Pulling new image..."
+            sudo docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+            
+            # Run new container with ENV vars
+            echo "🚀 Starting new container..."
+            sudo docker run -d \
+              --name edupro-site \
+              --restart always \
+              -p 3000:3000 \
+              -e NEXT_PUBLIC_SUPABASE_URL='${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}' \
+              -e NEXT_PUBLIC_SUPABASE_ANON_KEY='${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}' \
+              -e SUPABASE_SERVICE_ROLE_KEY='${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
+              -e RECAPTCHA_SECRET_KEY='${{ secrets.RECAPTCHA_SECRET_KEY }}' \
+              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+
+            # Healthcheck
+            echo "🏥 Running healthcheck..."
+            success=0
+            for i in {1..10}; do
+              if curl -fs http://localhost:3000 > /dev/null; then
+                success=1
+                break
+              fi
+              echo "Waiting for container to be ready... ($i/10)"
+              sleep 5
+            done
+
+            if [ $success -eq 1 ]; then
+              echo "✅ Deployment successful and service is UP!"
+            else
+              echo "❌ Healthcheck failed! Checking logs..."
+              sudo docker logs edupro-site | tail -n 20
+              exit 1
+            fi
+          EOF

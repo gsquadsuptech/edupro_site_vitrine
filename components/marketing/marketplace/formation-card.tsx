@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Course } from "@/lib/supabase/types"
 
 interface FormationCardProps {
-  course: Course & {
+  course: Pick<Course, 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration'> & {
     // Add missing properties that might be computed or hardcoded for now
     rating?: number
     reviewCount?: number

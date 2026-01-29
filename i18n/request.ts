@@ -1,25 +1,17 @@
 import { getRequestConfig } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { routing } from './routing'; // Does not exist yet, but let's check args first
+import { routing } from './routing';
 
-const locales = ['fr', 'en'];
+export default getRequestConfig(async ({ locale: localeArg }) => {
+    // In some cases (like build time or early lifecycle), locale could be undefined
+    // We fallback to the default locale to avoid 404s
+    const locale = localeArg || routing.defaultLocale;
 
-export default getRequestConfig(async (args) => {
-    console.log('[i18n/request] RequestConfig called with args:', args);
-
-    // Try to find locale in args
-    let locale = args?.locale;
-    // If undefined, maybe it's requestLocale (Promise)
-    if (!locale && args?.requestLocale) {
-        console.log('[i18n/request] Awaiting requestLocale...');
-        locale = await args.requestLocale;
-    }
-
-    console.log('[i18n/request] Resolved locale:', locale);
+    console.log(`[i18n] Loading config for locale: ${locale} (arg was: ${localeArg})`);
 
     // Validate that the incoming `locale` parameter is valid
-    if (!locale || !locales.includes(locale as any)) {
-        console.error(`[i18n] Invalid locale: ${locale}`);
+    if (!routing.locales.includes(locale as any)) {
+        console.error(`[i18n] Invalid locale detected: ${locale}`);
         notFound();
     }
 
@@ -31,6 +23,7 @@ export default getRequestConfig(async (args) => {
     try {
         for (const ns of namespaces) {
             try {
+                // Using relative path for import
                 const mod = await import(`../messages/${locale}/${ns}.json`);
                 messages[ns] = mod.default;
             } catch (e) {
@@ -38,11 +31,11 @@ export default getRequestConfig(async (args) => {
             }
         }
     } catch (error) {
-        console.error(`[i18n] Error loading messages:`, error);
+        console.error(`[i18n] Error loading messages for ${locale}:`, error);
     }
 
     return {
         messages,
-        locale // Return the resolved locale
+        locale: locale as string
     };
 });

@@ -147,7 +147,7 @@ export const useCoursePlayer = (options: UseCoursePlayerOptions): UseCoursePlaye
     const cacheKey = `resume-${courseId}`;
     
     // Si un appel est déjà en cours, attendre le résultat
-    if (loadingRef.current[cacheKey]) {
+    if (await loadingRef.current[cacheKey]) {
       return loadingRef.current[cacheKey];
     }
     

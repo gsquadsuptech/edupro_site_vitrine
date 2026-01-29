@@ -30,7 +30,7 @@ export default function BlogEditor({ value, onChange, placeholder, editorId = 'b
   const [editorInitialized, setEditorInitialized] = useState(false);
   const [internalValue, setInternalValue] = useState(value || '');
   const initRef = useRef(false);
-  
+
   // Générer un ID unique une seule fois avec useMemo basé sur editorId
   const uniqueId = useMemo(() => {
     return `tiny-editor-${editorId}`;
@@ -121,14 +121,14 @@ export default function BlogEditor({ value, onChange, placeholder, editorId = 'b
           branding: false,
           setup: (editor: TinyMCEEditor) => {
             editorRef.current = editor;
-            
+
             editor.on('init', () => {
               setEditorInitialized(true);
               editor.setContent(value || '');
               initializedEditors.set(uniqueId, true);
               initializingEditors.delete(uniqueId);
             });
-            
+
             editor.on('change', () => {
               const newContent = editor.getContent();
               setInternalValue(newContent);
@@ -196,6 +196,7 @@ export default function BlogEditor({ value, onChange, placeholder, editorId = 'b
         initRef.current = false;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uniqueId]);
 
   // Mettre à jour le contenu uniquement si la valeur externe change
@@ -205,10 +206,10 @@ export default function BlogEditor({ value, onChange, placeholder, editorId = 'b
       // Sauvegarder la position du curseur
       const editor = editorRef.current;
       const bookmark = editor.selection.getBookmark(2, true);
-      
+
       // Mettre à jour le contenu
       editor.setContent(value || '');
-      
+
       // Restaurer la position du curseur
       try {
         editor.selection.moveToBookmark(bookmark);
@@ -217,13 +218,13 @@ export default function BlogEditor({ value, onChange, placeholder, editorId = 'b
         // Si la restauration échoue, ne rien faire
         console.log("Impossible de restaurer la position du curseur");
       }
-      
+
       setInternalValue(value || '');
     }
   }, [value, editorInitialized, internalValue, uniqueId]);
 
   return (
-    <textarea 
+    <textarea
       id={uniqueId}
       placeholder={placeholder}
       style={{ visibility: 'hidden' }}

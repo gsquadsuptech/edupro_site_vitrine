@@ -3,7 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { Locale } from '@/i18n';
+import { Locale } from '@/i18n/routing';
 
 export function useLanguage() {
   const locale = useLocale() as Locale;

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useCache } from '@/lib/cache/redis';
 
 export interface Chapter {
   id: string;

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/utils/supabase/client';
+import { createClient } from '@/lib/supabase/client';
+
+const supabase = createClient();
 
 interface ProfileData {
   id: string;
@@ -68,7 +70,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         setProfile(data.profile);
       } else {
@@ -95,7 +97,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         // Optionnellement recharger le profil (éviter lors des mises à jour optimistes)
         if (!skipRefetch) {
@@ -124,7 +126,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         // Mettre à jour immédiatement le profil local avec les préférences retournées
         // pour éviter les problèmes de cache
@@ -137,7 +139,7 @@ export const useProfile = () => {
             }
           });
         }
-        
+
         // Optionnellement recharger le profil (éviter lors des mises à jour optimistes)
         if (!skipRefetch) {
           await fetchProfile();
@@ -168,7 +170,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         // Recharger le profil pour obtenir la nouvelle URL d'avatar
         await fetchProfile();
@@ -194,7 +196,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         // Recharger le profil pour refléter la suppression
         await fetchProfile();
@@ -221,7 +223,7 @@ export const useProfile = () => {
       });
 
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || `Erreur ${response.status}: ${response.statusText}`);
       }
@@ -248,7 +250,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         return data.loginHistory;
       } else {
@@ -282,7 +284,7 @@ export const useProfile = () => {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      
+
       return { success: true, message: 'Export terminé avec succès' };
     } catch (err) {
       console.error('Erreur lors de l\'export des données:', err);
@@ -299,7 +301,7 @@ export const useProfile = () => {
       });
 
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || `Erreur ${response.status}: ${response.statusText}`);
       }
@@ -326,7 +328,7 @@ export const useProfile = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         return data;
       } else {
@@ -347,7 +349,7 @@ export const useProfile = () => {
       });
 
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || `Erreur ${response.status}: ${response.statusText}`);
       }

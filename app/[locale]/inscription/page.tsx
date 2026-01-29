@@ -28,7 +28,8 @@ export default function InscriptionPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
-    const { locale } = useParams()
+    const params = useParams()
+    const locale = params.locale
     const supabase = createClient()
 
     const [formData, setFormData] = useState({

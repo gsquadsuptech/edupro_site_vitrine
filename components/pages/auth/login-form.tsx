@@ -27,7 +27,7 @@ export function LoginForm({ onRegisterClick }: LoginFormProps) {
     const formSchema = z.object({
         email: z.string().email("Email invalide"),
         password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
-        rememberMe: z.boolean().default(false),
+        rememberMe: z.boolean(),
     })
 
     type FormValues = z.infer<typeof formSchema>

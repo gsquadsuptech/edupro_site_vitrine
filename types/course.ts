@@ -14,10 +14,12 @@ export interface CourseValidationComment {
 
 export interface Course {
   id: string;
+  slug: string;
   title: string;
   subtitle?: string;
   description?: string;
   thumbnail?: string;
+  image_url?: string;
   preview_video?: string;
   category_id?: string;
   level?: string;
