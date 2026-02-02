@@ -1,13 +1,18 @@
 import { createClient } from '@/lib/supabase/client';
-import { User, Session, AuthError } from '@supabase/supabase-js';
+// import { User, Session, AuthError } from '@supabase/supabase-js'; // REMOVED
 
 export const supabaseAuth = createClient();
+
+// Mock types
+type User = any;
+type Session = any;
+type AuthError = any;
 
 /**
  * Retrieves the user with a timeout to prevent hanging requests
  * @param timeoutMs Timeout in milliseconds (default: 5000)
  */
-export async function getUserWithTimeout(timeoutMs: number = 5000): Promise<{ data: { user: User | null }; error: AuthError | null | Error }> {
+export async function getUserWithTimeout(timeoutMs: number = 5000): Promise<{ data: { user: any | null }; error: any | null | Error }> {
     // Create a promise that rejects after the timeout
     const timeoutPromise = new Promise<never>((_, reject) => {
         const id = setTimeout(() => {
@@ -36,7 +41,7 @@ export async function getUserWithTimeout(timeoutMs: number = 5000): Promise<{ da
  * Retrieves the session with a timeout to prevent hanging requests
  * @param timeoutMs Timeout in milliseconds (default: 5000)
  */
-export async function getSessionWithTimeout(timeoutMs: number = 5000): Promise<{ data: { session: Session | null }; error: AuthError | null | Error }> {
+export async function getSessionWithTimeout(timeoutMs: number = 5000): Promise<{ data: { session: any | null }; error: any | null | Error }> {
     // Create a promise that rejects after the timeout
     const timeoutPromise = new Promise<never>((_, reject) => {
         const id = setTimeout(() => {

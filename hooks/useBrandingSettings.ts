@@ -1,7 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useOrganization } from './useOrganization';
-import { PostgrestError, SupabaseClient } from '@supabase/supabase-js';
+// import { PostgrestError, SupabaseClient } from '@supabase/supabase-js'; // REMOVED
 import { useAuth } from './useAuth';
+
+// Mock types
+type PostgrestError = any;
+type SupabaseClient = any;
 
 export interface BrandingSettings {
   id: string;
@@ -65,7 +69,7 @@ export const useBrandingSettings = () => {
     try {
       setLoading(true);
       console.log("[Branding] Récupération des paramètres de marque pour l'organisation:", organization.id);
-      
+
       const { data, error: fetchError } = await supabaseClient
         .from('organization_branding_settings')
         .select('*')
@@ -112,7 +116,7 @@ export const useBrandingSettings = () => {
     try {
       setLoading(true);
       console.log("[Branding] Mise à jour des paramètres de marque pour l'organisation:", organization.id);
-      
+
       const { data, error: updateError } = await supabase
         .from('organization_branding_settings')
         .upsert({

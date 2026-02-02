@@ -11,21 +11,12 @@ import { RecaptchaProvider } from "@/components/marketing/recaptcha-provider";
 import { FloatingActions } from "@/components/ui/floating-actions";
 import { AuthProvider } from "@/hooks/useAuth";
 
-// import { Inter, Poppins } from "next/font/google"; // Import fonts
-// import "../globals.css";
-// import { NextIntlClientProvider } from 'next-intl';
-// ...
-
-// Mock fonts to avoid build timeout
-const inter = { variable: "font-sans" };
-const poppins = { variable: "font-poppins" }; // We'll rely on system/loaded fonts for now
-
-// const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-// const poppins = Poppins({
-//     weight: ['400', '500', '600', '700', '800'],
-//     subsets: ["latin"],
-//     variable: "--font-poppins"
-// });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const poppins = Poppins({
+    weight: ['400', '500', '600', '700', '800'],
+    subsets: ["latin"],
+    variable: "--font-poppins"
+});
 
 export const metadata: Metadata = {
     title: {
@@ -74,7 +65,7 @@ export default async function LocaleLayout({
 
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={`${inter.variable} ${poppins.variable} antialiased`}>
+            <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <AuthProvider>
                         <ThemeProvider

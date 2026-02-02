@@ -39,7 +39,7 @@ export function HeroSection() {
 
                 <div className="relative mx-auto mt-16 max-w-5xl overflow-hidden rounded-2xl">
                     <Image
-                        src="/diverse-african-team-working-together-in-modern-co.jpg"
+                        src="/edupro-home2.png"
                         alt="L'équipe EduPro"
                         width={1200}
                         height={600}

@@ -17,7 +17,7 @@ export default getRequestConfig(async ({ locale: localeArg }) => {
     }
 
     // Load all necessary namespaces
-    const namespaces = ['common', 'landing', 'auth', 'courses', 'categories', 'marketplace', 'enterprises', 'professionals', 'trainers', 'blog', 'careers'];
+    const namespaces = ['common', 'landing', 'auth', 'courses', 'categories', 'marketplace', 'enterprises', 'professionals', 'trainers', 'blog', 'careers', 'about', 'contact', 'legal', 'profile', 'admin', 'dashboard', 'errors'];
 
     const messages: Record<string, any> = {};
 
