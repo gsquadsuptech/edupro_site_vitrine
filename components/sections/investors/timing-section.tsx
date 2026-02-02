@@ -1,9 +1,10 @@
 import { Container } from "@/components/marketing/layout/container"
+import { Smartphone, CreditCard, GraduationCap, Briefcase, Globe } from "lucide-react"
 
 export function TimingSection() {
     const catalysts = [
         {
-            icon: "📱",
+            icon: Smartphone,
             title: "Révolution Mobile",
             points: [
                 "78% de taux de pénétration mobile",
@@ -12,7 +13,7 @@ export function TimingSection() {
             ],
         },
         {
-            icon: "💳",
+            icon: CreditCard,
             title: "Explosion Mobile Money",
             points: [
                 "60% de la population bancarisée via mobile money",
@@ -21,7 +22,7 @@ export function TimingSection() {
             ],
         },
         {
-            icon: "🎓",
+            icon: GraduationCap,
             title: "Politiques Publiques Favorables",
             points: [
                 "Sénégal: Vision 2050 + Fonds 3FPT",
@@ -30,7 +31,7 @@ export function TimingSection() {
             ],
         },
         {
-            icon: "💼",
+            icon: Briefcase,
             title: "Pénurie de Talents Post-COVID",
             points: [
                 "Travail hybride normalisé",
@@ -39,7 +40,7 @@ export function TimingSection() {
             ],
         },
         {
-            icon: "🌍",
+            icon: Globe,
             title: "Momentum EdTech Africa",
             points: [
                 "+200% de startups EdTech depuis 2020",
@@ -58,20 +59,25 @@ export function TimingSection() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {catalysts.map((catalyst, index) => (
-                        <div key={index} className="rounded-lg border border-border bg-card p-6 hover:shadow-lg transition-all">
-                            <div className="mb-3 text-3xl">{catalyst.icon}</div>
-                            <h3 className="mb-3 font-bold text-foreground">{catalyst.title}</h3>
-                            <ul className="space-y-2">
-                                {catalyst.points.map((point, i) => (
-                                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                        <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
-                                        {point}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                    {catalysts.map((catalyst, index) => {
+                        const Icon = catalyst.icon
+                        return (
+                            <div key={index} className="rounded-lg border border-border bg-card p-6 hover:shadow-lg transition-all">
+                                <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-3">
+                                    <Icon className="h-6 w-6 text-primary" />
+                                </div>
+                                <h3 className="mb-3 font-bold text-foreground">{catalyst.title}</h3>
+                                <ul className="space-y-2">
+                                    {catalyst.points.map((point, i) => (
+                                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                            <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                                            {point}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className="mt-12 rounded-lg border-2 border-primary/20 bg-primary/5 p-8 text-center">

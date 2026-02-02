@@ -259,24 +259,24 @@
       "name": "SÉNÉGAL",
       "city": "Dakar (HQ)",
       "stats": {
-        "0": "",
-        "1": ""
+        "0": "500+ Apprenants",
+        "1": "Hub Régional"
       }
     },
     "ivoryCoast": {
       "name": "CÔTE D'IVOIRE",
       "city": "Abidjan",
       "stats": {
-        "0": "",
-        "1": ""
+        "0": "Nouvelle antenne",
+        "1": "Partenariats actifs"
       }
     },
     "rwanda": {
       "name": "RWANDA",
       "city": "Kigali",
       "stats": {
-        "0": "",
-        "1": ""
+        "0": "Bureau de liaison",
+        "1": "Ecosystème Tech"
       }
     }
   },

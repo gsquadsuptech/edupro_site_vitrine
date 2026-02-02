@@ -1,5 +1,5 @@
 import { DemoHeroSection } from "@/components/sections/demo/hero-section"
-import { DemoForm } from "@/components/sections/demo/demo-form"
+import { DemoRequestForm } from "@/components/marketing/sections/enterprises/demo-request-form"
 import type { Metadata } from "next"
 import { Container } from "@/components/marketing/layout/container"
 
@@ -14,7 +14,7 @@ export default function DemoPage() {
             <Container>
                 <div className="grid gap-12 lg:grid-cols-2 lg:gap-24 items-center">
                     <DemoHeroSection />
-                    <DemoForm />
+                    <DemoRequestForm />
                 </div>
             </Container>
         </section>

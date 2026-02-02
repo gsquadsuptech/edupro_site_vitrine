@@ -52,7 +52,9 @@ export function FormateursWhySection() {
                 key={index}
                 className="rounded-xl border border-border bg-card p-8 hover:shadow-lg transition-shadow"
               >
-                <Icon className="mb-4 h-8 w-8 text-primary" />
+                <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-3">
+                  <Icon className="h-6 w-6 text-primary" />
+                </div>
                 <h3 className="mb-2 text-lg font-bold">{t(`reasons.${reason.key}.title`)}</h3>
                 <p className="mb-4 text-sm font-semibold text-primary">{t(`reasons.${reason.key}.highlight`)}</p>
                 <p className="mb-4 text-sm text-muted-foreground">{t(`reasons.${reason.key}.description`)}</p>

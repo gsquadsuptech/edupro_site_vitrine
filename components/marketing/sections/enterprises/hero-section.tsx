@@ -83,7 +83,7 @@ export function EnterprisesHeroSection() {
           <div className="relative">
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="/images/edupro-entreprise2.png"
+                src="/images/edupro-entreprise3.png"
                 alt="Équipe africaine en formation"
                 width={500}
                 height={500}

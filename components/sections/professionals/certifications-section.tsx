@@ -1,35 +1,26 @@
 import { Container } from "@/components/marketing/layout/container"
 import { CheckCircle2, Share2, Award, Zap } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export function CertificationsSection() {
+    const t = useTranslations("professionals.certifications")
+
     const features = [
         {
             icon: CheckCircle2,
-            title: "Vérifiable",
-            description:
-                "Chaque certificat possède un numéro unique et un QR code. Les recruteurs peuvent vérifier son authenticité en ligne en quelques secondes.",
-            impact: "Confiance totale des employeurs, zéro fraude possible.",
+            key: "verifiable",
         },
         {
             icon: Award,
-            title: "Co-certifié",
-            description:
-                "Nos certifications sont créées en co-certification avec des experts reconnus. Chaque certification valide des compétences pratiques spécifiques.",
-            impact: "Crédibilité maximale, validation par les pairs du métier.",
+            key: "coCertified",
         },
         {
             icon: Share2,
-            title: "Partageable",
-            description:
-                "Ajoutez vos certificats à votre profil LinkedIn en 1 clic. Affichez-les sur votre CV digital. Impressionnez recruteurs et réseau.",
-            impact: "Visibilité accrue, crédibilité renforcée.",
+            key: "shareable",
         },
         {
             icon: Zap,
-            title: "Évolutif",
-            description:
-                "Cumulez plusieurs certifications et créez votre badge d'expertise. Devenez 'Data Analyst Certifié EduPro' ou 'Business Developer Expert'.",
-            impact: "Différenciation sur le marché du travail.",
+            key: "evolutive",
         },
     ]
 
@@ -38,11 +29,10 @@ export function CertificationsSection() {
             <Container>
                 <div className="mb-16 text-center">
                     <h2 className="mb-4 text-balance text-3xl font-bold md:text-4xl lg:text-5xl">
-                        Des certificats qui ouvrent des portes
+                        {t("title")}
                     </h2>
                     <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-                        Chaque Skill Pack se conclut par une certification de compétences avérées créée en co-certification avec des
-                        experts. Nos certificats sont vérifiables et vous donnent un avantage compétitif.
+                        {t("subtitle")}
                     </p>
                 </div>
 
@@ -57,10 +47,10 @@ export function CertificationsSection() {
                                 <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-3">
                                     <Icon className="h-6 w-6 text-primary" />
                                 </div>
-                                <h3 className="mb-2 text-lg font-bold">{feature.title}</h3>
-                                <p className="mb-4 text-sm text-muted-foreground">{feature.description}</p>
+                                <h3 className="mb-2 text-lg font-bold">{t(`features.${feature.key}.title`)}</h3>
+                                <p className="mb-4 text-sm text-muted-foreground">{t(`features.${feature.key}.description`)}</p>
                                 <div className="border-t border-border pt-3">
-                                    <p className="text-sm font-medium text-chart-2 italic">Impact: {feature.impact}</p>
+                                    <p className="text-sm font-medium text-chart-2 italic">Impact: {t(`features.${feature.key}.impact`)}</p>
                                 </div>
                             </div>
                         )
@@ -70,7 +60,7 @@ export function CertificationsSection() {
                 {/* Certificate Example */}
                 <div className="rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-chart-2/10 overflow-hidden">
                     <div className="p-8 md:p-12">
-                        <h3 className="mb-8 text-center text-2xl font-bold">Exemple de Certificat</h3>
+                        <h3 className="mb-8 text-center text-2xl font-bold">{t("example.title")}</h3>
 
                         <div className="max-w-md mx-auto rounded-xl border border-border bg-white p-8 shadow-lg">
                             <div className="text-center space-y-4">
@@ -85,7 +75,7 @@ export function CertificationsSection() {
 
                                 <div className="border-t border-border pt-4 space-y-2">
                                     <p className="text-sm">Décerné à</p>
-                                    <p className="text-lg font-bold">[Nom Prénom]</p>
+                                    <p className="text-lg font-bold">{t("example.name")}</p>
                                 </div>
 
                                 <div className="space-y-2 text-left bg-muted p-4 rounded-lg">
@@ -103,7 +93,7 @@ export function CertificationsSection() {
                                         Score: <span className="font-bold text-primary">92/100</span>
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        Certificat N°: <span className="font-mono">EDU-DA-2025-0042</span>
+                                        {t("example.number")}: <span className="font-mono">EDU-DA-2025-0042</span>
                                     </p>
                                 </div>
 

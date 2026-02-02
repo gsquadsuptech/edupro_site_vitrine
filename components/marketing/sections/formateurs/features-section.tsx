@@ -65,7 +65,9 @@ export function FormateursFeaturesSection() {
                 key={index}
                 className="rounded-xl border border-border bg-card p-6 hover:shadow-lg transition-shadow"
               >
-                <Icon className="mb-4 h-7 w-7 text-primary" />
+                <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-3">
+                  <Icon className="h-6 w-6 text-primary" />
+                </div>
                 <h3 className="mb-4 font-bold">{featureData.title}</h3>
                 <ul className="space-y-2">
                   {(featureData.items as string[]).map((item: string, idx: number) => (

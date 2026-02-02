@@ -37,7 +37,7 @@ export function FormateursHeroSection() {
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                         </div>
-
+{/* 
                         <div className="mt-8 inline-flex items-center gap-4">
                             <div className="inline-flex items-center gap-1 rounded-full bg-muted/50 px-3 py-1">
                                 <span className="inline-flex h-2 w-2 rounded-full bg-chart-1"></span>
@@ -47,7 +47,7 @@ export function FormateursHeroSection() {
                                 <option>Formateur indépendant</option>
                                 <option>Institut de formation</option>
                             </select>
-                        </div>
+                        </div> */}
 
                         {/* Stats */}
                         <div className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-4 border-t border-border pt-8">
@@ -64,7 +64,7 @@ export function FormateursHeroSection() {
                                 <p className="text-xs font-medium text-muted-foreground">Satisfaction formateurs</p>
                             </div>
                             <div>
-                                <p className="text-3xl font-bold text-primary">3</p>
+                                <p className="text-3xl font-bold text-primary">∞</p>
                                 <p className="text-xs font-medium text-muted-foreground">Pays couverts</p>
                             </div>
                         </div>
@@ -73,18 +73,19 @@ export function FormateursHeroSection() {
                     <div className="relative">
                         <div className="aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 to-chart-2/20">
                             <Image
-                                src="/african-instructor-teaching-digital-course.jpg"
+                                src="/images/edupro-formateur.png"
                                 alt="Formateur africain créant du contenu digital"
                                 width={500}
                                 height={500}
                                 className="h-full w-full object-cover"
                             />
                         </div>
-                        <div className="absolute inset-0 flex items-center justify-center">
+                        {/* <div className="absolute inset-0 flex items-center justify-center">
                             <button className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-xl transition-transform hover:scale-110">
                                 <Play className="h-6 w-6 text-primary ml-1" />
+                                
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </Container>

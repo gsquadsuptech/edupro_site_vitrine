@@ -14,7 +14,7 @@ export function InvestorsHeroSection() {
         <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-chart-2/5 to-accent/5 py-20 md:py-32">
             <Container>
                 <div className="mx-auto max-w-4xl">
-                    <div className="mb-8 flex flex-wrap gap-2">
+                    {/* <div className="mb-8 flex flex-wrap gap-2">
                         {badges.map((badge, index) => (
                             <div
                                 key={index}
@@ -24,7 +24,7 @@ export function InvestorsHeroSection() {
                                 {badge.label}
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
                     <h1 className="mb-6 text-balance text-4xl font-bold md:text-5xl lg:text-6xl">
                         40 milliards de FCFA de marché.

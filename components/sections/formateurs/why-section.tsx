@@ -43,6 +43,14 @@ export function FormateursWhySection() {
                 "Suivez la progression de vos apprenants, identifiez les points d'amélioration, mesurez votre impact. Des données pour optimiser vos formations.",
             cta: "Dashboard intuitif, insights actionnables",
         },
+        {
+            icon: BarChart3,
+            title: "Zéro Investissement",
+            highlight: "Lancez-vous sans frais ni infrastructure",
+            description:
+                "Créez une fois, générez des revenus à chaque inscription. Monétisez votre expertise sans plafond de revenus.",
+            cta: "Concentrez-vous sur votre expertise, on s'occupe du reste.",
+        },
     ]
 
     return (
@@ -52,10 +60,10 @@ export function FormateursWhySection() {
                     <h2 className="mb-4 text-balance text-3xl font-bold md:text-4xl lg:text-5xl">
                         Pourquoi 150+ formateurs nous font confiance
                     </h2>
-                    <p className="text-lg text-muted-foreground">Les 5 raisons qui changent tout</p>
+                    <p className="text-lg text-muted-foreground">Les 6 raisons qui changent tout</p>
                 </div>
 
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [&>:nth-child(5)]:lg:col-span-3 [&>:nth-child(5)]:lg:mx-auto [&>:nth-child(5)]:lg:max-w-md">
+                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {reasons.map((reason, index) => {
                         const Icon = reason.icon
                         return (
@@ -63,7 +71,9 @@ export function FormateursWhySection() {
                                 key={index}
                                 className="rounded-xl border border-border bg-card p-8 hover:shadow-lg transition-shadow"
                             >
-                                <Icon className="mb-4 h-8 w-8 text-primary" />
+                                <div className="mb-4 inline-flex rounded-lg bg-primary/10 p-3">
+                                    <Icon className="h-6 w-6 text-primary" />
+                                </div>
                                 <h3 className="mb-2 text-lg font-bold">{reason.title}</h3>
                                 <p className="mb-4 text-sm font-semibold text-primary">{reason.highlight}</p>
                                 <p className="mb-4 text-sm text-muted-foreground">{reason.description}</p>

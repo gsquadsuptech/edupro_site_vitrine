@@ -7,6 +7,7 @@ export default getRequestConfig(async ({ locale: localeArg }) => {
     // We fallback to the default locale to avoid 404s
     const locale = localeArg || routing.defaultLocale;
 
+    // Force reload comment
     console.log(`[i18n] Loading config for locale: ${locale} (arg was: ${localeArg})`);
 
     // Validate that the incoming `locale` parameter is valid
@@ -16,7 +17,7 @@ export default getRequestConfig(async ({ locale: localeArg }) => {
     }
 
     // Load all necessary namespaces
-    const namespaces = ['common', 'landing', 'auth', 'courses', 'categories', 'marketplace'];
+    const namespaces = ['common', 'landing', 'auth', 'courses', 'categories', 'marketplace', 'enterprises', 'professionals', 'trainers', 'blog', 'careers'];
 
     const messages: Record<string, any> = {};
 

@@ -195,7 +195,18 @@ export function Header() {
             <option value="en">🇬🇧 EN</option>
           </select>
 
-          <div className="hidden md:flex">
+          <div className="hidden items-center gap-4 md:flex">
+            {!user && !isLoading && (
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90 transition-all active:scale-95"
+                asChild
+              >
+                <Link href={`/${locale}/inscription`}>
+                  {locale === 'fr' ? 'Commencer' : 'Get started'}
+                </Link>
+              </Button>
+            )}
             {isLoading ? (
               <Button variant="ghost" size="icon" disabled>
                 <Loader2 className="h-5 w-5 animate-spin" />
