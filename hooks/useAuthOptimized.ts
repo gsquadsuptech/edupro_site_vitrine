@@ -112,7 +112,7 @@ export const useAuthOptimized = (): UseAuthOptimizedReturn => {
 
         // Écouter les changements d'authentification
         const { data: { subscription } } = supabaseAuth.auth.onAuthStateChange(
-            async (event, session) => {
+            async (event: string, session: any) => {
                 if (mounted) {
                     setSession(session);
                     setUser(session?.user ?? null);
