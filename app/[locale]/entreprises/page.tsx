@@ -21,9 +21,11 @@ export default function EntreprisePage() {
             <EnterprisesHeroSection />
             <ChallengesSection />
             <SolutionSection />
-            <FeaturesSection />
             <CaseStudySection />
+            <FeaturesSection />
+            stech
             <PricingSection />
+            lalalalalalalalalalala
             <PaymentSection />
             <FAQSection />
             <ExtendedFAQSection />

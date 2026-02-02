@@ -3,7 +3,6 @@ import { WhyEduProSection } from "@/components/sections/professionals/why-edupro
 import { SkillPacksSection } from "@/components/sections/professionals/skill-packs-section"
 import { HowItWorksSection } from "@/components/sections/professionals/how-it-works-section"
 import { CertificationsSection } from "@/components/sections/professionals/certifications-section"
-import { ProfessionalsTestimonialsSection } from "@/components/sections/professionals/testimonials-section"
 import { FAQSection } from "@/components/sections/professionals/faq-section"
 import { ProfessionalsCTASection } from "@/components/sections/professionals/cta-section"
 import type { Metadata } from "next"
@@ -18,10 +17,9 @@ export default function ProfessionnelsPage() {
         <>
             <ProfessionalsHeroSection />
             <WhyEduProSection />
-            <SkillPacksSection />
+            {/* <SkillPacksSection /> */}
             <HowItWorksSection />
             <CertificationsSection />
-            <ProfessionalsTestimonialsSection />
             <FAQSection />
             <ProfessionalsCTASection />
         </>

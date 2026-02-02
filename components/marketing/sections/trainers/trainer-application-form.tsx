@@ -103,6 +103,8 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
         throw new Error(t("form.errors.recaptchaError"))
       }
 
+      //stechapp
+
       // Créer FormData pour l'envoi
       const formDataToSend = new FormData()
       formDataToSend.append('recaptcha_token', recaptchaToken)

@@ -7,6 +7,7 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
+import eduproEntrepriseImage from "@/assets/images/edupro-entreprise1.png"
 
 export function CareersHeroSection() {
   const params = useParams()
@@ -61,7 +62,8 @@ export function CareersHeroSection() {
           <div className="relative">
             <div className="aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 to-chart-2/20 relative">
               <Image
-                src="/images/edupro-entreprise1.png"
+                src={eduproEntrepriseImage}
+
                 alt={t('imageAlt')}
                 fill
                 className="object-cover"

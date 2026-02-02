@@ -74,7 +74,7 @@ export default async function LocaleLayout({
 
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+            <body className={`${inter.variable} ${poppins.variable} antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <AuthProvider>
                         <ThemeProvider

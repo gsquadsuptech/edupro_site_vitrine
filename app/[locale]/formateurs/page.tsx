@@ -32,7 +32,7 @@ export default function FormateursPage() {
             <FormateursResourcesSection />
             <FormateursFAQSection />
             <FormateursFinalCTASection />
-            <FormateursConfidenceSection />
+            {/* <FormateursConfidenceSection /> */}
         </>
     )
 }

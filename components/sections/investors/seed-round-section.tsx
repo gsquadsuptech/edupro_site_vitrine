@@ -47,7 +47,7 @@ export function SeedRoundSection() {
                     <p className="text-lg text-muted-foreground">Nous cherchons nos premiers investisseurs</p>
                 </div>
 
-                <div className="mb-12 rounded-xl border border-border bg-card p-8 md:p-12">
+                <div className="mb-12 rounded-xl border border-primary/20 bg-primary/5 p-8 md:p-12">
                     <div className="text-center">
                         <h3 className="mb-4 text-2xl font-bold">Structure de la Levée</h3>
                         <div className="mb-4 text-lg text-muted-foreground">

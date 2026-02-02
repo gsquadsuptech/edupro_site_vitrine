@@ -1,3 +1,5 @@
+import Image from "next/image"
+import eduproEntreprise5 from "@/assets/images/edupro-entreprise5.png"
 import { Container } from "@/components/marketing/layout/container"
 
 export function CaseStudySection() {
@@ -40,12 +42,16 @@ export function CaseStudySection() {
                         </div>
                     </div>
 
-                    <div className="relative rounded-xl overflow-hidden">
-                        <img
-                            src="/bpo-call-center-team-working-with-dashboard-analyt.jpg"
-                            alt="Centre d'appels BPO avec analytics"
-                            className="h-full w-full object-cover rounded-xl"
-                        />
+                    <div className="relative rounded-xl overflow-hidden text-center flex justify-center items-center">
+                        <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-lg border border-border/50">
+                            <Image
+                                src={eduproEntreprise5}
+                                alt="Centre d'appels BPO avec analytics"
+                                fill
+                                className="object-cover"
+                                placeholder="blur"
+                            />
+                        </div>
                     </div>
                 </div>
 

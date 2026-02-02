@@ -1,29 +1,30 @@
 import { Container } from "@/components/marketing/layout/container"
+import { XCircle } from "lucide-react"
 
 export function FormateursProblemsSection() {
     const problems = [
         {
             title: "Portée limitée",
-            icon: "❌",
+            icon: XCircle,
             description: "Vous formez 10-30 personnes en présentiel, mais des milliers ont besoin de votre expertise.",
             consequence: "Impact limité et revenus plafonnés malgré une expertise reconnue.",
         },
         {
             title: "Outils complexes",
-            icon: "❌",
+            icon: XCircle,
             description:
                 "Créer du contenu digital de qualité demande des compétences techniques que vous n'avez pas ou peu de temps à maîtriser.",
             consequence: "Vous restez bloqué dans le présentiel ou créez du contenu de qualité moyenne.",
         },
         {
             title: "Visibilité inexistante",
-            icon: "❌",
+            icon: XCircle,
             description: "Même avec du contenu de qualité, comment atteindre votre audience cible à travers l'Afrique?",
             consequence: "Vos formations restent confidentielles et votre expertise sous-valorisée.",
         },
         {
             title: "Gestion chronophage",
-            icon: "❌",
+            icon: XCircle,
             description:
                 "Entre la création, la gestion administrative, le suivi des apprenants et la logistique, vous manquez de temps pour ce qui compte: former.",
             consequence: "Épuisement et impossibilité de scaler votre activité.",
@@ -41,16 +42,21 @@ export function FormateursProblemsSection() {
                 </div>
 
                 <div className="grid gap-8 md:grid-cols-2">
-                    {problems.map((problem, index) => (
-                        <div key={index} className="rounded-xl border border-border bg-card p-8 hover:shadow-lg transition-shadow">
-                            <div className="mb-4 text-4xl">{problem.icon}</div>
-                            <h3 className="mb-3 text-xl font-bold">{problem.title}</h3>
-                            <p className="mb-4 text-muted-foreground">{problem.description}</p>
-                            <p className="text-sm italic text-chart-5">
-                                <strong>Conséquence:</strong> {problem.consequence}
-                            </p>
-                        </div>
-                    ))}
+                    {problems.map((problem, index) => {
+                        const Icon = problem.icon
+                        return (
+                            <div key={index} className="rounded-xl border border-border bg-card p-8 hover:shadow-lg transition-shadow">
+                                <div className="mb-4 inline-flex rounded-lg bg-destructive/10 p-3">
+                                    <Icon className="h-6 w-6 text-destructive" />
+                                </div>
+                                <h3 className="mb-3 text-xl font-bold">{problem.title}</h3>
+                                <p className="mb-4 text-muted-foreground">{problem.description}</p>
+                                <p className="text-sm italic text-chart-5">
+                                    <strong>Conséquence:</strong> {problem.consequence}
+                                </p>
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className="mt-16 text-center">

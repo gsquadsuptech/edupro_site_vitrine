@@ -1,6 +1,6 @@
-import { CareersHeroSection } from "@/components/sections/careers/hero-section"
-import { CareersValuesSection } from "@/components/sections/careers/values-section"
-import { CareersPositionsSection } from "@/components/sections/careers/positions-section"
+import { CareersHeroSection } from "@/components/marketing/sections/careers/hero-section"
+import { CareersValuesSection } from "@/components/marketing/sections/careers/values-section"
+import { CareersPositionsSection } from "@/components/marketing/sections/careers/positions-section"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {

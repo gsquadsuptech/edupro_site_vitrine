@@ -6,9 +6,12 @@ import { ArrowRight, Check } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useLanguage } from "@/hooks/useLanguage"
+import { useTranslations } from "next-intl"
+import eduproEntrepriseImage from "@/assets/images/edupro-entreprise2.png"
 
 export function EnterprisesHeroSection() {
     const { locale } = useLanguage()
+    const t = useTranslations("enterprises.hero")
 
     return (
         <section className="relative py-20 md:py-32">
@@ -16,13 +19,10 @@ export function EnterprisesHeroSection() {
                 <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
                     <div>
                         <h1 className="mb-6 text-balance text-4xl font-bold md:text-5xl lg:text-6xl">
-                            Transformez votre capital humain en avantage compétitif
+                            {t("title")} <span className="text-primary">{t("titleHighlight")}</span>
                         </h1>
                         <p className="mb-8 text-balance text-lg text-muted-foreground md:text-xl">
-                            EduPro accompagne les <strong>entreprises africaines</strong> dans leur transformation par la formation :
-                            onboarding accéléré, upskilling continu, et mesure d'impact en temps réel.{" "}
-                            <strong>Plus de 25 entreprises</strong> nous font déjà confiance au Sénégal, en Côte d'Ivoire et au
-                            Rwanda.
+                            {t("subtitle")}
                         </p>
 
                         <div className="mb-8 flex flex-col gap-3 sm:flex-row">
@@ -32,46 +32,46 @@ export function EnterprisesHeroSection() {
                                 asChild
                             >
                                 <Link href={`/${locale}/demande-demo`}>
-                                    Réserver une démo personnalisée
+                                    {t("cta.primary")}
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>
                             </Button>
                             <Button size="lg" variant="outline">
-                                Demander un devis
+                                {t("cta.secondary")}
                             </Button>
                         </div>
 
                         <div className="mb-8 flex flex-col gap-2 text-sm text-muted-foreground">
                             <div className="flex items-center gap-2">
                                 <Check className="h-4 w-4 text-primary" />
-                                Démo gratuite 30 min
+                                {t("features.demo")}
                             </div>
                             <div className="flex items-center gap-2">
                                 <Check className="h-4 w-4 text-primary" />
-                                Proposition commerciale sous 24h
+                                {t("features.proposal")}
                             </div>
                             <div className="flex items-center gap-2">
                                 <Check className="h-4 w-4 text-primary" />
-                                Déploiement en 48h
+                                {t("features.deployment")}
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                             <div className="rounded-lg bg-muted/50 p-4 text-center">
                                 <div className="text-2xl font-bold text-primary">-50%</div>
-                                <div className="text-xs text-muted-foreground">Time-to-productivity</div>
+                                <div className="text-xs text-muted-foreground">{t("stats.productivity")}</div>
                             </div>
                             <div className="rounded-lg bg-muted/50 p-4 text-center">
                                 <div className="text-2xl font-bold text-primary">48h</div>
-                                <div className="text-xs text-muted-foreground">Déploiement moyen</div>
+                                <div className="text-xs text-muted-foreground">{t("stats.deployment")}</div>
                             </div>
                             <div className="rounded-lg bg-muted/50 p-4 text-center">
                                 <div className="text-2xl font-bold text-primary">100%</div>
-                                <div className="text-xs text-muted-foreground">ROI visible en temps réel</div>
+                                <div className="text-xs text-muted-foreground">{t("stats.roi")}</div>
                             </div>
                             <div className="rounded-lg bg-muted/50 p-4 text-center">
                                 <div className="text-2xl font-bold text-primary">-60%</div>
-                                <div className="text-xs text-muted-foreground">vs coûts présentiel</div>
+                                <div className="text-xs text-muted-foreground">{t("stats.costs")}</div>
                             </div>
                         </div>
                     </div>
@@ -79,11 +79,12 @@ export function EnterprisesHeroSection() {
                     <div className="relative">
                         <div className="relative aspect-square overflow-hidden rounded-2xl">
                             <Image
-                                src="/african-team-in-modern-office-using-dashboard-anal.jpg"
+                                src={eduproEntrepriseImage}
                                 alt="Équipe africaine en formation"
                                 width={500}
                                 height={500}
                                 className="h-full w-full object-cover"
+                                placeholder="blur"
                             />
                         </div>
                     </div>
