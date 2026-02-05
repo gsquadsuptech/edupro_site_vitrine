@@ -104,8 +104,8 @@ export async function POST(request: NextRequest) {
             .select()
             .single()
 
-        if (error) {
-            console.error('Erreur lors de l\'insertion:', error)
+        if (error || !data) {
+            console.error('Erreur lors de l\'insertion:', error || 'Aucune donnée retournée')
             return NextResponse.json(
                 { error: "Erreur lors de l'enregistrement de la demande" },
                 { status: 500 }

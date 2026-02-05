@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ['@formatjs/intl-localematcher'],
+  outputFileTracingRoot: __dirname,
 };
 
 export default withNextIntl(nextConfig);
