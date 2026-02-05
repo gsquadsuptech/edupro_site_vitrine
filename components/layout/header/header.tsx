@@ -98,7 +98,7 @@ export function Header() {
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
-                            href={`/${locale}/demande-demo`}
+                            href={`/${locale}/entreprises`}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
                             <div className="text-sm font-medium leading-none">
@@ -122,23 +122,11 @@ export function Header() {
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
-                            href={`/${locale}/formateurs/candidature`}
+                            href={`/${locale}/formateurs`}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
                             <div className="text-sm font-medium leading-none">
                               {locale === 'fr' ? 'Formateurs' : 'Trainers'}
-                            </div>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href={`/${locale}/demande-demo?type=institute`}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">
-                              {locale === 'fr' ? 'Instituts de formation' : 'Training Institutes'}
                             </div>
                           </Link>
                         </NavigationMenuLink>
@@ -321,17 +309,14 @@ export function Header() {
                       {locale === 'fr' ? 'Pour qui ?' : 'For whom?'}
                     </div>
                     <div className="ml-4 flex flex-col gap-3 border-l pl-4">
-                      <Link href={`/${locale}/demande-demo`} className="font-medium hover:text-primary">
+                      <Link href={`/${locale}/entreprises`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Entreprises' : 'Companies'}
                       </Link>
                       <Link href={`/${locale}/professionnels`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Professionnels' : 'Professionals'}
                       </Link>
-                      <Link href={`/${locale}/formateurs/candidature`} className="font-medium hover:text-primary">
+                      <Link href={`/${locale}/formateurs`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Formateurs' : 'Trainers'}
-                      </Link>
-                      <Link href={`/${locale}/demande-demo?type=institute`} className="font-medium hover:text-primary">
-                        {locale === 'fr' ? 'Instituts de formation' : 'Training Institutes'}
                       </Link>
                       <Link href={`/${locale}/investisseurs`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Investisseurs' : 'Investors'}

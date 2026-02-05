@@ -57,7 +57,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
-                <Link href={`/${locale}/demande-demo`} className="transition-colors hover:text-foreground">
+                <Link href={`/${locale}/entreprises`} className="transition-colors hover:text-foreground">
                   {locale === 'fr' ? 'Pour Entreprises' : 'For Companies'}
                 </Link>
               </li>
@@ -67,13 +67,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/formateurs/candidature`} className="transition-colors hover:text-foreground">
+                <Link href={`/${locale}/formateurs`} className="transition-colors hover:text-foreground">
                   {locale === 'fr' ? 'Pour Formateurs' : 'For Trainers'}
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/demande-demo?type=institute`} className="transition-colors hover:text-foreground">
-                  {locale === 'fr' ? 'Pour Instituts de formation' : 'For Training Institutes'}
                 </Link>
               </li>
               <li>

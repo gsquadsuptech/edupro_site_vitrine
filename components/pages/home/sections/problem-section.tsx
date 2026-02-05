@@ -1,7 +1,7 @@
 "use client"
 
 import { Container } from "@/components/marketing/container"
-import { XCircle, TrendingDown, Clock, Search } from "lucide-react"
+import { XCircle } from "lucide-react"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import eduproHome2a from "@/assets/images/edupro-home2a.png"
