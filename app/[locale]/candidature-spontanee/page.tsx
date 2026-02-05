@@ -3,6 +3,7 @@ import { Container } from "@/components/marketing/layout/container"
 import { SpontaneousHeroSection } from "@/components/sections/careers/spontaneous-hero-section"
 import { getTranslations } from "next-intl/server"
 import { Locale } from "@/i18n"
+import { Metadata } from "next"
 
 export const dynamic = 'force-dynamic'
 

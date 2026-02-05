@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { CareersHeroSection } from "@/components/sections/careers/hero-section"
 import { CareersValuesSection } from "@/components/sections/careers/values-section"
 import { CareersPositionsSection } from "@/components/sections/careers/positions-section"
