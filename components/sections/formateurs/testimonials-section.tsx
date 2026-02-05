@@ -1,6 +1,9 @@
 import { Container } from "@/components/marketing/layout/container"
 import { Star } from "lucide-react"
 import Image from "next/image"
+import mariame from "@/assets/images/mariame-wone.jpeg"
+import auger from "@/assets/images/auger.jpeg"
+import ibrahima from "@/assets/images/ibrahima-yade.jpeg"
 
 export function FormateursTestimonialsSection() {
     const testimonials = [
@@ -10,7 +13,7 @@ export function FormateursTestimonialsSection() {
             specialty: "Gestion de carrière et dynamiques professionnelles",
             quote:
                 "Je tiens à remercier l'équipe pour l'initiative et l'accompagnement. Habituée aux webinaires et aux sessions en présentiel, j'ai découvert un format entièrement nouveau... et j'en ressors avec de vraies compétences! Grâce aux cours sous format vidéos visualisées en amont, la création de cours s'est faite facilement. Une collaboration inspirante que j'ai hâte de poursuivre.",
-            image: "/images/mariame-wone.jpeg",
+            image: mariame,
             course: "Gestion de carrière",
             rating: 5,
         },
@@ -20,7 +23,7 @@ export function FormateursTestimonialsSection() {
             specialty: "Qualité, Hygiène, Sécurité et Environnement",
             quote:
                 "C'est une très bonne initiative d'avoir une plateforme qui répond aux besoins du continent africain. Plus on avançait je me suis rendu compte qu'en tant que formateur, nous avons les connaissances mais nous ne savions pas comment les dispenser à l'ère du digital. J'ai pu acquérir beaucoup de compétences au cours de ce bootcamp surtout la structuration des cours. Je commence à les appliquer dans mes formations au niveau de mon entreprise.",
-            image: "/images/auger.jpeg",
+            image: auger,
             course: "QHSE & Sécurité",
             rating: 5,
         },
@@ -30,7 +33,7 @@ export function FormateursTestimonialsSection() {
             specialty: "Formation de formateurs",
             quote:
                 "Je félicite toute l'équipe de Edupro pour leur disponibilité et leur suivi lors de ce bootcamp. J'ai vécu une expérience enrichissante et inspirante. J'y ai appris à utiliser les outils digitaux et l'IA pour moderniser mes cours. Surtout, j'ai su adapter mes formations jadis en présentiel au format digital: modules structurés, quiz, certificats et suivi des apprenants. Aujourd'hui, je pourrais déployer mes sessions en ligne avec une meilleure expérience pour tous.",
-            image: "/images/ibrahima-yade.jpeg",
+            image: ibrahima,
             course: "Formation de formateurs",
             rating: 5,
         },
