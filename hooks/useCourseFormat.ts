@@ -53,7 +53,7 @@ export const useCourseFormat = ({ courseId }: UseCourseFormatProps) => {
           table: 'courses',
           filter: `id=eq.${courseId}`,
         },
-        (payload) => {
+        (payload: any) => {
           console.log('Format du cours mis à jour:', payload.new);
           setCourseFormat(payload.new?.format || 'auto-formation');
         }

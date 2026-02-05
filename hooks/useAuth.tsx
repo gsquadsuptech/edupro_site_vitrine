@@ -196,7 +196,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     fetchUser();
 
     const { data: authListener } = supabaseInstance.auth.onAuthStateChange(
-      async (event, session) => {
+      async (event: string, session: any) => {
         console.log("[Auth] Changement d'état d'authentification:", event, session);
 
         if (session) {

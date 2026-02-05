@@ -130,7 +130,7 @@ export class NotificationService {
                     table: 'notifications',
                     filter: `user_id=eq.${userId}`
                 },
-                (payload) => {
+                (payload: any) => {
                     if (payload.eventType === 'INSERT') {
                         this.emit('notification:new', payload.new as Notification);
                     } else if (payload.eventType === 'UPDATE') {
