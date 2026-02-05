@@ -8,7 +8,6 @@
     "loading": "Chargement...",
     "error": "Erreur",
     "noResults": "Aucun résultat",
-
     "table": {
       "learner": "Apprenant",
       "quiz": "Quiz / Évaluation",
@@ -22,13 +21,11 @@
       "openMenu": "Ouvrir menu",
       "minutes": "min"
     },
-
     "status": {
       "passed": "Réussi",
       "failed": "Échoué"
     }
   },
-
   "details": {
     "title": "Détails de la tentative",
     "back": "Retour",
@@ -57,16 +54,14 @@
       "quiz": "Quiz"
     }
   },
-
   "feedback": {
-    "title": "Feedback des apprenants",
-    "description": "Consultez et gérez les avis et commentaires des apprenants sur vos cours",
-    "searchPlaceholder": "Rechercher par commentaire ou apprenant...",
+    "title": "Feedback des professionnels",
+    "description": "Consultez et gérez les avis et commentaires des professionnels sur vos cours",
+    "searchPlaceholder": "Rechercher par commentaire ou professionnel...",
     "analysisButton": "Analyse des feedbacks",
     "export": "Exporter",
     "refresh": "Actualiser",
     "loading": "Chargement des feedbacks...",
-
     "filters": {
       "status": "Statut",
       "allStatuses": "Tous les statuts",
@@ -85,9 +80,8 @@
       "ratingHigh": "Note décroissante",
       "ratingLow": "Note croissante"
     },
-
     "table": {
-      "learner": "Apprenant",
+      "learner": "Professionnel",
       "course": "Cours",
       "rating": "Évaluation",
       "comment": "Commentaire",
@@ -100,21 +94,18 @@
       "reply": "Répondre",
       "report": "Signaler"
     },
-
     "status": {
       "published": "Publié",
       "flagged": "Signalé",
       "hidden": "Masqué"
     },
-
     "noFeedback": {
       "title": "Aucun feedback trouvé",
-      "description": "Modifiez vos filtres ou attendez que les apprenants donnent leurs avis."
+      "description": "Modifiez vos filtres ou attendez que les professionnels donnent leurs avis."
     },
-
     "detailsModal": {
       "title": "Détails du feedback",
-      "learner": "Apprenant",
+      "learner": "Professionnel",
       "course": "Cours",
       "rating": "Note",
       "status": "Statut",
@@ -126,7 +117,6 @@
       "instructorResponse": "Réponse de l'instructeur",
       "respondedOn": "Répondu le"
     },
-
     "responseModal": {
       "title": "Répondre au feedback",
       "feedbackFrom": "Feedback de {name}",
@@ -138,7 +128,6 @@
       "sending": "Envoi...",
       "required": "Veuillez saisir une réponse"
     },
-
     "reportModal": {
       "title": "Signaler le feedback",
       "feedbackFrom": "Feedback de {name}",
@@ -151,13 +140,11 @@
       "reporting": "Signalement...",
       "required": "Veuillez saisir un motif de signalement"
     },
-
     "confirmModal": {
       "title": "Confirmer l'action",
       "cancel": "Annuler",
       "confirm": "Confirmer"
     },
-
     "messages": {
       "responseSuccess": "Réponse envoyée avec succès",
       "responseError": "Erreur lors de l'envoi de la réponse",

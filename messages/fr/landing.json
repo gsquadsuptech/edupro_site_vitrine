@@ -18,7 +18,7 @@
     },
     "stats": {
       "growth": "Croissance e-learning",
-      "learners": "Apprenants actifs",
+      "learners": "Professionnels actifs",
       "companies": "Entreprises intéressées",
       "countries": "Pays couverts"
     }
@@ -83,7 +83,7 @@
     "stats": {
       "learners": {
         "value": "500+",
-        "label": "APPRENANTS ACTIFS",
+        "label": "PROFESSIONNELS ACTIFS",
         "sublabel": "Phase pilote (6 mois)"
       },
       "companies": {
@@ -259,7 +259,7 @@
       "name": "SÉNÉGAL",
       "city": "Dakar (HQ)",
       "stats": {
-        "0": "500+ Apprenants",
+        "0": "500+ Professionnels",
         "1": "Hub Régional"
       }
     },

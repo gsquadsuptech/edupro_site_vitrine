@@ -15,7 +15,7 @@
     "features": "Gratuit pour commencer · Outils IA inclus · Commission attractive · Support dédié",
     "stats": {
       "trainers": "Formateurs actifs",
-      "learners": "Apprenants formés",
+      "learners": "Professionnels formés",
       "satisfaction": "Satisfaction formateurs",
       "reach": "Portée mondiale"
     }
@@ -44,7 +44,7 @@
       "features": [
         "Plateforme personnalisée à vos couleurs",
         "Votre nom de domaine",
-        "Gestion complète des apprenants",
+        "Gestion complète des professionnels",
         "Analytics et reporting avancés",
         "Migration de votre contenu existant"
       ],
@@ -119,7 +119,7 @@
         ]
       },
       "learners": {
-        "title": "Gestion des Apprenants",
+        "title": "Gestion des Professionnels",
         "items": [
           "Suivi de progression en temps réel",
           "Messagerie intégrée",
@@ -552,4 +552,3 @@
     }
   }
 }
-

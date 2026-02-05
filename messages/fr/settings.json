@@ -64,7 +64,7 @@
       "name": "Nom",
       "namePlaceholder": "Responsable",
       "description": "Description",
-      "descriptionPlaceholder": "Gestion des cours et des apprenants",
+      "descriptionPlaceholder": "Gestion des cours et des professionnels",
       "create": "Créer",
       "creating": "Création...",
       "usersCount": "{count} utilisateur",
@@ -92,7 +92,7 @@
     "categories": {
       "main": "Menu Principal",
       "catalogue": "Catalogue de Formation",
-      "learners": "Apprenants",
+      "learners": "Professionnels",
       "instructors": "Instructeurs",
       "evaluations": "Évaluations",
       "certifications": "Certifications",
@@ -108,7 +108,7 @@
       "categories": "Catégories",
       "tags": "Tags",
       "content": "Contenu du cours",
-      "students": "Apprenants",
+      "students": "Professionnels",
       "cohorts": "Cohortes/Groupes",
       "enrollments": "Inscriptions",
       "progress": "Progression & résultats",
@@ -174,7 +174,6 @@
       "createRoleError": "Impossible de créer le rôle"
     }
   },
-
   "institute": {
     "title": "Profil de l'institut",
     "description": "Gérez les informations de votre établissement de formation qui apparaîtront sur la plateforme",
@@ -297,7 +296,6 @@
       "logoUrlInvalid": "URL du logo invalide"
     }
   },
-
   "branding": {
     "title": "Branding & Site Public",
     "description": "Centre de contrôle de votre identité visuelle et de votre site public",
@@ -426,7 +424,6 @@
       "contact": "Contact"
     }
   },
-
   "notifications": {
     "title": "Emails et notifications",
     "description": "Configurez les messages envoyés aux utilisateurs de votre plateforme",
@@ -507,7 +504,6 @@
       "comingSoonDescription": "Cette fonctionnalité sera disponible prochainement. Vous pourrez personnaliser tous les messages système de la plateforme."
     }
   },
-
   "main": {
     "title": "Paramètres",
     "description": "Configurez les paramètres globaux de votre plateforme de formation",
@@ -546,4 +542,3 @@
     }
   }
 }
-

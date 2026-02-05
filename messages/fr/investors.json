@@ -86,7 +86,7 @@
       "title": "4 Piliers de Différenciation",
       "ai": {
         "title": "IA au Service de l'Afrique",
-        "description": "Assistant IA pour créer formations 40% plus vite, contextualisation automatique et génération de contenus adaptatifs selon le niveau de l'apprenant"
+        "description": "Assistant IA pour créer formations 40% plus vite, contextualisation automatique et génération de contenus adaptatifs selon le niveau du professionnel"
       },
       "mobile": {
         "title": "Mobile-First & Offline-Ready",
@@ -232,7 +232,7 @@
         "description": "Afrique subsaharienne"
       },
       "learners": {
-        "label": "Apprenants formés",
+        "label": "Professionnels actifs",
         "value": "2M+",
         "description": "Cumulé"
       },
@@ -419,4 +419,3 @@
     }
   }
 }
-

@@ -387,7 +387,10 @@
     }
   },
   "demoRequest": {
-    "title": "Demandez une démonstration",
+    "title": {
+      "enterprise": "Demandez une démonstration",
+      "institute": "Demandez une démonstration pour votre institut"
+    },
     "subtitle": {
       "enterprise": "Découvrez comment EduPro peut transformer la formation dans votre entreprise",
       "institute": "Découvrez comment EduPro peut transformer la formation dans votre institut"
@@ -424,7 +427,7 @@
         "companySize": {
           "label": {
             "enterprise": "Taille de l'entreprise",
-            "institute": "Nombre d'apprenants"
+            "institute": "Nombre de professionnels"
           },
           "placeholder": "Sélectionnez",
           "options": {
@@ -436,11 +439,11 @@
               "500+": "Plus de 500 employés"
             },
             "institute": {
-              "1-50": "1-50 apprenants",
-              "51-200": "51-200 apprenants",
-              "201-500": "201-500 apprenants",
-              "501-1000": "501-1000 apprenants",
-              "1000+": "Plus de 1000 apprenants"
+              "1-50": "1-50 professionnels",
+              "51-200": "51-200 professionnels",
+              "201-500": "201-500 professionnels",
+              "501-1000": "501-1000 professionnels",
+              "1000+": "Plus de 1000 professionnels"
             }
           }
         },
@@ -489,4 +492,3 @@
     }
   }
 }
-

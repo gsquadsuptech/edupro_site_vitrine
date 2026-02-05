@@ -25,6 +25,7 @@ import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings } fr
 import { useLanguage } from "@/hooks/useLanguage"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/useAuth"
+import { FlagImage } from "@/components/ui/flag-image"
 
 // Safely try to import role-guard util, fallback if not available
 // This pattern avoids build errors if the file structure is different than expected
@@ -97,7 +98,7 @@ export function Header() {
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
-                            href={`/${locale}/entreprises`}
+                            href={`/${locale}/demande-demo`}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
                             <div className="text-sm font-medium leading-none">
@@ -121,11 +122,23 @@ export function Header() {
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
-                            href={`/${locale}/formateurs`}
+                            href={`/${locale}/formateurs/candidature`}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
                             <div className="text-sm font-medium leading-none">
                               {locale === 'fr' ? 'Formateurs' : 'Trainers'}
+                            </div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={`/${locale}/demande-demo?type=institute`}
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">
+                              {locale === 'fr' ? 'Instituts de formation' : 'Training Institutes'}
                             </div>
                           </Link>
                         </NavigationMenuLink>
@@ -186,14 +199,24 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <select
-            className="hidden rounded-lg border border-border bg-background px-3 py-2 text-sm md:block"
-            value={locale}
-            onChange={(e) => handleLanguageChange(e.target.value as "fr" | "en")}
-          >
-            <option value="fr">🇫🇷 FR</option>
-            <option value="en">🇬🇧 EN</option>
-          </select>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="hidden gap-2 md:flex">
+                <FlagImage countryCode={locale === 'fr' ? 'fr' : 'gb'} width={20} height={15} />
+                <span className="uppercase">{locale}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => handleLanguageChange("fr")} className="gap-2 cursor-pointer">
+                <FlagImage countryCode="fr" width={20} height={15} />
+                <span>Français</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleLanguageChange("en")} className="gap-2 cursor-pointer">
+                <FlagImage countryCode="gb" width={20} height={15} />
+                <span>English</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <div className="hidden items-center gap-4 md:flex">
             {!user && !isLoading && (
@@ -298,14 +321,17 @@ export function Header() {
                       {locale === 'fr' ? 'Pour qui ?' : 'For whom?'}
                     </div>
                     <div className="ml-4 flex flex-col gap-3 border-l pl-4">
-                      <Link href={`/${locale}/entreprises`} className="font-medium hover:text-primary">
+                      <Link href={`/${locale}/demande-demo`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Entreprises' : 'Companies'}
                       </Link>
                       <Link href={`/${locale}/professionnels`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Professionnels' : 'Professionals'}
                       </Link>
-                      <Link href={`/${locale}/formateurs`} className="font-medium hover:text-primary">
+                      <Link href={`/${locale}/formateurs/candidature`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Formateurs' : 'Trainers'}
+                      </Link>
+                      <Link href={`/${locale}/demande-demo?type=institute`} className="font-medium hover:text-primary">
+                        {locale === 'fr' ? 'Instituts de formation' : 'Training Institutes'}
                       </Link>
                       <Link href={`/${locale}/investisseurs`} className="font-medium hover:text-primary">
                         {locale === 'fr' ? 'Investisseurs' : 'Investors'}
@@ -360,14 +386,26 @@ export function Header() {
                     </>
                   )}
 
-                  <select
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm mt-2"
-                    value={locale}
-                    onChange={(e) => handleLanguageChange(e.target.value as "fr" | "en")}
-                  >
-                    <option value="fr">🇫🇷 Français</option>
-                    <option value="en">🇬🇧 English</option>
-                  </select>
+                  <div className="flex gap-2 mt-2">
+                    <Button
+                      variant={locale === 'fr' ? 'default' : 'outline'}
+                      size="sm"
+                      className="flex-1 gap-2"
+                      onClick={() => handleLanguageChange("fr")}
+                    >
+                      <FlagImage countryCode="fr" width={20} height={15} />
+                      Français
+                    </Button>
+                    <Button
+                      variant={locale === 'en' ? 'default' : 'outline'}
+                      size="sm"
+                      className="flex-1 gap-2"
+                      onClick={() => handleLanguageChange("en")}
+                    >
+                      <FlagImage countryCode="gb" width={20} height={15} />
+                      English
+                    </Button>
+                  </div>
                 </div>
               </div>
             </SheetContent>

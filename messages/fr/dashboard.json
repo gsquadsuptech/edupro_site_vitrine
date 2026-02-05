@@ -416,7 +416,7 @@
       }
     },
     "stats": {
-      "title": "Statistiques rapides",
+      "stats": "Statistiques professionnels",
       "attendanceRate": "Taux de présence",
       "averageScore": "Score moyen",
       "totalPoints": "Points cumulés",

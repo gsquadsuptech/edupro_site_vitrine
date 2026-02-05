@@ -8,7 +8,7 @@
     "title": "Nous croyons au génie africain",
     "subtitle": "EduPro est née d'une conviction simple : l'Afrique possède les talents, elle a juste besoin des bons outils pour les révéler. Depuis 2023, nous bâtissons la plateforme qui transforme cette vision en réalité, une compétence à la fois.",
     "stats": {
-      "learners": "Apprenants transformés",
+      "learners": "Professionnels transformés",
       "companies": "Entreprises partenaires",
       "countries": "Pays présents",
       "trainings": "Formations créées"
@@ -40,7 +40,7 @@
     },
     "ecosystem": {
       "title": "L'Écosystème",
-      "text": "Nous ne créons pas seulement une plateforme. Nous construisons un écosystème où entreprises, formateurs, apprenants et investisseurs collaborent pour élever le niveau de compétences du continent. Chaque acteur trouve sa valeur, chaque interaction crée de l'impact. Car quand l'Afrique excelle, le monde entier en bénéficie."
+      "text": "Nous ne créons pas seulement une plateforme. Nous construisons un écosystème où entreprises, formateurs, professionnels et investisseurs collaborent pour élever le niveau de compétences du continent. Chaque acteur trouve sa valeur, chaque interaction crée de l'impact. Car quand l'Afrique excelle, le monde entier en bénéficie."
     },
     "quote": {
       "text": "J'ai grandi en voyant des talents extraordinaires limités par le manque d'opportunités de formation. EduPro est ma réponse à cette injustice. Nous ne cherchons pas à copier ce qui existe ailleurs - nous créons ce qui devrait exister ici.",
@@ -60,7 +60,7 @@
         "talents": "Les talents africains sont reconnus et valorisés à leur juste valeur sur la scène mondiale"
       }
     },
-    "ambition": "Notre ambition : Devenir la référence panafricaine en formation professionnelle digitale, touchant des millions d'apprenants dans les 10 prochaines années."
+    "ambition": "Notre ambition : Devenir la référence panafricaine en formation professionnelle digitale, touchant des millions de professionnels dans les 10 prochaines années."
   },
   "pillars": {
     "title": "Les 4 piliers qui nous guident",
@@ -87,7 +87,7 @@
           "Représentation équitable des genres et des régions",
           "Parcours adaptés à tous les niveaux (débutant à expert)",
           "Interface intuitive et accessible sur tous les appareils",
-          "Communauté inclusive et bienveillante pour tous les apprenants"
+          "Communauté inclusive et bienveillante pour tous les professionnels"
         ],
         "commitment": "Nous célébrons la diversité africaine comme notre plus grande richesse."
       },
@@ -137,7 +137,7 @@
       "impact": {
         "title": "Impact Avant Profit",
         "subtitle": "Notre succès se mesure en vies transformées",
-        "description": "Nous construisons un modèle économique durable, mais jamais au détriment de notre mission. Chaque décision est évaluée d'abord sur son impact sur les apprenants, les formateurs et les entreprises africaines.",
+        "description": "Nous construisons un modèle économique durable, mais jamais au détriment de notre mission. Chaque décision est évaluée d'abord sur son impact sur les professionnels, les formateurs et les entreprises africaines.",
         "practices": [
           "Tarifs accessibles pensés pour le contexte africain",
           "Partenariats avec des organisations pour faciliter l'accès à la formation",
@@ -147,8 +147,8 @@
       },
       "userOriented": {
         "title": "Orientation Utilisateur",
-        "subtitle": "Chaque décision commence par l'apprenant",
-        "description": "Nous concevons chaque fonctionnalité, chaque contenu, chaque interaction en pensant d'abord à l'expérience de nos utilisateurs : apprenants, formateurs et entreprises. Leur succès est notre seul compas.",
+        "subtitle": "Chaque décision commence par le professionnel",
+        "description": "Nous concevons chaque fonctionnalité, chaque contenu, chaque interaction en pensant d'abord à l'expérience de nos utilisateurs : professionnels, formateurs et entreprises. Leur succès est notre seul compas.",
         "practices": [
           "Tests utilisateurs réguliers avant chaque lancement",
           "Support client réactif et bienveillant",
@@ -191,7 +191,7 @@
       },
       "trainer": {
         "title": "Devenir Formateur Partenaire",
-        "subtitle": "Partagez votre expertise, touchez des milliers d'apprenants",
+        "subtitle": "Partagez votre expertise, touchez des milliers de professionnels",
         "description": "Vous êtes expert dans votre domaine et voulez avoir de l'impact à grande échelle ?",
         "benefits": [
           "Outils IA pour créer vos formations 40% plus vite",
@@ -307,7 +307,7 @@
         "email": "formateurs@edupro.africa"
       },
       "learners": {
-        "label": "Pour les apprenants:",
+        "label": "Pour les professionnels:",
         "email": "contact@edupro.africa"
       },
       "investors": {
@@ -393,4 +393,3 @@
     }
   }
 }
-

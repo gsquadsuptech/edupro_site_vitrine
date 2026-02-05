@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card"
 import { Quote } from "lucide-react"
 
 import Image, { StaticImageData } from "next/image"
+import { FlagImage } from "./flag-image"
 
 interface TestimonialCardProps {
   quote: string
@@ -28,8 +29,8 @@ export function TestimonialCard({ quote, name, role, company, flag, results, ima
         <div>
           <div className="font-bold">{name}</div>
           <div className="text-sm text-muted-foreground">{role}</div>
-          <div className="text-sm text-muted-foreground">
-            {company} {flag}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            {company} <FlagImage countryCode={flag} />
           </div>
         </div>
       </div>

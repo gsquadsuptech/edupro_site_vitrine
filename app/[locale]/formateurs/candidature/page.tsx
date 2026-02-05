@@ -1,4 +1,4 @@
-import { Container } from "@/components/marketing/layout/container"
+import { Container } from "@/components/marketing/container"
 import { TrainerApplicationForm } from "@/components/marketing/sections/trainers/trainer-application-form"
 import { useTranslations } from "next-intl"
 

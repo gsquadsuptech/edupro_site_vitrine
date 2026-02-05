@@ -57,7 +57,6 @@
     },
     "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce modèle de certificat ?"
   },
-
   "new": {
     "title": "Nouveau modèle de certificat",
     "description": "Créez un nouveau modèle de certificat pour vos cours",
@@ -82,7 +81,6 @@
       "saved": "Modèle de certificat enregistré avec succès"
     }
   },
-
   "edit": {
     "title": "Modifier le modèle de certificat",
     "description": "Modifiez les paramètres de votre modèle de certificat",
@@ -128,7 +126,6 @@
       "gradeIntroText": "avec une note de"
     }
   },
-
   "editor": {
     "tabs": {
       "model": "Modèle",
@@ -191,7 +188,6 @@
       "eduproLogoAlt": "Logo EduPro"
     }
   },
-
   "issued": {
     "title": "Certificats émis",
     "description": "Gérez les certificats accordés aux apprenants ayant terminé leurs cours",
@@ -239,4 +235,3 @@
     }
   }
 }
-

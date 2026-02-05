@@ -13,7 +13,7 @@ const rawSlides = [
             "Formations certifiantes reconnues",
             "Apprentissage à votre rythme",
             "Accompagnement personnalisé",
-            "Communauté d'apprenants active"
+            "Communauté de professionnels active"
         ]
     },
     {
@@ -22,7 +22,7 @@ const rawSlides = [
         features: [
             "Plateforme complète de création",
             "Outils IA intégrés",
-            "Gestion simplifiée des apprenants",
+            "Gestion simplifiée des professionnels",
             "Revenus récurrents"
         ]
     },

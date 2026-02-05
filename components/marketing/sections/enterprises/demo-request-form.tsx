@@ -23,15 +23,15 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
   const locale = (params?.locale as string) || 'fr'
   const { executeRecaptcha, isLoaded: recaptchaLoaded } = useRecaptcha()
   const t = useTranslations("enterprises.demoRequest.form")
-  
+
   // Détecter le type depuis l'URL ou la prop
   const urlType = searchParams?.get('type')
   const requestType = propRequestType || (urlType === 'institute' ? 'institute' : 'enterprise')
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
+
   const [formData, setFormData] = useState({
     company_name: "",
     contact_name: "",
@@ -151,25 +151,25 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
           <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
         </div>
       </div>
-      
+
       {error && (
         <div className="mb-6 flex items-center gap-2 rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
           <AlertCircle className="h-4 w-4" />
           <span>{error}</span>
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="company_name">
               {t(`fields.companyName.label.${requestType}`)}
             </Label>
-            <Input 
-              id="company_name" 
-              name="company_name" 
-              placeholder={t(`fields.companyName.placeholder.${requestType}`)} 
-              required 
+            <Input
+              id="company_name"
+              name="company_name"
+              placeholder={t(`fields.companyName.placeholder.${requestType}`)}
+              required
               className="bg-muted"
               value={formData.company_name}
               onChange={handleChange}
@@ -177,11 +177,11 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
           </div>
           <div className="space-y-2">
             <Label htmlFor="contact_name">{t("fields.contactName.label")}</Label>
-            <Input 
-              id="contact_name" 
-              name="contact_name" 
-              placeholder={t("fields.contactName.placeholder")} 
-              required 
+            <Input
+              id="contact_name"
+              name="contact_name"
+              placeholder={t("fields.contactName.placeholder")}
+              required
               className="bg-muted"
               value={formData.contact_name}
               onChange={handleChange}
@@ -192,12 +192,12 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="email">{t("fields.email.label")}</Label>
-            <Input 
-              id="email" 
-              name="email" 
-              type="email" 
-              placeholder={t("fields.email.placeholder")} 
-              required 
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder={t("fields.email.placeholder")}
+              required
               className="bg-muted"
               value={formData.email}
               onChange={handleChange}
@@ -205,11 +205,11 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">{t("fields.phone.label")}</Label>
-            <Input 
-              id="phone" 
-              name="phone" 
-              type="tel" 
-              placeholder={t("fields.phone.placeholder")} 
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder={t("fields.phone.placeholder")}
               className="bg-muted"
               value={formData.phone}
               onChange={handleChange}
@@ -222,8 +222,8 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
             <Label htmlFor="company_size">
               {t(`fields.companySize.label.${requestType}`)}
             </Label>
-            <Select 
-              value={formData.company_size} 
+            <Select
+              value={formData.company_size}
               onValueChange={(value) => handleSelectChange('company_size', value)}
             >
               <SelectTrigger className="bg-muted">
@@ -238,8 +238,8 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
           </div>
           <div className="space-y-2">
             <Label htmlFor="industry">{t("fields.industry.label")}</Label>
-            <Select 
-              value={formData.industry} 
+            <Select
+              value={formData.industry}
               onValueChange={(value) => handleSelectChange('industry', value)}
             >
               <SelectTrigger className="bg-muted">
@@ -257,10 +257,10 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="country">{t("fields.country.label")}</Label>
-            <Input 
-              id="country" 
-              name="country" 
-              placeholder={t("fields.country.placeholder")} 
+            <Input
+              id="country"
+              name="country"
+              placeholder={t("fields.country.placeholder")}
               className="bg-muted"
               value={formData.country}
               onChange={handleChange}
@@ -268,10 +268,10 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
           </div>
           <div className="space-y-2">
             <Label htmlFor="city">{t("fields.city.label")}</Label>
-            <Input 
-              id="city" 
-              name="city" 
-              placeholder={t("fields.city.placeholder")} 
+            <Input
+              id="city"
+              name="city"
+              placeholder={t("fields.city.placeholder")}
               className="bg-muted"
               value={formData.city}
               onChange={handleChange}
@@ -281,19 +281,19 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
 
         <div className="space-y-2">
           <Label htmlFor="message">{t("fields.message.label")}</Label>
-          <Textarea 
-            id="message" 
+          <Textarea
+            id="message"
             name="message"
-            placeholder={t("fields.message.placeholder")} 
-            className="min-h-[120px] bg-muted" 
+            placeholder={t("fields.message.placeholder")}
+            className="min-h-[120px] bg-muted"
             value={formData.message}
             onChange={handleChange}
           />
         </div>
 
-        <Button 
-          type="submit" 
-          className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground" 
+        <Button
+          type="submit"
+          className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
@@ -309,4 +309,3 @@ export function DemoRequestForm({ requestType: propRequestType }: DemoRequestFor
     </div>
   )
 }
-

@@ -1,11 +1,19 @@
-import { BlogHeroSection } from "@/components/marketing/sections/blog/hero-section"
-import { BlogArticlesSection } from "@/components/marketing/sections/blog/articles-section"
+import { BlogHeroSection } from "@/components/sections/blog/hero-section"
+import { BlogArticlesSection } from "@/components/sections/blog/articles-section"
 import type { Metadata } from "next"
+import { getNamespaceMessages, type Locale } from "@/i18n"
 
-export const metadata: Metadata = {
-    title: "Blog & Actualités | EduPro",
-    description: "Découvrez nos articles, conseils pratiques et tendances sur la formation professionnelle en Afrique.",
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
+    const { locale } = await params
+    const messages = await getNamespaceMessages(locale, "blog")
+
+    return {
+        title: messages?.meta?.title ?? "Blog | EduPro",
+        description: messages?.meta?.description ?? "EduPro Blog",
+    }
 }
+
+export const dynamic = 'force-dynamic'
 
 export default function BlogPage() {
     return (

@@ -37,7 +37,7 @@ export function FormateursHeroSection() {
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                         </div>
-{/* 
+                        {/* 
                         <div className="mt-8 inline-flex items-center gap-4">
                             <div className="inline-flex items-center gap-1 rounded-full bg-muted/50 px-3 py-1">
                                 <span className="inline-flex h-2 w-2 rounded-full bg-chart-1"></span>

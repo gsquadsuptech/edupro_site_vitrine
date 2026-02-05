@@ -1,11 +1,12 @@
 import { Container } from "@/components/marketing/container"
 import { MapPin } from "lucide-react"
 import Image from "next/image"
+import { FlagImage } from "@/components/ui/flag-image"
 
 export function CountriesSection() {
   const countries = [
     {
-      flag: "🇸🇳",
+      code: "sn",
       name: "SÉNÉGAL",
       city: "Dakar (HQ)",
       stats: [
@@ -15,7 +16,7 @@ export function CountriesSection() {
       image: "/placeholder.jpg"
     },
     {
-      flag: "🇨🇮",
+      code: "ci",
       name: "CÔTE D'IVOIRE",
       city: "Abidjan",
       stats: [
@@ -25,7 +26,7 @@ export function CountriesSection() {
       image: "/placeholder.jpg"
     },
     {
-      flag: "🇷🇼",
+      code: "rw",
       name: "RWANDA",
       city: "Kigali",
       stats: [
@@ -64,7 +65,7 @@ export function CountriesSection() {
               <div className="relative -mt-20 p-6">
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-3xl shadow-lg">
-                    {country.flag}
+                    <FlagImage countryCode={country.code} width={32} height={24} />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold uppercase tracking-wide text-white">

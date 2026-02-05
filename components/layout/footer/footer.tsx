@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react"
 import logo from "@/assets/images/logo.png"
 import { useLanguage } from "@/hooks/useLanguage"
+import { FlagImage } from "@/components/ui/flag-image"
 
 export function Footer() {
   const { locale } = useLanguage()
@@ -56,7 +57,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
-                <Link href={`/${locale}/entreprises`} className="transition-colors hover:text-foreground">
+                <Link href={`/${locale}/demande-demo`} className="transition-colors hover:text-foreground">
                   {locale === 'fr' ? 'Pour Entreprises' : 'For Companies'}
                 </Link>
               </li>
@@ -66,8 +67,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/formateurs`} className="transition-colors hover:text-foreground">
+                <Link href={`/${locale}/formateurs/candidature`} className="transition-colors hover:text-foreground">
                   {locale === 'fr' ? 'Pour Formateurs' : 'For Trainers'}
+                </Link>
+              </li>
+              <li>
+                <Link href={`/${locale}/demande-demo?type=institute`} className="transition-colors hover:text-foreground">
+                  {locale === 'fr' ? 'Pour Instituts de formation' : 'For Training Institutes'}
                 </Link>
               </li>
               <li>
@@ -121,7 +127,15 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 EduPro. {locale === 'fr' ? 'Tous droits réservés' : 'All rights reserved'}. {locale === 'fr' ? 'Présent au' : 'Present in'} 🇸🇳 Sénégal · 🇨🇮 Côte d'Ivoire · 🇷🇼 Rwanda</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 mb-4">
+            <span>&copy; 2025 EduPro. {locale === 'fr' ? 'Tous droits réservés' : 'All rights reserved'}.</span>
+            <span className="flex items-center gap-1.5 ml-1">
+              {locale === 'fr' ? 'Présent au' : 'Present in'}
+              <span className="flex items-center gap-1"><FlagImage countryCode="sn" /> Sénégal</span>
+              <span className="flex items-center gap-1">· <FlagImage countryCode="ci" /> Côte d'Ivoire</span>
+              <span className="flex items-center gap-1">· <FlagImage countryCode="rw" /> Rwanda</span>
+            </span>
+          </div>
           <p className="mt-2 text-xs">
             {locale === 'fr' ? (
               <>

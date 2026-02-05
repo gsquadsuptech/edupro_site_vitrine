@@ -23,11 +23,11 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
   const locale = (params?.locale as string) || 'fr'
   const { executeRecaptcha, isLoaded: recaptchaLoaded } = useRecaptcha()
   const t = useTranslations("trainers.application")
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -102,8 +102,6 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
         console.error("Erreur reCAPTCHA:", recaptchaError)
         throw new Error(t("form.errors.recaptchaError"))
       }
-
-      //stechapp
 
       // Créer FormData pour l'envoi
       const formDataToSend = new FormData()
@@ -186,23 +184,23 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
           <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
         </div>
       </div>
-      
+
       {error && (
         <div className="mb-6 flex items-center gap-2 rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
           <AlertCircle className="h-4 w-4" />
           <span>{error}</span>
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="first_name">{t("form.fields.firstName.label")}</Label>
-            <Input 
-              id="first_name" 
-              name="first_name" 
-              placeholder={t("form.fields.firstName.placeholder")} 
-              required 
+            <Input
+              id="first_name"
+              name="first_name"
+              placeholder={t("form.fields.firstName.placeholder")}
+              required
               className="bg-muted"
               value={formData.first_name}
               onChange={handleChange}
@@ -210,11 +208,11 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
           </div>
           <div className="space-y-2">
             <Label htmlFor="last_name">{t("form.fields.lastName.label")}</Label>
-            <Input 
-              id="last_name" 
-              name="last_name" 
-              placeholder={t("form.fields.lastName.placeholder")} 
-              required 
+            <Input
+              id="last_name"
+              name="last_name"
+              placeholder={t("form.fields.lastName.placeholder")}
+              required
               className="bg-muted"
               value={formData.last_name}
               onChange={handleChange}
@@ -225,12 +223,12 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="email">{t("form.fields.email.label")}</Label>
-            <Input 
-              id="email" 
-              name="email" 
-              type="email" 
-              placeholder={t("form.fields.email.placeholder")} 
-              required 
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder={t("form.fields.email.placeholder")}
+              required
               className="bg-muted"
               value={formData.email}
               onChange={handleChange}
@@ -238,11 +236,11 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">{t("form.fields.phone.label")}</Label>
-            <Input 
-              id="phone" 
-              name="phone" 
-              type="tel" 
-              placeholder={t("form.fields.phone.placeholder")} 
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder={t("form.fields.phone.placeholder")}
               className="bg-muted"
               value={formData.phone}
               onChange={handleChange}
@@ -252,8 +250,8 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
 
         <div className="space-y-2">
           <Label htmlFor="experience_years">{t("form.fields.experienceYears.label")}</Label>
-          <Select 
-            value={formData.experience_years} 
+          <Select
+            value={formData.experience_years}
             onValueChange={(value) => handleSelectChange('experience_years', value)}
           >
             <SelectTrigger className="bg-muted">
@@ -269,11 +267,11 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
 
         <div className="space-y-2">
           <Label htmlFor="specialties">{t("form.fields.specialties.label")}</Label>
-          <Textarea 
-            id="specialties" 
+          <Textarea
+            id="specialties"
             name="specialties"
-            placeholder={t("form.fields.specialties.placeholder")} 
-            className="min-h-[100px] bg-muted" 
+            placeholder={t("form.fields.specialties.placeholder")}
+            className="min-h-[100px] bg-muted"
             value={formData.specialties}
             onChange={handleChange}
             required
@@ -284,8 +282,8 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
         <div className="space-y-2">
           <Label htmlFor="cv">{t("form.fields.cv.label")}</Label>
           <div className="flex items-center gap-4">
-            <Input 
-              id="cv" 
+            <Input
+              id="cv"
               name="cv"
               type="file"
               accept=".pdf,.doc,.docx"
@@ -304,11 +302,11 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
 
         <div className="space-y-2">
           <Label htmlFor="cover_letter">{t("form.fields.coverLetter.label")}</Label>
-          <Textarea 
-            id="cover_letter" 
+          <Textarea
+            id="cover_letter"
             name="cover_letter"
-            placeholder={t("form.fields.coverLetter.placeholder")} 
-            className="min-h-[150px] bg-muted" 
+            placeholder={t("form.fields.coverLetter.placeholder")}
+            className="min-h-[150px] bg-muted"
             value={formData.cover_letter}
             onChange={handleChange}
             required
@@ -318,15 +316,15 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
         <div className="space-y-4">
           <div className="rounded-lg border border-border bg-muted/50 p-4">
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="bootcamp" 
+              <Checkbox
+                id="bootcamp"
                 checked={formData.bootcamp}
                 onCheckedChange={(checked) => handleCheckboxChange('bootcamp', checked as boolean)}
                 className="mt-1"
               />
               <div className="space-y-1">
-                <Label 
-                  htmlFor="bootcamp" 
+                <Label
+                  htmlFor="bootcamp"
                   className="text-sm font-medium leading-none cursor-pointer"
                 >
                   {t("form.fields.bootcamp.label")}
@@ -340,15 +338,15 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
 
           <div className="rounded-lg border border-border bg-muted/50 p-4">
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="wants_certification" 
+              <Checkbox
+                id="wants_certification"
                 checked={formData.wants_certification}
                 onCheckedChange={(checked) => handleCheckboxChange('wants_certification', checked as boolean)}
                 className="mt-1"
               />
               <div className="space-y-1">
-                <Label 
-                  htmlFor="wants_certification" 
+                <Label
+                  htmlFor="wants_certification"
                   className="text-sm font-medium leading-none cursor-pointer"
                 >
                   {t("form.fields.certification.label")}
@@ -364,9 +362,9 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
           </div>
         </div>
 
-        <Button 
-          type="submit" 
-          className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground" 
+        <Button
+          type="submit"
+          className="w-full bg-gradient-to-r from-primary to-chart-2 text-primary-foreground"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
@@ -382,4 +380,3 @@ export function TrainerApplicationForm({ isBootcamp = false }: TrainerApplicatio
     </div>
   )
 }
-

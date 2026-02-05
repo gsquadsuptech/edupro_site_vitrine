@@ -13,7 +13,8 @@ import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { User, Briefcase, GraduationCap, Eye, EyeOff, Check, ArrowRight, Loader2 } from "lucide-react"
+import { FlagImage } from "@/components/ui/flag-image"
+import { User, Briefcase, GraduationCap, Eye, EyeOff, Check, ArrowRight, Loader2, School } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
 import { getAppUrl } from "@/lib/utils"
@@ -21,10 +22,10 @@ import { getAppUrl } from "@/lib/utils"
 // Import assets locally if needed, assuming /images/edupro-logo.png exists in public or using the imported logo from header
 import logo from "@/assets/images/logo.png"
 
-type TabType = "apprenant" | "formateur" | "entreprise"
+type TabType = "professionnel" | "formateur" | "entreprise" | "institut"
 
 export default function InscriptionPage() {
-    const [activeTab, setActiveTab] = useState<TabType>("apprenant")
+    const [activeTab, setActiveTab] = useState<TabType>("professionnel")
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
@@ -58,30 +59,36 @@ export default function InscriptionPage() {
         e.preventDefault()
         setIsLoading(true)
 
+        // Split name into first and last name
+        const nameParts = formData.fullName.trim().split(' ')
+        const firstName = nameParts[0] || ''
+        const lastName = nameParts.slice(1).join(' ') || ''
+
         try {
-            const { error } = await supabase.auth.signUp({
-                email: formData.email,
-                password: formData.password,
-                options: {
-                    data: {
-                        full_name: formData.fullName,
-                        country: formData.country,
-                        role: 'student' // Default role for learners
-                    },
-                    // Redirect to the backend app after email confirmation if required
-                    emailRedirectTo: getAppUrl('/auth/callback')
-                }
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                    firstName,
+                    lastName,
+                    role: 'student'
+                }),
             })
 
-            if (error) {
+            const data = await response.json()
+
+            if (!response.ok) {
                 toast.error("Erreur lors de l'inscription", {
-                    description: error.message
+                    description: data.error || "Une erreur est survenue"
                 })
             } else {
                 toast.success("Inscription réussie !", {
                     description: "Veuillez vérifier votre email pour confirmer votre compte."
                 })
-                // Optional: redirect to a specific success page or info page
             }
         } catch (err) {
             console.error(err)
@@ -110,14 +117,14 @@ export default function InscriptionPage() {
                     <div className="container mx-auto px-4">
                         <div className="flex justify-center gap-2 md:gap-4">
                             <button
-                                onClick={() => setActiveTab("apprenant")}
-                                className={`flex items-center gap-2 border-b-2 px-4 py-4 text-sm font-medium transition-colors md:px-8 md:text-base ${activeTab === "apprenant"
+                                onClick={() => setActiveTab("professionnel")}
+                                className={`flex items-center gap-2 border-b-2 px-4 py-4 text-sm font-medium transition-colors md:px-8 md:text-base ${activeTab === "professionnel"
                                     ? "border-violet-600 text-violet-600"
                                     : "border-transparent text-slate-500 hover:text-slate-700"
                                     }`}
                             >
                                 <User className="h-5 w-5" />
-                                <span>Apprenant</span>
+                                <span>Professionnel</span>
                             </button>
                             <button
                                 onClick={() => setActiveTab("formateur")}
@@ -128,6 +135,16 @@ export default function InscriptionPage() {
                             >
                                 <GraduationCap className="h-5 w-5" />
                                 <span>Formateur</span>
+                            </button>
+                            <button
+                                onClick={() => setActiveTab("institut")}
+                                className={`flex items-center gap-2 border-b-2 px-4 py-4 text-sm font-medium transition-colors md:px-8 md:text-base ${activeTab === "institut"
+                                    ? "border-emerald-600 text-emerald-600"
+                                    : "border-transparent text-slate-500 hover:text-slate-700"
+                                    }`}
+                            >
+                                <School className="h-5 w-5" />
+                                <span>Institut de Formation</span>
                             </button>
                             <button
                                 onClick={() => setActiveTab("entreprise")}
@@ -146,8 +163,8 @@ export default function InscriptionPage() {
                 {/* Content Area */}
                 <section className="py-12 md:py-16">
                     <div className="container mx-auto px-4">
-                        {/* APPRENANT TAB */}
-                        {activeTab === "apprenant" && (
+                        {/* PROFESSIONNEL TAB */}
+                        {activeTab === "professionnel" && (
                             <div className="mx-auto max-w-md animate-fade-in">
                                 <div className="mb-8 text-center">
                                     <h2 className="mb-2 text-3xl font-bold text-slate-900">Créer mon compte</h2>
@@ -221,15 +238,51 @@ export default function InscriptionPage() {
                                                 <SelectValue placeholder="Sélectionnez votre pays" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="senegal">🇸🇳 Sénégal</SelectItem>
-                                                <SelectItem value="cote-ivoire">🇨🇮 Côte d'Ivoire</SelectItem>
-                                                <SelectItem value="rwanda">🇷🇼 Rwanda</SelectItem>
-                                                <SelectItem value="mali">🇲🇱 Mali</SelectItem>
-                                                <SelectItem value="benin">🇧🇯 Bénin</SelectItem>
-                                                <SelectItem value="burkina">🇧🇫 Burkina Faso</SelectItem>
-                                                <SelectItem value="cameroun">🇨🇲 Cameroun</SelectItem>
-                                                <SelectItem value="gabon">🇬🇦 Gabon</SelectItem>
-                                                <SelectItem value="autre">🌍 Autre</SelectItem>
+                                                <SelectItem value="senegal">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="sn" /> <span>Sénégal</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="cote-ivoire">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="ci" /> <span>Côte d'Ivoire</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="rwanda">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="rw" /> <span>Rwanda</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="mali">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="ml" /> <span>Mali</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="benin">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="bj" /> <span>Bénin</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="burkina">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="bf" /> <span>Burkina Faso</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="cameroun">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="cm" /> <span>Cameroun</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="gabon">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="ga" /> <span>Gabon</span>
+                                                    </div>
+                                                </SelectItem>
+                                                <SelectItem value="autre">
+                                                    <div className="flex items-center gap-2">
+                                                        <FlagImage countryCode="autre" /> <span>Autre</span>
+                                                    </div>
+                                                </SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
@@ -313,7 +366,7 @@ export default function InscriptionPage() {
                                     </div>
                                     <h2 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">Devenir Formateur</h2>
                                     <p className="text-lg text-muted-foreground">
-                                        Partagez votre expertise et formez des milliers d'apprenants africains
+                                        Partagez votre expertise et formez des milliers de professionnels africains
                                     </p>
                                 </div>
 
@@ -325,7 +378,7 @@ export default function InscriptionPage() {
                                         </div>
                                         <div>
                                             <h3 className="mb-1 font-semibold text-foreground">Visibilité panafricaine</h3>
-                                            <p className="text-sm text-muted-foreground">Atteignez des milliers d'apprenants</p>
+                                            <p className="text-sm text-muted-foreground">Atteignez des milliers de professionnels</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-4 rounded-lg border border-border bg-card p-6 text-card-foreground shadow-sm transition-colors hover:bg-muted/50">
@@ -407,14 +460,10 @@ export default function InscriptionPage() {
                                         size="lg"
                                         className="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-6 text-lg font-semibold text-white hover:opacity-90"
                                     >
-                                        <a
-                                            href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
+                                        <Link href={`/${locale}/formateurs/candidature`}>
                                             Postuler comme formateur
                                             <ArrowRight className="ml-2 h-5 w-5" />
-                                        </a>
+                                        </Link>
                                     </Button>
                                     <p className="mt-4 text-sm text-muted-foreground">Taux d'acceptation : 85% des candidats qualifiés</p>
                                 </div>
@@ -559,14 +608,123 @@ export default function InscriptionPage() {
                                         size="lg"
                                         className="bg-gradient-to-r from-blue-600 to-cyan-600 px-8 py-6 text-lg font-semibold text-white hover:opacity-90"
                                     >
-                                        <a
-                                            href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
+                                        <Link href={`/${locale}/demande-demo`}>
                                             Demander une démo
                                             <ArrowRight className="ml-2 h-5 w-5" />
-                                        </a>
+                                        </Link>
+                                    </Button>
+                                    <p className="mt-4 text-sm text-muted-foreground">Réponse sous 24h - Sans engagement</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* INSTITUT TAB */}
+                        {activeTab === "institut" && (
+                            <div className="mx-auto max-w-3xl animate-fade-in">
+                                <div className="mb-12 text-center">
+                                    <div className="mb-6 flex justify-center">
+                                        <div className="rounded-full bg-emerald-100 p-6 dark:bg-emerald-900/30">
+                                            <School className="h-16 w-16 text-emerald-600 dark:text-emerald-400" />
+                                        </div>
+                                    </div>
+                                    <h2 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">Solution Institut de Formation</h2>
+                                    <p className="text-lg text-muted-foreground">Transformez votre institut avec une plateforme de formation digitale complète</p>
+                                </div>
+
+                                {/* Solutions */}
+                                <div className="mb-12 grid gap-6 md:grid-cols-2">
+                                    <div className="flex gap-4 rounded-lg border border-border bg-card p-6 text-card-foreground shadow-sm transition-colors hover:bg-muted/50">
+                                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                                            <Check className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <h3 className="mb-1 font-semibold text-foreground">Académie digitale personnalisée à vos couleurs</h3>
+                                            <p className="text-sm text-muted-foreground">Votre plateforme avec votre identité visuelle</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 rounded-lg border border-border bg-card p-6 text-card-foreground shadow-sm transition-colors hover:bg-muted/50">
+                                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                                            <Check className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <h3 className="mb-1 font-semibold text-foreground">Votre nom de domaine</h3>
+                                            <p className="text-sm text-muted-foreground">Plateforme accessible via votre propre domaine</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 rounded-lg border border-border bg-card p-6 text-card-foreground shadow-sm transition-colors hover:bg-muted/50">
+                                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                                            <Check className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <h3 className="mb-1 font-semibold text-foreground">Gestion complète des professionnels</h3>
+                                            <p className="text-sm text-muted-foreground">Suivi et administration de tous vos professionnels</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 rounded-lg border border-border bg-card p-6 text-card-foreground shadow-sm transition-colors hover:bg-muted/50">
+                                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                                            <Check className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <h3 className="mb-1 font-semibold text-foreground">Analytics et reporting avancés</h3>
+                                            <p className="text-sm text-muted-foreground">Tableaux de bord et rapports détaillés sur la progression</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Process */}
+                                <div className="mb-12">
+                                    <h3 className="mb-8 text-center text-2xl font-bold text-foreground">Comment ça marche</h3>
+                                    <div className="grid gap-6 md:grid-cols-4">
+                                        <div className="text-center">
+                                            <div className="mb-4 flex justify-center">
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-lg font-bold text-white">
+                                                    1
+                                                </div>
+                                            </div>
+                                            <h4 className="mb-2 font-semibold text-foreground">Demande de démo</h4>
+                                            <p className="text-sm text-muted-foreground">Remplissez le formulaire</p>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="mb-4 flex justify-center">
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-lg font-bold text-white">
+                                                    2
+                                                </div>
+                                            </div>
+                                            <h4 className="mb-2 font-semibold text-foreground">Démo personnalisée</h4>
+                                            <p className="text-sm text-muted-foreground">Présentation adaptée (48h)</p>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="mb-4 flex justify-center">
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-lg font-bold text-white">
+                                                    3
+                                                </div>
+                                            </div>
+                                            <h4 className="mb-2 font-semibold text-foreground">Essai gratuit</h4>
+                                            <p className="text-sm text-muted-foreground">Testez pendant 14 jours</p>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="mb-4 flex justify-center">
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-lg font-bold text-white">
+                                                    4
+                                                </div>
+                                            </div>
+                                            <h4 className="mb-2 font-semibold text-foreground">Déploiement</h4>
+                                            <p className="text-sm text-muted-foreground">Configuration et formation (48h)</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* CTA */}
+                                <div className="text-center">
+                                    <Button
+                                        asChild
+                                        size="lg"
+                                        className="bg-gradient-to-r from-emerald-600 to-teal-600 px-8 py-6 text-lg font-semibold text-white hover:opacity-90"
+                                    >
+                                        <Link href={`/${locale}/demande-demo?type=institute`}>
+                                            Demander une démo
+                                            <ArrowRight className="ml-2 h-5 w-5" />
+                                        </Link>
                                     </Button>
                                     <p className="mt-4 text-sm text-muted-foreground">Réponse sous 24h - Sans engagement</p>
                                 </div>

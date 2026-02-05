@@ -23,9 +23,7 @@ export default function EntreprisePage() {
             <SolutionSection />
             <CaseStudySection />
             <FeaturesSection />
-            stech
             <PricingSection />
-            lalalalalalalalalalala
             <PaymentSection />
             <FAQSection />
             <ExtendedFAQSection />

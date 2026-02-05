@@ -1,9 +1,8 @@
 {
   "title": "Sessions de formation",
-  "description": "Créez et gérez vos cohortes et groupes d'apprenants",
+  "description": "Créez et gérez vos cohortes et groupes de professionnels",
   "createSession": "Créer une session",
   "searchPlaceholder": "Rechercher des sessions...",
-
   "status": {
     "draft": "Brouillon",
     "upcoming": "À venir",
@@ -11,7 +10,6 @@
     "completed": "Terminée",
     "cancelled": "Annulée"
   },
-
   "messages": {
     "demoData": "Affichage des données de démonstration",
     "demoDataDescription": "Connexion à la base de données impossible. Données simulées affichées.",
@@ -24,7 +22,6 @@
     "deleteSuccess": "Session supprimée avec succès",
     "deleteError": "Erreur lors de la suppression de la session"
   },
-
   "labels": {
     "sessionWithoutName": "Session sans nom",
     "unknownCourse": "Cours inconnu",
@@ -36,7 +33,6 @@
     "loading": "Chargement des sessions...",
     "noSessions": "Aucune session trouvée"
   },
-
   "actions": {
     "create": "Créer",
     "edit": "Modifier",
@@ -51,7 +47,6 @@
     "save": "Enregistrer",
     "back": "Retour"
   },
-
   "table": {
     "image": "Image",
     "session": "Session",
@@ -61,7 +56,6 @@
     "status": "Statut",
     "actions": "Actions"
   },
-
   "labels": {
     "course": "Cours:",
     "instructors": "Formateur(s):",
@@ -69,7 +63,6 @@
     "loading": "Chargement des sessions...",
     "noSessions": "Aucune session trouvée"
   },
-
   "create": {
     "title": "Créer une nouvelle cohorte",
     "validationErrors": "Erreurs de validation",
@@ -95,7 +88,6 @@
       "apiError": "Erreur API: {error}"
     }
   },
-
   "tabs": {
     "general": "Informations générales",
     "planning": "Planification",
@@ -103,7 +95,6 @@
     "pricing": "Tarification",
     "communication": "Communication"
   },
-
   "generalInfo": {
     "title": "Informations générales",
     "error": "Erreur",
@@ -137,19 +128,18 @@
     "selectCustomTemplate": "Sélectionner un modèle personnalisé",
     "noCertificate": "Aucun (ne pas délivrer de certificat)",
     "noCustomTemplates": "Aucun modèle personnalisé disponible pour cette organisation.",
-    "certificateTemplateDescription": "Ce modèle sera utilisé pour générer les certificats des apprenants.",
+    "certificateTemplateDescription": "Ce modèle sera utilisé pour générer les certificats des professionnels.",
     "courseNoCertificate": "Le cours sélectionné ne permet pas la délivrance de certificats."
   },
-
   "communication": {
     "title": "Communication",
-    "description": "Gérez les communications avec les apprenants",
+    "description": "Gérez les communications avec les professionnels",
     "welcomeMessage": "Message de bienvenue",
-    "welcomeMessagePlaceholder": "Message de bienvenue envoyé aux apprenants...",
-    "welcomeMessageDescription": "Ce message sera envoyé aux apprenants lorsqu'ils rejoignent la session.",
+    "welcomeMessagePlaceholder": "Message de bienvenue envoyé aux professionnels...",
+    "welcomeMessageDescription": "Ce message sera envoyé aux professionnels lorsqu'ils rejoignent la session.",
     "endMessage": "Message de fin de session",
-    "endMessagePlaceholder": "Message envoyé aux apprenants à la fin de la session...",
-    "endMessageDescription": "Ce message sera envoyé aux apprenants à la fin de la session.",
+    "endMessagePlaceholder": "Message envoyé aux professionnels à la fin de la session...",
+    "endMessageDescription": "Ce message sera envoyé aux professionnels à la fin de la session.",
     "channelTitle": "Canal de communication",
     "channelDescription": "Choisissez la plateforme qui sera utilisée pour les communications du groupe",
     "whatsapp": "WhatsApp",
@@ -159,7 +149,6 @@
     "groupLinkPlaceholder": "https://...",
     "groupLinkDescription": "Lien vers le groupe de discussion pour cette cohorte"
   },
-
   "planning": {
     "title": "Planification de la session",
     "readOnlySession": "Cette section est en lecture seule car la session est clôturée.",
@@ -180,15 +169,14 @@
     "urlInvalid": "L'URL est invalide",
     "descriptionRequired": "La description est requise"
   },
-
   "participants": {
     "title": "Participants",
     "description": "Gérer les participants de la cohorte",
-    "descriptionView": "Apprenants inscrits à cette cohorte",
+    "learners": "Professionnels inscrits",
     "error": "Erreur",
     "hide": "Masquer",
     "errorLoadingStudents": "Impossible de charger la liste des étudiants.",
-    "errorOrganizationMessage": "Vérifiez que votre organisation a des apprenants inscrits ou utilisez le bouton \"Voir tous les membres\" pour afficher tous les membres de votre organisation.",
+    "errorOrganizationMessage": "Vérifiez que votre organisation a des professionnel(s) inscrits ou utilisez le bouton \"Voir tous les membres\" pour afficher tous les membres de votre organisation.",
     "adding": "Ajout...",
     "add": "Ajouter",
     "addSelected": "Ajouter ({count})",
@@ -217,7 +205,7 @@
     "selectDeadline": "Sélectionner une date limite",
     "customDeadlineDescription": "Date après laquelle les inscriptions ne seront plus acceptées",
     "waitlist": "Liste d'attente",
-    "waitlistDescription": "Permettre aux apprenants de rejoindre une liste d'attente lorsque la session est complète",
+    "waitlistDescription": "Permettre aux professionnels de rejoindre une liste d'attente lorsque la session est complète",
     "approvalProcess": "Processus d'approbation",
     "automaticApproval": "Automatique - Les inscriptions sont approuvées automatiquement",
     "manualApproval": "Manuel - Vous approuvez chaque demande d'inscription",
@@ -244,7 +232,6 @@
     "unexpectedError": "Une erreur inattendue est survenue.",
     "errorSendingInvitation": "Erreur lors de l'envoi de l'invitation"
   },
-
   "pricing": {
     "free": "Gratuit",
     "freeDescription": "Ce cours est accessible gratuitement. Les participants de cette cohorte n'auront aucun frais à payer.",
@@ -314,7 +301,6 @@
     "addPromoCode": "Ajouter un code promo",
     "addAnotherPromoCode": "Ajouter un autre code promo"
   },
-
   "details": {
     "backButton": "Retour",
     "deleteButton": "Supprimer",
@@ -325,18 +311,15 @@
     "removeButton": "Retirer",
     "selectInstructorPlaceholder": "Sélectionner un formateur",
     "addInstructorHelp": "Ajoutez un formateur à la volée sans changer l'état de la session.",
-
     "deleteDialog": {
       "title": "Êtes-vous sûr(e) de vouloir supprimer cette cohorte ?",
       "description": "Cette action ne peut pas être annulée. Les données seront définitivement supprimées de nos serveurs.",
       "cancel": "Annuler",
       "confirm": "Supprimer"
     },
-
     "tooltips": {
       "cannotEditActive": "Impossible de modifier une session active. Remettez d'abord en brouillon."
     },
-
     "toasts": {
       "instructorAdded": "Formateur ajouté à la cohorte",
       "instructorRemoved": "Formateur retiré",
@@ -351,13 +334,11 @@
       "unpublishError": "Impossible de remettre en brouillon",
       "linkCopied": "Lien copié dans le presse-papier"
     },
-
     "errors": {
       "sessionNotFound": "Session non trouvée",
       "sessionNotFoundDescription": "La session que vous cherchez n'existe pas ou n'est pas accessible.",
       "backToList": "Retour à la liste des sessions"
     },
-
     "sections": {
       "description": "Description",
       "dates": "Dates",
@@ -374,14 +355,12 @@
       "instructors": "Formateurs",
       "noInstructors": "Aucun formateur assigné"
     },
-
     "tabs": {
       "overview": "Aperçu",
       "sessions": "Sessions",
       "participants": "Participants",
       "settings": "Paramètres"
     },
-
     "overview": {
       "progressCard": {
         "title": "Progression",
@@ -390,7 +369,7 @@
       },
       "participationCard": {
         "title": "Participation",
-        "description": "Taux de participation des apprenants",
+        "description": "Taux de participation des professionnels",
         "spotsOccupied": "places occupées"
       },
       "nextSessionCard": {
@@ -433,7 +412,6 @@
         "codeCopied": "Le code a été copié dans le presse-papier"
       }
     },
-
     "sessionsTab": {
       "manageInfo": "Vous pouvez gérer les sessions sans changer le statut de la cohorte.",
       "openEditor": "Ouvrir l'éditeur des sessions",
@@ -445,7 +423,6 @@
       "time": "Horaire",
       "recording": "Enregistrement"
     },
-
     "settingsTab": {
       "title": "Paramètres de la cohorte",
       "description": "Configuration avancée de cette session",

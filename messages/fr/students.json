@@ -7,7 +7,6 @@
   "viewProfile": "Voir le profil",
   "noStudents": "Aucun apprenant",
   "searchPlaceholder": "Rechercher des apprenants...",
-
   "stats": {
     "total": "Total des apprenants",
     "active": "Actifs",
@@ -15,7 +14,6 @@
     "pending": "En attente",
     "newThisMonth": "Nouveaux ce mois"
   },
-
   "status": {
     "active": "Actif",
     "inactive": "Inactif",
@@ -23,7 +21,6 @@
     "suspended": "Suspendu",
     "graduated": "Diplômé"
   },
-
   "fields": {
     "name": "Nom complet",
     "firstName": "Prénom",
@@ -42,7 +39,6 @@
     "certificates": "Certificats",
     "lastActivity": "Dernière activité"
   },
-
   "form": {
     "title": "Ajouter un apprenant",
     "firstNamePlaceholder": "Prénom de l'apprenant",
@@ -53,7 +49,6 @@
     "submitting": "Ajout en cours...",
     "cancel": "Annuler"
   },
-
   "validation": {
     "firstNameMin": "Le prénom doit contenir au moins 2 caractères",
     "firstNameMax": "Le prénom ne peut pas dépasser 50 caractères",
@@ -74,7 +69,6 @@
     "genericError": "Une erreur est survenue",
     "organizationNotFound": "Organisation non trouvée"
   },
-
   "profile": {
     "title": "Profil de l'apprenant",
     "personalInfo": "Informations personnelles",
@@ -84,7 +78,6 @@
     "activity": "Activité",
     "statistics": "Statistiques"
   },
-
   "enrollments": {
     "title": "Inscriptions aux cours",
     "noEnrollments": "Aucune inscription",
@@ -96,7 +89,6 @@
     "inProgress": "En cours",
     "notStarted": "Non démarré"
   },
-
   "progress": {
     "overallProgress": "Progression globale",
     "coursesCompleted": "Cours terminés",
@@ -106,7 +98,6 @@
     "studyTime": "Temps d'étude",
     "averageScore": "Score moyen"
   },
-
   "messages": {
     "createSuccess": "Apprenant ajouté avec succès",
     "createError": "Erreur lors de l'ajout de l'apprenant",
@@ -123,7 +114,6 @@
     "loadError": "Impossible de charger la liste des étudiants",
     "error": "Erreur"
   },
-
   "actions": {
     "suspend": "Suspendre",
     "activate": "Activer",
@@ -138,21 +128,20 @@
     "delete": "Supprimer",
     "back": "Retour"
   },
-
   "viewMode": {
     "grid": "Afficher en grille",
     "list": "Afficher en liste"
   },
-
   "list": {
-    "defaultName": "Apprenant",
+    "defaultName": "Professionnel",
     "notSpecified": "Non spécifié",
     "invalidDate": "Date invalide",
-    "noStudents": "Aucun apprenant trouvé",
-    "addFirstStudent": "Commencez par ajouter votre premier apprenant.",
-    "actions": "Actions",
+    "noStudents": "Aucun professionnel trouvé",
+    "addFirstStudent": "Commencez par ajouter votre premier professionnel.",
+    "welcome": "Bienvenue sur votre espace professionnel",
+    "dashboard": "Tableau de bord",
     "openMenu": "Ouvrir le menu",
-    "showing": "Affichage de {start} à {end} sur {total} apprenants",
+    "showing": "Affichage de {start} à {end} sur {total} professionnels",
     "previous": "Précédent",
     "next": "Suivant",
     "registeredOn": "Inscrit le",

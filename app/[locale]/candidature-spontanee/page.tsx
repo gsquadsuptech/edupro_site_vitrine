@@ -1,19 +1,29 @@
-import { SpontaneousHeroSection } from "@/components/marketing/sections/careers/spontaneous-hero-section"
+import { SpontaneousApplicationForm } from "@/components/marketing/spontaneous-application-form"
 import { Container } from "@/components/marketing/layout/container"
-import { useTranslations } from "next-intl"
+import { SpontaneousHeroSection } from "@/components/sections/careers/spontaneous-hero-section"
+import { Metadata } from "next"
+import { getNamespaceMessages, Locale } from "@/i18n"
+
+export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
+    const { locale } = await params
+    const messages = await getNamespaceMessages(locale, "careers")
+    const t = messages as any
+
+    return {
+        title: t.spontaneous?.meta?.title ?? "Candidature spontanée | Edupro",
+        description: t.spontaneous?.meta?.description ?? "Postulez chez Edupro",
+    }
+}
 
 export default function SpontaneousApplicationPage() {
-    const t = useTranslations('careers.spontaneous')
-
     return (
         <>
             <SpontaneousHeroSection />
-            <div className="py-20">
+            <div className="min-h-screen bg-background py-12 md:py-20">
                 <Container>
-                    <div className="mx-auto max-w-2xl text-center">
-                        <p className="text-muted-foreground">{t("form.description") || "Envoyez-nous votre CV à jobs@edupro.africa"}</p>
-                        {/* Placeholder for form if needed later */}
-                    </div>
+                    <SpontaneousApplicationForm />
                 </Container>
             </div>
         </>

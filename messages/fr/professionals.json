@@ -63,16 +63,32 @@
   },
   "skillPacks": {
     "title": "3 Skill Packs pour Transformer Votre Carrière",
-    "subtitle": "Parcours complets avec certifications, projets et accompagnement carrière",
+    "subtitle": "La plateforme de référence pour les professionnels africains qui veulent accélérer leur carrière.",
     "packs": {
       "tech": {
         "title": "TECH & MAÎTRISE DIGITALE",
         "headline": "Devenez expert en technologies digitales et IA",
         "courses": [
-          { "name": "DATA ANALYTICS & IA", "duration": "3-4 mois", "level": "Débutant à Inter." },
-          { "name": "DÉVELOPPEMENT WEB", "duration": "4-5 mois", "level": "Débutant à Avancé" },
-          { "name": "MARKETING DIGITAL", "duration": "2-3 mois", "level": "Débutant à Inter." },
-          { "name": "CYBERSÉCURITÉ", "duration": "3 mois", "level": "Intermédiaire" }
+          {
+            "name": "DATA ANALYTICS & IA",
+            "duration": "3-4 mois",
+            "level": "Débutant à Inter."
+          },
+          {
+            "name": "DÉVELOPPEMENT WEB",
+            "duration": "4-5 mois",
+            "level": "Débutant à Avancé"
+          },
+          {
+            "name": "MARKETING DIGITAL",
+            "duration": "2-3 mois",
+            "level": "Débutant à Inter."
+          },
+          {
+            "name": "CYBERSÉCURITÉ",
+            "duration": "3 mois",
+            "level": "Intermédiaire"
+          }
         ],
         "highlights": [
           "100+ heures de contenu vidéo",
@@ -102,11 +118,31 @@
         "title": "EXCELLENCE BUSINESS & LEADERSHIP",
         "headline": "Dirigez, managez, entreprenez avec les compétences de leader africain",
         "courses": [
-          { "name": "LEADERSHIP & MANAGEMENT", "duration": "2-3 mois", "level": "Tous niveaux" },
-          { "name": "GESTION DE PROJET", "duration": "3 mois", "level": "Débutant à Avancé" },
-          { "name": "ENTREPRENEURIAT", "duration": "3-4 mois", "level": "Tous niveaux" },
-          { "name": "FINANCE & COMPTABILITÉ", "duration": "3 mois", "level": "Débutant à Inter." },
-          { "name": "BUSINESS DEVELOPMENT", "duration": "2-3 mois", "level": "Intermédiaire" }
+          {
+            "name": "LEADERSHIP & MANAGEMENT",
+            "duration": "2-3 mois",
+            "level": "Tous niveaux"
+          },
+          {
+            "name": "GESTION DE PROJET",
+            "duration": "3 mois",
+            "level": "Débutant à Avancé"
+          },
+          {
+            "name": "ENTREPRENEURIAT",
+            "duration": "3-4 mois",
+            "level": "Tous niveaux"
+          },
+          {
+            "name": "FINANCE & COMPTABILITÉ",
+            "duration": "3 mois",
+            "level": "Débutant à Inter."
+          },
+          {
+            "name": "BUSINESS DEVELOPMENT",
+            "duration": "2-3 mois",
+            "level": "Intermédiaire"
+          }
         ],
         "highlights": [
           "80+ heures de contenu vidéo",
@@ -136,10 +172,26 @@
         "title": "CONSTRUCTION DURABLE & BIM",
         "headline": "Construisez l'avenir avec des compétences modernes de construction",
         "courses": [
-          { "name": "ÉCO-CONSTRUCTION", "duration": "3 mois", "level": "Débutant à Inter." },
-          { "name": "BIM (BUILDING INFO MODELING)", "duration": "4 mois", "level": "Intermédiaire" },
-          { "name": "GESTION DE CHANTIER", "duration": "3 mois", "level": "Intermédiaire" },
-          { "name": "NORMES ENVIRONNEMENTALES", "duration": "2 mois", "level": "Intermédiaire" }
+          {
+            "name": "ÉCO-CONSTRUCTION",
+            "duration": "3 mois",
+            "level": "Débutant à Inter."
+          },
+          {
+            "name": "BIM (BUILDING INFO MODELING)",
+            "duration": "4 mois",
+            "level": "Intermédiaire"
+          },
+          {
+            "name": "GESTION DE CHANTIER",
+            "duration": "3 mois",
+            "level": "Intermédiaire"
+          },
+          {
+            "name": "NORMES ENVIRONNEMENTALES",
+            "duration": "2 mois",
+            "level": "Intermédiaire"
+          }
         ],
         "highlights": [
           "70+ heures de contenu vidéo",
@@ -399,4 +451,3 @@
     }
   }
 }
-
