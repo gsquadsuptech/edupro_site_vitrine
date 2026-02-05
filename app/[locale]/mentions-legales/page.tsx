@@ -6,10 +6,11 @@ import { LegalContentDisplay } from "@/components/sections/legal/legal-content-d
 export const dynamic = 'force-dynamic'
 
 type Props = {
-    params: { locale: string }
+    params: Promise<{ locale: string }>
 }
 
-export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { locale } = await params
     return {
         title: locale === 'fr' ? "Mentions Légales | EduPro" : "Legal Notice | EduPro",
         description: locale === 'fr'
@@ -18,7 +19,8 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     }
 }
 
-export default async function MentionsLegalesPage({ params: { locale } }: Props) {
+export default async function MentionsLegalesPage({ params }: Props) {
+    const { locale } = await params
     return (
         <main className="flex-1">
             <section className="bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 py-12">

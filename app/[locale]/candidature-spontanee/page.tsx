@@ -1,19 +1,18 @@
 import { SpontaneousApplicationForm } from "@/components/marketing/spontaneous-application-form"
 import { Container } from "@/components/marketing/layout/container"
 import { SpontaneousHeroSection } from "@/components/sections/careers/spontaneous-hero-section"
-import { Metadata } from "next"
-import { getNamespaceMessages, Locale } from "@/i18n"
+import { getTranslations } from "next-intl/server"
+import { Locale } from "@/i18n"
 
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }): Promise<Metadata> {
     const { locale } = await params
-    const messages = await getNamespaceMessages(locale, "careers")
-    const t = messages as any
+    const t = await getTranslations({ locale, namespace: "careers.spontaneous.meta" })
 
     return {
-        title: t.spontaneous?.meta?.title ?? "Candidature spontanée | Edupro",
-        description: t.spontaneous?.meta?.description ?? "Postulez chez Edupro",
+        title: t("title"),
+        description: t("description"),
     }
 }
 
