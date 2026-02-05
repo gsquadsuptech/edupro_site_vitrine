@@ -3,9 +3,12 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { type User } from '@supabase/supabase-js';
+// import { type User } from '@supabase/supabase-js'; // REMOVED
 import { createClient } from '@/lib/supabase/client';
 import { canAccessRoute, getDefaultRouteForUser } from '../lib/role-guard';
+
+// Local mock type for User
+type User = any;
 
 const supabase = createClient();
 

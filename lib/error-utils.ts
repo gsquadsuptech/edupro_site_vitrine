@@ -1,11 +1,12 @@
-import { AuthError } from '@supabase/supabase-js';
+// import { AuthError } from '@supabase/supabase-js'; // REMOVED
 
 export const getPublicAuthError = (error: unknown): string => {
     if (!error) return 'Une erreur inconnue est survenue.';
 
-    // Handle Supabase AuthError
-    if ((error as AuthError).message) {
-        switch ((error as AuthError).message) {
+    // Handle Mock/Supabase AuthError structure loosely
+    const err = error as any;
+    if (err.message) {
+        switch (err.message) {
             case 'Invalid login credentials':
                 return 'Email ou mot de passe incorrect.';
             case 'User not found':
@@ -13,7 +14,7 @@ export const getPublicAuthError = (error: unknown): string => {
             case 'Email not confirmed':
                 return 'Veuillez confirmer votre email avant de vous connecter.';
             default:
-                return (error as AuthError).message;
+                return err.message;
         }
     }
 

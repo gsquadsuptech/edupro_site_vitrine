@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
-import { RealtimeChannel } from '@supabase/supabase-js';
+// import { RealtimeChannel } from '@supabase/supabase-js'; // REMOVED
 
 export interface Notification {
     id: string;
@@ -25,7 +25,7 @@ type NotificationEvent = 'notification:new' | 'notification:updated' | 'notifica
 
 export class NotificationService {
     private supabase = createClient();
-    private channel: RealtimeChannel | null = null;
+    private channel: any | null = null;
     private listeners: Map<string, Function[]> = new Map();
 
     constructor() {

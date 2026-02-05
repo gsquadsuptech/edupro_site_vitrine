@@ -1,4 +1,7 @@
-import { SupabaseClient } from '@supabase/supabase-js';
+// import { SupabaseClient } from '@supabase/supabase-js'; // REMOVED
+
+// Mock type
+type SupabaseClient = any;
 
 export class CourseDurationService {
     private supabase: SupabaseClient;

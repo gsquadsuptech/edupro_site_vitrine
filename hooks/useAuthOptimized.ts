@@ -1,10 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
-import { User, Session } from '@supabase/supabase-js';
+// import { User, Session } from '@supabase/supabase-js'; // REMOVED
 import { supabaseAuth, getUserWithTimeout, getSessionWithTimeout } from '@/lib/supabase-auth';
 
+// Mock types
+type User = any;
+type Session = any;
+
 interface UseAuthOptimizedReturn {
-    user: User | null;
-    session: Session | null;
+    user: any | null;
+    session: any | null;
     loading: boolean;
     error: string | null;
     refreshUser: () => Promise<void>;

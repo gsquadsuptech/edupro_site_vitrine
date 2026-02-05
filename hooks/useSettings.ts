@@ -1,7 +1,10 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
-import type { SupabaseClient } from '@supabase/supabase-js';
+// import type { SupabaseClient } from '@supabase/supabase-js'; // REMOVED
 import type { PlatformSettings, BillingSettings, SecuritySettings, EmailSettings } from '@/types/settings';
+
+// Mock types
+type SupabaseClient = any;
 
 interface SettingsState {
   platformSettings: PlatformSettings | null;
@@ -251,13 +254,13 @@ export const useSettings = create<SettingsState>((set, get) => ({
       const filePath = `public/logos/${fileName}`;
 
       const { error: uploadError, data: uploadData } = await supabaseClient.storage
-        .from('organization-assets') 
+        .from('organization-assets')
         .upload(filePath, file);
 
       if (uploadError) {
         throw uploadError;
       }
-      
+
       // Récupérer l'URL publique
       const { data: publicUrlData } = supabaseClient.storage
         .from('organization-assets')
@@ -266,14 +269,14 @@ export const useSettings = create<SettingsState>((set, get) => ({
       if (!publicUrlData || !publicUrlData.publicUrl) {
         throw new Error("Impossible de récupérer l'URL publique du logo après l'upload.");
       }
-      
+
       toast.success('Logo téléversé avec succès');
       return publicUrlData.publicUrl;
     } catch (error) {
       console.error('Erreur lors du téléversement du logo:', error);
       set({ error: (error as Error).message });
       toast.error('Erreur lors du téléversement du logo');
-      throw error; 
+      throw error;
     } finally {
       set({ isLoading: false });
     }
@@ -287,7 +290,7 @@ export const useSettings = create<SettingsState>((set, get) => ({
       const filePath = `public/favicons/${fileName}`;
 
       const { error: uploadError, data: uploadData } = await supabaseClient.storage
-        .from('organization-assets') 
+        .from('organization-assets')
         .upload(filePath, file);
 
       if (uploadError) {
