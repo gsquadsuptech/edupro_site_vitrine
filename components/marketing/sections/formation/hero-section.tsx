@@ -14,7 +14,7 @@ interface FormationHeroProps {
 
 export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
   // Safe access / Fallbacks
-  const instructorName = course.instructor?.name || "Instructeur"
+  const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
   const categoryName = course.category?.name || "Général"
   const price = course.price || 0
 
@@ -26,7 +26,7 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
   // Fallback rating if no reviews
   const rating = course.rating || (reviewCount > 0
     ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviewCount
-    : 4.8)
+    : 0)
 
   // Parsing duration string to hours if possible, else 20h default
   // course.duration is usually string like "20h" or "120 min".
@@ -119,7 +119,11 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
               </div>
 
               {showWaitlist ? (
-                <WaitlistDialog courseId={course.id} courseTitle={course.title} />
+                <WaitlistDialog
+                  courseId={course.id}
+                  courseSlug={course.slug}
+                  courseTitle={course.title}
+                />
               ) : (
                 <Link href={`/checkout/${course.id}`}>
                   <Button className="mb-4 w-full bg-gradient-to-r from-primary to-chart-2 text-lg text-primary-foreground hover:opacity-90">

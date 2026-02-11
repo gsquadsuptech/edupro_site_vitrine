@@ -20,6 +20,11 @@ export type Course = {
         name: string
         avatar_url: string | null
         role?: string
+        institute?: string | null
+        courses_count?: number
+        students_count?: number
+        rating?: number
+        organization_id?: string | null
     } | null
     highlights?: string[]
     objectives?: string[]
@@ -34,6 +39,9 @@ export type Course = {
         rating: number
         comment: string
         created_at: string
+        date: string
+        location?: string
+        helpful: number
         user: {
             name: string
             avatar_url: string | null

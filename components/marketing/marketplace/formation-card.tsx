@@ -1,15 +1,19 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { Star, Users, Clock, Heart, Bookmark } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { toast } from "sonner"
+import { createClient } from "@/lib/supabase/client"
 
 import { Course } from "@/lib/supabase/types"
+import { WishlistService } from "@/services/wishlist-service"
 
 interface FormationCardProps {
-  course: Pick<Course, 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration'> & {
+  course: Pick<Course, 'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration'> & {
     // Add missing properties that might be computed or hardcoded for now
     rating?: number
     reviewCount?: number
@@ -21,16 +25,69 @@ interface FormationCardProps {
 
 export function FormationCard({ course }: FormationCardProps) {
   const params = useParams()
+  const router = useRouter()
   const locale = params?.locale || 'fr'
+  const [isWishlisted, setIsWishlisted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Derived/Fallback values
   const imageUrl = course.image_url || "/placeholder.svg"
   const categoryName = course.category?.name || "Général"
-  const instructorName = course.instructor?.name || "Instructeur"
-  const rating = course.rating || 4.5
+  // Prefer institute name if available, otherwise instructor name
+  const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
+  const rating = course.rating ?? 0
   const reviewCount = course.reviewCount || 0
   const enrolledCount = course.enrolledCount || 0
   const price = course.price || 0
+
+  useEffect(() => {
+    checkWishlistStatus()
+  }, [course.id])
+
+  const checkWishlistStatus = async () => {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (user && course.id) {
+      const inWishlist = await WishlistService.isInWishlist(user.id, course.id)
+      setIsWishlisted(inWishlist)
+    }
+  }
+
+  const toggleWishlist = async (e: React.MouseEvent) => {
+    e.preventDefault() // Prevent navigation
+    e.stopPropagation()
+
+    if (isLoading) return
+
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+      toast.error("Vous devez être connecté pour ajouter aux favoris")
+      // Optionally redirect to login or open modal
+      return
+    }
+
+    if (!course.id) return
+
+    setIsLoading(true)
+    try {
+      if (isWishlisted) {
+        await WishlistService.removeFromWishlist(user.id, course.id)
+        setIsWishlisted(false)
+        toast.success("Retiré des favoris")
+      } else {
+        await WishlistService.addToWishlist(user.id, course.id)
+        setIsWishlisted(true)
+        toast.success("Ajouté aux favoris")
+      }
+    } catch (error) {
+      toast.error("Une erreur est survenue")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <Link href={`/${locale}/formation/${course.slug}`}>
@@ -56,7 +113,16 @@ export function FormationCard({ course }: FormationCardProps) {
               {categoryName}
             </Badge>
             <span className="text-muted-foreground">•</span>
-            <span className="text-muted-foreground">{course.level || 'Tous niveaux'}</span>
+            <span className="text-muted-foreground">
+              {(() => {
+                const labels: Record<string, string> = {
+                  'beginner': 'Débutant',
+                  'intermediate': 'Intermédiaire',
+                  'high': 'Avancé'
+                }
+                return labels[course.level || ''] || course.level || 'Tous niveaux'
+              })()}
+            </span>
           </div>
 
           {/* Title */}
@@ -71,18 +137,22 @@ export function FormationCard({ course }: FormationCardProps) {
           </div>
 
           {/* Rating */}
-          <div className="mb-3 flex items-center gap-1">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                    }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm font-medium">{rating}</span>
-            <span className="text-sm text-muted-foreground">({reviewCount} avis)</span>
+          <div className="mb-3 flex items-center gap-1 min-h-[20px]">
+            {reviewCount > 0 && (
+              <>
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                        }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm font-medium">{rating}</span>
+                <span className="text-sm text-muted-foreground">({reviewCount} avis)</span>
+              </>
+            )}
           </div>
 
           {/* Price & Actions */}
@@ -94,8 +164,13 @@ export function FormationCard({ course }: FormationCardProps) {
               )}
             </div>
             <div className="flex gap-1">
-              <Button size="icon" variant="ghost" className="h-8 w-8">
-                <Heart className="h-4 w-4" />
+              <Button
+                size="icon"
+                variant="ghost"
+                className={`h-8 w-8 ${isWishlisted ? "text-red-500 hover:text-red-600" : "text-muted-foreground hover:text-red-500"}`}
+                onClick={toggleWishlist}
+              >
+                <Heart className={`h-4 w-4 ${isWishlisted ? "fill-current" : ""}`} />
               </Button>
               <Button size="icon" variant="ghost" className="h-8 w-8">
                 <Bookmark className="h-4 w-4" />

@@ -23,34 +23,32 @@ export function InstructorTab({ course }: InstructorTabProps) {
             className="h-32 w-32 rounded-full object-cover"
           />
           <div className="flex-1">
-            <h3 className="mb-2 text-2xl font-bold">{instructor.name}</h3>
+            <h3 className="mb-2 text-2xl font-bold">{instructor.institute || instructor.name}</h3>
             <p className="mb-3 text-muted-foreground">
-              Formateur EduPro
+              {instructor.institute ? "Institut de formation" : "Formateur EduPro"}
             </p>
             <div className="mb-4 flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="font-medium">4.9</span>
+                <Star className={`h-4 w-4 ${instructor.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />
+                <span className="font-medium">{instructor.rating || "N/A"}</span>
                 <span className="text-muted-foreground">note moyenne</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Users className="h-4 w-4 text-muted-foreground" />
-                <span className="font-medium">12,456</span>
-                <span className="text-muted-foreground">étudiants</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
-                <span className="font-medium">8</span>
-                <span className="text-muted-foreground">formations</span>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button size="sm" className="bg-gradient-to-r from-primary to-chart-2">
-                Suivre
-              </Button>
-              <Button size="sm" variant="outline">
-                Contacter
-              </Button>
+
+              {(instructor.students_count || 0) > 0 && (
+                <div className="flex items-center gap-1">
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">{instructor.students_count?.toLocaleString()}</span>
+                  <span className="text-muted-foreground">étudiants</span>
+                </div>
+              )}
+
+              {(instructor.courses_count || 0) > 0 && (
+                <div className="flex items-center gap-1">
+                  <BookOpen className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">{instructor.courses_count}</span>
+                  <span className="text-muted-foreground">formations</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

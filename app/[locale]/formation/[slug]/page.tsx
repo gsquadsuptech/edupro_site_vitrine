@@ -24,16 +24,21 @@ export default async function FormationPage({
         notFound();
     }
 
-    const similarCourses = course.category?.slug
-        ? await CourseService.getSimilarCourses(course.category.slug, course.id)
-        : [];
+    const similarCourses = await CourseService.getRelatedCourses(
+        course.category?.slug || 'general',
+        course.id,
+        course.instructor?.organization_id
+    );
 
     const cohorts = await CourseService.getCohortsByCourseId(course.id);
 
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
-                <FormationBreadcrumb />
+                <FormationBreadcrumb
+                    category={course.category}
+                    courseTitle={course.title}
+                />
                 <FormationHero course={course} cohorts={cohorts} />
                 <FormationTabs course={course} />
                 <SimilarCourses courses={similarCourses} />

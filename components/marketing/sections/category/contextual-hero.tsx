@@ -1,34 +1,46 @@
 "use client"
 
 import { SearchInput } from "@/components/marketing/shared/search-input"
-import { Code, Briefcase, Building2, Users, Heart, TrendingUp, Palette, Languages, Monitor, Lightbulb, GraduationCap, Globe } from "lucide-react"
+import { Code, Briefcase, Building2, Users, Heart, TrendingUp, Palette, Languages, Monitor, Lightbulb, GraduationCap, Globe, LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { Category } from "@/lib/supabase/types"
 
-// Reusing static categories for consistency, or we could accept them as props
-const categories = [
-    { name: "Tech & Digital", icon: Code, slug: "tech-digital", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Business", icon: Briefcase, slug: "business-management", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Construction", icon: Building2, slug: "construction-durable", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Soft Skills", icon: Users, slug: "soft-skills", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Santé", icon: Heart, slug: "sante", image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Finance", icon: TrendingUp, slug: "finance", image: "https://images.unsplash.com/photo-1554224155-97e3a6a9db61?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Design", icon: Palette, slug: "design", image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=300&h=200" },
-    { name: "Langues", icon: Languages, slug: "langues", image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=300&h=200" }
-]
+// Metadata lookup for icons and images based on slug
+const CATEGORY_METADATA: Record<string, { icon: LucideIcon, image: string }> = {
+    "tech-digital": { icon: Code, image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=300&h=200" },
+    "business-management": { icon: Briefcase, image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=300&h=200" },
+    "construction-durable": { icon: Building2, image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=300&h=200" },
+    "soft-skills": { icon: Users, image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=300&h=200" },
+    "sante": { icon: Heart, image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=300&h=200" },
+    "finance": { icon: TrendingUp, image: "https://images.unsplash.com/photo-1554224155-97e3a6a9db61?auto=format&fit=crop&q=80&w=300&h=200" },
+    "design": { icon: Palette, image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=300&h=200" },
+    "langues": { icon: Languages, image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=300&h=200" },
+    "developpement-web": { icon: Code, image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=300&h=200" },
+    "marketing-digital": { icon: TrendingUp, image: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&q=80&w=300&h=200" },
+    "data-science": { icon: Monitor, image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=300&h=200" }
+}
+
+// Fallback metadata
+const DEFAULT_METADATA = { icon: Lightbulb, image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=300&h=200" }
 
 interface ContextualHeroProps {
     categorySlug?: string
     locale?: string
+    categories?: Category[]
 }
 
-export function ContextualHero({ categorySlug, locale = 'fr' }: ContextualHeroProps) {
+export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }: ContextualHeroProps) {
     const searchParams = useSearchParams();
     const currentCategory = searchParams.get('category') || 'all';
 
+    // Helper to get metadata
+    const getMetadata = (slug: string) => CATEGORY_METADATA[slug] || DEFAULT_METADATA;
+
     // Determine background image based on category
     const activeCategory = categories.find(c => c.slug === currentCategory);
-    const backgroundImage = activeCategory?.image || "https://images.unsplash.com/photo-1513258496098-b64ecf3900ca?auto=format&fit=crop&q=80&w=1920&h=600"; // Generic education background
+    const activeMetadata = activeCategory ? getMetadata(activeCategory.slug) : DEFAULT_METADATA;
+    const backgroundImage = activeMetadata.image.replace("w=300&h=200", "w=1920&h=600"); // Use larger version if available, or just same URL if not replaced correctly (handled by Unsplash parameters)
 
     return (
         <section className="relative overflow-hidden bg-slate-900 text-white">
@@ -67,20 +79,23 @@ export function ContextualHero({ categorySlug, locale = 'fr' }: ContextualHeroPr
                             </div>
                         </Link>
 
-                        {categories.map((category) => (
-                            <Link
-                                key={category.slug}
-                                href={`/${locale}/catalogue/all?category=${category.slug}`}
-                                className={`snap-start shrink-0 cursor-pointer rounded-xl border overflow-hidden relative transition-all hover:scale-105 ${currentCategory === category.slug ? 'border-primary ring-2 ring-primary' : 'border-transparent'}`}
-                            >
-                                <div className="relative h-24 w-32">
-                                    <img src={category.image} alt={category.name} className="h-full w-full object-cover opacity-80" />
-                                    <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-2">
-                                        <span className="text-sm font-bold text-center leading-tight">{category.name}</span>
+                        {categories.map((category) => {
+                            const metadata = getMetadata(category.slug);
+                            return (
+                                <Link
+                                    key={category.slug}
+                                    href={`/${locale}/catalogue/all?category=${category.slug}`}
+                                    className={`snap-start shrink-0 cursor-pointer rounded-xl border overflow-hidden relative transition-all hover:scale-105 ${currentCategory === category.slug ? 'border-primary ring-2 ring-primary' : 'border-transparent'}`}
+                                >
+                                    <div className="relative h-24 w-32">
+                                        <img src={metadata.image} alt={category.name} className="h-full w-full object-cover opacity-80" />
+                                        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-2">
+                                            <span className="text-sm font-bold text-center leading-tight">{category.name}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

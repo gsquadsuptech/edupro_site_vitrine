@@ -16,7 +16,7 @@ export function PartnerInstitutes() {
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="mb-8 text-center">
           <h2 className="mb-2 text-2xl font-bold md:text-3xl">Nos Formateurs Experts</h2>
-          <p className="text-muted-foreground">Ils nous font confiance pour diffuser leurs formations</p>
+          {/* <p className="text-muted-foreground">Ils nous font confiance pour diffuser leurs formations</p> */}
         </div>
 
         <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">

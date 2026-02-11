@@ -1,24 +1,41 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 
-export function FormationBreadcrumb() {
+interface FormationBreadcrumbProps {
+  category?: {
+    name: string
+    slug: string
+  } | null
+  courseTitle: string
+}
+
+export function FormationBreadcrumb({ category, courseTitle }: FormationBreadcrumbProps) {
   return (
     <div className="border-b border-border bg-muted/30 py-3">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground">
+        <nav className="flex items-center gap-2 text-sm text-muted-foreground overflow-x-auto whitespace-nowrap">
+          <Link href="/" className="hover:text-foreground transition-colors">
             Accueil
           </Link>
-          <ChevronRight className="h-4 w-4" />
-          <Link href="/catalogue" className="hover:text-foreground">
+          <ChevronRight className="h-4 w-4 flex-shrink-0" />
+          <Link href="/catalogue" className="hover:text-foreground transition-colors">
             Catalogue
           </Link>
-          <ChevronRight className="h-4 w-4" />
-          <Link href="/catalogue/tech-digital" className="hover:text-foreground">
-            Tech & Digital
-          </Link>
-          <ChevronRight className="h-4 w-4" />
-          <span className="text-foreground">Intelligence Artificielle Pratique</span>
+          {category && (
+            <>
+              <ChevronRight className="h-4 w-4 flex-shrink-0" />
+              <Link
+                href={`/catalogue?category=${category.slug}`}
+                className="hover:text-foreground transition-colors"
+              >
+                {category.name}
+              </Link>
+            </>
+          )}
+          <ChevronRight className="h-4 w-4 flex-shrink-0" />
+          <span className="text-foreground font-medium truncate max-w-[200px] md:max-w-md">
+            {courseTitle}
+          </span>
         </nav>
       </div>
     </div>

@@ -101,10 +101,9 @@ export function SearchFilters({ categories: initialCategories = [] }: SearchFilt
 
 
   const levels = [
-    { id: "Débutant", label: "Débutant" }, // Updated IDs to match likely DB values or mapped values
-    { id: "Intermédiaire", label: "Intermédiaire" },
-    { id: "Avancé", label: "Avancé" },
-    { id: "Expert", label: "Expert" },
+    { id: "beginner", label: "Débutant" },
+    { id: "intermediate", label: "Intermédiaire" },
+    { id: "high", label: "Avancé" },
   ]
 
   const durations = [

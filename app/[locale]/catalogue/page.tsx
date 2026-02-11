@@ -2,9 +2,9 @@ import { MarketplaceHero } from "@/components/marketing/sections/marketplace/her
 import { MarketplaceStats } from "@/components/marketing/sections/marketplace/stats-section";
 import { FeaturedCourses } from "@/components/marketing/sections/marketplace/featured-courses";
 import { CategoriesGrid } from "@/components/marketing/sections/marketplace/categories-grid";
-import { SkillPacksSection } from "@/components/marketing/sections/marketplace/skill-packs-section";
+// import { SkillPacksSection } from "@/components/marketing/sections/marketplace/skill-packs-section";
 import { PartnerInstitutes } from "@/components/marketing/sections/marketplace/partner-institutes";
-import { LearnerTestimonials } from "@/components/marketing/sections/marketplace/learner-testimonials";
+// import { LearnerTestimonials } from "@/components/marketing/sections/marketplace/learner-testimonials";
 import { MarketplaceCTA } from "@/components/marketing/sections/marketplace/marketplace-cta";
 
 import { CourseService } from "@/services/course-service";
@@ -32,9 +32,9 @@ export default async function CataloguePage({
                 <MarketplaceStats />
                 <FeaturedCourses locale={locale} courses={featuredCourses} />
                 <CategoriesGrid locale={locale} categories={categories} />
-                <SkillPacksSection locale={locale} skillPacks={skillPacks} />
+                {/* <SkillPacksSection locale={locale} skillPacks={skillPacks} /> */}
                 <PartnerInstitutes />
-                <LearnerTestimonials />
+                {/* <LearnerTestimonials /> */}
                 <MarketplaceCTA />
             </main>
         </div>

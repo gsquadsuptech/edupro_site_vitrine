@@ -1,96 +1,159 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Bell } from "lucide-react"
+import { Bell, Loader2, Check } from "lucide-react"
+import { useAuth } from "@/hooks/useAuth"
+import { CourseService } from "@/services/course-service"
+import { useToast } from "@/hooks/use-toast"
+import { LoginForm } from "@/components/pages/auth/login-form"
+import { RegisterForm } from "@/components/pages/auth/register-form"
 
 interface WaitlistDialogProps {
     courseId: string
+    courseSlug: string
     courseTitle: string
     cohortId?: string
 }
 
-export function WaitlistDialog({ courseId, courseTitle, cohortId }: WaitlistDialogProps) {
-    const [email, setEmail] = useState("")
+export function WaitlistDialog({ courseId, courseSlug, courseTitle, cohortId }: WaitlistDialogProps) {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [success, setSuccess] = useState(false)
+    const [isJoined, setIsJoined] = useState(false)
+    const [authView, setAuthView] = useState<'none' | 'login' | 'register'>('none')
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+    const { user, isAuthenticated } = useAuth()
+    const { toast } = useToast()
+
+    // Check for pending waitlist join after reload
+    useEffect(() => {
+        const checkPendingJoin = async () => {
+            const pendingCourseId = sessionStorage.getItem('pendingWaitlistJoin')
+
+            if (pendingCourseId === courseId && isAuthenticated && user) {
+                // Clear immediately to prevent loop
+                sessionStorage.removeItem('pendingWaitlistJoin')
+                await addToWaitlist()
+            }
+        }
+
+        checkPendingJoin()
+    }, [isAuthenticated, user, courseId])
+
+    const handleWaitlistClick = async (e: React.MouseEvent) => {
+        if (isJoined) return; // Already joined
+
+        if (!isAuthenticated) {
+            e.preventDefault()
+            setAuthView('login')
+            setOpen(true)
+        } else {
+            // Authenticated: Direct add
+            // We prevent default to handle it nicely with feedback
+            e.preventDefault()
+            await addToWaitlist()
+        }
+    }
+
+    const addToWaitlist = async () => {
+        if (!user) return
+
         setLoading(true)
+        try {
+            const { success, error } = await CourseService.addToWaitlist(courseId, user.id)
+            if (success) {
+                setIsJoined(true)
+                toast({
+                    title: "Inscrit sur liste d'attente",
+                    description: "Vous serez prévenu dès l'ouverture des inscriptions.",
+                    variant: "default",
+                })
+                // We don't necessarily need to open the dialog if it's a direct action,
+                // but the user wants "En attente" button state.
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: "Erreur",
+                    description: "Impossible de vous ajouter. Réessayez.",
+                })
+            }
+        } catch (err) {
+            console.error(err)
+            toast({
+                variant: "destructive",
+                title: "Erreur",
+                description: "Une erreur est survenue.",
+            })
+        } finally {
+            setLoading(false)
+        }
+    }
 
-        // Simulate API call or Server Action
-        // In a real app, call registerForWaitlist(courseId, email, cohortId)
-        await new Promise(resolve => setTimeout(resolve, 1000))
+    const handleAuthSuccess = async () => {
+        // Set flag for auto-join after reload
+        sessionStorage.setItem('pendingWaitlistJoin', courseId)
 
-        // Reset and success
-        setLoading(false)
-        setSuccess(true)
+        setAuthView('none')
+        setOpen(false) // Close auth modal
+
+        // Small delay to ensure token propagation
         setTimeout(() => {
-            setOpen(false)
-            setSuccess(false)
-            setEmail("")
-        }, 2000)
+            window.location.reload()
+        }, 500)
     }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="mb-4 w-full bg-orange-600 hover:bg-orange-700 text-lg text-white">
-                    <Bell className="mr-2 h-5 w-5" />
-                    M'avertir
+                <Button
+                    onClick={handleWaitlistClick}
+                    disabled={loading || isJoined}
+                    className={`mb-4 w-full text-lg text-white ${isJoined ? "bg-green-600 hover:bg-green-700" : "bg-orange-600 hover:bg-orange-700"}`}
+                >
+                    {loading ? (
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    ) : isJoined ? (
+                        <Check className="mr-2 h-5 w-5" />
+                    ) : (
+                        <Bell className="mr-2 h-5 w-5" />
+                    )}
+                    {loading ? "Traitement..." : isJoined ? "En attente" : "M'avertir"}
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Être informé des prochaines sessions</DialogTitle>
+                    <DialogTitle>
+                        {authView === 'login' ? "Connexion requise" : "Créer un compte"}
+                    </DialogTitle>
                     <DialogDescription>
-                        Ce cours est actuellement complet ou indisponible. Laissez votre email pour être notifié en priorité de la prochaine ouverture.
+                        Vous devez être connecté pour rejoindre la liste d'attente.
                     </DialogDescription>
                 </DialogHeader>
 
-                {success ? (
-                    <div className="flex flex-col items-center justify-center py-6 text-center text-green-600">
-                        <Bell className="h-12 w-12 mb-2" />
-                        <h3 className="text-lg font-medium">C'est noté !</h3>
-                        <p className="text-sm text-gray-500">Vous recevrez un email dès que les inscriptions ouvriront.</p>
+                {authView === 'login' && (
+                    <div className="py-2">
+                        <LoginForm
+                            onRegisterClick={() => setAuthView('register')}
+                            onSuccess={handleAuthSuccess}
+                        />
                     </div>
-                ) : (
-                    <form onSubmit={handleSubmit}>
-                        <div className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="email" className="text-right">
-                                    Email
-                                </Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="votre@email.com"
-                                    className="col-span-3"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button type="submit" disabled={loading}>
-                                {loading ? "Enregistrement..." : "M'avertir"}
-                            </Button>
-                        </DialogFooter>
-                    </form>
+                )}
+
+                {authView === 'register' && (
+                    <div className="py-2">
+                        <RegisterForm
+                            onLoginClick={() => setAuthView('login')}
+                            onSuccess={handleAuthSuccess}
+                        />
+                    </div>
                 )}
             </DialogContent>
         </Dialog>

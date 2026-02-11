@@ -31,7 +31,7 @@ export const CourseService = {
         format,
         created_at,
         category:categories!inner(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, organization:organizations(name)),
         marketplace:marketplace_courses!inner(featured, rating, review_count)
       `, { count: 'exact' })
             .eq('status', 'published')
@@ -41,7 +41,7 @@ export const CourseService = {
         }
 
         if (category && category !== 'all') {
-            query = query.eq('categories.slug', category)
+            query = query.eq('category.slug', category)
         }
 
         if (minPrice !== undefined) {
@@ -81,9 +81,14 @@ export const CourseService = {
             level: item.level,
 
             is_featured: item.marketplace?.featured || false,
+            is_published: item.status === 'published',
             published_at: item.created_at,
             category: item.category,
-            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
+            instructor: item.instructor ? {
+                name: item.instructor.name,
+                avatar_url: item.instructor.avatar_url,
+                institute: item.instructor.organization?.name || null
+            } : null
         }))
 
         return { courses, total: count || 0 }
@@ -97,6 +102,7 @@ export const CourseService = {
             .from('marketplace_courses')
             .select('course_id, featured, rating, review_count')
             .eq('featured', true)
+            .limit(8)
 
         if (featuredError) {
             console.error('Error fetching featured IDs:', featuredError)
@@ -125,13 +131,13 @@ export const CourseService = {
         format,
         created_at,
         category:categories(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, organization:organizations(name)),
         marketplace:marketplace_courses(featured, rating, review_count)
       `)
             .in('id', featuredIds)
             .eq('status', 'published')
             .order('created_at', { ascending: false })
-            .limit(6)
+            .limit(8)
 
         if (error) {
             console.error('Error fetching featured courses:', error)
@@ -156,7 +162,11 @@ export const CourseService = {
             is_featured: item.marketplace?.featured || false,
             published_at: item.created_at,
             category: item.category,
-            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
+            instructor: item.instructor ? {
+                name: item.instructor.name,
+                avatar_url: item.instructor.avatar_url,
+                institute: item.instructor.organization?.name || null
+            } : null
         }))
     },
 
@@ -205,7 +215,11 @@ export const CourseService = {
             is_featured: item.marketplace?.featured || false,
             published_at: item.created_at,
             category: item.category,
-            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
+            instructor: item.instructor ? {
+                name: item.instructor.name,
+                avatar_url: item.instructor.avatar_url,
+                institute: item.instructor.organization?.name || null
+            } : null
         }))
     },
 
@@ -231,7 +245,7 @@ export const CourseService = {
         marketplace:marketplace_courses(featured, rating, review_count)
       `)
             .eq('status', 'published')
-            .eq('categories.slug', categorySlug)
+            .eq('category.slug', categorySlug)
             .order('created_at', { ascending: false })
 
         if (error) {
@@ -323,7 +337,9 @@ export const CourseService = {
             },
             rating: r.rating,
             comment: r.comment,
-            created_at: r.created_at
+            created_at: r.created_at,
+            date: r.created_at,
+            helpful: 0
         })) || []
 
         // Map sections/lessons
@@ -416,7 +432,7 @@ export const CourseService = {
         prerequisites,
         created_at,
         category:categories(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, rating, students_count, courses_count, organization_id, organization:organizations(name)),
         marketplace:marketplace_courses(featured, rating, review_count),
         sections(
              id,
@@ -446,19 +462,25 @@ export const CourseService = {
         // Fetch reviews separately
         const { data: reviewsData } = await supabase
             .from('course_reviews')
-            .select('*')
+            .select(`
+                *,
+                user:profiles(full_name, avatar_url)
+            `)
             .eq('course_id', item.id)
             .order('created_at', { ascending: false })
-            .limit(5) // Limit for performance
+            .limit(10) // Limit for performance
 
         const reviews = reviewsData?.map((r: any) => ({
             id: r.id,
             user: {
-                name: 'Étudiant', // anonymity or join user profile if needed
-                avatar_url: null
+                name: r.user?.full_name || 'Étudiant', // anonymity or join user profile if needed
+                avatar_url: r.user?.avatar_url || null
             },
             rating: r.rating,
             comment: r.comment,
+            location: r.location || "En ligne",
+            date: new Date(r.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
+            helpful: r.helpful_count || 0,
             created_at: r.created_at
         })) || []
 
@@ -514,7 +536,12 @@ export const CourseService = {
             instructor: {
                 name: item.instructor?.name || 'Algorix',
                 avatar_url: item.instructor?.avatar_url || null,
-                role: 'Instructor'
+                role: 'Instructor',
+                institute: item.instructor?.organization?.name || null,
+                courses_count: item.instructor?.courses_count || 0,
+                students_count: item.instructor?.students_count || 0,
+                rating: item.instructor?.rating || 0,
+                organization_id: item.instructor?.organization_id || null
             },
             category: {
                 name: item.category?.name || 'Général',
@@ -530,6 +557,96 @@ export const CourseService = {
             is_featured: item.marketplace?.featured || false
         }
     },
+    async getRelatedCourses(categorySlug: string, excludeCourseId: string, organizationId?: string | null): Promise<Course[]> {
+        const supabase = createClient()
+        const limit = 4;
+        let courses: any[] = [];
+
+        // 1. Try to fetch courses from the same institute (organization)
+        if (organizationId) {
+            const { data: instituteCourses, error: instError } = await supabase
+                .from('courses')
+                .select(`
+                    id,
+                    title,
+                    slug,
+                    description,
+                    thumbnail,
+                    price,
+                    duration,
+                    level,
+                    status,
+                    format,
+                    created_at,
+                    category:categories!inner(name, slug),
+                    instructor:instructors!inner(name, avatar_url, organization_id, organization:organizations(name)),
+                    marketplace:marketplace_courses!inner(featured, rating, review_count)
+                `)
+                .eq('status', 'published')
+                .eq('instructor.organization_id', organizationId)
+                .neq('id', excludeCourseId)
+                .limit(limit)
+                .order('created_at', { ascending: false });
+
+            if (!instError && instituteCourses) {
+                courses = [...instituteCourses];
+            }
+        }
+
+        // 2. If we don't have enough courses, fill with category matches
+        if (courses.length < limit) {
+            const needed = limit - courses.length;
+            const existingIds = courses.map(c => c.id);
+            existingIds.push(excludeCourseId);
+
+            const { data: categoryCourses, error: catError } = await supabase
+                .from('courses')
+                .select(`
+                    id,
+                    title,
+                    slug,
+                    description,
+                    thumbnail,
+                    price,
+                    duration,
+                    level,
+                    status,
+                    format,
+                    created_at,
+                    category:categories!inner(name, slug),
+                    instructor:instructors(name, avatar_url, organization:organizations(name)),
+                    marketplace:marketplace_courses!inner(featured, rating, review_count)
+                `)
+                .eq('status', 'published')
+                .eq('category.slug', categorySlug)
+                .not('id', 'in', `(${existingIds.join(',')})`)
+                .limit(needed)
+                .order('created_at', { ascending: false });
+
+            if (!catError && categoryCourses) {
+                courses = [...courses, ...categoryCourses];
+            }
+        }
+
+        return courses.map((item: any) => ({
+            id: item.id,
+            format: item.format,
+            title: item.title,
+            slug: item.slug,
+            description: item.description,
+            image_url: item.thumbnail,
+            price: item.price,
+            original_price: null,
+            currency: 'FCFA',
+            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
+            level: item.level,
+            is_featured: item.marketplace?.featured || false,
+            published_at: item.created_at,
+            category: item.category,
+            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
+        }))
+    },
+
     async getSimilarCourses(categorySlug: string, excludeCourseId: string): Promise<Course[]> {
         const supabase = createClient()
 
@@ -548,11 +665,11 @@ export const CourseService = {
         format,
         created_at,
         category:categories!inner(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, organization:organizations(name)),
         marketplace:marketplace_courses!inner(featured, rating, review_count)
       `)
             .eq('status', 'published')
-            .eq('categories.slug', categorySlug)
+            .eq('category.slug', categorySlug)
             .neq('id', excludeCourseId)
             .limit(4)
             .order('created_at', { ascending: false })
@@ -617,5 +734,32 @@ export const CourseService = {
             pricing_modes: item.pricing_modes,
             sessions: []
         }))
+    },
+
+    async addToWaitlist(courseId: string, userId: string): Promise<{ success: boolean; error?: any }> {
+        const supabase = createClient()
+
+        try {
+            const { error } = await supabase
+                .from('waitlist')
+                .insert({
+                    course_id: courseId,
+                    user_id: userId
+                });
+
+            if (error) {
+                // Ignore duplicates gracefully
+                if (error.code === '23505') { // Unique violation
+                    return { success: true };
+                }
+                console.error('Error adding to waitlist:', error);
+                return { success: false, error };
+            }
+
+            return { success: true };
+        } catch (err) {
+            console.error('Exception adding to waitlist:', err);
+            return { success: false, error: err };
+        }
     }
 }

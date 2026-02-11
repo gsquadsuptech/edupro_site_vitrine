@@ -56,7 +56,7 @@ export default async function CatalogueAllPage({
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
-                <ContextualHero categorySlug={categoryQuery} />
+                <ContextualHero categorySlug={categoryQuery} categories={categoriesData} />
                 <SubCategories />
                 <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
                     <div className="flex flex-col gap-6 lg:flex-row">

@@ -16,9 +16,10 @@ import { useAuth } from "@/hooks/useAuth"
 
 interface LoginFormProps {
     onRegisterClick: () => void;
+    onSuccess?: () => void;
 }
 
-export function LoginForm({ onRegisterClick }: LoginFormProps) {
+export function LoginForm({ onRegisterClick, onSuccess }: LoginFormProps) {
     const router = useRouter()
     const searchParams = useSearchParams()
     const [showPassword, setShowPassword] = useState(false)
@@ -53,8 +54,13 @@ export function LoginForm({ onRegisterClick }: LoginFormProps) {
 
             if (success) {
                 toast.success("Connexion réussie")
-                // Redirect is handled by useAuth or header logic, but we can force home
-                router.push('/')
+
+                if (onSuccess) {
+                    onSuccess()
+                } else {
+                    // Redirect is handled by useAuth or header logic, but we can force home
+                    router.push('/')
+                }
             } else {
                 toast.error("Erreur de connexion", {
                     description: error?.message || "Identifiants invalides"

@@ -14,9 +14,10 @@ import { Input } from "@/components/ui/input"
 
 interface RegisterFormProps {
     onLoginClick: () => void;
+    onSuccess?: () => void;
 }
 
-export function RegisterForm({ onLoginClick }: RegisterFormProps) {
+export function RegisterForm({ onLoginClick, onSuccess }: RegisterFormProps) {
     const router = useRouter()
     const [showPassword, setShowPassword] = useState(false)
     const [isRegistering, setIsRegistering] = useState<boolean>(false)
@@ -52,8 +53,13 @@ export function RegisterForm({ onLoginClick }: RegisterFormProps) {
             await new Promise(resolve => setTimeout(resolve, 1500))
 
             toast.success("Inscription réussie")
-            // Normally we would redirect or show success message, but for mock we can switch to login or redirect home
-            router.push('/')
+
+            if (onSuccess) {
+                onSuccess()
+            } else {
+                // Normally we would redirect or show success message, but for mock we can switch to login or redirect home
+                router.push('/')
+            }
 
         } catch (err: any) {
             console.error("Erreur d'inscription:", err)

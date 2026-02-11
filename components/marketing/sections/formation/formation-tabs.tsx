@@ -36,7 +36,7 @@ export function FormationTabs({ course }: FormationTabsProps) {
           </TabsContent>
 
           <TabsContent value="avis">
-            <ReviewsTab />
+            <ReviewsTab reviews={course.reviews as any} />
           </TabsContent>
         </Tabs>
       </div>

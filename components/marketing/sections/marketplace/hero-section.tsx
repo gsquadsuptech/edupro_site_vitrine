@@ -15,7 +15,7 @@ export function MarketplaceHero() {
           </p>
 
           {/* Search Bar */}
-          <div className="relative mx-auto mb-8 max-w-3xl">
+          {/* <div className="relative mx-auto mb-8 max-w-3xl">
             <div className="relative flex items-center gap-2 rounded-xl border-2 border-border bg-background p-2 shadow-lg transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
               <Search className="ml-2 h-5 w-5 text-muted-foreground" />
               <Input
@@ -30,7 +30,7 @@ export function MarketplaceHero() {
                 Rechercher
               </Button>
             </div>
-          </div>
+          </div> */}
 
           {/* Popular Searches */}
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
