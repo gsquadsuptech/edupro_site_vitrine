@@ -68,7 +68,7 @@ export function CategoriesGridClient({ initialCategories, locale = 'fr' }: Categ
                 {paginatedCategories.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         {paginatedCategories.map((category, index) => (
-                            <Link key={`${category.slug}-${index}`} href={`/${locale}/catalogue/${category.slug}`}>
+                            <Link key={`${category.slug}-${index}`} href={`/${locale}/catalogue/all?category=${category.slug}`}>
                                 <div className="group relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg">
                                     <div className={`mb-4 inline-flex rounded-lg bg-gradient-to-br ${category.color} p-3`}>
                                         <category.icon className="h-6 w-6 text-white" />

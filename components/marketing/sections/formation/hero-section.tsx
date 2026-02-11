@@ -46,8 +46,7 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
             {/* Video Preview */}
             <div className="mb-6 aspect-video overflow-hidden rounded-xl border border-border bg-black">
               {course.preview_video ? (
-                // If we have a preview video, show thumbnail with play button (implementation dependent on video type)
-                // For now, retaining the UI that suggests playability
+                // If we have a preview video, show thumbnail with play button
                 <div className="relative flex h-full items-center justify-center bg-muted group cursor-pointer">
                   {course.image_url && <img src={course.image_url} alt={course.title} className="h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-40" />}
                   <div className="absolute inset-0 flex items-center justify-center">

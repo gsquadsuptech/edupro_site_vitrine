@@ -18,14 +18,14 @@ export function FormationBreadcrumb({ category, courseTitle }: FormationBreadcru
             Accueil
           </Link>
           <ChevronRight className="h-4 w-4 flex-shrink-0" />
-          <Link href="/catalogue" className="hover:text-foreground transition-colors">
+          <Link href="/catalogue/all" className="hover:text-foreground transition-colors">
             Catalogue
           </Link>
           {category && (
             <>
               <ChevronRight className="h-4 w-4 flex-shrink-0" />
               <Link
-                href={`/catalogue?category=${category.slug}`}
+                href={`/catalogue/all?category=${category.slug}`}
                 className="hover:text-foreground transition-colors"
               >
                 {category.name}
