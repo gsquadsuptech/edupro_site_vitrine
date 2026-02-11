@@ -27,9 +27,9 @@ export function MarketplaceStats() {
   return (
     <section className="border-b border-border bg-background py-12">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 justify-items-center">
+        <div className="flex flex-wrap justify-center gap-12 md:gap-24">
           {stats.map((stat, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
+            <div key={index} className="flex flex-col items-center text-center w-[140px] md:w-auto">
               <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
                 <stat.icon className="h-7 w-7 text-primary" />
               </div>
