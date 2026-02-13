@@ -16,10 +16,11 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
   // Safe access / Fallbacks
   const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
   const categoryName = course.category?.name || "Général"
-  const price = course.price || 0
-
   // Calculate derived values
-  const monthlyPrice = price > 0 ? Math.round(price / 3) : 0 // Example: 3x payment
+  const price = course.price || 0
+  const isSessionCourse = course.format === 'session'
+  const displayPrice = price
+  const displayMonthlyPrice = course.monthly_price || (price > 0 ? Math.round(price / 3) : 0)
 
   const reviews = course.reviews || []
   const reviewCount = reviews.length
@@ -96,7 +97,16 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
 
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{categoryName}</Badge>
-                <Badge variant="outline">{course.level || "Tous niveaux"}</Badge>
+                <Badge variant="outline">
+                  {(() => {
+                    const labels: Record<string, string> = {
+                      'beginner': 'Débutant',
+                      'intermediate': 'Intermédiaire',
+                      'high': 'Avancé'
+                    }
+                    return labels[course.level || ''] || course.level || 'Tous niveaux'
+                  })()}
+                </Badge>
               </div>
             </div>
 
@@ -109,11 +119,16 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
           <div className="lg:col-span-1">
             <div className="sticky top-24 rounded-xl border border-border bg-card p-6 shadow-lg">
               <div className="mb-4">
-                <div className="mb-1 text-3xl font-bold">
-                  {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(price)}
+                <div className="mb-0.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  {isSessionCourse ? "À partir de" : "Prix total"}
                 </div>
-                {monthlyPrice > 0 && (
-                  <div className="text-sm text-muted-foreground">ou {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(monthlyPrice)}/mois</div>
+                <div className="mb-1 text-3xl font-bold">
+                  {Number(displayPrice) >= 1
+                    ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(Math.round(Number(displayPrice)))
+                    : "Gratuit"}
+                </div>
+                {displayMonthlyPrice > 0 && (
+                  <div className="text-sm text-muted-foreground">ou {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(displayMonthlyPrice)}/mois</div>
                 )}
               </div>
 

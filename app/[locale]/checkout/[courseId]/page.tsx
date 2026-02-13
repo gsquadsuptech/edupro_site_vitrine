@@ -40,17 +40,7 @@ export default function CheckoutPage({
                 ]);
 
                 if (fetchedCourse) {
-                    // Adapt Course to PaymentPlan expectations
-                    const adaptedCourse = {
-                        ...fetchedCourse,
-                        one_time_price: fetchedCourse.price,
-                        // inferred pricing modes
-                        pricing_modes: {
-                            oneTime: (fetchedCourse.price || 0) > 0,
-                            // Add other modes if you can infer them or fetch them
-                        }
-                    };
-                    setCourse(adaptedCourse);
+                    setCourse(fetchedCourse);
                 }
 
                 if (fetchedCohorts && fetchedCohorts.length > 0) {

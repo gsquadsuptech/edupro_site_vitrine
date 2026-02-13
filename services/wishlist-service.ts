@@ -1,4 +1,3 @@
-
 import { createClient } from '@/lib/supabase/client'
 
 export const WishlistService = {
@@ -51,6 +50,8 @@ export const WishlistService = {
      * Check if a course is in the user's wishlist
      */
     async isInWishlist(userId: string, courseId: string) {
+        if (!userId || !courseId) return false
+
         const supabase = createClient()
 
         const { data, error } = await supabase
@@ -60,10 +61,15 @@ export const WishlistService = {
                 user_id: userId,
                 course_id: courseId
             })
-            .single()
+            .maybeSingle()
 
-        if (error && error.code !== 'PGRST116') { // PGRST116 is "The result contains 0 rows"
-            console.error('Error checking wishlist status:', error)
+        if (error) {
+            console.error('Error checking wishlist status:', {
+                message: error.message,
+                code: error.code,
+                userId,
+                courseId
+            })
             return false
         }
 

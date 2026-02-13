@@ -86,11 +86,8 @@ export const PaymentPlan = ({
             : cohortPricingModes.registration_monthly || false,
     };
 
-    // Si aucun mode n'est détecté, créer au moins un mode par défaut si le cours a un prix
-    if (
-        !Object.values(availableModes).some(Boolean) &&
-        parseFloat(course?.one_time_price || "0") > 0
-    ) {
+    // Si aucun mode n'est détecté, créer au moins un mode par défaut
+    if (!Object.values(availableModes).some(Boolean)) {
         availableModes.oneTime = true;
     }
 
@@ -213,7 +210,7 @@ export const PaymentPlan = ({
                             <div className="space-y-4">
                                 <div className="text-center">
                                     <div className="text-3xl font-bold text-primary">
-                                        {formatPrice(discountedPrice)}
+                                        {discountedPrice > 0 ? formatPrice(discountedPrice) : "Gratuit"}
                                     </div>
 
                                     {oneTimeDiscount > 0 && (
