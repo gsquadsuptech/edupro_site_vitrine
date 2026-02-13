@@ -10,6 +10,7 @@ import { MarketplaceCTA } from "@/components/marketing/sections/marketplace/mark
 import { CourseService } from "@/services/course-service";
 import { CategoryService } from "@/services/category-service";
 import { SkillPackService } from "@/services/skill-pack-service";
+import { OrganizationService } from "@/services/organization-service";
 
 export default async function CataloguePage({
     params,
@@ -19,10 +20,11 @@ export default async function CataloguePage({
     const { locale } = await params;
 
     // Parallel data fetching
-    const [featuredCourses, categories, skillPacks] = await Promise.all([
+    const [featuredCourses, categories, skillPacks, institutes] = await Promise.all([
         CourseService.getFeaturedCourses(),
         CategoryService.getCategoriesWithCounts(),
-        SkillPackService.getAllSkillPacks()
+        SkillPackService.getAllSkillPacks(),
+        OrganizationService.getPartnerInstitutes()
     ]);
 
     return (
@@ -33,7 +35,7 @@ export default async function CataloguePage({
                 <FeaturedCourses locale={locale} courses={featuredCourses} />
                 <CategoriesGrid locale={locale} categories={categories} />
                 {/* <SkillPacksSection locale={locale} skillPacks={skillPacks} /> */}
-                <PartnerInstitutes />
+                <PartnerInstitutes institutes={institutes} />
                 {/* <LearnerTestimonials /> */}
                 <MarketplaceCTA />
             </main>

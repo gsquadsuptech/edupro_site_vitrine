@@ -33,6 +33,17 @@ export type Course = {
     is_featured: boolean // mapped from marketplace_courses.featured
     is_published?: boolean
     published_at: string
+    one_time_price: number | null
+    monthly_price: number | null
+    registration_fee: number | null
+    monthly_fee: number | null
+    installments: any[] | null
+    pricing_modes: {
+        one_time: boolean
+        installments: boolean
+        subscription: boolean
+        registration_monthly: boolean
+    } | null
     sections?: Section[]
     reviews?: {
         id: string
@@ -109,6 +120,12 @@ export type Cohort = {
     max_students: number | null
     current_students_count?: number
     pricing_modes?: any
+    one_time_price: number | null
+    monthly_price: number | null
+    registration_fee: number | null
+    monthly_fee: number | null
+    installments: any[] | null
+    use_course_price: boolean | null
     // Relations
     sessions?: CohortSession[]
 }
