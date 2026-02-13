@@ -25,6 +25,12 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
         duration,
         level,
         status,
@@ -67,18 +73,37 @@ export const CourseService = {
             return { courses: [], total: 0 }
         }
 
-        const courses = data.map((item: any) => ({
+        const courses = data.map((item: any) => CourseService.mapCourseItem(item))
+
+        return { courses, total: count || 0 }
+    },
+
+    mapCourseItem(item: any): Course {
+        const oneTimePrice = item.one_time_price ? Number(item.one_time_price) : null;
+        const legacyPrice = item.price ? Number(item.price) : 0;
+
+        // Use one_time_price if available and legacy price is 0 or less
+        const displayPrice = (legacyPrice <= 0 && oneTimePrice && oneTimePrice > 0) ? oneTimePrice : legacyPrice;
+
+        return {
             id: item.id,
             format: item.format,
             title: item.title,
             slug: item.slug,
             description: item.description,
             image_url: item.thumbnail,
-            price: item.price,
-            original_price: null,
+            price: displayPrice,
+            original_price: item.one_time_discount ? Number(item.one_time_discount) : null,
             currency: 'FCFA',
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
             level: item.level,
+
+            one_time_price: item.one_time_price ? Number(item.one_time_price) : null,
+            monthly_price: item.monthly_price ? Number(item.monthly_price) : null,
+            registration_fee: item.registration_fee ? Number(item.registration_fee) : null,
+            monthly_fee: item.monthly_fee ? Number(item.monthly_fee) : null,
+            installments: item.installments || [],
+            pricing_modes: item.pricing_modes || null,
 
             is_featured: item.marketplace?.featured || false,
             is_published: item.status === 'published',
@@ -87,11 +112,9 @@ export const CourseService = {
             instructor: item.instructor ? {
                 name: item.instructor.name,
                 avatar_url: item.instructor.avatar_url,
-                institute: item.instructor.organization?.name || null
+                institute: item.instructor.organization?.name || (item.instructor.organizations?.[0]?.name) || null
             } : null
-        }))
-
-        return { courses, total: count || 0 }
+        }
     },
 
     async getFeaturedCourses(): Promise<Course[]> {
@@ -125,6 +148,12 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
         duration,
         level,
         status,
@@ -147,27 +176,7 @@ export const CourseService = {
         // Filter for featured manually if join filtering is tricky (supa simplified)
         // Or better, let's just map what we get, assuming strict query later.
         // MAPPING
-        return data.map((item: any) => ({
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price,
-            original_price: null,
-            currency: 'FCFA', // Default
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
-            level: item.level,
-            is_featured: item.marketplace?.featured || false,
-            published_at: item.created_at,
-            category: item.category,
-            instructor: item.instructor ? {
-                name: item.instructor.name,
-                avatar_url: item.instructor.avatar_url,
-                institute: item.instructor.organization?.name || null
-            } : null
-        }))
+        return data.map((item: any) => CourseService.mapCourseItem(item))
     },
 
     async getAllCourses(limit = 12): Promise<Course[]> {
@@ -182,13 +191,19 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
         duration,
         level,
         status,
         format,
         created_at,
         category:categories(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, organization:organizations(name)),
         marketplace:marketplace_courses(featured, rating, review_count)
       `)
             .eq('status', 'published')
@@ -200,27 +215,7 @@ export const CourseService = {
             return []
         }
 
-        return data.map((item: any) => ({
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price,
-            original_price: null,
-            currency: 'FCFA',
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
-            level: item.level,
-            is_featured: item.marketplace?.featured || false,
-            published_at: item.created_at,
-            category: item.category,
-            instructor: item.instructor ? {
-                name: item.instructor.name,
-                avatar_url: item.instructor.avatar_url,
-                institute: item.instructor.organization?.name || null
-            } : null
-        }))
+        return data.map((item: any) => CourseService.mapCourseItem(item))
     },
 
     async getCoursesByCategory(categorySlug: string): Promise<Course[]> {
@@ -235,13 +230,19 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
         duration,
         level,
         status,
         format,
         created_at,
         category:categories!inner(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, organization:organizations(name)),
         marketplace:marketplace_courses(featured, rating, review_count)
       `)
             .eq('status', 'published')
@@ -253,23 +254,7 @@ export const CourseService = {
             return []
         }
 
-        return data.map((item: any) => ({
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price,
-            original_price: null,
-            currency: 'FCFA',
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
-            level: item.level,
-            is_featured: item.marketplace?.featured || false,
-            published_at: item.created_at,
-            category: item.category,
-            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
-        }))
+        return data.map((item: any) => CourseService.mapCourseItem(item))
     },
 
     async getCourseById(id: string): Promise<Course | null> {
@@ -284,6 +269,13 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
+        one_time_discount,
         duration,
         level,
         status,
@@ -294,7 +286,7 @@ export const CourseService = {
         prerequisites,
         created_at,
         category:categories(name, slug),
-        instructor:instructors(name, avatar_url),
+        instructor:instructors(name, avatar_url, organization:organizations(name)),
         marketplace:marketplace_courses(featured, rating, review_count),
         sections(
              id,
@@ -374,38 +366,19 @@ export const CourseService = {
             return []
         }
 
+        const baseCourse = CourseService.mapCourseItem(item)
+
         return {
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price || 0,
-            original_price: null,
-            currency: 'FCFA',
+            ...baseCourse,
             rating: item.marketplace?.rating || 0,
             reviewCount: item.marketplace?.review_count || reviews.length,
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '10h',
-            level: item.level,
-            published_at: item.created_at,
-            instructor: {
-                name: item.instructor?.name || 'Algorix',
-                avatar_url: item.instructor?.avatar_url || null,
-                role: 'Instructor'
-            },
-            category: {
-                name: item.category?.name || 'Général',
-                slug: item.category?.slug || 'general'
-            },
             highlights: parseJson(item.expected_results),
             objectives: parseJson(item.objectives),
             prerequisites: parseJson(item.prerequisites),
             preview_video: item.preview_video || null,
             sections: sections,
-            reviews: reviews,
-            is_published: item.status === 'published',
-            is_featured: item.marketplace?.featured || false
+            reviews: reviews
         }
     },
 
@@ -422,6 +395,13 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
+        one_time_discount,
         duration,
         level,
         status,
@@ -518,43 +498,27 @@ export const CourseService = {
             return []
         }
 
+        const baseCourse = CourseService.mapCourseItem(item)
+
         return {
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price || 0,
-            original_price: null,
-            currency: 'FCFA',
+            ...baseCourse,
             rating: item.marketplace?.rating || 0,
             reviewCount: item.marketplace?.review_count || reviews.length,
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '10h',
-            level: item.level,
-            published_at: item.created_at,
-            instructor: {
-                name: item.instructor?.name || 'Algorix',
-                avatar_url: item.instructor?.avatar_url || null,
-                role: 'Instructor',
-                institute: item.instructor?.organization?.name || null,
-                courses_count: item.instructor?.courses_count || 0,
-                students_count: item.instructor?.students_count || 0,
-                rating: item.instructor?.rating || 0,
-                organization_id: item.instructor?.organization_id || null
-            },
-            category: {
-                name: item.category?.name || 'Général',
-                slug: item.category?.slug || 'general'
-            },
             highlights: parseJson(item.expected_results),
             objectives: parseJson(item.objectives),
             prerequisites: parseJson(item.prerequisites),
             preview_video: item.preview_video || null,
             sections: sections,
             reviews: reviews,
-            is_published: item.status === 'published',
-            is_featured: item.marketplace?.featured || false
+            instructor: {
+                ...baseCourse.instructor,
+                role: 'Instructor',
+                rating: item.instructor?.rating || 0,
+                students_count: item.instructor?.students_count || 0,
+                courses_count: item.instructor?.courses_count || 0,
+                organization_id: item.instructor?.organization_id || null
+            } as any
         }
     },
     async getRelatedCourses(categorySlug: string, excludeCourseId: string, organizationId?: string | null): Promise<Course[]> {
@@ -573,6 +537,12 @@ export const CourseService = {
                     description,
                     thumbnail,
                     price,
+                    one_time_price,
+                    monthly_price,
+                    registration_fee,
+                    monthly_fee,
+                    installments,
+                    pricing_modes,
                     duration,
                     level,
                     status,
@@ -608,6 +578,12 @@ export const CourseService = {
                     description,
                     thumbnail,
                     price,
+                    one_time_price,
+                    monthly_price,
+                    registration_fee,
+                    monthly_fee,
+                    installments,
+                    pricing_modes,
                     duration,
                     level,
                     status,
@@ -628,23 +604,7 @@ export const CourseService = {
             }
         }
 
-        return courses.map((item: any) => ({
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price,
-            original_price: null,
-            currency: 'FCFA',
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
-            level: item.level,
-            is_featured: item.marketplace?.featured || false,
-            published_at: item.created_at,
-            category: item.category,
-            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
-        }))
+        return courses.map((item: any) => CourseService.mapCourseItem(item))
     },
 
     async getSimilarCourses(categorySlug: string, excludeCourseId: string): Promise<Course[]> {
@@ -659,6 +619,12 @@ export const CourseService = {
         description,
         thumbnail,
         price,
+        one_time_price,
+        monthly_price,
+        registration_fee,
+        monthly_fee,
+        installments,
+        pricing_modes,
         duration,
         level,
         status,
@@ -679,23 +645,7 @@ export const CourseService = {
             return []
         }
 
-        return data.map((item: any) => ({
-            id: item.id,
-            format: item.format,
-            title: item.title,
-            slug: item.slug,
-            description: item.description,
-            image_url: item.thumbnail,
-            price: item.price,
-            original_price: null,
-            currency: 'FCFA',
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
-            level: item.level,
-            is_featured: item.marketplace?.featured || false,
-            published_at: item.created_at,
-            category: item.category,
-            instructor: item.instructor ? { name: item.instructor.name, avatar_url: item.instructor.avatar_url } : null
-        }))
+        return data.map((item: any) => CourseService.mapCourseItem(item))
     },
 
     async getCohortsByCourseId(courseId: string): Promise<Cohort[]> {
@@ -712,7 +662,13 @@ export const CourseService = {
                 status,
                 max_participants,
                 pricing_modes,
-                registration_deadline
+                registration_deadline,
+                one_time_price,
+                monthly_price,
+                registration_fee,
+                monthly_fee,
+                installments,
+                use_course_price
             `)
             .eq('course_id', courseId)
             .eq('status', 'active')
@@ -730,8 +686,14 @@ export const CourseService = {
             end_date: item.end_date,
             registration_deadline: item.registration_deadline || null,
             status: item.status,
-            max_students: item.max_participants || item.max_students, // Handle potential mapping mismatch if schema differs
+            max_students: item.max_participants || null,
             pricing_modes: item.pricing_modes,
+            one_time_price: item.one_time_price ? Number(item.one_time_price) : null,
+            monthly_price: item.monthly_price ? Number(item.monthly_price) : null,
+            registration_fee: item.registration_fee ? Number(item.registration_fee) : null,
+            monthly_fee: item.monthly_fee ? Number(item.monthly_fee) : null,
+            installments: item.installments || [],
+            use_course_price: item.use_course_price || false,
             sessions: []
         }))
     },

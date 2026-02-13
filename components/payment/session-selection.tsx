@@ -130,6 +130,13 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
                                             </span>
                                         </div>
                                     )}
+
+                                    <div className="mt-4 pt-3 border-t border-border">
+                                        <div className="text-sm font-medium text-muted-foreground mb-1">Prix de la session</div>
+                                        <div className="text-xl font-bold text-primary">
+                                            {session.one_time_price ? `${Number(session.one_time_price).toLocaleString()} FCFA` : 'Utilise le prix du cours'}
+                                        </div>
+                                    </div>
                                 </div>
                             </CardContent>
 
@@ -150,20 +157,22 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
                 })}
             </div>
 
-            {onPrevious && (
-                <div className="mt-6 flex justify-start">
-                    <Button
-                        variant="outline"
-                        onClick={onPrevious}
-                        className="flex items-center"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
-                        Retour
-                    </Button>
-                </div>
-            )}
-        </div>
+            {
+                onPrevious && (
+                    <div className="mt-6 flex justify-start">
+                        <Button
+                            variant="outline"
+                            onClick={onPrevious}
+                            className="flex items-center"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                            </svg>
+                            Retour
+                        </Button>
+                    </div>
+                )
+            }
+        </div >
     );
 };

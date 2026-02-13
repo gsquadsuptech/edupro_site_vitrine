@@ -13,13 +13,12 @@ import { Course } from "@/lib/supabase/types"
 import { WishlistService } from "@/services/wishlist-service"
 
 interface FormationCardProps {
-  course: Pick<Course, 'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration'> & {
+  course: Pick<Course, 'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration' | 'format' | 'one_time_price' | 'monthly_price' | 'pricing_modes'> & {
     // Add missing properties that might be computed or hardcoded for now
     rating?: number
     reviewCount?: number
     enrolledCount?: number
     badge?: string
-    monthlyPrice?: number
   }
 }
 
@@ -158,9 +157,14 @@ export function FormationCard({ course }: FormationCardProps) {
           {/* Price & Actions */}
           <div className="flex items-center justify-between border-t border-border pt-3">
             <div>
-              <div className="text-lg font-bold">{price.toLocaleString()} FCFA</div>
-              {course.monthlyPrice && (
-                <div className="text-xs text-muted-foreground">ou {course.monthlyPrice.toLocaleString()}/mois</div>
+              <div className="text-xs text-muted-foreground font-medium">
+                {course.format === 'session' ? 'À partir de' : 'Prix total'}
+              </div>
+              <div className="text-lg font-bold">
+                {Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString()} FCFA` : 'Gratuit'}
+              </div>
+              {course.monthly_price && (
+                <div className="text-xs text-muted-foreground">ou {course.monthly_price.toLocaleString()} FCFA/mois</div>
               )}
             </div>
             <div className="flex gap-1">

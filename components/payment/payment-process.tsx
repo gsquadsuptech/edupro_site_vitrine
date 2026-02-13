@@ -136,25 +136,39 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
                 <CardFooter className="flex flex-col gap-4">
                     <div className="flex flex-col gap-4 w-full">
-                        <Button
-                            size="lg"
-                            className="w-full bg-[#0085CA] hover:bg-[#006ca3]" // Paydunya Blue-ish
-                            onClick={simulatePayment}
-                            disabled={loading}
-                        >
-                            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
-                            Payer avec Paydunya {formatPrice(initialAmount)}
-                        </Button>
-                        <Button
-                            size="lg"
-                            variant="outline"
-                            className="w-full"
-                            onClick={simulatePayment}
-                            disabled={loading}
-                        >
-                            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
-                            Autre méthode {formatPrice(initialAmount)}
-                        </Button>
+                        {initialAmount > 0 ? (
+                            <>
+                                <Button
+                                    size="lg"
+                                    className="w-full bg-[#0085CA] hover:bg-[#006ca3]" // Paydunya Blue-ish
+                                    onClick={simulatePayment}
+                                    disabled={loading}
+                                >
+                                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
+                                    Payer avec Paydunya {formatPrice(initialAmount)}
+                                </Button>
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={simulatePayment}
+                                    disabled={loading}
+                                >
+                                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
+                                    Autre méthode {formatPrice(initialAmount)}
+                                </Button>
+                            </>
+                        ) : (
+                            <Button
+                                size="lg"
+                                className="w-full"
+                                onClick={simulatePayment}
+                                disabled={loading}
+                            >
+                                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ShieldCheckIcon className="mr-2 h-4 w-4" />}
+                                Confirmer l'inscription gratuite
+                            </Button>
+                        )}
                     </div>
 
                     <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1">

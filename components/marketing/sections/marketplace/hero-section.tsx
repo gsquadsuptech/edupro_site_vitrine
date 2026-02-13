@@ -33,7 +33,7 @@ export function MarketplaceHero() {
           </div> */}
 
           {/* Popular Searches */}
-          <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
+          {/* <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
             <span className="text-muted-foreground">Recherches populaires:</span>
             <Button variant="outline" size="sm" className="rounded-full bg-transparent">
               Intelligence Artificielle
@@ -47,7 +47,7 @@ export function MarketplaceHero() {
             <Button variant="outline" size="sm" className="rounded-full bg-transparent">
               Marketing Digital
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
 
