@@ -47,22 +47,74 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
     const initialAmount = getInitialPaymentAmount();
 
-    const simulatePayment = async () => {
+    const handlePayment = async () => {
         setLoading(true);
         setError(null);
 
-        // Simulate API call delay
-        setTimeout(() => {
+        // Stratégie pour contourner le blocage des popups
+        const width = 600;
+        const height = 700;
+        const left = window.screenX + (window.outerWidth - width) / 2;
+        const top = window.screenY + (window.outerHeight - height) / 2;
+        const popup = window.open('about:blank', 'PaymentPopup', `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+
+        try {
+            // URL de l'API SaaS (à rendre configurable via env si possible)
+            const saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || 'http://localhost:3000';
+
+            const response = await fetch(`${saasUrl}/api/payments/initialize`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': process.env.NEXT_PUBLIC_SAAS_API_KEY || ''
+                },
+                body: JSON.stringify({
+                    amount: initialAmount,
+                    courseId: course.id,
+                    paymentPlan: plan.type,
+                    userId: course.userId || 'guest', // À adapter selon votre gestion utilisateur
+                    returnUrl: `${window.location.origin}/checkout/${course.id}?status=success`,
+                    cancelUrl: `${window.location.origin}/checkout/${course.id}?status=cancelled`,
+                    // gatewayId: 'paydunya' // L'API SaaS gère l'opérateur dynamiquement
+                }),
+            });
+
+            if (!response.ok) {
+                if (popup) popup.close();
+                throw new Error('Erreur lors de l\'initialisation du paiement');
+            }
+
+            const data = await response.json();
+
+            if (data.success && data.redirectUrl) {
+                const url = data.redirectUrl;
+                const mode = data.presentationMode || 'same_tab';
+
+                if (mode === 'popup' && popup) {
+                    popup.location.href = url;
+                } else {
+                    if (popup) popup.close();
+
+                    if (mode === 'new_tab') {
+                        window.open(url, '_blank');
+                    } else {
+                        window.location.href = url;
+                    }
+                }
+
+                // On peut potentiellement appeler onSuccess ici si on ne redirige pas, 
+                // mais généralement on attend le retour du webhook sur le backend.
+            } else {
+                if (popup) popup.close();
+                throw new Error(data.message || 'L\'initialisation a échoué');
+            }
+        } catch (err: any) {
+            if (popup) popup.close();
+            setError(err.message);
+            onFailure(err);
+        } finally {
             setLoading(false);
-            // Simulate Success
-            const mockSuccessData = {
-                amount: initialAmount,
-                reference: 'PAY-' + Math.random().toString(36).substring(7).toUpperCase(),
-                created_at: new Date().toISOString(),
-                nextPaymentDate: plan.type === 'installments' ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : null
-            };
-            onSuccess(mockSuccessData);
-        }, 2000);
+        }
     };
 
     const getPlanDescription = () => {
@@ -137,32 +189,20 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
                 <CardFooter className="flex flex-col gap-4">
                     <div className="flex flex-col gap-4 w-full">
                         {initialAmount > 0 ? (
-                            <>
-                                <Button
-                                    size="lg"
-                                    className="w-full bg-[#0085CA] hover:bg-[#006ca3]" // Paydunya Blue-ish
-                                    onClick={simulatePayment}
-                                    disabled={loading}
-                                >
-                                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
-                                    Payer avec Paydunya {formatPrice(initialAmount)}
-                                </Button>
-                                <Button
-                                    size="lg"
-                                    variant="outline"
-                                    className="w-full"
-                                    onClick={simulatePayment}
-                                    disabled={loading}
-                                >
-                                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
-                                    Autre méthode {formatPrice(initialAmount)}
-                                </Button>
-                            </>
+                            <Button
+                                size="lg"
+                                className="w-full text-lg font-bold"
+                                onClick={handlePayment}
+                                disabled={loading}
+                            >
+                                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
+                                Payez {formatPrice(initialAmount)}
+                            </Button>
                         ) : (
                             <Button
                                 size="lg"
                                 className="w-full"
-                                onClick={simulatePayment}
+                                onClick={handlePayment}
                                 disabled={loading}
                             >
                                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ShieldCheckIcon className="mr-2 h-4 w-4" />}
@@ -173,7 +213,7 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
                     <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1">
                         <ShieldCheckIcon className="h-4 w-4 text-green-600" />
-                        Paiement sécurisé (Simulation Vitrine)
+                        Paiement sécurisé
                     </p>
                 </CardFooter>
             </Card>
