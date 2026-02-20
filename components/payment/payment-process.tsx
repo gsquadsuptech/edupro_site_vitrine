@@ -60,7 +60,14 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
         try {
             // URL de l'API SaaS (à rendre configurable via env si possible)
-            const saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || 'http://localhost:3000';
+            let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || 'https://edupro.africa';
+
+            // Sécurité : Si on est en production mais que saasUrl pointe sur localhost, forcer le domaine de production
+            if (typeof window !== 'undefined' &&
+                !window.location.hostname.includes('localhost') &&
+                saasUrl.includes('localhost')) {
+                saasUrl = 'https://edupro.africa';
+            }
 
             const response = await fetch(`${saasUrl}/api/payments/initialize`, {
                 method: 'POST',
