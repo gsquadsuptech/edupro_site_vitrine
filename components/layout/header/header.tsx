@@ -19,9 +19,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings } from "lucide-react"
+import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings, GraduationCap } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/useAuth"
@@ -30,10 +33,7 @@ import { FlagImage } from "@/components/ui/flag-image"
 // Safely try to import role-guard util, fallback if not available
 // This pattern avoids build errors if the file structure is different than expected
 // In a real scenario, we would ensure the import path is correct.
-// Safely try to import role-guard util, fallback if not available
-// This pattern avoids build errors if the file structure is different than expected
-// In a real scenario, we would ensure the import path is correct.
-import { getDefaultRouteForUser } from "../../../lib/role-guard"
+import { getDefaultRouteForUser, getAvailableDashboards, type DashboardSpace } from "../../../lib/role-guard"
 import { getAppUrl } from "@/lib/utils"
 
 export function Header() {
@@ -63,10 +63,19 @@ export function Header() {
     window.location.href = `/${locale}`
   }
 
-  const handleDashboardClick = () => {
-    // Use the utility to get the correct dashboard route based on role
-    const dashboardRoute = getDefaultRouteForUser(roles || [])
-    window.location.href = getAppUrl(dashboardRoute)
+  const availableDashboards = getAvailableDashboards(roles || [])
+
+  const handleDashboardClick = (route: string) => {
+    window.location.href = getAppUrl(route)
+  }
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Settings': return <Settings className="mr-2 h-4 w-4" />;
+      case 'GraduationCap': return <GraduationCap className="mr-2 h-4 w-4" />;
+      case 'LayoutDashboard': return <LayoutDashboard className="mr-2 h-4 w-4" />;
+      default: return <LayoutDashboard className="mr-2 h-4 w-4" />;
+    }
   }
 
   return (
@@ -245,10 +254,39 @@ export function Header() {
                         </div>
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={handleDashboardClick} className="cursor-pointer">
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>{locale === 'fr' ? 'Mon espace' : 'My Space'}</span>
-                      </DropdownMenuItem>
+
+                      {availableDashboards.length > 1 ? (
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger className="cursor-pointer">
+                            <LayoutDashboard className="mr-2 h-4 w-4" />
+                            <span>{locale === 'fr' ? 'Mon espace' : 'My Space'}</span>
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuSubContent>
+                            {availableDashboards.map((dash) => (
+                              <DropdownMenuItem
+                                key={dash.id}
+                                onClick={() => handleDashboardClick(dash.route)}
+                                className="cursor-pointer"
+                              >
+                                {getIcon(dash.icon)}
+                                <span>{locale === 'fr' ? dash.labelFr : dash.labelEn}</span>
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+                      ) : (
+                        availableDashboards.map((dash) => (
+                          <DropdownMenuItem
+                            key={dash.id}
+                            onClick={() => handleDashboardClick(dash.route)}
+                            className="cursor-pointer"
+                          >
+                            {getIcon(dash.icon)}
+                            <span>{locale === 'fr' ? 'Mon espace' : 'My Space'}</span>
+                          </DropdownMenuItem>
+                        ))
+                      )}
+
                       <DropdownMenuItem className="cursor-pointer">
                         <Settings className="mr-2 h-4 w-4" />
                         <span>{locale === 'fr' ? 'Paramètres' : 'Settings'}</span>
@@ -348,10 +386,21 @@ export function Header() {
                         )}
                         <span className="font-medium">{user.user_metadata?.full_name || user.email}</span>
                       </div>
-                      <Button variant="outline" className="w-full justify-start" onClick={handleDashboardClick}>
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        {locale === 'fr' ? 'Mon espace' : 'My Space'}
-                      </Button>
+
+                      <div className="flex flex-col gap-2">
+                        {availableDashboards.map((dash) => (
+                          <Button
+                            key={dash.id}
+                            variant="outline"
+                            className="w-full justify-start"
+                            onClick={() => handleDashboardClick(dash.route)}
+                          >
+                            {getIcon(dash.icon)}
+                            {availableDashboards.length === 1 ? (locale === 'fr' ? 'Mon espace' : 'My Space') : (locale === 'fr' ? dash.labelFr : dash.labelEn)}
+                          </Button>
+                        ))}
+                      </div>
+
                       <Button variant="outline" className="w-full justify-start text-red-600" onClick={handleLogout}>
                         <LogOut className="mr-2 h-4 w-4" />
                         {locale === 'fr' ? 'Se déconnecter' : 'Log out'}

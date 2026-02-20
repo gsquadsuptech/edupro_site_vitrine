@@ -16,6 +16,8 @@ import { CourseService } from "@/services/course-service"
 import { useToast } from "@/hooks/use-toast"
 import { LoginForm } from "@/components/pages/auth/login-form"
 import { RegisterForm } from "@/components/pages/auth/register-form"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface WaitlistDialogProps {
     courseId: string
@@ -125,7 +127,7 @@ export function WaitlistDialog({ courseId, courseSlug, courseTitle, cohortId }: 
                     ) : (
                         <Bell className="mr-2 h-5 w-5" />
                     )}
-                    {loading ? "Traitement..." : isJoined ? "En attente" : "M'avertir"}
+                    {loading ? "Traitement..." : isJoined ? "En attente pour la prochaine session" : "M'avertir pour la prochaine session"}
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -138,23 +140,35 @@ export function WaitlistDialog({ courseId, courseSlug, courseTitle, cohortId }: 
                     </DialogDescription>
                 </DialogHeader>
 
-                {authView === 'login' && (
-                    <div className="py-2">
-                        <LoginForm
-                            onRegisterClick={() => setAuthView('register')}
-                            onSuccess={handleAuthSuccess}
-                        />
+                <Tabs value={authView} className="w-full" onValueChange={(v: string) => setAuthView(v as 'login' | 'register')}>
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="login">Connexion</TabsTrigger>
+                        <TabsTrigger value="register">Inscription</TabsTrigger>
+                    </TabsList>
+                    <div className="relative mt-4 overflow-hidden">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={authView === 'login' ? 'login' : 'register'}
+                                initial={{ x: authView === 'login' ? -20 : 20, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: authView === 'login' ? 20 : -20, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                            >
+                                {authView === 'login' ? (
+                                    <LoginForm
+                                        onRegisterClick={() => setAuthView('register')}
+                                        onSuccess={handleAuthSuccess}
+                                    />
+                                ) : (
+                                    <RegisterForm
+                                        onLoginClick={() => setAuthView('login')}
+                                        onSuccess={handleAuthSuccess}
+                                    />
+                                )}
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
-                )}
-
-                {authView === 'register' && (
-                    <div className="py-2">
-                        <RegisterForm
-                            onLoginClick={() => setAuthView('login')}
-                            onSuccess={handleAuthSuccess}
-                        />
-                    </div>
-                )}
+                </Tabs>
             </DialogContent>
         </Dialog>
     )
