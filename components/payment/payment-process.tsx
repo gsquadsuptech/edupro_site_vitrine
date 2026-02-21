@@ -59,14 +59,25 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
         const popup = window.open('about:blank', 'PaymentPopup', `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
 
         try {
-            // URL de l'API SaaS (à rendre configurable via env si possible)
-            let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || 'https://edupro.africa';
+            // URL de l'API SaaS (détection dynamique pour staging/production)
+            let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
 
-            // Sécurité : Si on est en production mais que saasUrl pointe sur localhost, forcer le domaine de production
-            if (typeof window !== 'undefined' &&
-                !window.location.hostname.includes('localhost') &&
-                saasUrl.includes('localhost')) {
-                saasUrl = 'https://edupro.africa';
+            if (typeof window !== 'undefined') {
+                const hostname = window.location.hostname;
+
+                // Détection dynamique de l'environnement SaaS
+                if (hostname.includes('site.edupro.africa')) {
+                    // Si on est sur le site vitrine de staging, on utilise le SaaS de staging
+                    saasUrl = 'https://staging.edupro.africa';
+                } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
+                    // Si on est sur le domaine principal et pas de config spécifique, on utilise la prod
+                    saasUrl = 'https://edupro.africa';
+                }
+            }
+
+            // Fallback pour le développement local si rien n'est défini
+            if (!saasUrl || saasUrl.includes('localhost')) {
+                saasUrl = 'http://localhost:3000';
             }
 
             const response = await fetch(`${saasUrl}/api/payments/initialize`, {
