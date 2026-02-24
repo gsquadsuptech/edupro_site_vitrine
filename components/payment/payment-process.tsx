@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2, UserIcon } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-// import { MarketplaceCourse } from '@/types/marketplace'; // Local types if needed
+import { useAuth } from '@/hooks/useAuth';
 
 interface PaymentPlan {
     type: string;
@@ -23,6 +25,12 @@ interface PaymentProcessProps {
 export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: PaymentProcessProps) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { user, isAuthenticated } = useAuth();
+
+    // Guest info state
+    const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const formatPrice = (price: number | undefined | null) => {
         if (price === undefined || price === null) return 'N/A';
@@ -48,15 +56,26 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
     const initialAmount = getInitialPaymentAmount();
 
     const handlePayment = async () => {
+        // Validation for guest
+        if (!isAuthenticated && !email) {
+            setError("Veuillez renseigner votre email pour continuer.");
+            return;
+        }
+
         setLoading(true);
         setError(null);
 
         // Stratégie pour contourner le blocage des popups
         const width = 600;
         const height = 700;
-        const left = window.screenX + (window.outerWidth - width) / 2;
-        const top = window.screenY + (window.outerHeight - height) / 2;
-        const popup = window.open('about:blank', 'PaymentPopup', `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+        const left = (typeof window !== 'undefined' ? window.screenX : 0) + ((typeof window !== 'undefined' ? window.outerWidth : 0) - width) / 2;
+        const top = (typeof window !== 'undefined' ? window.screenY : 0) + ((typeof window !== 'undefined' ? window.outerHeight : 0) - height) / 2;
+
+        // On n'ouvre la popup que si nécessaire
+        let popup: Window | null = null;
+        if (typeof window !== 'undefined') {
+            popup = window.open('about:blank', 'PaymentPopup', `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+        }
 
         try {
             // URL de l'API SaaS (détection dynamique pour staging/production)
@@ -67,15 +86,12 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
                 // Détection dynamique de l'environnement SaaS
                 if (hostname.includes('site.edupro.africa')) {
-                    // Si on est sur le site vitrine de staging, on utilise le SaaS de staging
                     saasUrl = 'https://staging.edupro.africa';
                 } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
-                    // Si on est sur le domaine principal et pas de config spécifique, on utilise la prod
                     saasUrl = 'https://edupro.africa';
                 }
             }
 
-            // Fallback pour le développement local si rien n'est défini
             if (!saasUrl || saasUrl.includes('localhost')) {
                 saasUrl = 'http://localhost:3000';
             }
@@ -89,17 +105,22 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
                 body: JSON.stringify({
                     amount: initialAmount,
                     courseId: course.id,
+                    cohortId: cohort?.id,
                     paymentPlan: plan.type,
-                    userId: course.userId || 'guest', // À adapter selon votre gestion utilisateur
+                    userId: user?.id || 'guest',
+                    // Guest customer info
+                    email: user?.email || email,
+                    firstName: user?.user_metadata?.first_name || firstName,
+                    lastName: user?.user_metadata?.last_name || lastName,
                     returnUrl: `${window.location.origin}/checkout/${course.id}?status=success`,
                     cancelUrl: `${window.location.origin}/checkout/${course.id}?status=cancelled`,
-                    // gatewayId: 'paydunya' // L'API SaaS gère l'opérateur dynamiquement
                 }),
             });
 
             if (!response.ok) {
+                const errorData = await response.json();
                 if (popup) popup.close();
-                throw new Error('Erreur lors de l\'initialisation du paiement');
+                throw new Error(errorData.message || 'Erreur lors de l\'initialisation du paiement');
             }
 
             const data = await response.json();
@@ -119,9 +140,6 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
                         window.location.href = url;
                     }
                 }
-
-                // On peut potentiellement appeler onSuccess ici si on ne redirige pas, 
-                // mais généralement on attend le retour du webhook sur le backend.
             } else {
                 if (popup) popup.close();
                 throw new Error(data.message || 'L\'initialisation a échoué');
@@ -156,19 +174,66 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
             <Card className="shadow-lg">
                 <CardHeader>
-                    <CardTitle className="text-xl">Récapitulatif</CardTitle>
-                    <CardDescription>Vérifiez les détails avant de procéder au paiement.</CardDescription>
+                    <CardTitle className="text-xl">Récapitulatif & Informations</CardTitle>
+                    <CardDescription>Vérifiez vos informations avant de procéder au paiement.</CardDescription>
                 </CardHeader>
 
-                <CardContent className="space-y-4">
-                    <div className="bg-muted/50 p-4 rounded-md border">
-                        <h3 className="font-semibold text-lg mb-2">{course.title}</h3>
+                <CardContent className="space-y-6">
+                    {/* Guest Form */}
+                    {!isAuthenticated && (
+                        <div className="space-y-4 p-4 bg-orange-50 dark:bg-orange-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                            <h3 className="font-semibold flex items-center gap-2 text-orange-800 dark:text-orange-300">
+                                <UserIcon className="h-4 w-4" />
+                                Vos informations de contact
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="firstName">Prénom</Label>
+                                    <Input
+                                        id="firstName"
+                                        placeholder="Jean"
+                                        value={firstName}
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                        disabled={loading}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="lastName">Nom</Label>
+                                    <Input
+                                        id="lastName"
+                                        placeholder="Dupont"
+                                        value={lastName}
+                                        onChange={(e) => setLastName(e.target.value)}
+                                        disabled={loading}
+                                    />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="email">Email <span className="text-red-500">*</span></Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="jean.dupont@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    disabled={loading}
+                                />
+                                <p className="text-xs text-orange-600/80">
+                                    Un compte sera automatiquement créé avec cet email pour vous donner accès au cours.
+                                </p>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="bg-muted/50 p-4 rounded-md border text-sm">
+                        <h3 className="font-semibold text-base mb-2">{course.title}</h3>
                         {cohort && (
-                            <p className="text-sm text-muted-foreground mb-1">
+                            <p className="text-muted-foreground mb-1">
                                 Session : <span className="font-medium text-foreground">{cohort.name}</span>
                             </p>
                         )}
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground">
                             Plan : <span className="font-medium text-foreground">{getPlanDescription()}</span>
                         </p>
                     </div>
@@ -182,15 +247,6 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
                             <div className="flex justify-between text-sm">
                                 <span className="text-muted-foreground">Montant total :</span>
                                 <span className="font-medium">{formatPrice(plan.details.totalAmount)}</span>
-                            </div>
-                        )}
-                        {plan.type === 'subscription' && (
-                            <p className="text-xs text-muted-foreground text-right">Sera facturé mensuellement</p>
-                        )}
-                        {plan.type === 'registrationMonthly' && plan.details.monthlyPrice && (
-                            <div className="flex justify-between text-sm mt-1">
-                                <span className="text-muted-foreground">Prochaine mensualité :</span>
-                                <span className="font-medium">{formatPrice(plan.details.monthlyPrice)}</span>
                             </div>
                         )}
                     </div>
