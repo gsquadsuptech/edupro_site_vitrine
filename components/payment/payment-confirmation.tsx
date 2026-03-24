@@ -107,7 +107,7 @@ export const PaymentConfirmation = ({
             <CardContent className="space-y-6">
                 <div className="bg-green-50 p-4 rounded-md">
                     <p className="text-sm text-green-700">
-                        Nous vous remercions pour votre achat. C'est une simulation, aucun débit n'a été effectué.
+                        Nous vous remercions pour votre achat.
                     </p>
                 </div>
 
@@ -136,14 +136,15 @@ export const PaymentConfirmation = ({
                                     plan.type === 'oneTime' ? 'Paiement unique' :
                                         plan.type === 'installments' ? 'Paiement échelonné' :
                                             plan.type === 'subscription' ? 'Abonnement mensuel' :
-                                                'Inscription + Mensualités'
+                                                plan.type === 'registrationMonthly' ? 'Inscription + Mensualités' :
+                                                    'Standard (via redirect)'
                                 }
                             </span>
                         </div>
 
                         <div className="flex justify-between items-center border-b pb-2">
                             <span className="text-sm text-muted-foreground">Montant total</span>
-                            <span className="font-medium">{formatPrice(getTotalAmount())}</span>
+                            <span className="font-medium">{formatPrice(getTotalAmount() || paymentData?.amount || 0)}</span>
                         </div>
 
                         <div className="flex justify-between items-center border-b pb-2">
@@ -173,8 +174,8 @@ export const PaymentConfirmation = ({
                         <h4 className="font-medium text-amber-700">Accès au cours</h4>
                         <p className="text-sm text-amber-600 mt-1">
                             {course.format === 'auto-formation'
-                                ? "Accès immédiat (Simulation)."
-                                : "Vous êtes inscrit (Simulation)."
+                                ? "Accès immédiat."
+                                : "Vous êtes inscrit."
                             }
                         </p>
                     </div>

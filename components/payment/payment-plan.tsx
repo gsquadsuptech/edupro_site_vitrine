@@ -18,6 +18,11 @@ import {
     PercentIcon, // Replaced BadgePercentIcon
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LoginForm } from "@/components/pages/auth/login-form";
+import { RegisterForm } from "@/components/pages/auth/register-form";
+import { useAuth } from "@/hooks/useAuth";
 
 interface PaymentPlanProps {
     course: any;
@@ -33,7 +38,11 @@ export const PaymentPlan = ({
     onSelect,
     onPrevious,
 }: PaymentPlanProps) => {
+    const { isAuthenticated } = useAuth();
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [authTab, setAuthTab] = useState<"login" | "register">("login");
+    const [pendingPlan, setPendingPlan] = useState<{type: string, details: any} | null>(null);
 
     // Fonction pour parser les modes de paiement qui peuvent être des chaînes JSON ou des objets
     const parsePricingModes = (pricingModes: any) => {
@@ -133,11 +142,29 @@ export const PaymentPlan = ({
     };
 
     const handlePlanSelect = (planType: string, planDetails: any) => {
+        if (!isAuthenticated) {
+            setPendingPlan({ type: planType, details: planDetails });
+            setAuthModalOpen(true);
+            return;
+        }
+
         setSelectedPlan(planType);
         onSelect({
             type: planType,
             details: planDetails,
         });
+    };
+
+    const handleAuthSuccess = () => {
+        setAuthModalOpen(false);
+        if (pendingPlan) {
+            setSelectedPlan(pendingPlan.type);
+            onSelect({
+                type: pendingPlan.type,
+                details: pendingPlan.details,
+            });
+            setPendingPlan(null);
+        }
     };
 
     const handlePrevious = () => {
@@ -509,6 +536,37 @@ export const PaymentPlan = ({
                     </Card>
                 )}
             </div>
+
+            {/* Modal d'authentification */}
+            <Dialog open={authModalOpen} onOpenChange={setAuthModalOpen}>
+                <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Connexion requise</DialogTitle>
+                        <DialogDescription>
+                            Veuillez vous connecter ou créer un compte pour continuer votre inscription.
+                        </DialogDescription>
+                    </DialogHeader>
+                    
+                    <Tabs value={authTab} onValueChange={(v) => setAuthTab(v as any)} className="w-full mt-2">
+                        <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value="login">Connexion</TabsTrigger>
+                            <TabsTrigger value="register">Inscription</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="login" className="mt-4">
+                            <LoginForm 
+                                onSuccess={handleAuthSuccess} 
+                                onRegisterClick={() => setAuthTab("register")} 
+                            />
+                        </TabsContent>
+                        <TabsContent value="register" className="mt-4">
+                            <RegisterForm 
+                                onSuccess={handleAuthSuccess} 
+                                onLoginClick={() => setAuthTab("login")} 
+                            />
+                        </TabsContent>
+                    </Tabs>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

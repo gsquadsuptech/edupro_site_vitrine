@@ -84,21 +84,28 @@ export function sanitizeFileName(fileName: string): string {
 }
 
 
-// Uses NEXT_PUBLIC_APP_URL environment variable, defaults to https://edupro.africa.
+// Builds a URL to the SaaS application (dashboard).
+// Uses NEXT_PUBLIC_SAAS_URL, falls back to NEXT_PUBLIC_APP_URL, then production default.
+// Optionally appends an access_token query param for cross-domain session transfer.
 
-export function getAppUrl(path: string = ''): string {
+export function getAppUrl(path: string = '', token?: string): string {
   // If the path is already an absolute URL, return it directly
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path;
   }
 
-  let baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://edupro.africa';
-
-  // Force ignoring localhost:3000 if set in env, as it causes 404s when redirected to from vitrine (which is also 3000)
-  if (baseUrl.includes('localhost:3000')) {
-    baseUrl = 'https://edupro.africa';
-  }
+  let baseUrl = process.env.NEXT_PUBLIC_SAAS_URL
+    || process.env.NEXT_PUBLIC_APP_URL
+    || 'https://app.edupro.africa';
 
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${baseUrl}${cleanPath}`;
+  let url = `${baseUrl}${cleanPath}`;
+
+  // Append access token for cross-domain session persistence
+  if (token) {
+    const separator = url.includes('?') ? '&' : '?';
+    url += `${separator}access_token=${encodeURIComponent(token)}`;
+  }
+
+  return url;
 }

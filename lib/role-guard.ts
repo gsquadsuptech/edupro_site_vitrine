@@ -25,8 +25,8 @@ export const getAvailableDashboards = (roles: string[]): DashboardSpace[] => {
     if (roles.includes('superadmin') || roles.includes('admin')) {
         spaces.push({
             id: 'admin',
-            labelFr: 'Administration',
-            labelEn: 'Administration',
+            labelFr: 'Tableau de bord Admin',
+            labelEn: 'Admin Dashboard',
             route: process.env.NEXT_PUBLIC_DASHBOARD_ADMIN_URL || '/admin',
             icon: 'Settings'
         });
@@ -35,21 +35,22 @@ export const getAvailableDashboards = (roles: string[]): DashboardSpace[] => {
     if (roles.includes('instructor')) {
         spaces.push({
             id: 'instructor',
-            labelFr: 'Instructeur',
-            labelEn: 'Instructor',
-            route: process.env.NEXT_PUBLIC_DASHBOARD_INSTRUCTOR_URL || '/instructeur',
+            labelFr: 'Espace Formateur',
+            labelEn: 'Instructor Dashboard',
+            route: process.env.NEXT_PUBLIC_DASHBOARD_INSTRUCTOR_URL || '/instructor',
             icon: 'GraduationCap'
         });
     }
 
-    // Default for all authenticated users (Student space)
-    spaces.push({
-        id: 'student',
-        labelFr: 'Apprenant',
-        labelEn: 'Student',
-        route: process.env.NEXT_PUBLIC_DASHBOARD_STUDENT_URL || '/apprenant',
-        icon: 'LayoutDashboard'
-    });
+    if (roles.includes('student')) {
+        spaces.push({
+            id: 'student',
+            labelFr: 'Mon Espace Formation',
+            labelEn: 'My Learning Space',
+            route: process.env.NEXT_PUBLIC_DASHBOARD_STUDENT_URL || '/dashboard',
+            icon: 'LayoutDashboard'
+        });
+    }
 
     return spaces;
 }

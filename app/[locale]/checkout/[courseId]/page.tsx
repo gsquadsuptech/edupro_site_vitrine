@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Stepper } from "@/components/payment/stepper";
@@ -19,9 +19,13 @@ export default function CheckoutPage({
 }) {
     const { locale, courseId } = use(params);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const statusParam = searchParams.get('status');
+    const tokenParam = searchParams.get('token');
 
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [isVerifying, setIsVerifying] = useState(false);
     const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (Plan) by default
     const [selectedSession, setSelectedSession] = useState<any>(null);
     const [selectedPlan, setSelectedPlan] = useState<any>(null);
@@ -32,12 +36,61 @@ export default function CheckoutPage({
     const [skipSessionStep, setSkipSessionStep] = useState(true); // Default to true, enable if cohorts found
 
     useEffect(() => {
+        let isMounted = true;
         const fetchData = async () => {
             try {
+                if (statusParam === 'success' && tokenParam) {
+                    setIsVerifying(true);
+                    
+                    const fetchedCourse = await CourseService.getCourseById(courseId);
+                    if (!isMounted) return;
+                    if (fetchedCourse) setCourse(fetchedCourse);
+                    
+                    let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
+                    if (typeof window !== 'undefined') {
+                        const hostname = window.location.hostname;
+                        if (hostname.includes('site.edupro.africa')) {
+                            saasUrl = 'https://staging.edupro.africa';
+                        } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
+                            saasUrl = 'https://edupro.africa';
+                        }
+                    }
+                    if (!saasUrl || saasUrl.includes('localhost')) {
+                        saasUrl = 'http://localhost:3000';
+                    }
+
+                    const res = await fetch(`${saasUrl}/api/payments/check-status?ref=${tokenParam}&status=success`);
+                    if (!isMounted) return;
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.success && data.payment) {
+                            setPaymentStatus("success");
+                            setPaymentData(data.payment);
+                            setSkipSessionStep(true);
+                            setSelectedPlan({ type: 'unknown', details: {} });
+                            setCurrentStep(4);
+                        } else {
+                            setPaymentStatus("failed");
+                            setSelectedPlan({ type: 'unknown', details: {} });
+                            setCurrentStep(4);
+                        }
+                    } else {
+                        setPaymentStatus("failed");
+                        setSelectedPlan({ type: 'unknown', details: {} });
+                        setCurrentStep(4);
+                    }
+                    setIsVerifying(false);
+                    setLoading(false);
+                    return;
+                }
+
                 const [fetchedCourse, fetchedCohorts] = await Promise.all([
                     CourseService.getCourseById(courseId),
                     CourseService.getCohortsByCourseId(courseId)
                 ]);
+
+                if (!isMounted) return;
 
                 if (fetchedCourse) {
                     setCourse(fetchedCourse);
@@ -55,12 +108,19 @@ export default function CheckoutPage({
             } catch (error) {
                 console.error("Failed to fetch data", error);
             } finally {
-                setLoading(false);
+                if (isMounted) {
+                    setLoading(false);
+                    setIsVerifying(false);
+                }
             }
         };
 
         fetchData();
-    }, [courseId]);
+        
+        return () => {
+            isMounted = false;
+        };
+    }, [courseId, statusParam, tokenParam]);
 
     const handleSessionSelect = (session: any) => {
         setSelectedSession(session);
@@ -83,9 +143,21 @@ export default function CheckoutPage({
         // Could set error data here
     };
 
-    const handleAccessCourse = () => {
-        // Redirect to dashboard or home
-        router.push(`/${locale}`);
+    const handleAccessCourse = async () => {
+        try {
+            const { createClient } = await import("@/lib/supabase/client");
+            const { getAppUrl } = await import("@/lib/utils");
+            
+            const supabase = createClient();
+            const { data } = await supabase.auth.getSession();
+            const token = data.session?.access_token;
+            
+            window.location.href = getAppUrl('/dashboard/courses', token);
+        } catch (error) {
+            console.error("Erreur de redirection:", error);
+            // Fallback if import fails
+            window.location.href = `${process.env.NEXT_PUBLIC_SAAS_URL || 'https://app.edupro.africa'}/dashboard/courses`;
+        }
     };
 
     const handlePrevious = () => {
@@ -100,12 +172,12 @@ export default function CheckoutPage({
         }
     };
 
-    if (loading) {
+    if (loading || isVerifying) {
         return (
             <div className="flex items-center justify-center h-screen">
                 <div className="flex flex-col items-center gap-4">
                     <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-                    <p>Chargement des informations du cours...</p>
+                    <p>{isVerifying ? "Vérification du paiement en cours..." : "Chargement des informations du cours..."}</p>
                 </div>
             </div>
         );

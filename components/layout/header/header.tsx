@@ -19,9 +19,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings, GraduationCap } from "lucide-react"
@@ -39,7 +36,7 @@ import { getAppUrl } from "@/lib/utils"
 export function Header() {
   const { locale, changeLanguage } = useLanguage()
   const router = useRouter()
-  const { user, signOut, isLoading, roles } = useAuth()
+  const { user, signOut, isLoading, roles, supabase } = useAuth()
 
   const handleLanguageChange = async (newLocale: "fr" | "en") => {
     if (newLocale === locale) {
@@ -65,8 +62,13 @@ export function Header() {
 
   const availableDashboards = getAvailableDashboards(roles || [])
 
-  const handleDashboardClick = (route: string) => {
-    window.location.href = getAppUrl(route)
+  const handleDashboardClick = async (route: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      window.location.href = getAppUrl(route, session?.access_token)
+    } catch {
+      window.location.href = getAppUrl(route)
+    }
   }
 
   const getIcon = (iconName: string) => {
@@ -255,42 +257,17 @@ export function Header() {
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
 
-                      {availableDashboards.length > 1 ? (
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger className="cursor-pointer">
-                            <LayoutDashboard className="mr-2 h-4 w-4" />
-                            <span>{locale === 'fr' ? 'Mon espace' : 'My Space'}</span>
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            {availableDashboards.map((dash) => (
-                              <DropdownMenuItem
-                                key={dash.id}
-                                onClick={() => handleDashboardClick(dash.route)}
-                                className="cursor-pointer"
-                              >
-                                {getIcon(dash.icon)}
-                                <span>{locale === 'fr' ? dash.labelFr : dash.labelEn}</span>
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                      ) : (
-                        availableDashboards.map((dash) => (
-                          <DropdownMenuItem
-                            key={dash.id}
-                            onClick={() => handleDashboardClick(dash.route)}
-                            className="cursor-pointer"
-                          >
-                            {getIcon(dash.icon)}
-                            <span>{locale === 'fr' ? 'Mon espace' : 'My Space'}</span>
-                          </DropdownMenuItem>
-                        ))
-                      )}
+                      {availableDashboards.map((dash) => (
+                        <DropdownMenuItem
+                          key={dash.id}
+                          onClick={() => handleDashboardClick(dash.route)}
+                          className="cursor-pointer"
+                        >
+                          {getIcon(dash.icon)}
+                          <span>{locale === 'fr' ? dash.labelFr : dash.labelEn}</span>
+                        </DropdownMenuItem>
+                      ))}
 
-                      <DropdownMenuItem className="cursor-pointer">
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>{locale === 'fr' ? 'Paramètres' : 'Settings'}</span>
-                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer focus:text-red-600">
                         <LogOut className="mr-2 h-4 w-4" />
@@ -396,7 +373,7 @@ export function Header() {
                             onClick={() => handleDashboardClick(dash.route)}
                           >
                             {getIcon(dash.icon)}
-                            {availableDashboards.length === 1 ? (locale === 'fr' ? 'Mon espace' : 'My Space') : (locale === 'fr' ? dash.labelFr : dash.labelEn)}
+                            {locale === 'fr' ? dash.labelFr : dash.labelEn}
                           </Button>
                         ))}
                       </div>

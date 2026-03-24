@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/diopb/dev/edupro-site/app -type f \\\\\\(-name *.ts -o -name *.tsx \\\\\\))",
+      "Bash(grep -r \"Mon espace\\\\|Se déconnecter\\\\|Paramètres\" /c/Users/diopb/dev/edupro-site --include=*.tsx --include=*.ts --include=*.jsx --include=*.js)",
+      "Bash(grep -r \"NEXT_PUBLIC_DASHBOARD\\\\|NEXT_PUBLIC_SAAS\\\\|edupro\\\\.africa\" /c/Users/diopb/dev/edupro-site --include=*.ts --include=*.tsx --include=*.env*)",
+      "Bash(grep -r useAuth /c/Users/diopb/dev/edupro-site/hooks --include=*.ts --include=*.tsx)",
+      "Bash(ls -la /c/Users/diopb/dev/edupro-site/app/[locale]/)",
+      "Bash(grep -r \"organization_members\\\\|user.*role\\\\|instructor\\\\|student\" /c/Users/diopb/dev/edupro-site --include=*.ts --include=*.tsx)",
+      "Bash(grep -r \"getAvailableDashboards\\\\|DashboardSpace\" /c/Users/diopb/dev/edupro-site --include=*.ts --include=*.tsx)"
+    ]
+  }
+}

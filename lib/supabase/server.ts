@@ -1,31 +1,27 @@
-// import { createServerClient, type CookieOptions } from '@supabase/ssr' // REMOVED
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-
-// Mock types
-type CookieOptions = any;
 
 export async function createClient() {
     const cookieStore = await cookies()
 
-    console.log("[Mock] Creating mock Supabase server client");
-    return {
-        from: () => ({
-            select: () => ({
-                eq: () => ({
-                    single: () => ({ data: null, error: null }),
-                    order: () => ({ data: [], error: null }),
-                }),
-                order: () => ({ data: [], error: null }),
-                data: [],
-                error: null
-            }),
-            insert: () => ({ select: () => ({ single: () => ({ data: null, error: null }) }) }),
-            update: () => ({ eq: () => ({ select: () => ({ single: () => ({ data: null, error: null }) }) }) }),
-            delete: () => ({ eq: () => ({ data: null, error: null }) }),
-        }),
-        auth: {
-            getSession: async () => ({ data: { session: null }, error: null }),
-            getUser: async () => ({ data: { user: null }, error: null }),
+    return createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+            cookies: {
+                getAll() {
+                    return cookieStore.getAll()
+                },
+                setAll(cookiesToSet) {
+                    try {
+                        cookiesToSet.forEach(({ name, value, options }) =>
+                            cookieStore.set(name, value, options)
+                        )
+                    } catch {
+                        // setAll called from Server Component — safe to ignore
+                    }
+                },
+            },
         }
-    } as any;
+    )
 }
