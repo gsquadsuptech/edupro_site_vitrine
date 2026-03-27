@@ -1,26 +1,18 @@
 "use client"
 
-import { Star, Users, CheckCircle2, Heart, Bookmark, Share2, Play } from "lucide-react"
+import { Star, Users, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
-import { Course, Cohort } from "@/lib/supabase/types"
-import { WaitlistDialog } from "./waitlist-dialog"
+import { Course } from "@/lib/supabase/types"
 
 interface FormationHeroProps {
   course: Course
-  cohorts?: Cohort[]
 }
 
-export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
+export function FormationHero({ course }: FormationHeroProps) {
   // Safe access / Fallbacks
   const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
   const categoryName = course.category?.name || "Général"
-  // Calculate derived values
-  const price = course.price || 0
-  const isSessionCourse = course.format === 'session'
-  const displayPrice = price
-  const displayMonthlyPrice = course.monthly_price || (price > 0 ? Math.round(price / 3) : 0)
 
   const reviews = course.reviews || []
   const reviewCount = reviews.length
@@ -29,176 +21,94 @@ export function FormationHero({ course, cohorts = [] }: FormationHeroProps) {
     ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviewCount
     : 0)
 
-  // Parsing duration string to hours if possible, else 20h default
-  // course.duration is usually string like "20h" or "120 min".
-  // Display as is if string.
-
-  // Smart CTA Logic
-  const isAutoFormation = course.format === 'auto-formation' || !course.format
-  const hasAvailableCohort = cohorts.some(c => c.status === 'active')
-  const showWaitlist = !isAutoFormation && !hasAvailableCohort;
-
   return (
     <section className="py-8">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-3">
-          {/* Left Column - Video & Info */}
-          <div className="lg:col-span-2">
-            {/* Video Preview */}
-            <div className="mb-6 aspect-video overflow-hidden rounded-xl border border-border bg-black">
-              {course.preview_video ? (
-                // If we have a preview video, show thumbnail with play button
-                <div className="relative flex h-full items-center justify-center bg-muted group cursor-pointer">
-                  {course.image_url && <img src={course.image_url} alt={course.title} className="h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-40" />}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Button size="lg" className="h-16 w-16 rounded-full transition-transform group-hover:scale-110" variant="secondary">
-                      <Play className="h-8 w-8 ml-1" fill="currentColor" />
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                // No video, just image
-                <div className="relative h-full w-full bg-muted">
-                  {course.image_url ? (
-                    <img src={course.image_url} alt={course.title} className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-muted-foreground">
-                      Pas d'aperçu
-                    </div>
-                  )}
-                </div>
-              )}
+      {/* Video Preview */}
+      <div className="mb-8 aspect-video overflow-hidden rounded-2xl border border-border bg-black shadow-2xl">
+        {course.preview_video ? (
+          <div className="relative flex h-full items-center justify-center bg-muted group cursor-pointer">
+            {course.image_url && (
+              <img 
+                src={course.image_url} 
+                alt={course.title} 
+                className="h-full w-full object-cover opacity-70 transition-all duration-500 group-hover:opacity-40 group-hover:scale-105" 
+              />
+            )}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover:bg-black/40">
+              <Button size="lg" className="h-20 w-20 rounded-full bg-primary/90 text-primary-foreground shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-primary" variant="secondary">
+                <Play className="h-10 w-10 ml-1.5" fill="currentColor" />
+              </Button>
             </div>
-
-            {/* Title & Meta */}
-            <div className="mb-4">
-              <h1 className="mb-3 text-3xl font-bold leading-tight md:text-4xl">
-                {course.title}
-              </h1>
-
-              <div className="mb-3 flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-1">
-                  <Users className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">{instructorName}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${i < Math.round(rating) ? "fill-yellow-400 text-yellow-400" : "fill-gray-200 text-gray-200"}`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm font-medium">{rating.toFixed(1)}</span>
-                  <span className="text-sm text-muted-foreground">({reviewCount} avis)</span>
+          </div>
+        ) : (
+          <div className="relative h-full w-full bg-muted/50">
+            {course.image_url ? (
+              <img src={course.image_url} alt={course.title} className="h-full w-full object-cover" />
+            ) : (
+              <div className="flex h-full items-center justify-center text-muted-foreground bg-gradient-to-br from-muted to-muted/30">
+                <div className="flex flex-col items-center gap-2">
+                  <Play className="h-12 w-12 opacity-20" />
+                  <span className="font-medium">Pas d'aperçu vidéo</span>
                 </div>
               </div>
+            )}
+          </div>
+        )}
+      </div>
 
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">{categoryName}</Badge>
-                <Badge variant="outline">
-                  {(() => {
-                    const labels: Record<string, string> = {
-                      'beginner': 'Débutant',
-                      'intermediate': 'Intermédiaire',
-                      'high': 'Avancé'
-                    }
-                    return labels[course.level || ''] || course.level || 'Tous niveaux'
-                  })()}
-                </Badge>
-              </div>
-            </div>
-
-            <p className="text-lg text-muted-foreground mb-6">
-              {course.description}
-            </p>
+      {/* Title & Meta Info Card */}
+      <div className="space-y-6">
+        <div>
+          <div className="mb-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-wider">
+            <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-3 py-1">
+              {categoryName}
+            </Badge>
+            <Badge variant="outline" className="px-3 py-1 border-border bg-muted/30">
+              {(() => {
+                const labels: Record<string, string> = {
+                  'beginner': 'Débutant',
+                  'intermediate': 'Intermédiaire',
+                  'high': 'Avancé'
+                }
+                return labels[course.level || ''] || course.level || 'Tous niveaux'
+              })()}
+            </Badge>
           </div>
 
-          {/* Right Column - Purchase Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 rounded-xl border border-border bg-card p-6 shadow-lg">
-              <div className="mb-4">
-                <div className="mb-0.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  {isSessionCourse ? "À partir de" : "Prix total"}
-                </div>
-                <div className="mb-1 text-3xl font-bold">
-                  {Number(displayPrice) >= 1
-                    ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(Math.round(Number(displayPrice)))
-                    : "Gratuit"}
-                </div>
-                {displayMonthlyPrice > 0 && (
-                  <div className="text-sm text-muted-foreground">ou {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(displayMonthlyPrice)}/mois</div>
-                )}
+          <h1 className="mb-4 text-4xl font-extrabold leading-tight tracking-tight md:text-5xl lg:text-6xl text-foreground">
+            {course.title}
+          </h1>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4 text-sm md:text-base">
+            <div className="flex items-center gap-2 group">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted shadow-inner group-hover:bg-primary/10 transition-colors">
+                <Users className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
               </div>
+              <span className="font-medium text-foreground/80">{course.enrolled_count || 0} apprenants</span>
+            </div>
+            
+            <div className="flex items-center gap-2 group border-l border-border/50 pl-6">
+              <span className="text-muted-foreground italic">Par <strong className="text-foreground not-italic group-hover:text-primary transition-colors cursor-pointer">{instructorName}</strong></span>
+            </div>
 
-              {showWaitlist ? (
-                <WaitlistDialog
-                  courseId={course.id}
-                  courseSlug={course.slug}
-                  courseTitle={course.title}
-                />
-              ) : (
-                <Link href={`/checkout/${course.id}`}>
-                  <Button className="mb-4 w-full bg-gradient-to-r from-primary to-chart-2 text-lg text-primary-foreground hover:opacity-90">
-                    S'inscrire maintenant
-                  </Button>
-                </Link>
-              )}
-
-              <div className="mb-4 flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                  <Heart className="mr-2 h-4 w-4" />
-                  Favoris
-                </Button>
-                <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                  <Bookmark className="mr-2 h-4 w-4" />
-                  Sauvegarder
-                </Button>
+            <div className="flex items-center gap-2 border-l border-border/50 pl-6">
+              <div className="flex items-center bg-yellow-400/10 px-2 py-0.5 rounded-lg">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-4 w-4 ${i < Math.round(rating) ? "fill-yellow-400 text-yellow-400" : "fill-border text-border"}`}
+                  />
+                ))}
+                <span className="ml-2 font-bold text-yellow-600">{rating.toFixed(1)}</span>
               </div>
-
-              <Button variant="ghost" size="sm" className="mb-4 w-full">
-                <Share2 className="mr-2 h-4 w-4" />
-                Partager cette formation
-              </Button>
-
-              <div className="border-t border-border pt-4">
-                <h4 className="mb-3 font-semibold">Cette formation inclut :</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <span>{course.duration || "Durée flexible"}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <span>{course.sections?.length || 0} sections</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <span>Accès mobile & desktop</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <span>Certificat de fin</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <span>Accès à vie</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 border-t border-border pt-4">
-                <Button variant="outline" size="sm" className="mb-2 w-full bg-transparent">
-                  Offrir en cadeau
-                </Button>
-                <Button variant="outline" size="sm" className="w-full bg-transparent">
-                  Acheter pour mon équipe
-                </Button>
-              </div>
+              <span className="text-muted-foreground text-xs font-medium">({reviewCount} avis)</span>
             </div>
           </div>
         </div>
+
+        <p className="max-w-3xl text-lg md:text-xl text-muted-foreground leading-relaxed">
+          {course.description}
+        </p>
       </div>
     </section>
   )

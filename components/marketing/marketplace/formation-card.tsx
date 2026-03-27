@@ -13,12 +13,13 @@ import { Course } from "@/lib/supabase/types"
 import { WishlistService } from "@/services/wishlist-service"
 
 interface FormationCardProps {
-  course: Pick<Course, 'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration' | 'format' | 'one_time_price' | 'monthly_price' | 'pricing_modes'> & {
+  course: Pick<Course, 'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration' | 'format' | 'one_time_price' | 'monthly_price' | 'pricing_modes' | 'registration_fee' | 'monthly_fee' | 'installments'> & {
     // Add missing properties that might be computed or hardcoded for now
     rating?: number
     reviewCount?: number
-    enrolledCount?: number
+    enrolled_count?: number
     badge?: string
+    has_varying_prices?: boolean
   }
 }
 
@@ -36,7 +37,7 @@ export function FormationCard({ course }: FormationCardProps) {
   const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
   const rating = course.rating ?? 0
   const reviewCount = course.reviewCount || 0
-  const enrolledCount = course.enrolledCount || 0
+  const enrolledCount = course.enrolled_count || 0
   const price = course.price || 0
 
   useEffect(() => {
@@ -158,14 +159,50 @@ export function FormationCard({ course }: FormationCardProps) {
           <div className="flex items-center justify-between border-t border-border pt-3">
             <div>
               <div className="text-xs text-muted-foreground font-medium">
-                {course.format === 'session' ? 'À partir de' : 'Prix total'}
+                {course.has_varying_prices ? 'À partir de' : (
+                  (() => {
+                    const modes = course.pricing_modes as any || {};
+                    if (modes.subscription && !modes.one_time && !modes.oneTime) return "Abonnement";
+                    if (modes.registration_monthly || modes.registrationMonthly) return "Inscription + Mensualités";
+                    return "Prix";
+                  })()
+                )}
               </div>
               <div className="text-lg font-bold">
-                {Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString()} FCFA` : 'Gratuit'}
+                {(() => {
+                  const modes = course.pricing_modes as any || {};
+                  const hasOneTime = modes.one_time || modes.oneTime;
+                  const hasSubscription = modes.subscription;
+                  const hasRegistrationMonthly = modes.registration_monthly || modes.registrationMonthly;
+                  const hasInstallments = modes.installments;
+
+                  if (hasOneTime && price > 0) {
+                    return `${Math.round(Number(price)).toLocaleString()} FCFA`;
+                  } else if (hasSubscription && course.monthly_price) {
+                    return `${course.monthly_price.toLocaleString()} FCFA/mois`;
+                  } else if (hasRegistrationMonthly && course.registration_fee) {
+                    return `${course.registration_fee.toLocaleString()} FCFA`;
+                  } else if (hasInstallments && course.installments && course.installments.length > 0) {
+                    const total = course.installments.reduce((acc: number, inst: any) => acc + (Number(inst.amount) || 0), 0);
+                    return `${Math.round(total).toLocaleString()} FCFA`;
+                  }
+
+                  return Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString()} FCFA` : 'Gratuit';
+                })()}
               </div>
-              {course.monthly_price && (
-                <div className="text-xs text-muted-foreground">ou {course.monthly_price.toLocaleString()} FCFA/mois</div>
-              )}
+              {(() => {
+                const modes = course.pricing_modes as any || {};
+                if ((modes.one_time || modes.oneTime) && modes.subscription && course.monthly_price) {
+                  return <div className="text-xs text-muted-foreground">ou {course.monthly_price.toLocaleString()} FCFA/mois</div>;
+                }
+                if (modes.registration_monthly || modes.registrationMonthly) {
+                  return <div className="text-xs text-muted-foreground">+ {course.monthly_fee?.toLocaleString()} FCFA/mois</div>;
+                }
+                if (modes.installments && course.installments && course.installments.length > 0 && !(modes.one_time || modes.oneTime)) {
+                  return <div className="text-xs text-muted-foreground">en {course.installments.length} versements</div>;
+                }
+                return null;
+              })()}
             </div>
             <div className="flex gap-1">
               <Button

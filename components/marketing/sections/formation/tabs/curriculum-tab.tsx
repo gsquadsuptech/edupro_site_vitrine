@@ -90,11 +90,13 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
     }
   }
 
+  const totalLessons = curriculum.reduce((acc, s) => acc + s.lessons, 0)
+
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="mb-6">
         <h3 className="mb-2 text-xl font-bold">Curriculum</h3>
-        <p className="text-sm text-muted-foreground">48 leçons • 12h de contenu total</p>
+        <p className="text-sm text-muted-foreground">{totalLessons} leçons • {curriculum.length} modules</p>
       </div>
 
       <div className="space-y-2">
@@ -115,7 +117,7 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
                     Section {sectionIndex + 1}: {section.title}
                   </h4>
                   <p className="text-sm text-muted-foreground">
-                    {section.lessons} leçons • {section.duration}
+                    {section.lessons} leçons
                   </p>
                 </div>
               </div>

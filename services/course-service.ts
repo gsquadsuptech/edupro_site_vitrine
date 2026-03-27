@@ -38,7 +38,8 @@ export const CourseService = {
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses!inner(featured, rating, review_count)
+        marketplace:marketplace_courses!inner(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price)
       `, { count: 'exact' })
             .eq('status', 'published')
 
@@ -73,7 +74,7 @@ export const CourseService = {
             return { courses: [], total: 0 }
         }
 
-        const courses = data.map((item: any) => CourseService.mapCourseItem(item))
+        const courses = data.map((item: any) => CourseService.mapCourseWithPricing(item))
 
         return { courses, total: count || 0 }
     },
@@ -83,7 +84,27 @@ export const CourseService = {
         const legacyPrice = item.price ? Number(item.price) : 0;
 
         // Use one_time_price if available and legacy price is 0 or less
-        const displayPrice = (legacyPrice <= 0 && oneTimePrice && oneTimePrice > 0) ? oneTimePrice : legacyPrice;
+        let displayPrice = (legacyPrice <= 0 && oneTimePrice && oneTimePrice > 0) ? oneTimePrice : legacyPrice;
+
+        // If still 0, check alternative pricing modes for display
+        if (displayPrice <= 0) {
+            const monthlyPrice = item.monthly_price ? Number(item.monthly_price) : 0;
+            const registrationFee = item.registration_fee ? Number(item.registration_fee) : 0;
+            const monthlyFee = item.monthly_fee ? Number(item.monthly_fee) : 0;
+            if (monthlyPrice > 0) displayPrice = monthlyPrice;
+            else if (registrationFee > 0) displayPrice = registrationFee;
+            else if (monthlyFee > 0) displayPrice = monthlyFee;
+        }
+
+        // Ensure pricing_modes is an object
+        let pricingModes = item.pricing_modes;
+        if (typeof pricingModes === 'string') {
+            try {
+                pricingModes = JSON.parse(pricingModes);
+            } catch (e) {
+                pricingModes = null;
+            }
+        }
 
         return {
             id: item.id,
@@ -98,14 +119,15 @@ export const CourseService = {
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
             level: item.level,
 
-            one_time_price: item.one_time_price ? Number(item.one_time_price) : null,
+            one_time_price: oneTimePrice,
             monthly_price: item.monthly_price ? Number(item.monthly_price) : null,
             registration_fee: item.registration_fee ? Number(item.registration_fee) : null,
             monthly_fee: item.monthly_fee ? Number(item.monthly_fee) : null,
             installments: item.installments || [],
-            pricing_modes: item.pricing_modes || null,
+            pricing_modes: pricingModes,
 
             is_featured: item.marketplace?.featured || false,
+            enrolled_count: item.marketplace?.student_count || 0,
             is_published: item.status === 'published',
             published_at: item.created_at,
             category: item.category,
@@ -115,6 +137,32 @@ export const CourseService = {
                 institute: item.instructor.organization?.name || (item.instructor.organizations?.[0]?.name) || null
             } : null
         }
+    },
+
+    mapCourseWithPricing(item: any): Course {
+        const baseCourse = CourseService.mapCourseItem(item);
+        const cohorts = (item.cohorts || []).filter((c: any) => c.status === 'active' || c.status === 'published');
+
+        if (baseCourse.format === 'session' && cohorts.length > 0) {
+            // Collect all possible one-time prices from cohorts
+            const cohortPrices = cohorts
+                .map((c: any) => {
+                    if (c.use_course_price) return baseCourse.one_time_price || baseCourse.price || 0;
+                    return c.one_time_price ? Number(c.one_time_price) : 0;
+                })
+                .filter((p: number) => p > 0);
+
+            if (cohortPrices.length > 0) {
+                const minPrice = Math.min(...cohortPrices);
+                const maxPrice = Math.max(...cohortPrices);
+
+                baseCourse.price = minPrice;
+                baseCourse.lowest_price = minPrice;
+                baseCourse.has_varying_prices = minPrice < maxPrice;
+            }
+        }
+
+        return baseCourse;
     },
 
     async getFeaturedCourses(): Promise<Course[]> {
@@ -161,7 +209,8 @@ export const CourseService = {
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses(featured, rating, review_count)
+        marketplace:marketplace_courses(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price)
       `)
             .in('id', featuredIds)
             .eq('status', 'published')
@@ -176,7 +225,7 @@ export const CourseService = {
         // Filter for featured manually if join filtering is tricky (supa simplified)
         // Or better, let's just map what we get, assuming strict query later.
         // MAPPING
-        return data.map((item: any) => CourseService.mapCourseItem(item))
+        return data.map((item: any) => CourseService.mapCourseWithPricing(item))
     },
 
     async getAllCourses(limit = 12): Promise<Course[]> {
@@ -204,7 +253,8 @@ export const CourseService = {
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses(featured, rating, review_count)
+        marketplace:marketplace_courses(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price)
       `)
             .eq('status', 'published')
             .limit(limit)
@@ -215,7 +265,7 @@ export const CourseService = {
             return []
         }
 
-        return data.map((item: any) => CourseService.mapCourseItem(item))
+        return data.map((item: any) => CourseService.mapCourseWithPricing(item))
     },
 
     async getCoursesByCategory(categorySlug: string): Promise<Course[]> {
@@ -243,7 +293,8 @@ export const CourseService = {
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses(featured, rating, review_count)
+        marketplace:marketplace_courses(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price)
       `)
             .eq('status', 'published')
             .eq('category.slug', categorySlug)
@@ -254,7 +305,7 @@ export const CourseService = {
             return []
         }
 
-        return data.map((item: any) => CourseService.mapCourseItem(item))
+        return data.map((item: any) => CourseService.mapCourseWithPricing(item))
     },
 
     async getCourseById(id: string): Promise<Course | null> {
@@ -287,7 +338,8 @@ export const CourseService = {
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses(featured, rating, review_count),
+        marketplace:marketplace_courses(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price),
         sections(
              id,
              title,
@@ -366,11 +418,11 @@ export const CourseService = {
             return []
         }
 
-        const baseCourse = CourseService.mapCourseItem(item)
+        const baseCourse = CourseService.mapCourseWithPricing(item)
 
         return {
             ...baseCourse,
-            rating: item.marketplace?.rating || 0,
+            rating: item.marketplace?.rating || 4.5,
             reviewCount: item.marketplace?.review_count || reviews.length,
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '10h',
             highlights: parseJson(item.expected_results),
@@ -413,7 +465,8 @@ export const CourseService = {
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url, rating, students_count, courses_count, organization_id, organization:organizations(name)),
-        marketplace:marketplace_courses(featured, rating, review_count),
+        marketplace:marketplace_courses(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price),
         sections(
              id,
              title,
@@ -498,12 +551,13 @@ export const CourseService = {
             return []
         }
 
-        const baseCourse = CourseService.mapCourseItem(item)
+        const baseCourse = CourseService.mapCourseWithPricing(item)
 
         return {
             ...baseCourse,
-            rating: item.marketplace?.rating || 0,
+            rating: item.marketplace?.rating || 4.5,
             reviewCount: item.marketplace?.review_count || reviews.length,
+            enrolled_count: item.marketplace?.student_count || 0,
             duration: item.duration ? `${Math.round(item.duration / 60)}h` : '10h',
             highlights: parseJson(item.expected_results),
             objectives: parseJson(item.objectives),
@@ -550,7 +604,8 @@ export const CourseService = {
                     created_at,
                     category:categories!inner(name, slug),
                     instructor:instructors!inner(name, avatar_url, organization_id, organization:organizations(name)),
-                    marketplace:marketplace_courses!inner(featured, rating, review_count)
+                    marketplace:marketplace_courses!inner(featured, rating, review_count, student_count),
+                    cohorts(one_time_price, monthly_price, status, use_course_price)
                 `)
                 .eq('status', 'published')
                 .eq('instructor.organization_id', organizationId)
@@ -591,7 +646,8 @@ export const CourseService = {
                     created_at,
                     category:categories!inner(name, slug),
                     instructor:instructors(name, avatar_url, organization:organizations(name)),
-                    marketplace:marketplace_courses!inner(featured, rating, review_count)
+                    marketplace:marketplace_courses!inner(featured, rating, review_count, student_count),
+                    cohorts(one_time_price, monthly_price, status, use_course_price)
                 `)
                 .eq('status', 'published')
                 .eq('category.slug', categorySlug)
@@ -604,7 +660,7 @@ export const CourseService = {
             }
         }
 
-        return courses.map((item: any) => CourseService.mapCourseItem(item))
+        return courses.map((item: any) => CourseService.mapCourseWithPricing(item))
     },
 
     async getSimilarCourses(categorySlug: string, excludeCourseId: string): Promise<Course[]> {
@@ -632,7 +688,8 @@ export const CourseService = {
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses!inner(featured, rating, review_count)
+        marketplace:marketplace_courses!inner(featured, rating, review_count, student_count),
+        cohorts(one_time_price, monthly_price, status, use_course_price)
       `)
             .eq('status', 'published')
             .eq('category.slug', categorySlug)
@@ -645,7 +702,7 @@ export const CourseService = {
             return []
         }
 
-        return data.map((item: any) => CourseService.mapCourseItem(item))
+        return data.map((item: any) => CourseService.mapCourseWithPricing(item))
     },
 
     async getCohortsByCourseId(courseId: string): Promise<Cohort[]> {
@@ -671,7 +728,7 @@ export const CourseService = {
                 use_course_price
             `)
             .eq('course_id', courseId)
-            .eq('status', 'active')
+            .in('status', ['active', 'published'])
 
         if (error) {
             console.error('Error fetching cohorts:', error)

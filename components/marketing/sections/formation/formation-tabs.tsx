@@ -5,41 +5,55 @@ import { OverviewTab } from "./tabs/overview-tab"
 import { CurriculumTab } from "./tabs/curriculum-tab"
 import { InstructorTab } from "./tabs/instructor-tab"
 import { ReviewsTab } from "./tabs/reviews-tab"
-import { Course } from "@/lib/supabase/types"
+import { SessionsTab } from "./tabs/sessions-tab"
+import { Course, Cohort } from "@/lib/supabase/types"
 
 interface FormationTabsProps {
   course: Course & { rating?: number; reviewCount?: number }
+  cohorts?: Cohort[]
 }
 
-export function FormationTabs({ course }: FormationTabsProps) {
+export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
+  const hasCohorts = cohorts && cohorts.length > 0;
+  const gridCols = hasCohorts ? "grid-cols-5" : "grid-cols-4";
+  
   return (
-    <section className="border-t border-border bg-muted/30 py-8">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <Tabs defaultValue="apercu" className="w-full">
-          <TabsList className="mb-8 grid w-full grid-cols-4 lg:w-auto">
-            <TabsTrigger value="apercu">Aperçu</TabsTrigger>
-            <TabsTrigger value="programme">Programme</TabsTrigger>
-            <TabsTrigger value="formateur">Formateur</TabsTrigger>
-            <TabsTrigger value="avis">Avis</TabsTrigger>
+    <section className="py-12">
+      <Tabs defaultValue="apercu" className="w-full">
+        <div className="sticky top-[88px] z-20 bg-background/95 backdrop-blur-md pb-4 pt-2 -mx-2 px-2 border-b border-border/50">
+          <TabsList className={`grid w-full ${gridCols} lg:w-max bg-muted/50 p-1 rounded-xl`}>
+            <TabsTrigger value="apercu" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Aperçu</TabsTrigger>
+            {hasCohorts && <TabsTrigger value="sessions" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Sessions</TabsTrigger>}
+            <TabsTrigger value="programme" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Programme</TabsTrigger>
+            <TabsTrigger value="formateur" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur</TabsTrigger>
+            <TabsTrigger value="avis" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Avis</TabsTrigger>
           </TabsList>
+        </div>
 
-          <TabsContent value="apercu">
+        <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <TabsContent value="apercu" className="focus-visible:outline-none">
             <OverviewTab course={course} />
           </TabsContent>
 
-          <TabsContent value="programme">
+          {hasCohorts && (
+            <TabsContent value="sessions" className="focus-visible:outline-none">
+              <SessionsTab course={course} cohorts={cohorts} />
+            </TabsContent>
+          )}
+
+          <TabsContent value="programme" className="focus-visible:outline-none">
             <CurriculumTab course={course} />
           </TabsContent>
 
-          <TabsContent value="formateur">
+          <TabsContent value="formateur" className="focus-visible:outline-none">
             <InstructorTab course={course} />
           </TabsContent>
 
-          <TabsContent value="avis">
+          <TabsContent value="avis" className="focus-visible:outline-none">
             <ReviewsTab reviews={course.reviews as any} />
           </TabsContent>
-        </Tabs>
-      </div>
+        </div>
+      </Tabs>
     </section>
   )
 }

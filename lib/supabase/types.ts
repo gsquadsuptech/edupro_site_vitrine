@@ -12,6 +12,7 @@ export type Course = {
     format: 'auto-formation' | 'session' | null // Added format field
     rating?: number
     reviewCount?: number
+    enrolled_count?: number
     category: {
         name: string
         slug: string
@@ -58,6 +59,8 @@ export type Course = {
             avatar_url: string | null
         }
     }[]
+    has_varying_prices?: boolean
+    lowest_price?: number
 }
 
 export type Lesson = {
@@ -116,7 +119,7 @@ export type Cohort = {
     start_date: string
     end_date: string
     registration_deadline: string | null
-    status: 'active' | 'draft' | 'completed' | 'archived'
+    status: 'active' | 'published' | 'draft' | 'completed' | 'archived'
     max_students: number | null
     current_students_count?: number
     pricing_modes?: any
