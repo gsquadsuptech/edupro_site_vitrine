@@ -12,6 +12,15 @@ export interface CourseFilters {
 }
 
 export const CourseService = {
+    formatDuration(minutes: number | null | undefined): string {
+        if (!minutes || minutes <= 0) return 'Durée flexible'
+        if (minutes < 60) return `${minutes} min`
+        const hours = Math.floor(minutes / 60)
+        const remainingMinutes = minutes % 60
+        if (remainingMinutes === 0) return `${hours}h`
+        return `${hours}h ${remainingMinutes}min`
+    },
+
     async searchCourses(filters: CourseFilters): Promise<{ courses: Course[], total: number }> {
         const supabase = createClient()
         const { searchTerm, category, minPrice, maxPrice, level, limit = 12, offset = 0 } = filters
@@ -116,7 +125,7 @@ export const CourseService = {
             price: displayPrice,
             original_price: item.one_time_discount ? Number(item.one_time_discount) : null,
             currency: 'FCFA',
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '20h',
+            duration: CourseService.formatDuration(item.duration),
             level: item.level,
 
             one_time_price: oneTimePrice,
@@ -400,7 +409,7 @@ export const CourseService = {
                     id: les.id,
                     title: les.title,
                     slug: les.id,
-                    duration: les.duration ? `${les.duration} min` : '5 min',
+                    duration: CourseService.formatDuration(les.duration),
                     video_url: null,
                     is_preview: les.is_preview || false,
                     type: les.type || 'video'
@@ -424,7 +433,7 @@ export const CourseService = {
             ...baseCourse,
             rating: item.marketplace?.rating || 4.5,
             reviewCount: item.marketplace?.review_count || reviews.length,
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '10h',
+            duration: CourseService.formatDuration(item.duration),
             highlights: parseJson(item.expected_results),
             objectives: parseJson(item.objectives),
             prerequisites: parseJson(item.prerequisites),
@@ -533,7 +542,7 @@ export const CourseService = {
                     id: les.id,
                     title: les.title,
                     slug: les.id,
-                    duration: les.duration ? `${les.duration} min` : '5 min',
+                    duration: CourseService.formatDuration(les.duration),
                     video_url: null,
                     is_preview: les.is_preview || false,
                     type: les.type || 'video'
@@ -558,7 +567,7 @@ export const CourseService = {
             rating: item.marketplace?.rating || 4.5,
             reviewCount: item.marketplace?.review_count || reviews.length,
             enrolled_count: item.marketplace?.student_count || 0,
-            duration: item.duration ? `${Math.round(item.duration / 60)}h` : '10h',
+            duration: CourseService.formatDuration(item.duration),
             highlights: parseJson(item.expected_results),
             objectives: parseJson(item.objectives),
             prerequisites: parseJson(item.prerequisites),
@@ -735,6 +744,15 @@ export const CourseService = {
             return []
         }
 
+        const parseJson = (val: any) => {
+            if (Array.isArray(val)) return val
+            if (typeof val === 'string') {
+                try { return JSON.parse(val) } catch { return [] }
+            }
+            if (typeof val === 'object' && val !== null) return Object.values(val)
+            return []
+        }
+
         return (data as any[]).map(item => ({
             id: item.id,
             name: item.name,
@@ -749,7 +767,7 @@ export const CourseService = {
             monthly_price: item.monthly_price ? Number(item.monthly_price) : null,
             registration_fee: item.registration_fee ? Number(item.registration_fee) : null,
             monthly_fee: item.monthly_fee ? Number(item.monthly_fee) : null,
-            installments: item.installments || [],
+            installments: parseJson(item.installments),
             use_course_price: item.use_course_price || false,
             sessions: []
         }))

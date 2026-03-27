@@ -34,7 +34,8 @@ interface PaymentPlanProps {
 
 export const PaymentPlan = ({
     course,
-    cohort,
+    cohort: propCohort,
+    session,
     onSelect,
     onPrevious,
 }: PaymentPlanProps) => {
@@ -42,7 +43,10 @@ export const PaymentPlan = ({
     const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [authTab, setAuthTab] = useState<"login" | "register">("login");
-    const [pendingPlan, setPendingPlan] = useState<{type: string, details: any} | null>(null);
+    const [pendingPlan, setPendingPlan] = useState<{ type: string, details: any } | null>(null);
+
+    // Unifier cohort et session car ils sont utilisés de manière interchangeable
+    const cohort = propCohort || session;
 
     // Fonction pour parser les modes de paiement qui peuvent être des chaînes JSON ou des objets
     const parsePricingModes = (pricingModes: any) => {
@@ -63,46 +67,49 @@ export const PaymentPlan = ({
             }
         }
 
-        // Cas par défaut
         return {};
     };
 
-    // Parser les modes de paiement du cours (nous utiliserons toujours ceux du cours)
+    const parseInstallments = (installments: any) => {
+        if (Array.isArray(installments)) return installments;
+        if (typeof installments === "string") {
+            try {
+                return JSON.parse(installments);
+            } catch (e) {
+                console.error("Erreur lors du parsing des échelonnements:", e);
+                return [];
+            }
+        }
+        return [];
+    };
+
+    // Parser les modes de paiement
     const coursePricingModes = parsePricingModes(course?.pricing_modes);
     const cohortPricingModes = parsePricingModes(cohort?.pricing_modes);
 
-    // IMPORTANT: Forcer l'utilisation des modes de paiement du cours si au moins l'un d'eux est disponible
-    const hasCoursePricingModes =
-        coursePricingModes &&
-        (coursePricingModes.oneTime ||
-            coursePricingModes.one_time ||
-            coursePricingModes.installments ||
-            coursePricingModes.subscription ||
-            coursePricingModes.registration_monthly);
+    // Déterminer quel mode de tarification utiliser
+    // Si une cohorte est sélectionnée et qu'elle n'utilise pas le prix du cours, on prioritise ses réglages
+    const isUsingCoursePrice = !cohort || cohort.use_course_price !== false;
 
     const availableModes = {
-        oneTime: hasCoursePricingModes
-            ? coursePricingModes.oneTime || coursePricingModes.one_time || false
-            : cohortPricingModes.oneTime || cohortPricingModes.one_time || false,
-        installments: hasCoursePricingModes
-            ? coursePricingModes.installments || false
-            : cohortPricingModes.installments || false,
-        subscription: hasCoursePricingModes
-            ? coursePricingModes.subscription || false
-            : cohortPricingModes.subscription || false,
-        registrationMonthly: hasCoursePricingModes
-            ? coursePricingModes.registration_monthly || false
-            : cohortPricingModes.registration_monthly || false,
+        oneTime: isUsingCoursePrice
+            ? (coursePricingModes.oneTime || coursePricingModes.one_time || false)
+            : (cohortPricingModes.oneTime || cohortPricingModes.one_time || false),
+        installments: isUsingCoursePrice
+            ? (coursePricingModes.installments || false)
+            : (cohortPricingModes.installments || false),
+        subscription: isUsingCoursePrice
+            ? (coursePricingModes.subscription || false)
+            : (cohortPricingModes.subscription || false),
+        registrationMonthly: isUsingCoursePrice
+            ? (coursePricingModes.registration_monthly || coursePricingModes.registrationMonthly || false)
+            : (cohortPricingModes.registration_monthly || cohortPricingModes.registrationMonthly || false),
     };
 
     // Si aucun mode n'est détecté, créer au moins un mode par défaut
     if (!Object.values(availableModes).some(Boolean)) {
         availableModes.oneTime = true;
     }
-
-    // Calcul des informations pour l'affichage
-    const isUsingCoursePrice =
-        (cohort && cohort.use_course_price !== false) || hasCoursePricingModes;
 
     const oneTimePrice = isUsingCoursePrice
         ? parseFloat(course?.one_time_price || "0")
@@ -127,8 +134,8 @@ export const PaymentPlan = ({
         : parseFloat(cohort?.monthly_fee || "0");
 
     const installments = isUsingCoursePrice
-        ? course?.installments || []
-        : cohort?.installments || [];
+        ? parseInstallments(course?.installments)
+        : parseInstallments(cohort?.installments);
 
     const totalInstallmentAmount = Array.isArray(installments)
         ? installments.reduce(
@@ -330,20 +337,22 @@ export const PaymentPlan = ({
                                     </div>
 
                                     <div className="space-y-2">
-                                        {installments.map((installment: any, index: number) => (
+                                        {installments.map((inst: any, index: number) => (
                                             <div
                                                 key={index}
-                                                className="flex justify-between items-center px-3 py-2 bg-gray-50 rounded-md"
+                                                className="flex items-center p-4 rounded-lg border border-border/50 bg-muted/30 transition-colors hover:bg-muted/50"
                                             >
-                                                <span className="text-sm">Versement {index + 1}</span>
-                                                <div className="flex items-center">
-                                                    <span className="font-medium">
-                                                        {formatPrice(parseFloat(installment.amount || 0))}
+                                                <div className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                                                    Versement {index + 1}
+                                                </div>
+                                                <div className="ml-auto flex items-center gap-3">
+                                                    <span className="text-sm font-bold whitespace-nowrap">
+                                                        {formatPrice(parseFloat(inst.amount))}
                                                     </span>
                                                     {index === 0 && (
                                                         <Badge
-                                                            className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-100"
                                                             variant="outline"
+                                                            className="text-[9px] uppercase tracking-wider h-5 px-2 bg-primary/10 text-primary border-primary/20 font-bold shrink-0"
                                                         >
                                                             Maintenant
                                                         </Badge>

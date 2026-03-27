@@ -96,10 +96,13 @@ export default function CheckoutPage({
                     setCourse(fetchedCourse);
                 }
 
-                if (fetchedCohorts && fetchedCohorts.length > 0) {
+                if (fetchedCohorts && fetchedCohorts.length > 1) {
                     setSkipSessionStep(false);
-                    // If cohorts exist, we might want to start at step 1
                     setCurrentStep(1);
+                } else if (fetchedCohorts && fetchedCohorts.length === 1) {
+                    setSkipSessionStep(true);
+                    setSelectedSession(fetchedCohorts[0]);
+                    setCurrentStep(2);
                 } else {
                     setSkipSessionStep(true);
                     setCurrentStep(2);
@@ -226,7 +229,7 @@ export default function CheckoutPage({
                 {currentStep === 2 && (
                     <PaymentPlan
                         course={course}
-                        session={selectedSession}
+                        cohort={selectedSession}
                         onSelect={handlePlanSelect}
                         onPrevious={handlePrevious}
                     />
@@ -239,6 +242,7 @@ export default function CheckoutPage({
                         plan={selectedPlan}
                         onSuccess={handlePaymentSuccess}
                         onFailure={handlePaymentFailure}
+                        onPrevious={handlePrevious}
                     />
                 )}
 

@@ -20,9 +20,10 @@ interface PaymentProcessProps {
     plan: PaymentPlan;
     onSuccess: (data: any) => void;
     onFailure: (error: any) => void;
+    onPrevious?: () => void;
 }
 
-export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: PaymentProcessProps) => {
+export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onPrevious }: PaymentProcessProps) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { user, isAuthenticated } = useAuth();
@@ -170,7 +171,14 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure }: P
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-center md:text-left">Finaliser votre inscription</h2>
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-bold">Finaliser votre inscription</h2>
+                {onPrevious && (
+                    <Button variant="outline" onClick={onPrevious} disabled={loading}>
+                        Retour
+                    </Button>
+                )}
+            </div>
 
             <Card className="shadow-lg">
                 <CardHeader>
