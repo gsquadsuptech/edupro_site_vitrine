@@ -21,7 +21,17 @@ interface RegisterFormProps {
 export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormProps) {
     const router = useRouter()
     const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [isRegistering, setIsRegistering] = useState<boolean>(false)
+
+    const getPasswordStrength = (pass: string) => {
+        if (pass.length === 0) return { label: "", strength: 0, color: "" }
+        if (pass.length < 6) return { label: "Faible", strength: 1, color: "bg-red-500" }
+        if (pass.length < 10) return { label: "Moyen", strength: 2, color: "bg-yellow-500" }
+        if (pass.length >= 10 && /[A-Z]/.test(pass) && /[0-9]/.test(pass))
+            return { label: "Fort", strength: 3, color: "bg-green-500" }
+        return { label: "Moyen", strength: 2, color: "bg-yellow-500" }
+    }
 
     const formSchema = z.object({
         firstName: z.string().min(1, "Le prénom est requis"),
@@ -154,28 +164,50 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                 <FormField
                     control={form.control}
                     name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Mot de passe</FormLabel>
-                            <FormControl>
-                                <div className="relative">
-                                    <Input
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="******"
-                                        {...field}
-                                    />
-                                    <button
-                                        type="button"
-                                        className="absolute right-1 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-md hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors duration-200"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                                    </button>
-                                </div>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    render={({ field }) => {
+                        const strength = getPasswordStrength(field.value || "")
+                        return (
+                            <FormItem>
+                                <FormLabel>Mot de passe</FormLabel>
+                                <FormControl>
+                                    <div className="relative">
+                                        <Input
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="******"
+                                            {...field}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="absolute right-1 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-md hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors duration-200"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                        </button>
+                                    </div>
+                                </FormControl>
+                                {field.value && (
+                                    <div className="mt-2 space-y-1">
+                                        <div className="flex gap-1">
+                                            {[1, 2, 3].map((level) => (
+                                                <div
+                                                    key={level}
+                                                    className={`h-1 flex-1 rounded ${
+                                                        strength.strength >= level ? strength.color : "bg-muted"
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                        {strength.label && (
+                                            <p className="text-xs text-muted-foreground">
+                                                Force: <span className="font-medium">{strength.label}</span>
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                                <FormMessage />
+                            </FormItem>
+                        )
+                    }}
                 />
                 <FormField
                     control={form.control}
@@ -184,7 +216,20 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                         <FormItem>
                             <FormLabel>Confirmer le mot de passe</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="******" {...field} />
+                                <div className="relative">
+                                    <Input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        placeholder="******"
+                                        {...field}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute right-1 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-md hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors duration-200"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    >
+                                        {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>

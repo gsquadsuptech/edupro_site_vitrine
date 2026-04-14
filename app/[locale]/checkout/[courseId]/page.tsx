@@ -42,6 +42,7 @@ export default function CheckoutPage({
     const [skipSessionStep, setSkipSessionStep] = useState(true); // Default to true, enable if cohorts found
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [enrollingFree, setEnrollingFree] = useState(false);
+    const [pendingEnrollment, setPendingEnrollment] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -150,6 +151,11 @@ export default function CheckoutPage({
 
     const handleFreeEnrollment = useCallback(async (session?: any) => {
         if (enrollingFree) return;
+        if (!user?.id || !user?.email) {
+            // Auth not ready yet — defer until the user object is available
+            setPendingEnrollment(true);
+            return;
+        }
         setEnrollingFree(true);
         try {
             let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
@@ -205,7 +211,8 @@ export default function CheckoutPage({
         setSelectedSession(session);
         if (skipPayment) {
             // Free course: require auth, then enroll directly
-            if (!isAuthenticated) {
+            if (!isAuthenticated || !user?.id || !user?.email) {
+                setPendingEnrollment(true);
                 setAuthModalOpen(true);
             } else {
                 handleFreeEnrollment(session);
@@ -236,23 +243,31 @@ export default function CheckoutPage({
     const handleAuthSuccess = useCallback(() => {
         setAuthModalOpen(false);
         if (skipPayment) {
-            // Small delay to let auth state propagate
-            setTimeout(() => handleFreeEnrollment(), 300);
+            // Defer: an effect will pick this up once the auth context exposes the user
+            setPendingEnrollment(true);
         }
-    }, [skipPayment, handleFreeEnrollment]);
+    }, [skipPayment]);
 
     // Auto-trigger free enrollment when user is authenticated and on a free course with no session selection step
     useEffect(() => {
         if (!loading && skipPayment && skipSessionStep && currentStep !== 4) {
             if (isAuthenticated) {
                 if (paymentStatus === "pending" && !enrollingFree) {
-                    handleFreeEnrollment();
+                    setPendingEnrollment(true);
                 }
             } else {
                 setAuthModalOpen(true);
             }
         }
-    }, [loading, skipPayment, skipSessionStep, isAuthenticated, currentStep, paymentStatus, enrollingFree, handleFreeEnrollment]);
+    }, [loading, skipPayment, skipSessionStep, isAuthenticated, currentStep, paymentStatus, enrollingFree]);
+
+    // Execute deferred enrollment once user is fully loaded
+    useEffect(() => {
+        if (pendingEnrollment && user?.id && user?.email && !enrollingFree && currentStep !== 4) {
+            setPendingEnrollment(false);
+            handleFreeEnrollment();
+        }
+    }, [pendingEnrollment, user?.id, user?.email, enrollingFree, currentStep, handleFreeEnrollment]);
 
     const handleAccessCourse = async () => {
         try {
