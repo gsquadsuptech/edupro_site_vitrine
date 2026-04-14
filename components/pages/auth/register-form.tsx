@@ -24,6 +24,8 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
     const [isRegistering, setIsRegistering] = useState<boolean>(false)
 
     const formSchema = z.object({
+        firstName: z.string().min(1, "Le prénom est requis"),
+        lastName: z.string().min(1, "Le nom est requis"),
         email: z.string().email("Email invalide"),
         password: z.string()
             .min(6, "Le mot de passe doit contenir au moins 6 caractères")
@@ -41,6 +43,8 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            firstName: "",
+            lastName: "",
             email: "",
             password: "",
             confirmPassword: "",
@@ -50,21 +54,43 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
     const onSubmit = async (data: FormValues) => {
         try {
             setIsRegistering(true)
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1500))
 
-            toast.success("Inscription réussie")
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: data.email,
+                    password: data.password,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    role: 'student',
+                }),
+            })
+
+            const payload = await response.json().catch(() => ({}))
+
+            if (!response.ok || !payload.user) {
+                toast.error("Erreur lors de l'inscription", {
+                    description: payload.error || "Une erreur est survenue",
+                })
+                return
+            }
+
+            toast.success("Inscription réussie", {
+                description: "Veuillez vérifier votre email pour activer votre compte.",
+            })
 
             if (onSuccess) {
                 onSuccess()
             } else {
-                // Normally we would redirect or show success message, but for mock we can switch to login or redirect home
                 router.push('/')
             }
 
         } catch (err: any) {
             console.error("Erreur d'inscription:", err)
-            toast.error("Erreur d'inscription")
+            toast.error("Erreur d'inscription", {
+                description: err?.message || "Une erreur est survenue",
+            })
         } finally {
             setIsRegistering(false)
         }
@@ -84,6 +110,34 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
             </div>
 
             <Form form={form} onSubmit={onSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                    <FormField
+                        control={form.control}
+                        name="firstName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Prénom</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Prénom" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="lastName"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nom</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Nom" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
                 <FormField
                     control={form.control}
                     name="email"

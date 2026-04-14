@@ -79,15 +79,15 @@ export default function InscriptionPage() {
                 }),
             })
 
-            const data = await response.json()
+            const data = await response.json().catch(() => ({}))
 
-            if (!response.ok) {
+            if (!response.ok || !data.user) {
                 toast.error("Erreur lors de l'inscription", {
                     description: data.error || "Une erreur est survenue"
                 })
             } else {
                 toast.success("Inscription réussie !", {
-                    description: "Veuillez vérifier votre email pour confirmer votre compte."
+                    description: "Veuillez vérifier votre email pour activer votre compte."
                 })
             }
         } catch (err) {
