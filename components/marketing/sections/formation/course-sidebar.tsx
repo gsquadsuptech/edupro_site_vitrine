@@ -4,6 +4,7 @@ import { CheckCircle2, Heart, Bookmark, Share2, Smartphone, Monitor, Trophy, Clo
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Course, Cohort } from "@/lib/supabase/types"
+import { getCohortAvailability } from "@/services/course-service"
 import { WaitlistDialog } from "./waitlist-dialog"
 
 interface CourseSidebarProps {
@@ -18,14 +19,16 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
   const displayMonthlyPrice = course.monthly_price || (price > 0 ? Math.round(price / 3) : 0)
 
   const isAutoFormation = course.format === 'auto-formation' || !course.format
-  const hasAvailableCohort = cohorts.some(c => c.status === 'active' || c.status === 'published')
-  const showWaitlist = !isAutoFormation && !hasAvailableCohort
+  const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
+  const hasAnyCohort = cohorts.length > 0
+  const showEnrollButton = isAutoFormation || hasOpenCohort
+  const showWaitlist = !isAutoFormation && !hasOpenCohort
 
   // Count total lessons from sections
   const totalLessons = course.sections?.reduce((acc, s) => acc + (s.lessons?.length || 0), 0) || 0
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-8 shadow-xl transition-all duration-300 hover:shadow-2xl">
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-xl transition-all duration-300 hover:shadow-2xl">
       <div className="mb-6">
         <div className="mb-1 text-xs font-bold text-primary uppercase tracking-widest">
           {hasVaryingPrices ? "À partir de" : "Investissement"}
@@ -59,14 +62,14 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
           </Link>
         )}
 
-        <div className="flex gap-3">
-          <Button variant="outline" size="lg" className="flex-1 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors">
-            <Heart className="mr-2 h-4 w-4" />
-            Favoris
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" className="flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm">
+            <Heart className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">Favoris</span>
           </Button>
-          <Button variant="outline" size="lg" className="flex-1 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors">
-            <Bookmark className="mr-2 h-4 w-4" />
-            Sauvegarder
+          <Button variant="outline" size="sm" className="flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm">
+            <Bookmark className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+            <span className="truncate">Sauvegarder</span>
           </Button>
         </div>
 

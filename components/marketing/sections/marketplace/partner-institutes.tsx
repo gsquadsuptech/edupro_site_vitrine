@@ -10,7 +10,7 @@ export function PartnerInstitutes({ institutes = [] }: PartnerInstitutesProps) {
 
   return (
     <section className="border-y border-border bg-background py-12">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <div className="mb-8 text-center">
           <h2 className="mb-2 text-2xl font-bold md:text-3xl">Nos Instituts Partenaires</h2>
           <p className="text-muted-foreground text-sm">Ils nous font confiance pour diffuser leurs formations d'excellence</p>

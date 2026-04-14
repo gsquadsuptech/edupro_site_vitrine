@@ -1,5 +1,19 @@
 import { createClient } from '@/lib/supabase/client'
-import { Course, Cohort } from '@/lib/supabase/types'
+import { Course, Cohort, CohortAvailability } from '@/lib/supabase/types'
+
+export function getCohortAvailability(cohort: Cohort): CohortAvailability {
+    const now = new Date()
+    const isDeadlinePassed = cohort.registration_deadline
+        ? new Date(cohort.registration_deadline) < now
+        : false
+    const remainingPlaces = cohort.max_students != null
+        ? cohort.max_students - cohort.current_students_count
+        : null
+    const isFull = remainingPlaces != null && remainingPlaces <= 0
+    const isOpen = !isDeadlinePassed && !isFull
+
+    return { isOpen, isFull, isDeadlinePassed, remainingPlaces }
+}
 
 export interface CourseFilters {
     searchTerm?: string
@@ -449,7 +463,7 @@ export const CourseService = {
 
         return {
             ...baseCourse,
-            rating: item.marketplace?.rating || 4.5,
+            rating: item.marketplace?.rating || 0,
             reviewCount: item.marketplace?.review_count || reviews.length,
             duration: CourseService.formatDuration(item.duration),
             highlights: parseJson(item.expected_results),
@@ -583,7 +597,7 @@ export const CourseService = {
 
         return {
             ...baseCourse,
-            rating: item.marketplace?.rating || 4.5,
+            rating: item.marketplace?.rating || 0,
             reviewCount: item.marketplace?.review_count || reviews.length,
             enrolled_count: item.marketplace?.student_count || 0,
             duration: CourseService.formatDuration(item.duration),
@@ -751,12 +765,15 @@ export const CourseService = {
                 max_participants,
                 pricing_modes,
                 registration_deadline,
+                enable_waitlist,
+                allow_waitlist,
                 one_time_price,
                 monthly_price,
                 registration_fee,
                 monthly_fee,
                 installments,
-                use_course_price
+                use_course_price,
+                cohort_participants(count)
             `)
             .eq('course_id', courseId)
             .in('status', ['active', 'published'])
@@ -784,6 +801,8 @@ export const CourseService = {
             registration_deadline: item.registration_deadline || null,
             status: item.status,
             max_students: item.max_participants || null,
+            current_students_count: item.cohort_participants?.[0]?.count || 0,
+            enable_waitlist: item.enable_waitlist || item.allow_waitlist || false,
             pricing_modes: item.pricing_modes,
             one_time_price: item.one_time_price ? Number(item.one_time_price) : null,
             monthly_price: item.monthly_price ? Number(item.monthly_price) : null,
@@ -811,7 +830,14 @@ export const CourseService = {
                 if (error.code === '23505') { // Unique violation
                     return { success: true };
                 }
-                console.error('Error adding to waitlist:', error);
+                console.error('Error adding to waitlist:', {
+                    message: error.message,
+                    code: error.code,
+                    details: error.details,
+                    hint: error.hint,
+                    courseId,
+                    userId
+                });
                 return { success: false, error };
             }
 

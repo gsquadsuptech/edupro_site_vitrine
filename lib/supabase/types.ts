@@ -122,7 +122,8 @@ export type Cohort = {
     registration_deadline: string | null
     status: 'active' | 'published' | 'draft' | 'completed' | 'archived'
     max_students: number | null
-    current_students_count?: number
+    current_students_count: number
+    enable_waitlist: boolean
     pricing_modes?: any
     one_time_price: number | null
     monthly_price: number | null
@@ -132,6 +133,13 @@ export type Cohort = {
     use_course_price: boolean | null
     // Relations
     sessions?: CohortSession[]
+}
+
+export type CohortAvailability = {
+    isOpen: boolean
+    isFull: boolean
+    isDeadlinePassed: boolean
+    remainingPlaces: number | null
 }
 
 export type CohortSession = {

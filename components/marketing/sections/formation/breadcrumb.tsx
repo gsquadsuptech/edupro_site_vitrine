@@ -12,7 +12,7 @@ interface FormationBreadcrumbProps {
 export function FormationBreadcrumb({ category, courseTitle }: FormationBreadcrumbProps) {
   return (
     <div className="border-b border-border bg-muted/30 py-3">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <nav className="flex items-center gap-2 text-sm text-muted-foreground overflow-x-auto whitespace-nowrap">
           <Link href="/" className="hover:text-foreground transition-colors">
             Accueil

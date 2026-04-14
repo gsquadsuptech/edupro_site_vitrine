@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 export function MarketplaceHero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-chart-2/10 to-accent/10 py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-6 text-balance text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
             Développez vos compétences avec les meilleurs formateurs d'Afrique

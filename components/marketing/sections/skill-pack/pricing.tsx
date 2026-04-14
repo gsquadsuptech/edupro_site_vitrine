@@ -40,7 +40,7 @@ export function SkillPackPricing() {
 
   return (
     <section className="border-t border-border bg-muted/30 py-16 md:py-20">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-3xl font-bold md:text-4xl">Tarifs & Options</h2>
           <p className="text-lg text-muted-foreground">Choisissez la formule qui vous convient</p>

@@ -13,7 +13,7 @@ export function SimilarCourses({ courses = [] }: SimilarCoursesProps) {
 
   return (
     <section className="border-t border-border py-16">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <h2 className="mb-8 text-2xl font-bold md:text-3xl">Formations similaires</h2>
         <p className="mb-8 text-muted-foreground">Les apprenants ont aussi aimé</p>
 

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_supabase_supabase__execute_sql",
+      "Bash(npx --yes sharp-cli -i assets/images/edupro-home7.png.bak -o assets/images/edupro-home7.png resize 1200 --quality 80)",
+      "Bash(npx --yes sharp-cli -i assets/images/edupro-home7.png.bak -o assets/images/edupro-home7.png resize 1000 --quality 70)"
+    ]
+  }
+}

@@ -91,6 +91,7 @@ export function FormationHero({ course }: FormationHeroProps) {
               <span className="text-muted-foreground italic">Par <strong className="text-foreground not-italic group-hover:text-primary transition-colors cursor-pointer">{instructorName}</strong></span>
             </div>
 
+            {reviewCount > 0 && (
             <div className="flex items-center gap-2 border-l border-border/50 pl-6">
               <div className="flex items-center bg-yellow-400/10 px-2 py-0.5 rounded-lg">
                 {[...Array(5)].map((_, i) => (
@@ -103,6 +104,7 @@ export function FormationHero({ course }: FormationHeroProps) {
               </div>
               <span className="text-muted-foreground text-xs font-medium">({reviewCount} avis)</span>
             </div>
+            )}
           </div>
         </div>
 

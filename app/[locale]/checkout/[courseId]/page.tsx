@@ -29,6 +29,7 @@ export default function CheckoutPage({
     const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (Plan) by default
     const [selectedSession, setSelectedSession] = useState<any>(null);
     const [selectedPlan, setSelectedPlan] = useState<any>(null);
+    const [skipPaymentPlan, setSkipPaymentPlan] = useState(false);
     const [paymentStatus, setPaymentStatus] = useState<
         "pending" | "success" | "failed"
     >("pending");
@@ -96,16 +97,35 @@ export default function CheckoutPage({
                     setCourse(fetchedCourse);
                 }
 
+                const isFree = fetchedCourse?.access_type === 'free' || (fetchedCourse?.price || 0) <= 0;
+
+                // Handle cohort selection
                 if (fetchedCohorts && fetchedCohorts.length > 1) {
                     setSkipSessionStep(false);
+                    if (isFree) {
+                        setSkipPaymentPlan(true);
+                        setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
+                    }
                     setCurrentStep(1);
                 } else if (fetchedCohorts && fetchedCohorts.length === 1) {
                     setSkipSessionStep(true);
                     setSelectedSession(fetchedCohorts[0]);
-                    setCurrentStep(2);
+                    if (isFree) {
+                        setSkipPaymentPlan(true);
+                        setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
+                        setCurrentStep(3); // Skip to payment/confirmation
+                    } else {
+                        setCurrentStep(2);
+                    }
                 } else {
                     setSkipSessionStep(true);
-                    setCurrentStep(2);
+                    if (isFree) {
+                        setSkipPaymentPlan(true);
+                        setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
+                        setCurrentStep(3); // Skip to payment/confirmation
+                    } else {
+                        setCurrentStep(2);
+                    }
                 }
 
             } catch (error) {
@@ -127,7 +147,11 @@ export default function CheckoutPage({
 
     const handleSessionSelect = (session: any) => {
         setSelectedSession(session);
-        setCurrentStep(2);
+        if (skipPaymentPlan) {
+            setCurrentStep(3); // Skip payment plan for free courses
+        } else {
+            setCurrentStep(2);
+        }
     };
 
     const handlePlanSelect = (plan: any) => {
@@ -165,6 +189,15 @@ export default function CheckoutPage({
 
     const handlePrevious = () => {
         if (currentStep > 1) {
+            if (currentStep === 3 && skipPaymentPlan) {
+                // Go back to session selection or course page
+                if (skipSessionStep) {
+                    router.push(`/${locale}/formation/${course?.slug}`);
+                } else {
+                    setCurrentStep(1);
+                }
+                return;
+            }
             if (currentStep === 2 && skipSessionStep) {
                 router.push(`/${locale}/formation/${course?.slug}`);
                 return;
@@ -209,7 +242,7 @@ export default function CheckoutPage({
                         currentStep={currentStep}
                         steps={[
                             { id: 1, label: "Choisir la session", skipped: skipSessionStep },
-                            { id: 2, label: "Plan de paiement" },
+                            { id: 2, label: "Plan de paiement", skipped: skipPaymentPlan },
                             { id: 3, label: "Paiement" },
                             { id: 4, label: "Confirmation" },
                         ]}

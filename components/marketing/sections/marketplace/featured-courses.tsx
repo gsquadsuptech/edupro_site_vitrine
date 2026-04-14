@@ -17,7 +17,7 @@ export function FeaturedCourses({ locale, courses, isLoading = false }: Featured
 
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-3xl font-bold mb-4">Formations à la une</h2>

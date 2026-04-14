@@ -22,11 +22,11 @@ export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
       <Tabs defaultValue="apercu" className="w-full">
         <div className="sticky top-[88px] z-20 bg-background/95 backdrop-blur-md pb-4 pt-2 -mx-2 px-2 border-b border-border/50">
           <TabsList className={`grid w-full ${gridCols} lg:w-max bg-muted/50 p-1 rounded-xl`}>
-            <TabsTrigger value="apercu" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Aperçu</TabsTrigger>
-            {hasCohorts && <TabsTrigger value="sessions" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Sessions</TabsTrigger>}
-            <TabsTrigger value="programme" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Programme</TabsTrigger>
-            <TabsTrigger value="formateur" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur</TabsTrigger>
-            <TabsTrigger value="avis" className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">Avis</TabsTrigger>
+            <TabsTrigger value="apercu" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Aperçu</TabsTrigger>
+            {hasCohorts && <TabsTrigger value="sessions" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Sessions</TabsTrigger>}
+            <TabsTrigger value="programme" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Programme</TabsTrigger>
+            <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur</TabsTrigger>
+            <TabsTrigger value="avis" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Avis</TabsTrigger>
           </TabsList>
         </div>
 

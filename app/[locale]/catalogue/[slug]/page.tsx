@@ -35,7 +35,7 @@ export default async function CategoryPage({
             <main className="flex-1">
                 <CategoryHero categorySlug={slug} courseCount={courses.length} />
                 <SubCategories />
-                <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
+                <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
                         <SearchFilters />
                         <SearchResults courses={courses} />

@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CalendarIcon, ClockIcon, UsersIcon } from 'lucide-react';
+import { CalendarIcon, ClockIcon, UsersIcon, XCircle } from 'lucide-react';
+import { CourseService, getCohortAvailability } from '@/services/course-service';
+import { Cohort } from '@/lib/supabase/types';
 
 interface SessionSelectionProps {
     courseId: string;
@@ -12,11 +14,9 @@ interface SessionSelectionProps {
     onPrevious?: () => void;
 }
 
-import { CourseService } from '@/services/course-service';
-
 export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSelectionProps) => {
     const [loading, setLoading] = useState(true);
-    const [sessions, setSessions] = useState<any[]>([]);
+    const [sessions, setSessions] = useState<Cohort[]>([]);
     const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
         }
     }, [courseId]);
 
-    const handleSelect = (session: any) => {
+    const handleSelect = (session: Cohort) => {
         setSelectedSessionId(session.id);
         onSelect(session);
     };
@@ -84,22 +84,32 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
             <div className="grid gap-4 md:grid-cols-2">
                 {sessions.map((session) => {
                     const isSelected = selectedSessionId === session.id;
-                    const placesRestantes = session.max_participants ?
-                        session.max_participants - (session.students_count?.[0]?.count || 0) :
-                        null;
+                    const { isOpen, isFull, isDeadlinePassed, remainingPlaces } = getCohortAvailability(session);
+                    const isDisabled = !isOpen;
 
                     return (
                         <Card
                             key={session.id}
-                            className={`cursor-pointer transition-shadow hover:shadow-md ${isSelected ? 'border-primary ring-2 ring-primary/20' : ''}`}
-                            onClick={() => handleSelect(session)}
+                            className={`transition-shadow ${
+                                isDisabled
+                                    ? 'opacity-60 cursor-not-allowed'
+                                    : `cursor-pointer hover:shadow-md ${isSelected ? 'border-primary ring-2 ring-primary/20' : ''}`
+                            }`}
+                            onClick={() => !isDisabled && handleSelect(session)}
                         >
                             <CardHeader>
                                 <div className="flex justify-between items-start">
                                     <CardTitle>{session.name}</CardTitle>
-                                    <Badge variant={isSelected ? "default" : "outline"}>
-                                        {isSelected ? 'Sélectionnée' : 'Disponible'}
-                                    </Badge>
+                                    {isDisabled ? (
+                                        <Badge variant="destructive" className="flex items-center gap-1">
+                                            <XCircle className="h-3 w-3" />
+                                            {isFull ? 'Complet' : 'Fermé'}
+                                        </Badge>
+                                    ) : (
+                                        <Badge variant={isSelected ? "default" : "outline"}>
+                                            {isSelected ? 'Sélectionnée' : 'Disponible'}
+                                        </Badge>
+                                    )}
                                 </div>
                                 <CardDescription>{session.description || "Aucune description disponible"}</CardDescription>
                             </CardHeader>
@@ -114,22 +124,34 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center text-sm">
-                                        <ClockIcon className="w-4 h-4 mr-2 text-muted-foreground" />
-                                        <div>
-                                            <span className="font-medium">Inscription jusqu'au: </span>
-                                            <span>{formatDate(session.registration_deadline)}</span>
-                                        </div>
-                                    </div>
-
-                                    {placesRestantes !== null && (
+                                    {session.registration_deadline && (
                                         <div className="flex items-center text-sm">
-                                            <UsersIcon className="w-4 h-4 mr-2 text-muted-foreground" />
-                                            <span>
-                                                <span className="font-medium">{placesRestantes} place{placesRestantes > 1 ? 's' : ''} restante{placesRestantes > 1 ? 's' : ''}</span>
-                                            </span>
+                                            <ClockIcon className="w-4 h-4 mr-2 text-muted-foreground" />
+                                            <div>
+                                                <span className="font-medium">Inscription jusqu'au: </span>
+                                                <span className={isDeadlinePassed ? 'text-red-500 line-through' : ''}>
+                                                    {formatDate(session.registration_deadline)}
+                                                </span>
+                                                {isDeadlinePassed && <span className="text-red-500 ml-2 text-xs">(dépassée)</span>}
+                                            </div>
                                         </div>
                                     )}
+
+                                    <div className="flex items-center text-sm">
+                                        <UsersIcon className="w-4 h-4 mr-2 text-muted-foreground" />
+                                        <span>
+                                            {session.max_students != null ? (
+                                                <span className={`font-medium ${isFull ? 'text-red-500' : ''}`}>
+                                                    {session.current_students_count}/{session.max_students} inscrits
+                                                    {remainingPlaces != null && remainingPlaces > 0 && (
+                                                        <span className="text-muted-foreground font-normal"> ({remainingPlaces} place{remainingPlaces > 1 ? 's' : ''} restante{remainingPlaces > 1 ? 's' : ''})</span>
+                                                    )}
+                                                </span>
+                                            ) : (
+                                                <span className="font-medium">{session.current_students_count} inscrits</span>
+                                            )}
+                                        </span>
+                                    </div>
 
                                     <div className="mt-4 pt-3 border-t border-border">
                                         <div className="text-sm font-medium text-muted-foreground mb-1">Prix de la session</div>
@@ -143,13 +165,18 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
                             <CardFooter>
                                 <Button
                                     className="w-full"
-                                    variant={isSelected ? "default" : "outline"}
+                                    variant={isSelected ? "default" : isDisabled ? "secondary" : "outline"}
+                                    disabled={isDisabled}
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        handleSelect(session);
+                                        if (!isDisabled) handleSelect(session);
                                     }}
                                 >
-                                    {isSelected ? 'Session sélectionnée' : 'Sélectionner cette session'}
+                                    {isDisabled
+                                        ? (isFull ? 'Session complète' : 'Inscriptions fermées')
+                                        : isSelected
+                                            ? 'Session sélectionnée'
+                                            : 'Sélectionner cette session'}
                                 </Button>
                             </CardFooter>
                         </Card>

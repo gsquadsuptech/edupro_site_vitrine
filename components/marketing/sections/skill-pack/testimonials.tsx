@@ -33,7 +33,7 @@ export function SkillPackTestimonials() {
 
   return (
     <section className="py-16 md:py-20">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <div className="mb-10 text-center">
           <h2 className="mb-3 text-3xl font-bold md:text-4xl">Témoignages</h2>
           <p className="text-lg text-muted-foreground">Ils ont transformé leur carrière avec ce Skill Pack</p>

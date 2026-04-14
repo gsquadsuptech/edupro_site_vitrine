@@ -82,19 +82,20 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6 lg:px-8">
+      <div className="container flex h-20 items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link href={`/${locale}`}>
+          <Link href={`/${locale}`} className="shrink-0">
             <Image
               src={logo}
               alt="EduPro Logo"
               width={180}
               height={50}
-              className="h-12 w-auto md:h-14"
+              style={{ width: 'auto', height: '3rem' }}
+              className="md:!h-14"
             />
           </Link>
-          <nav className="hidden items-center gap-6 md:flex">
-            <Link href={`/${locale}`} className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground">
+          <nav className="hidden items-center gap-4 lg:gap-6 lg:flex">
+            <Link href={`/${locale}`} className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap">
               {locale === 'fr' ? 'Accueil' : 'Home'}
             </Link>
 
@@ -162,35 +163,35 @@ export function Header() {
 
             <Link
               href={`/${locale}/catalogue`}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
             >
               {locale === 'fr' ? 'Découvrir le catalogue' : 'Discover the catalog'}
             </Link>
 
             <Link
               href={`/${locale}/blog`}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
             >
               {locale === 'fr' ? 'Blog' : 'Blog'}
             </Link>
 
             <Link
               href={`/${locale}/carrieres`}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
             >
               {locale === 'fr' ? 'Carrières' : 'Careers'}
             </Link>
 
             <Link
               href={`/${locale}/a-propos`}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
             >
               {locale === 'fr' ? 'À propos' : 'About'}
             </Link>
 
             <Link
               href={`/${locale}/contact`}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
             >
               {locale === 'fr' ? 'Contact' : 'Contact'}
             </Link>

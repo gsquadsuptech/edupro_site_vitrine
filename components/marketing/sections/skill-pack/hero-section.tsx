@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 export function SkillPackHero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-chart-2/10 to-accent/10 py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         <div className="mx-auto max-w-4xl text-center">
           <Badge className="mb-4 bg-accent text-accent-foreground">Parcours Complet</Badge>
           <h1 className="mb-4 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">Skill Pack : Tech & Digital</h1>

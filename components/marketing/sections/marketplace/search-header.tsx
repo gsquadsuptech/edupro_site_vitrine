@@ -14,7 +14,7 @@ export function SearchHeader() {
 
   return (
     <div className="border-b border-border bg-background py-6">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+      <div className="container">
         {/* Search Bar */}
         <div className="relative mb-4 flex items-center gap-2 rounded-lg border border-border bg-background p-2">
           <Search className="ml-2 h-5 w-5 text-muted-foreground" />

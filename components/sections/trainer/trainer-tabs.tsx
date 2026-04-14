@@ -8,7 +8,7 @@ import { TrainerReviewsTab } from "./tabs/trainer-reviews-tab"
 export function TrainerTabs() {
     return (
         <section className="py-8">
-            <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="container">
                 <Tabs defaultValue="about" className="w-full">
                     <TabsList className="mb-8 grid w-full grid-cols-3 lg:w-auto">
                         <TabsTrigger value="about">À propos</TabsTrigger>
