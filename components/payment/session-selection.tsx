@@ -6,15 +6,16 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CalendarIcon, ClockIcon, UsersIcon, XCircle } from 'lucide-react';
 import { CourseService, getCohortAvailability } from '@/services/course-service';
-import { Cohort } from '@/lib/supabase/types';
+import { Cohort, Course } from '@/lib/supabase/types';
 
 interface SessionSelectionProps {
     courseId: string;
+    course?: Course;
     onSelect: (session: any) => void;
     onPrevious?: () => void;
 }
 
-export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSelectionProps) => {
+export const SessionSelection = ({ courseId, course, onSelect, onPrevious }: SessionSelectionProps) => {
     const [loading, setLoading] = useState(true);
     const [sessions, setSessions] = useState<Cohort[]>([]);
     const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
@@ -156,7 +157,16 @@ export const SessionSelection = ({ courseId, onSelect, onPrevious }: SessionSele
                                     <div className="mt-4 pt-3 border-t border-border">
                                         <div className="text-sm font-medium text-muted-foreground mb-1">Prix de la session</div>
                                         <div className="text-xl font-bold text-primary">
-                                            {session.one_time_price ? `${Number(session.one_time_price).toLocaleString()} FCFA` : 'Utilise le prix du cours'}
+                                            {(() => {
+                                                const isFree = course?.access_type === 'free';
+                                                if (isFree) return 'Gratuit';
+                                                const price = session.one_time_price
+                                                    ? Number(session.one_time_price)
+                                                    : Number(course?.one_time_price ?? course?.price ?? 0);
+                                                return price >= 1
+                                                    ? `${price.toLocaleString()} FCFA`
+                                                    : 'Gratuit';
+                                            })()}
                                         </div>
                                     </div>
                                 </div>

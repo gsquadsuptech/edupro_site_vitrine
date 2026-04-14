@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,7 +9,10 @@ import { SessionSelection } from "@/components/payment/session-selection";
 import { PaymentPlan } from "@/components/payment/payment-plan";
 import { PaymentProcess } from "@/components/payment/payment-process";
 import { PaymentConfirmation } from "@/components/payment/payment-confirmation";
+import { AuthModal } from "@/components/auth/auth-modal";
 import { CourseService } from "@/services/course-service";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 
 export default function CheckoutPage({
@@ -23,6 +26,7 @@ export default function CheckoutPage({
     const statusParam = searchParams.get('status');
     const tokenParam = searchParams.get('token');
 
+    const { user, isAuthenticated } = useAuth();
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [isVerifying, setIsVerifying] = useState(false);
@@ -30,11 +34,14 @@ export default function CheckoutPage({
     const [selectedSession, setSelectedSession] = useState<any>(null);
     const [selectedPlan, setSelectedPlan] = useState<any>(null);
     const [skipPaymentPlan, setSkipPaymentPlan] = useState(false);
+    const [skipPayment, setSkipPayment] = useState(false); // Skip payment step entirely for free courses
     const [paymentStatus, setPaymentStatus] = useState<
         "pending" | "success" | "failed"
     >("pending");
     const [paymentData, setPaymentData] = useState<any>(null);
     const [skipSessionStep, setSkipSessionStep] = useState(true); // Default to true, enable if cohorts found
+    const [authModalOpen, setAuthModalOpen] = useState(false);
+    const [enrollingFree, setEnrollingFree] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -99,31 +106,27 @@ export default function CheckoutPage({
 
                 const isFree = fetchedCourse?.access_type === 'free' || (fetchedCourse?.price || 0) <= 0;
 
+                if (isFree) {
+                    setSkipPaymentPlan(true);
+                    setSkipPayment(true);
+                    setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
+                }
+
                 // Handle cohort selection
                 if (fetchedCohorts && fetchedCohorts.length > 1) {
                     setSkipSessionStep(false);
-                    if (isFree) {
-                        setSkipPaymentPlan(true);
-                        setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
-                    }
                     setCurrentStep(1);
                 } else if (fetchedCohorts && fetchedCohorts.length === 1) {
                     setSkipSessionStep(true);
                     setSelectedSession(fetchedCohorts[0]);
-                    if (isFree) {
-                        setSkipPaymentPlan(true);
-                        setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
-                        setCurrentStep(3); // Skip to payment/confirmation
-                    } else {
+                    // For free courses, we'll trigger enrollment flow via a separate effect
+                    // once we know auth status. Don't set currentStep to 3 here.
+                    if (!isFree) {
                         setCurrentStep(2);
                     }
                 } else {
                     setSkipSessionStep(true);
-                    if (isFree) {
-                        setSkipPaymentPlan(true);
-                        setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
-                        setCurrentStep(3); // Skip to payment/confirmation
-                    } else {
+                    if (!isFree) {
                         setCurrentStep(2);
                     }
                 }
@@ -145,10 +148,70 @@ export default function CheckoutPage({
         };
     }, [courseId, statusParam, tokenParam]);
 
+    const handleFreeEnrollment = useCallback(async (session?: any) => {
+        if (enrollingFree) return;
+        setEnrollingFree(true);
+        try {
+            let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
+            if (typeof window !== 'undefined') {
+                const hostname = window.location.hostname;
+                if (hostname.includes('site.edupro.africa')) {
+                    saasUrl = 'https://staging.edupro.africa';
+                } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
+                    saasUrl = 'https://edupro.africa';
+                }
+            }
+            if (!saasUrl || saasUrl.includes('localhost')) {
+                saasUrl = 'http://localhost:3000';
+            }
+
+            const response = await fetch(`${saasUrl}/api/payments/initialize`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': process.env.NEXT_PUBLIC_SAAS_API_KEY || '',
+                },
+                body: JSON.stringify({
+                    amount: 0,
+                    courseId: course?.id,
+                    cohortId: (session ?? selectedSession)?.id,
+                    paymentPlan: 'oneTime',
+                    userId: user?.id,
+                    email: user?.email,
+                    firstName: user?.user_metadata?.first_name,
+                    lastName: user?.user_metadata?.last_name,
+                    returnUrl: `${window.location.origin}/checkout/${course?.id}?status=success`,
+                    cancelUrl: `${window.location.origin}/checkout/${course?.id}?status=cancelled`,
+                }),
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.message || "Échec de l'inscription gratuite");
+            }
+
+            setPaymentStatus("success");
+            setPaymentData(data.payment || data);
+            setCurrentStep(4);
+        } catch (err: any) {
+            console.error(err);
+            toast.error(err?.message || "Erreur lors de l'inscription gratuite");
+        } finally {
+            setEnrollingFree(false);
+        }
+    }, [course?.id, selectedSession, user, enrollingFree]);
+
     const handleSessionSelect = (session: any) => {
         setSelectedSession(session);
-        if (skipPaymentPlan) {
-            setCurrentStep(3); // Skip payment plan for free courses
+        if (skipPayment) {
+            // Free course: require auth, then enroll directly
+            if (!isAuthenticated) {
+                setAuthModalOpen(true);
+            } else {
+                handleFreeEnrollment(session);
+            }
+        } else if (skipPaymentPlan) {
+            setCurrentStep(3);
         } else {
             setCurrentStep(2);
         }
@@ -169,6 +232,27 @@ export default function CheckoutPage({
         setPaymentStatus("failed");
         // Could set error data here
     };
+
+    const handleAuthSuccess = useCallback(() => {
+        setAuthModalOpen(false);
+        if (skipPayment) {
+            // Small delay to let auth state propagate
+            setTimeout(() => handleFreeEnrollment(), 300);
+        }
+    }, [skipPayment, handleFreeEnrollment]);
+
+    // Auto-trigger free enrollment when user is authenticated and on a free course with no session selection step
+    useEffect(() => {
+        if (!loading && skipPayment && skipSessionStep && currentStep !== 4) {
+            if (isAuthenticated) {
+                if (paymentStatus === "pending" && !enrollingFree) {
+                    handleFreeEnrollment();
+                }
+            } else {
+                setAuthModalOpen(true);
+            }
+        }
+    }, [loading, skipPayment, skipSessionStep, isAuthenticated, currentStep, paymentStatus, enrollingFree, handleFreeEnrollment]);
 
     const handleAccessCourse = async () => {
         try {
@@ -243,7 +327,7 @@ export default function CheckoutPage({
                         steps={[
                             { id: 1, label: "Choisir la session", skipped: skipSessionStep },
                             { id: 2, label: "Plan de paiement", skipped: skipPaymentPlan },
-                            { id: 3, label: "Paiement" },
+                            { id: 3, label: "Paiement", skipped: skipPayment },
                             { id: 4, label: "Confirmation" },
                         ]}
                     />
@@ -254,6 +338,7 @@ export default function CheckoutPage({
                 {currentStep === 1 && !skipSessionStep && (
                     <SessionSelection
                         courseId={courseId}
+                        course={course}
                         onSelect={handleSessionSelect}
                         onPrevious={() => router.push(`/${locale}/formation/${course.slug}`)}
                     />
@@ -268,7 +353,7 @@ export default function CheckoutPage({
                     />
                 )}
 
-                {currentStep === 3 && (
+                {currentStep === 3 && !skipPayment && (
                     <PaymentProcess
                         course={course}
                         cohort={selectedSession}
@@ -277,6 +362,15 @@ export default function CheckoutPage({
                         onFailure={handlePaymentFailure}
                         onPrevious={handlePrevious}
                     />
+                )}
+
+                {skipPayment && enrollingFree && currentStep !== 4 && (
+                    <div className="flex items-center justify-center py-20">
+                        <div className="flex flex-col items-center gap-4">
+                            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                            <p>Finalisation de votre inscription...</p>
+                        </div>
+                    </div>
                 )}
 
                 {currentStep === 4 && (
@@ -291,6 +385,16 @@ export default function CheckoutPage({
                     />
                 )}
             </div>
+
+            <AuthModal
+                open={authModalOpen}
+                onOpenChange={setAuthModalOpen}
+                onSuccess={handleAuthSuccess}
+                title="Connexion requise"
+                description={skipPayment
+                    ? "Connectez-vous pour finaliser votre inscription gratuite."
+                    : "Connectez-vous pour continuer votre inscription."}
+            />
         </div>
     );
 }

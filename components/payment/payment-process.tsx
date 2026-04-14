@@ -3,11 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2, UserIcon } from 'lucide-react';
+import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2, LogIn } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useAuth } from '@/hooks/useAuth';
+import { AuthModal } from '@/components/auth/auth-modal';
 
 interface PaymentPlan {
     type: string;
@@ -26,12 +25,8 @@ interface PaymentProcessProps {
 export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onPrevious }: PaymentProcessProps) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
     const { user, isAuthenticated } = useAuth();
-
-    // Guest info state
-    const [email, setEmail] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
 
     const formatPrice = (price: number | undefined | null) => {
         if (price === undefined || price === null) return 'N/A';
@@ -57,9 +52,8 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
     const initialAmount = getInitialPaymentAmount();
 
     const handlePayment = async () => {
-        // Validation for guest
-        if (!isAuthenticated && !email) {
-            setError("Veuillez renseigner votre email pour continuer.");
+        if (!isAuthenticated) {
+            setAuthModalOpen(true);
             return;
         }
 
@@ -108,11 +102,10 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                     courseId: course.id,
                     cohortId: cohort?.id,
                     paymentPlan: plan.type,
-                    userId: user?.id || 'guest',
-                    // Guest customer info
-                    email: user?.email || email,
-                    firstName: user?.user_metadata?.first_name || firstName,
-                    lastName: user?.user_metadata?.last_name || lastName,
+                    userId: user?.id,
+                    email: user?.email,
+                    firstName: user?.user_metadata?.first_name,
+                    lastName: user?.user_metadata?.last_name,
                     returnUrl: `${window.location.origin}/checkout/${course.id}?status=success`,
                     cancelUrl: `${window.location.origin}/checkout/${course.id}?status=cancelled`,
                 }),
@@ -187,51 +180,22 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                 </CardHeader>
 
                 <CardContent className="space-y-6">
-                    {/* Guest Form */}
                     {!isAuthenticated && (
-                        <div className="space-y-4 p-4 bg-orange-50 dark:bg-orange-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
-                            <h3 className="font-semibold flex items-center gap-2 text-orange-800 dark:text-orange-300">
-                                <UserIcon className="h-4 w-4" />
-                                Vos informations de contact
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="firstName">Prénom</Label>
-                                    <Input
-                                        id="firstName"
-                                        placeholder="Jean"
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        disabled={loading}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="lastName">Nom</Label>
-                                    <Input
-                                        id="lastName"
-                                        placeholder="Dupont"
-                                        value={lastName}
-                                        onChange={(e) => setLastName(e.target.value)}
-                                        disabled={loading}
-                                    />
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email <span className="text-red-500">*</span></Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="jean.dupont@example.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    disabled={loading}
-                                />
-                                <p className="text-xs text-orange-600/80">
-                                    Un compte sera automatiquement créé avec cet email pour vous donner accès au cours.
-                                </p>
-                            </div>
-                        </div>
+                        <Alert className="bg-primary/5 border-primary/20">
+                            <LogIn className="h-4 w-4 text-primary" />
+                            <AlertTitle>Connexion requise</AlertTitle>
+                            <AlertDescription className="flex flex-col gap-3">
+                                <span>Vous devez être connecté pour finaliser votre inscription.</span>
+                                <Button
+                                    type="button"
+                                    variant="default"
+                                    className="w-fit"
+                                    onClick={() => setAuthModalOpen(true)}
+                                >
+                                    Se connecter
+                                </Button>
+                            </AlertDescription>
+                        </Alert>
                     )}
 
                     <div className="bg-muted/50 p-4 rounded-md border text-sm">
@@ -275,7 +239,7 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                                 size="lg"
                                 className="w-full text-lg font-bold"
                                 onClick={handlePayment}
-                                disabled={loading}
+                                disabled={loading || !isAuthenticated}
                             >
                                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
                                 Payez {formatPrice(initialAmount)}
@@ -285,7 +249,7 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                                 size="lg"
                                 className="w-full"
                                 onClick={handlePayment}
-                                disabled={loading}
+                                disabled={loading || !isAuthenticated}
                             >
                                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <ShieldCheckIcon className="mr-2 h-4 w-4" />}
                                 Confirmer l'inscription gratuite
@@ -299,6 +263,13 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                     </p>
                 </CardFooter>
             </Card>
+
+            <AuthModal
+                open={authModalOpen}
+                onOpenChange={setAuthModalOpen}
+                onSuccess={() => setAuthModalOpen(false)}
+                description="Connectez-vous pour finaliser votre inscription."
+            />
         </div>
     );
 };
