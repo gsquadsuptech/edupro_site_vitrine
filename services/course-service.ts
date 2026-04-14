@@ -44,6 +44,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
@@ -89,20 +90,26 @@ export const CourseService = {
     },
 
     mapCourseItem(item: any): Course {
-        const oneTimePrice = item.one_time_price ? Number(item.one_time_price) : null;
-        const legacyPrice = item.price ? Number(item.price) : 0;
+        const isFree = item.access_type === 'free';
 
-        // Use one_time_price if available and legacy price is 0 or less
-        let displayPrice = (legacyPrice <= 0 && oneTimePrice && oneTimePrice > 0) ? oneTimePrice : legacyPrice;
+        const oneTimePrice = isFree ? null : (item.one_time_price ? Number(item.one_time_price) : null);
+        const legacyPrice = isFree ? 0 : (item.price ? Number(item.price) : 0);
 
-        // If still 0, check alternative pricing modes for display
-        if (displayPrice <= 0) {
-            const monthlyPrice = item.monthly_price ? Number(item.monthly_price) : 0;
-            const registrationFee = item.registration_fee ? Number(item.registration_fee) : 0;
-            const monthlyFee = item.monthly_fee ? Number(item.monthly_fee) : 0;
-            if (monthlyPrice > 0) displayPrice = monthlyPrice;
-            else if (registrationFee > 0) displayPrice = registrationFee;
-            else if (monthlyFee > 0) displayPrice = monthlyFee;
+        let displayPrice = 0;
+
+        if (!isFree) {
+            // Use one_time_price if available and legacy price is 0 or less
+            displayPrice = (legacyPrice <= 0 && oneTimePrice && oneTimePrice > 0) ? oneTimePrice : legacyPrice;
+
+            // If still 0, check alternative pricing modes for display
+            if (displayPrice <= 0) {
+                const monthlyPrice = item.monthly_price ? Number(item.monthly_price) : 0;
+                const registrationFee = item.registration_fee ? Number(item.registration_fee) : 0;
+                const monthlyFee = item.monthly_fee ? Number(item.monthly_fee) : 0;
+                if (monthlyPrice > 0) displayPrice = monthlyPrice;
+                else if (registrationFee > 0) displayPrice = registrationFee;
+                else if (monthlyFee > 0) displayPrice = monthlyFee;
+            }
         }
 
         // Ensure pricing_modes is an object
@@ -118,6 +125,7 @@ export const CourseService = {
         return {
             id: item.id,
             format: item.format,
+            access_type: item.access_type || null,
             title: item.title,
             slug: item.slug,
             description: item.description,
@@ -128,12 +136,12 @@ export const CourseService = {
             duration: CourseService.formatDuration(item.duration),
             level: item.level,
 
-            one_time_price: oneTimePrice,
-            monthly_price: item.monthly_price ? Number(item.monthly_price) : null,
-            registration_fee: item.registration_fee ? Number(item.registration_fee) : null,
-            monthly_fee: item.monthly_fee ? Number(item.monthly_fee) : null,
-            installments: item.installments || [],
-            pricing_modes: pricingModes,
+            one_time_price: isFree ? null : oneTimePrice,
+            monthly_price: isFree ? null : (item.monthly_price ? Number(item.monthly_price) : null),
+            registration_fee: isFree ? null : (item.registration_fee ? Number(item.registration_fee) : null),
+            monthly_fee: isFree ? null : (item.monthly_fee ? Number(item.monthly_fee) : null),
+            installments: isFree ? [] : (item.installments || []),
+            pricing_modes: isFree ? null : pricingModes,
 
             is_featured: item.marketplace?.featured || false,
             enrolled_count: item.marketplace?.student_count || 0,
@@ -150,6 +158,12 @@ export const CourseService = {
 
     mapCourseWithPricing(item: any): Course {
         const baseCourse = CourseService.mapCourseItem(item);
+
+        // If course is free, skip cohort pricing entirely
+        if (baseCourse.access_type === 'free') {
+            return baseCourse;
+        }
+
         const cohorts = (item.cohorts || []).filter((c: any) => c.status === 'active' || c.status === 'published');
 
         if (baseCourse.format === 'session' && cohorts.length > 0) {
@@ -215,6 +229,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
@@ -259,6 +274,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         created_at,
         category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
@@ -299,6 +315,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
@@ -340,6 +357,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         preview_video,
         expected_results,
         objectives,
@@ -467,6 +485,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         preview_video,
         expected_results,
         objectives,
@@ -610,6 +629,7 @@ export const CourseService = {
                     level,
                     status,
                     format,
+                    access_type,
                     created_at,
                     category:categories!inner(name, slug),
                     instructor:instructors!inner(name, avatar_url, organization_id, organization:organizations(name)),
@@ -652,6 +672,7 @@ export const CourseService = {
                     level,
                     status,
                     format,
+                    access_type,
                     created_at,
                     category:categories!inner(name, slug),
                     instructor:instructors(name, avatar_url, organization:organizations(name)),
@@ -694,6 +715,7 @@ export const CourseService = {
         level,
         status,
         format,
+        access_type,
         created_at,
         category:categories!inner(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),

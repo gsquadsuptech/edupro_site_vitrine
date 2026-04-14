@@ -10,6 +10,7 @@ export type Course = {
     duration: string | null // mapped from duration (int minutes) -> string
     level: string | null
     format: 'auto-formation' | 'session' | null // Added format field
+    access_type?: 'free' | 'paid' | string | null
     rating?: number
     reviewCount?: number
     enrolled_count?: number

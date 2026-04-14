@@ -51,9 +51,11 @@ export function SessionsTab({ course, cohorts }: SessionsTabProps) {
 
       <div className="grid gap-6">
         {sortedCohorts.map((cohort) => {
-          const price = cohort.use_course_price 
-            ? (course.one_time_price || course.price || 0)
-            : (cohort.one_time_price || 0);
+          const price = course.access_type === 'free'
+            ? 0
+            : cohort.use_course_price
+              ? (course.one_time_price || course.price || 0)
+              : (cohort.one_time_price || 0);
 
           return (
             <div 
