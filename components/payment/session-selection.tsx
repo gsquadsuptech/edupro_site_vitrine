@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { CalendarIcon, ClockIcon, UsersIcon, XCircle } from 'lucide-react';
 import { CourseService, getCohortAvailability } from '@/services/course-service';
 import { Cohort, Course } from '@/lib/supabase/types';
+import { WaitlistDialog } from '@/components/marketing/sections/formation/waitlist-dialog';
 
 interface SessionSelectionProps {
     courseId: string;
@@ -91,23 +92,28 @@ export const SessionSelection = ({ courseId, course, onSelect, onPrevious }: Ses
                     return (
                         <Card
                             key={session.id}
-                            className={`transition-shadow ${
+                            className={`transition-all ${
                                 isDisabled
-                                    ? 'opacity-60 cursor-not-allowed'
-                                    : `cursor-pointer hover:shadow-md ${isSelected ? 'border-primary ring-2 ring-primary/20' : ''}`
+                                    ? 'opacity-70 grayscale-[30%] bg-muted/40 border-dashed border-muted-foreground/30 cursor-not-allowed'
+                                    : `cursor-pointer hover:shadow-md ${isSelected ? 'border-primary ring-2 ring-primary/20 shadow-lg' : ''}`
                             }`}
                             onClick={() => !isDisabled && handleSelect(session)}
                         >
                             <CardHeader>
-                                <div className="flex justify-between items-start">
-                                    <CardTitle>{session.name}</CardTitle>
-                                    {isDisabled ? (
-                                        <Badge variant="destructive" className="flex items-center gap-1">
+                                <div className="flex justify-between items-start gap-2">
+                                    <CardTitle className={isDisabled ? 'text-muted-foreground' : ''}>{session.name}</CardTitle>
+                                    {isFull ? (
+                                        <Badge variant="destructive" className="flex items-center gap-1 shrink-0">
                                             <XCircle className="h-3 w-3" />
-                                            {isFull ? 'Complet' : 'Fermé'}
+                                            Complet
+                                        </Badge>
+                                    ) : isDeadlinePassed ? (
+                                        <Badge variant="secondary" className="flex items-center gap-1 shrink-0 bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                            <XCircle className="h-3 w-3" />
+                                            Fermé
                                         </Badge>
                                     ) : (
-                                        <Badge variant={isSelected ? "default" : "outline"}>
+                                        <Badge variant={isSelected ? "default" : "outline"} className="shrink-0">
                                             {isSelected ? 'Sélectionnée' : 'Disponible'}
                                         </Badge>
                                     )}
@@ -173,21 +179,28 @@ export const SessionSelection = ({ courseId, course, onSelect, onPrevious }: Ses
                             </CardContent>
 
                             <CardFooter>
-                                <Button
-                                    className="w-full"
-                                    variant={isSelected ? "default" : isDisabled ? "secondary" : "outline"}
-                                    disabled={isDisabled}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        if (!isDisabled) handleSelect(session);
-                                    }}
-                                >
-                                    {isDisabled
-                                        ? (isFull ? 'Session complète' : 'Inscriptions fermées')
-                                        : isSelected
-                                            ? 'Session sélectionnée'
-                                            : 'Sélectionner cette session'}
-                                </Button>
+                                {isDisabled && course ? (
+                                    <div className="w-full" onClick={(e) => e.stopPropagation()}>
+                                        <WaitlistDialog
+                                            courseId={course.id}
+                                            courseSlug={course.slug}
+                                            courseTitle={course.title}
+                                            cohortId={isFull && session.enable_waitlist ? session.id : undefined}
+                                        />
+                                    </div>
+                                ) : (
+                                    <Button
+                                        className="w-full"
+                                        variant={isSelected ? "default" : "outline"}
+                                        disabled={isDisabled}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (!isDisabled) handleSelect(session);
+                                        }}
+                                    >
+                                        {isSelected ? 'Session sélectionnée' : 'Sélectionner cette session'}
+                                    </Button>
+                                )}
                             </CardFooter>
                         </Card>
                     );

@@ -63,14 +63,14 @@ export function SessionsTab({ course, cohorts }: SessionsTabProps) {
           return (
             <div
               key={cohort.id}
-              className={`rounded-xl border bg-card overflow-hidden transition-all ${
+              className={`rounded-xl border overflow-hidden transition-all ${
                 isOpen
-                  ? 'border-border hover:shadow-md hover:border-primary/20'
-                  : 'border-border/50 opacity-75'
+                  ? 'border-border bg-card hover:shadow-md hover:border-primary/20'
+                  : 'border-dashed border-muted-foreground/30 bg-muted/30 opacity-75 grayscale-[30%]'
               }`}
             >
               {/* Top row: status + cohort name + price */}
-              <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-border/50 bg-muted/20">
+              <div className={`flex items-center justify-between gap-3 px-4 py-3 border-b ${isOpen ? 'border-border/50 bg-muted/20' : 'border-muted-foreground/20 bg-muted/40'}`}>
                 <div className="flex items-center gap-2 min-w-0">
                   {isOpen ? (
                     <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none px-2 py-0.5 text-xs font-semibold dark:bg-emerald-900/30 dark:text-emerald-400 shrink-0">
