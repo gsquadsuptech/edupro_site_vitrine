@@ -6,7 +6,7 @@ import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
-import { getAvailableModes } from "@/lib/pricing"
+import { CoursePriceDisplay } from "./course-price-display"
 
 interface CourseSidebarProps {
   course: Course
@@ -14,15 +14,6 @@ interface CourseSidebarProps {
 }
 
 export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
-  const price = course.price || 0
-  const hasVaryingPrices = course.has_varying_prices || false
-  const displayPrice = price
-
-  const pricingModes = getAvailableModes(course)
-  const hasMonthlyPayment = pricingModes.subscription || pricingModes.registrationMonthly
-  const monthlyCandidate = Number((course as any).monthly_price ?? (course as any).monthly_fee ?? 0)
-  const displayMonthlyPrice = hasMonthlyPayment && monthlyCandidate > 0 ? monthlyCandidate : 0
-
   const isAutoFormation = course.format === 'auto-formation' || !course.format
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
   const hasAnyCohort = cohorts.length > 0
@@ -34,23 +25,7 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
 
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-xl transition-all duration-300 hover:shadow-2xl">
-      <div className="mb-6">
-        <div className="mb-1 text-xs font-bold text-primary uppercase tracking-widest">
-          {hasVaryingPrices ? "À partir de" : "Investissement"}
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-extrabold text-foreground">
-            {Number(displayPrice) >= 1
-              ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(Math.round(Number(displayPrice)))
-              : "Gratuit"}
-          </span>
-        </div>
-        {displayMonthlyPrice > 0 && (
-          <div className="mt-1 text-sm font-medium text-muted-foreground">
-            ou <span className="text-foreground">{new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF', maximumFractionDigits: 0 }).format(displayMonthlyPrice)}</span>/mois
-          </div>
-        )}
-      </div>
+      <CoursePriceDisplay course={course} variant="sidebar" className="mb-6" />
 
       <div className="space-y-4">
         {showWaitlist ? (

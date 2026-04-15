@@ -463,26 +463,36 @@ export const PaymentPlan = ({
                         <CardContent>
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <div className="flex justify-between items-center px-3 py-2 bg-gray-50 rounded-md">
-                                        <span className="text-sm">Frais d'inscription</span>
-                                        <div className="flex items-center">
-                                            <span className="font-medium">
-                                                {formatPrice(registrationFee)}
+                                    <div className="flex justify-between items-center px-3 py-2 bg-muted/40 rounded-md">
+                                        <span className="text-sm text-muted-foreground">Frais d'inscription</span>
+                                        <span className="font-medium">
+                                            {formatPrice(registrationFee)}
+                                        </span>
+                                    </div>
+
+                                    <div className="flex justify-between items-center px-3 py-2 bg-muted/40 rounded-md">
+                                        <span className="text-sm text-muted-foreground">Mensualité</span>
+                                        <span className="font-medium">
+                                            {formatPrice(monthlyFee)}/mois
+                                        </span>
+                                    </div>
+
+                                    <div className="flex justify-between items-center px-3 py-3 bg-primary/10 rounded-md border border-primary/30">
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-semibold text-primary">Paiement initial</span>
+                                            <span className="text-[11px] text-muted-foreground">Inscription + 1er mois</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-bold text-primary">
+                                                {formatPrice(registrationFee + monthlyFee)}
                                             </span>
                                             <Badge
-                                                className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-100"
+                                                className="bg-blue-100 text-blue-800 hover:bg-blue-100"
                                                 variant="outline"
                                             >
                                                 Maintenant
                                             </Badge>
                                         </div>
-                                    </div>
-
-                                    <div className="flex justify-between items-center px-3 py-2 bg-gray-50 rounded-md">
-                                        <span className="text-sm">Mensualité</span>
-                                        <span className="font-medium">
-                                            {formatPrice(monthlyFee)}/mois
-                                        </span>
                                     </div>
                                 </div>
 

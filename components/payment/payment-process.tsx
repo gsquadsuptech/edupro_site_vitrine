@@ -37,13 +37,15 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
         if (!plan || !plan.details) return 0;
         switch (plan.type) {
             case 'oneTime':
-                return plan.details.price;
+                return Number(plan.details.price) || 0;
             case 'installments':
                 return parseFloat(plan.details.installments?.[0]?.amount || 0);
             case 'subscription':
-                return plan.details.monthlyPrice;
+                return Number(plan.details.monthlyPrice) || 0;
             case 'registrationMonthly':
-                return plan.details.registrationFee;
+                // First payment covers the registration fee + the first month
+                return (Number(plan.details.registrationFee) || 0)
+                    + (Number(plan.details.monthlyFee) || 0);
             default:
                 return 0;
         }
