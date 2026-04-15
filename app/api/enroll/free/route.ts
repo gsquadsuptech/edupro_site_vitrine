@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
                 course_id: courseId,
                 cohort_id: cohortId ?? null,
                 status: 'active',
-                payment_status: 'paid',
+                payment_status: 'completed',
                 payment_plan: 'free',
                 total_amount: 0,
                 balance_due: 0,
@@ -182,7 +182,7 @@ export async function POST(request: NextRequest) {
                         cohort_id: cohortId,
                         user_id: userId,
                         status: 'active',
-                        payment_status: 'paid',
+                        payment_status: 'completed',
                     })
                 if (participantError) {
                     console.error('cohort_participants insert failed:', participantError)
