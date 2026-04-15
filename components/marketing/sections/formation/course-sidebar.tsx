@@ -2,10 +2,11 @@
 
 import { CheckCircle2, Heart, Bookmark, Share2, Smartphone, Monitor, Trophy, Clock, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { WaitlistDialog } from "./waitlist-dialog"
+import { EnrollCTA } from "./enroll-cta"
+import { getAvailableModes } from "@/lib/pricing"
 
 interface CourseSidebarProps {
   course: Course
@@ -16,7 +17,11 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
   const price = course.price || 0
   const hasVaryingPrices = course.has_varying_prices || false
   const displayPrice = price
-  const displayMonthlyPrice = course.monthly_price || (price > 0 ? Math.round(price / 3) : 0)
+
+  const pricingModes = getAvailableModes(course)
+  const hasMonthlyPayment = pricingModes.subscription || pricingModes.registrationMonthly
+  const monthlyCandidate = Number((course as any).monthly_price ?? (course as any).monthly_fee ?? 0)
+  const displayMonthlyPrice = hasMonthlyPayment && monthlyCandidate > 0 ? monthlyCandidate : 0
 
   const isAutoFormation = course.format === 'auto-formation' || !course.format
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
@@ -55,11 +60,11 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
             courseTitle={course.title}
           />
         ) : (
-          <Link href={`/checkout/${course.id}`} className="block">
-            <Button className="w-full h-14 bg-gradient-to-r from-primary to-chart-2 text-lg font-bold text-primary-foreground shadow-lg hover:opacity-90 transition-all duration-300 hover:translate-y-[-2px]">
-              S'inscrire maintenant
-            </Button>
-          </Link>
+          <EnrollCTA
+            courseId={course.id}
+            enrollLabel="S'inscrire maintenant"
+            buttonClassName="h-14 bg-gradient-to-r from-primary to-chart-2 text-lg font-bold text-primary-foreground shadow-lg hover:opacity-90 transition-all duration-300 hover:translate-y-[-2px]"
+          />
         )}
 
         <div className="flex gap-2">

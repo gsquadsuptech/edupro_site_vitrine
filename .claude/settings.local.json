@@ -7,7 +7,8 @@
       "Bash(grep -r useAuth /c/Users/diopb/dev/edupro-site/hooks --include=*.ts --include=*.tsx)",
       "Bash(ls -la /c/Users/diopb/dev/edupro-site/app/[locale]/)",
       "Bash(grep -r \"organization_members\\\\|user.*role\\\\|instructor\\\\|student\" /c/Users/diopb/dev/edupro-site --include=*.ts --include=*.tsx)",
-      "Bash(grep -r \"getAvailableDashboards\\\\|DashboardSpace\" /c/Users/diopb/dev/edupro-site --include=*.ts --include=*.tsx)"
+      "Bash(grep -r \"getAvailableDashboards\\\\|DashboardSpace\" /c/Users/diopb/dev/edupro-site --include=*.ts --include=*.tsx)",
+      "Bash(grep -n \"skipPaymentPlan\\\\|skipPayment\\\\|oneTimePrice\\\\|monthlyPrice\" /c/Users/diopb/dev/edupro-site/app/[locale]/checkout/[courseId]/page.tsx)"
     ]
   }
 }

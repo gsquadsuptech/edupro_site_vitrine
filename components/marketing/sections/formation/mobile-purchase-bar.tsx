@@ -1,10 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { WaitlistDialog } from "./waitlist-dialog"
+import { EnrollCTA } from "./enroll-cta"
 
 interface MobilePurchaseBarProps {
   course: Course
@@ -29,11 +28,13 @@ export function MobilePurchaseBar({ course, cohorts }: MobilePurchaseBarProps) {
           </span>
         </div>
         {showEnrollButton ? (
-          <Link href={`/checkout/${course.id}`} className="flex-1 sm:max-w-xs">
-            <Button className="w-full bg-gradient-to-r from-primary to-chart-2 text-base font-bold text-primary-foreground shadow-lg h-12">
-              S'inscrire
-            </Button>
-          </Link>
+          <div className="flex-1 sm:max-w-xs">
+            <EnrollCTA
+              courseId={course.id}
+              enrollLabel="S'inscrire"
+              buttonClassName="bg-gradient-to-r from-primary to-chart-2 text-base font-bold text-primary-foreground shadow-lg h-12"
+            />
+          </div>
         ) : (
           <div className="flex-1 sm:max-w-xs">
             <WaitlistDialog

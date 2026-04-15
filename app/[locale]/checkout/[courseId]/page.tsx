@@ -13,6 +13,12 @@ import { AuthModal } from "@/components/auth/auth-modal";
 import { CourseService } from "@/services/course-service";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import {
+    derivePlanDetails,
+    getAvailableModes,
+    getEnabledModeCount,
+    getOnlyEnabledMode,
+} from "@/lib/pricing";
 
 
 export default function CheckoutPage({
@@ -113,6 +119,21 @@ export default function CheckoutPage({
                     setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
                 }
 
+                // Helper: when we already know which cohort applies (0 or 1 cohort),
+                // pre-compute available modes and pre-select the plan if there's only one.
+                const presetSinglePaymentMode = (selectedCohort?: any) => {
+                    if (isFree) return; // already handled above
+                    const modes = getAvailableModes(fetchedCourse, selectedCohort);
+                    if (getEnabledModeCount(modes) <= 1) {
+                        const onlyMode = getOnlyEnabledMode(modes) ?? 'oneTime';
+                        setSkipPaymentPlan(true);
+                        setSelectedPlan({
+                            type: onlyMode,
+                            details: derivePlanDetails(onlyMode, fetchedCourse, selectedCohort),
+                        });
+                    }
+                };
+
                 // Handle cohort selection
                 if (fetchedCohorts && fetchedCohorts.length > 1) {
                     setSkipSessionStep(false);
@@ -120,15 +141,21 @@ export default function CheckoutPage({
                 } else if (fetchedCohorts && fetchedCohorts.length === 1) {
                     setSkipSessionStep(true);
                     setSelectedSession(fetchedCohorts[0]);
+                    presetSinglePaymentMode(fetchedCohorts[0]);
                     // For free courses, we'll trigger enrollment flow via a separate effect
                     // once we know auth status. Don't set currentStep to 3 here.
                     if (!isFree) {
-                        setCurrentStep(2);
+                        // If we just skipped the plan step (single mode), jump to payment.
+                        // Otherwise show the plan step.
+                        const modes = getAvailableModes(fetchedCourse, fetchedCohorts[0]);
+                        setCurrentStep(getEnabledModeCount(modes) <= 1 ? 3 : 2);
                     }
                 } else {
                     setSkipSessionStep(true);
+                    presetSinglePaymentMode();
                     if (!isFree) {
-                        setCurrentStep(2);
+                        const modes = getAvailableModes(fetchedCourse);
+                        setCurrentStep(getEnabledModeCount(modes) <= 1 ? 3 : 2);
                     }
                 }
 
@@ -193,9 +220,22 @@ export default function CheckoutPage({
             } else {
                 handleFreeEnrollment(session);
             }
-        } else if (skipPaymentPlan) {
+            return;
+        }
+
+        // Re-evaluate available modes against the picked cohort — it can override
+        // the course-level pricing modes via use_course_price === false.
+        const modes = getAvailableModes(course, session);
+        if (getEnabledModeCount(modes) <= 1) {
+            const onlyMode = getOnlyEnabledMode(modes) ?? 'oneTime';
+            setSkipPaymentPlan(true);
+            setSelectedPlan({
+                type: onlyMode,
+                details: derivePlanDetails(onlyMode, course, session),
+            });
             setCurrentStep(3);
         } else {
+            setSkipPaymentPlan(false);
             setCurrentStep(2);
         }
     };

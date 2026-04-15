@@ -24,6 +24,10 @@ import { LoginForm } from "@/components/pages/auth/login-form";
 import { RegisterForm } from "@/components/pages/auth/register-form";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/lib/supabase/client";
+import {
+    getAvailableModes,
+    parseInstallments as parseInstallmentsShared,
+} from "@/lib/pricing";
 
 interface PaymentPlanProps {
     course: any;
@@ -49,63 +53,13 @@ export const PaymentPlan = ({
     // Unifier cohort et session car ils sont utilisés de manière interchangeable
     const cohort = propCohort || session;
 
-    // Fonction pour parser les modes de paiement qui peuvent être des chaînes JSON ou des objets
-    const parsePricingModes = (pricingModes: any) => {
-        if (!pricingModes) return {};
+    // Re-use shared parsing helper for installments
+    const parseInstallments = parseInstallmentsShared;
 
-        // Si c'est déjà un objet, le retourner tel quel
-        if (typeof pricingModes === "object" && !Array.isArray(pricingModes)) {
-            return pricingModes;
-        }
-
-        // Si c'est une chaîne, essayer de la parser en JSON
-        if (typeof pricingModes === "string") {
-            try {
-                return JSON.parse(pricingModes);
-            } catch (e) {
-                console.error("Erreur lors du parsing des modes de paiement:", e);
-                return {};
-            }
-        }
-
-        return {};
-    };
-
-    const parseInstallments = (installments: any) => {
-        if (Array.isArray(installments)) return installments;
-        if (typeof installments === "string") {
-            try {
-                return JSON.parse(installments);
-            } catch (e) {
-                console.error("Erreur lors du parsing des échelonnements:", e);
-                return [];
-            }
-        }
-        return [];
-    };
-
-    // Parser les modes de paiement
-    const coursePricingModes = parsePricingModes(course?.pricing_modes);
-    const cohortPricingModes = parsePricingModes(cohort?.pricing_modes);
-
-    // Déterminer quel mode de tarification utiliser
-    // Si une cohorte est sélectionnée et qu'elle n'utilise pas le prix du cours, on prioritise ses réglages
+    // Determine which pricing source applies (cohort overrides course only when use_course_price === false)
     const isUsingCoursePrice = !cohort || cohort.use_course_price !== false;
 
-    const availableModes = {
-        oneTime: isUsingCoursePrice
-            ? (coursePricingModes.oneTime || coursePricingModes.one_time || false)
-            : (cohortPricingModes.oneTime || cohortPricingModes.one_time || false),
-        installments: isUsingCoursePrice
-            ? (coursePricingModes.installments || false)
-            : (cohortPricingModes.installments || false),
-        subscription: isUsingCoursePrice
-            ? (coursePricingModes.subscription || false)
-            : (cohortPricingModes.subscription || false),
-        registrationMonthly: isUsingCoursePrice
-            ? (coursePricingModes.registration_monthly || coursePricingModes.registrationMonthly || false)
-            : (cohortPricingModes.registration_monthly || cohortPricingModes.registrationMonthly || false),
-    };
+    const availableModes = getAvailableModes(course, cohort);
 
     // Si aucun mode n'est détecté, créer au moins un mode par défaut
     if (!Object.values(availableModes).some(Boolean)) {
@@ -215,10 +169,20 @@ export const PaymentPlan = ({
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold">
-                    Choisissez votre plan de paiement
-                </h2>
+            <div className="flex justify-between items-start gap-4">
+                <div>
+                    {course?.title && (
+                        <p className="text-sm font-medium text-muted-foreground">{course.title}</p>
+                    )}
+                    <h2 className="text-2xl font-bold">
+                        Choisissez votre plan de paiement
+                    </h2>
+                    {cohort?.name && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                            Session : <span className="font-medium text-foreground">{cohort.name}</span>
+                        </p>
+                    )}
+                </div>
                 {onPrevious && (
                     <Button onClick={handlePrevious} variant="outline">
                         Retour

@@ -1,14 +1,13 @@
 "use client"
 
-import { Calendar, Users, ArrowRight, CheckCircle2, Clock, XCircle, AlertTriangle } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Calendar, Users, CheckCircle2, XCircle, AlertTriangle } from "lucide-react"
 import { Cohort, Course } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { format } from "date-fns"
 import { fr } from "date-fns/locale"
-import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { WaitlistDialog } from "../waitlist-dialog"
+import { EnrollCTA } from "../enroll-cta"
 
 interface SessionsTabProps {
   course: Course
@@ -131,11 +130,13 @@ export function SessionsTab({ course, cohorts }: SessionsTabProps) {
 
                 <div className="shrink-0 sm:w-auto">
                   {isOpen ? (
-                    <Link href={`/checkout/${course.id}?cohort=${cohort.id}`}>
-                      <Button className="w-full sm:w-auto font-semibold">
-                        S'inscrire <ArrowRight className="ml-1.5 h-4 w-4" />
-                      </Button>
-                    </Link>
+                    <EnrollCTA
+                      courseId={course.id}
+                      cohortId={cohort.id}
+                      enrollLabel="S'inscrire"
+                      buttonClassName="font-semibold"
+                      showArrow
+                    />
                   ) : (
                     <WaitlistDialog
                       courseId={course.id}
