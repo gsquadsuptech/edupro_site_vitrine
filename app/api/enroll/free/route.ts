@@ -78,27 +78,49 @@ export async function POST(request: NextRequest) {
         if (cohortId) {
             const { data: cohort, error: cohortError } = await supabaseAdmin
                 .from('cohorts')
-                .select('id, max_students, current_students_count, registration_deadline, status')
+                .select('id, max_participants, registration_deadline')
                 .eq('id', cohortId)
-                .single()
+                .maybeSingle()
 
-            if (cohortError || !cohort) {
-                return NextResponse.json({ error: "Session introuvable" }, { status: 404 })
+            if (cohortError) {
+                console.error('Cohort lookup failed:', cohortError, 'cohortId:', cohortId)
+                return NextResponse.json(
+                    { error: cohortError.message || "Erreur lors de la vérification de la session" },
+                    { status: 500 }
+                )
             }
 
-            const isFull =
-                cohort.max_students != null &&
-                cohort.current_students_count != null &&
-                cohort.current_students_count >= cohort.max_students
+            if (!cohort) {
+                console.error('Cohort not found for id:', cohortId)
+                return NextResponse.json(
+                    { error: `Session introuvable (id=${cohortId})` },
+                    { status: 404 }
+                )
+            }
+
             const isDeadlinePassed =
                 cohort.registration_deadline != null &&
                 new Date(cohort.registration_deadline) < new Date()
 
-            if (isFull || isDeadlinePassed) {
+            if (isDeadlinePassed) {
                 return NextResponse.json(
-                    { error: "Cette session n'accepte plus d'inscriptions." },
+                    { error: "La date limite d'inscription est dépassée." },
                     { status: 400 }
                 )
+            }
+
+            // Check capacity using cohort_participants count
+            if (cohort.max_participants != null) {
+                const { count } = await supabaseAdmin
+                    .from('cohort_participants')
+                    .select('id', { count: 'exact', head: true })
+                    .eq('cohort_id', cohortId)
+                if ((count ?? 0) >= cohort.max_participants) {
+                    return NextResponse.json(
+                        { error: "Cette session est complète." },
+                        { status: 400 }
+                    )
+                }
             }
         }
 
