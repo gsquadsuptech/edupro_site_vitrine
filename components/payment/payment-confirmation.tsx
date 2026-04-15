@@ -94,25 +94,37 @@ export const PaymentConfirmation = ({
         );
     }
 
+    const isFreeCourse =
+        course?.access_type === 'free' ||
+        (Number(course?.one_time_price ?? course?.price ?? 0) <= 0);
+
     return (
         <Card className="border-green-200">
             <CardHeader className="text-center">
                 <div className="flex justify-center mb-4">
                     <CheckCircleIcon className="h-16 w-16 text-green-500" />
                 </div>
-                <CardTitle className="text-xl text-green-700">Paiement réussi</CardTitle>
-                <CardDescription>Félicitations ! Votre paiement a été accepté</CardDescription>
+                <CardTitle className="text-xl text-green-700">
+                    {isFreeCourse ? 'Inscription confirmée' : 'Paiement réussi'}
+                </CardTitle>
+                <CardDescription>
+                    {isFreeCourse
+                        ? 'Félicitations ! Votre inscription a été enregistrée.'
+                        : 'Félicitations ! Votre paiement a été accepté'}
+                </CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-6">
                 <div className="bg-green-50 p-4 rounded-md">
                     <p className="text-sm text-green-700">
-                        Nous vous remercions pour votre achat.
+                        {isFreeCourse
+                            ? 'Vous avez maintenant accès à ce cours.'
+                            : 'Nous vous remercions pour votre achat.'}
                     </p>
                 </div>
 
                 <div className="space-y-4">
-                    <h3 className="font-medium text-lg">Récapitulatif financier</h3>
+                    <h3 className="font-medium text-lg">Récapitulatif</h3>
 
                     <div className="space-y-2">
                         <div className="flex justify-between items-center border-b pb-2">
@@ -129,40 +141,51 @@ export const PaymentConfirmation = ({
                             </div>
                         )}
 
-                        <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-sm text-muted-foreground">Plan de paiement</span>
-                            <span className="font-medium">
-                                {
-                                    plan.type === 'oneTime' ? 'Paiement unique' :
-                                        plan.type === 'installments' ? 'Paiement échelonné' :
-                                            plan.type === 'subscription' ? 'Abonnement mensuel' :
-                                                plan.type === 'registrationMonthly' ? 'Inscription + Mensualités' :
-                                                    'Standard (via redirect)'
-                                }
-                            </span>
-                        </div>
+                        {!isFreeCourse && (
+                            <>
+                                <div className="flex justify-between items-center border-b pb-2">
+                                    <span className="text-sm text-muted-foreground">Plan de paiement</span>
+                                    <span className="font-medium">
+                                        {
+                                            plan.type === 'oneTime' ? 'Paiement unique' :
+                                                plan.type === 'installments' ? 'Paiement échelonné' :
+                                                    plan.type === 'subscription' ? 'Abonnement mensuel' :
+                                                        plan.type === 'registrationMonthly' ? 'Inscription + Mensualités' :
+                                                            'Standard (via redirect)'
+                                        }
+                                    </span>
+                                </div>
 
-                        <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-sm text-muted-foreground">Montant total</span>
-                            <span className="font-medium">{formatPrice(getTotalAmount() || paymentData?.amount || 0)}</span>
-                        </div>
+                                <div className="flex justify-between items-center border-b pb-2">
+                                    <span className="text-sm text-muted-foreground">Montant total</span>
+                                    <span className="font-medium">{formatPrice(getTotalAmount() || paymentData?.amount || 0)}</span>
+                                </div>
 
-                        <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-sm text-muted-foreground">Montant payé</span>
-                            <span className="font-medium text-green-600">{formatPrice(paymentData?.amount || 0)}</span>
-                        </div>
+                                <div className="flex justify-between items-center border-b pb-2">
+                                    <span className="text-sm text-muted-foreground">Montant payé</span>
+                                    <span className="font-medium text-green-600">{formatPrice(paymentData?.amount || 0)}</span>
+                                </div>
 
-                        {paymentData?.reference && (
-                            <div className="flex justify-between items-center border-b pb-2">
-                                <span className="text-sm text-muted-foreground">Référence de transaction</span>
-                                <span className="font-medium">{paymentData.reference}</span>
-                            </div>
+                                {paymentData?.reference && (
+                                    <div className="flex justify-between items-center border-b pb-2">
+                                        <span className="text-sm text-muted-foreground">Référence de transaction</span>
+                                        <span className="font-medium">{paymentData.reference}</span>
+                                    </div>
+                                )}
+
+                                {paymentData?.created_at && (
+                                    <div className="flex justify-between items-center border-b pb-2">
+                                        <span className="text-sm text-muted-foreground">Date de paiement</span>
+                                        <span className="font-medium">{formatDate(paymentData.created_at)}</span>
+                                    </div>
+                                )}
+                            </>
                         )}
 
-                        {paymentData?.created_at && (
+                        {isFreeCourse && (
                             <div className="flex justify-between items-center border-b pb-2">
-                                <span className="text-sm text-muted-foreground">Date de paiement</span>
-                                <span className="font-medium">{formatDate(paymentData.created_at)}</span>
+                                <span className="text-sm text-muted-foreground">Tarif</span>
+                                <span className="font-medium text-green-600">Gratuit</span>
                             </div>
                         )}
                     </div>
