@@ -62,6 +62,10 @@ export async function POST(request: NextRequest) {
             )
         }
 
+        const origin =
+            request.headers.get('origin') ||
+            (request.headers.get('host') ? `https://${request.headers.get('host')}` : '')
+
         const invitationResponse = await fetch(
             `${supabaseUrl}/functions/v1/send-invitation`,
             {
@@ -76,6 +80,7 @@ export async function POST(request: NextRequest) {
                     lastName: lastName || '',
                     role,
                     organizationName: 'EduPro',
+                    redirectTo: origin ? `${origin}/auth/callback` : undefined,
                 }),
             }
         )

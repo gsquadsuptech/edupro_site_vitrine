@@ -88,6 +88,7 @@ export const SessionSelection = ({ courseId, course, onSelect, onPrevious }: Ses
                     const isSelected = selectedSessionId === session.id;
                     const { isOpen, isFull, isDeadlinePassed, remainingPlaces } = getCohortAvailability(session);
                     const isDisabled = !isOpen;
+                    const isFreeCourse = course?.access_type === 'free';
 
                     return (
                         <Card
@@ -198,7 +199,11 @@ export const SessionSelection = ({ courseId, course, onSelect, onPrevious }: Ses
                                             if (!isDisabled) handleSelect(session);
                                         }}
                                     >
-                                        {isSelected ? 'Session sélectionnée' : 'Sélectionner cette session'}
+                                        {isSelected
+                                            ? 'Session sélectionnée'
+                                            : isFreeCourse
+                                                ? "S'inscrire à cette session"
+                                                : 'Sélectionner cette session'}
                                     </Button>
                                 )}
                             </CardFooter>

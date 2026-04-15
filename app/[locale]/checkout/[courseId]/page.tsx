@@ -158,46 +158,22 @@ export default function CheckoutPage({
         }
         setEnrollingFree(true);
         try {
-            let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
-            if (typeof window !== 'undefined') {
-                const hostname = window.location.hostname;
-                if (hostname.includes('site.edupro.africa')) {
-                    saasUrl = 'https://staging.edupro.africa';
-                } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
-                    saasUrl = 'https://edupro.africa';
-                }
-            }
-            if (!saasUrl || saasUrl.includes('localhost')) {
-                saasUrl = 'http://localhost:3000';
-            }
-
-            const response = await fetch(`${saasUrl}/api/payments/initialize`, {
+            const response = await fetch('/api/enroll/free', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': process.env.NEXT_PUBLIC_SAAS_API_KEY || '',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    amount: 0,
                     courseId: course?.id,
                     cohortId: (session ?? selectedSession)?.id,
-                    paymentPlan: 'oneTime',
-                    userId: user?.id,
-                    email: user?.email,
-                    firstName: user?.user_metadata?.first_name,
-                    lastName: user?.user_metadata?.last_name,
-                    returnUrl: `${window.location.origin}/checkout/${course?.id}?status=success`,
-                    cancelUrl: `${window.location.origin}/checkout/${course?.id}?status=cancelled`,
                 }),
             });
 
             const data = await response.json().catch(() => ({}));
             if (!response.ok) {
-                throw new Error(data.message || "Échec de l'inscription gratuite");
+                throw new Error(data.error || "Échec de l'inscription gratuite");
             }
 
             setPaymentStatus("success");
-            setPaymentData(data.payment || data);
+            setPaymentData(data.enrollment || data);
             setCurrentStep(4);
         } catch (err: any) {
             console.error(err);
@@ -235,9 +211,8 @@ export default function CheckoutPage({
         setCurrentStep(4);
     };
 
-    const handlePaymentFailure = (error: any) => {
+    const handlePaymentFailure = () => {
         setPaymentStatus("failed");
-        // Could set error data here
     };
 
     const handleAuthSuccess = useCallback(() => {
