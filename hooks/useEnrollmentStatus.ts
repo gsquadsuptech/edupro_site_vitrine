@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { useAuth } from "@/hooks/useAuth"
-import { createClient } from "@/lib/supabase/client"
 
 export interface EnrollmentStatus {
     isEnrolled: boolean
@@ -28,29 +27,29 @@ export function useEnrollmentStatus(courseId?: string | null): EnrollmentStatus 
 
             setStatus((prev) => ({ ...prev, loading: true }))
 
-            const supabase = createClient()
-            const { data, error } = await supabase
-                .from("enrollments")
-                .select("id, cohort_id")
-                .eq("user_id", user.id)
-                .eq("course_id", courseId)
-                .in("status", ["active", "pending"])
-                .maybeSingle()
+            try {
+                const res = await fetch(
+                    `/api/enroll/status?courseId=${encodeURIComponent(courseId)}`,
+                    { credentials: "include", cache: "no-store" }
+                )
+                if (cancelled) return
 
-            if (cancelled) return
-
-            if (error) {
-                console.error("useEnrollmentStatus error:", error)
+                if (!res.ok) {
+                    setStatus({ isEnrolled: false, loading: false })
+                    return
+                }
+                const data = await res.json()
+                setStatus({
+                    isEnrolled: !!data.isEnrolled,
+                    cohortId: data.cohortId ?? null,
+                    enrollmentId: data.enrollmentId ?? null,
+                    loading: false,
+                })
+            } catch (err) {
+                if (cancelled) return
+                console.error("useEnrollmentStatus error:", err)
                 setStatus({ isEnrolled: false, loading: false })
-                return
             }
-
-            setStatus({
-                isEnrolled: !!data?.id,
-                cohortId: data?.cohort_id ?? null,
-                enrollmentId: data?.id ?? null,
-                loading: false,
-            })
         }
 
         run()
