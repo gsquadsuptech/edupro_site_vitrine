@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
             .select("id, cohort_id, status")
             .eq("user_id", userData.user.id)
             .eq("course_id", courseId)
-            .in("status", ["active", "pending"])
+            .in("status", ["active", "pending", "completed"])
             .maybeSingle()
 
         if (error) {

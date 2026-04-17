@@ -108,6 +108,7 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                     email: user?.email,
                     firstName: user?.user_metadata?.first_name,
                     lastName: user?.user_metadata?.last_name,
+                    description: buildInvoiceDescription(),
                     returnUrl: `${window.location.origin}/checkout/${course.id}?status=success`,
                     cancelUrl: `${window.location.origin}/checkout/${course.id}?status=cancelled`,
                 }),
@@ -161,6 +162,28 @@ export const PaymentProcess = ({ course, cohort, plan, onSuccess, onFailure, onP
                 return 'Frais d\'inscription + mensualités';
             default:
                 return 'Plan non spécifié';
+        }
+    };
+
+    const buildInvoiceDescription = () => {
+        const title = (course?.title || '').trim() || 'Formation EduPro';
+        const sessionPart = cohort?.name ? ` — Session: ${cohort.name}` : '';
+
+        switch (plan.type) {
+            case 'subscription':
+                return `Abonnement mensuel — ${title}${sessionPart}`;
+            case 'installments': {
+                const total = plan.details?.installments?.length;
+                const suffix = total ? ` (1/${total})` : '';
+                return `Paiement échelonné${suffix} — ${title}${sessionPart}`;
+            }
+            case 'registrationMonthly':
+                return `Inscription + 1ère mensualité — ${title}${sessionPart}`;
+            case 'oneTime':
+            default:
+                return cohort
+                    ? `Inscription — ${title}${sessionPart}`
+                    : `Achat de la formation — ${title}`;
         }
     };
 
