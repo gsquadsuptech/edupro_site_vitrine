@@ -85,27 +85,30 @@ export function sanitizeFileName(fileName: string): string {
 
 
 // Builds a URL to the SaaS application (dashboard).
-// Uses NEXT_PUBLIC_SAAS_URL, falls back to NEXT_PUBLIC_APP_URL, then production default.
-// Optionally appends an access_token query param for cross-domain session transfer.
+// Detects the SaaS host dynamically from the current site host so that staging
+// (site.edupro.africa → staging.edupro.africa) and prod (edupro.africa →
+// edupro.africa) route correctly without relying on a build-time env var.
+// Sessions are shared via the .edupro.africa cookie domain (see
+// lib/supabase/cookie-domain.ts), so no token query param is needed.
 
-export function getAppUrl(path: string = '', token?: string): string {
-  // If the path is already an absolute URL, return it directly
+export function getAppUrl(path: string = '', _token?: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path;
   }
 
   let baseUrl = process.env.NEXT_PUBLIC_SAAS_URL
     || process.env.NEXT_PUBLIC_APP_URL
-    || 'https://app.edupro.africa';
+    || 'https://edupro.africa';
 
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  let url = `${baseUrl}${cleanPath}`;
-
-  // Append access token for cross-domain session persistence
-  if (token) {
-    const separator = url.includes('?') ? '&' : '?';
-    url += `${separator}access_token=${encodeURIComponent(token)}`;
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    if (hostname === 'site.edupro.africa') {
+      baseUrl = 'https://staging.edupro.africa';
+    } else if (hostname === 'edupro.africa' || hostname === 'www.edupro.africa') {
+      baseUrl = 'https://edupro.africa';
+    }
   }
 
-  return url;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${baseUrl}${cleanPath}`;
 }

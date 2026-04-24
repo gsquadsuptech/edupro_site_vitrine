@@ -1,8 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
+import { getAuthCookieDomain } from './cookie-domain'
 
 export async function createClient() {
     const cookieStore = await cookies()
+    const headerStore = await headers()
+    const host = headerStore.get('x-forwarded-host') || headerStore.get('host')
+    const domain = getAuthCookieDomain(host)
 
     return createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,13 +19,18 @@ export async function createClient() {
                 setAll(cookiesToSet) {
                     try {
                         cookiesToSet.forEach(({ name, value, options }) =>
-                            cookieStore.set(name, value, options)
+                            cookieStore.set(name, value, {
+                                ...options,
+                                ...(domain
+                                    ? { domain, sameSite: 'lax', secure: true }
+                                    : {}),
+                            }),
                         )
                     } catch {
                         // setAll called from Server Component — safe to ignore
                     }
                 },
             },
-        }
+        },
     )
 }
