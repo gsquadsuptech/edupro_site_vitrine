@@ -39,6 +39,19 @@ export const CourseService = {
         const supabase = createClient()
         const { searchTerm, category, minPrice, maxPrice, level, limit = 12, offset = 0 } = filters
 
+        let marketplaceCategoryId: string | null = null
+        if (category && category !== 'all') {
+            const { data: mcat } = await supabase
+                .from('marketplace_categories')
+                .select('id')
+                .eq('slug', category)
+                .maybeSingle()
+            if (!mcat) {
+                return { courses: [], total: 0 }
+            }
+            marketplaceCategoryId = (mcat as any).id
+        }
+
         let query = supabase
             .from('courses')
             .select(`
@@ -60,9 +73,9 @@ export const CourseService = {
         format,
         access_type,
         created_at,
-        category:categories!inner(name, slug),
+        category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses!inner(featured, rating, review_count, student_count),
+        marketplace:marketplace_courses!inner(featured, rating, review_count, student_count, category_id),
         cohorts(one_time_price, monthly_price, status, use_course_price)
       `, { count: 'exact' })
             .eq('status', 'published')
@@ -71,8 +84,8 @@ export const CourseService = {
             query = query.ilike('title', `%${searchTerm}%`)
         }
 
-        if (category && category !== 'all') {
-            query = query.eq('category.slug', category)
+        if (marketplaceCategoryId) {
+            query = query.eq('marketplace.category_id', marketplaceCategoryId)
         }
 
         if (minPrice !== undefined) {
@@ -206,10 +219,13 @@ export const CourseService = {
         const supabase = createClient()
 
         // 1. Get featured course IDs from marketplace_courses
+        // "À la une" = uniquement le toggle "Vedette" (featured) coché par le superadmin
         const { data: featuredData, error: featuredError } = await supabase
             .from('marketplace_courses')
-            .select('course_id, featured, rating, review_count')
+            .select('course_id, featured, featured_order, rating, review_count')
             .eq('featured', true)
+            .eq('searchable', true)
+            .order('featured_order', { ascending: true, nullsFirst: false })
             .limit(8)
 
         if (featuredError) {
@@ -310,6 +326,16 @@ export const CourseService = {
     async getCoursesByCategory(categorySlug: string): Promise<Course[]> {
         const supabase = createClient()
 
+        const { data: mcat } = await supabase
+            .from('marketplace_categories')
+            .select('id')
+            .eq('slug', categorySlug)
+            .maybeSingle()
+
+        if (!mcat) {
+            return []
+        }
+
         const { data, error } = await supabase
             .from('courses')
             .select(`
@@ -331,13 +357,13 @@ export const CourseService = {
         format,
         access_type,
         created_at,
-        category:categories!inner(name, slug),
+        category:categories(name, slug),
         instructor:instructors(name, avatar_url, organization:organizations(name)),
-        marketplace:marketplace_courses(featured, rating, review_count, student_count),
+        marketplace:marketplace_courses!inner(featured, rating, review_count, student_count, category_id),
         cohorts(one_time_price, monthly_price, status, use_course_price)
       `)
             .eq('status', 'published')
-            .eq('category.slug', categorySlug)
+            .eq('marketplace.category_id', (mcat as any).id)
             .order('created_at', { ascending: false })
 
         if (error) {
