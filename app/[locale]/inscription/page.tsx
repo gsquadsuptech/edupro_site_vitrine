@@ -14,7 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { FlagImage } from "@/components/ui/flag-image"
-import { User, Briefcase, GraduationCap, Eye, EyeOff, Check, ArrowRight, Loader2, School } from "lucide-react"
+import { User, Briefcase, GraduationCap, Eye, EyeOff, Check, ArrowRight, Loader2, School, MailCheck } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
 import { getAppUrl } from "@/lib/utils"
@@ -28,6 +28,7 @@ export default function InscriptionPage() {
     const [activeTab, setActiveTab] = useState<TabType>("professionnel")
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
     const router = useRouter()
     const { locale } = useParams()
     const supabase = createClient()
@@ -89,6 +90,8 @@ export default function InscriptionPage() {
                 toast.success("Inscription réussie !", {
                     description: "Veuillez vérifier votre email pour activer votre compte."
                 })
+                setRegisteredEmail(formData.email)
+                setFormData({ fullName: "", email: "", password: "", country: "" })
             }
         } catch (err) {
             console.error(err)
@@ -164,7 +167,38 @@ export default function InscriptionPage() {
                 <section className="py-12 md:py-16">
                     <div className="container mx-auto px-4">
                         {/* PROFESSIONNEL TAB */}
-                        {activeTab === "professionnel" && (
+                        {activeTab === "professionnel" && registeredEmail && (
+                            <div className="mx-auto max-w-md animate-fade-in">
+                                <div className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
+                                    <div className="mb-4 flex justify-center">
+                                        <div className="rounded-full bg-emerald-100 p-4 dark:bg-emerald-900/30">
+                                            <MailCheck className="h-10 w-10 text-emerald-600 dark:text-emerald-400" />
+                                        </div>
+                                    </div>
+                                    <h2 className="mb-2 text-2xl font-bold text-foreground">Compte créé avec succès</h2>
+                                    <p className="mb-6 text-sm text-muted-foreground">
+                                        Un email d'activation a été envoyé à{" "}
+                                        <span className="font-medium text-foreground">{registeredEmail}</span>.
+                                        Cliquez sur le lien reçu pour activer votre compte.
+                                    </p>
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+                                        <Button
+                                            onClick={() => router.push(`/${locale}/connexion`)}
+                                            className="bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold text-white"
+                                        >
+                                            Aller à la connexion
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => setRegisteredEmail(null)}
+                                        >
+                                            Créer un autre compte
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {activeTab === "professionnel" && !registeredEmail && (
                             <div className="mx-auto max-w-md animate-fade-in">
                                 <div className="mb-8 text-center">
                                     <h2 className="mb-2 text-3xl font-bold text-slate-900">Créer mon compte</h2>
