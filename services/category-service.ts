@@ -21,18 +21,38 @@ export const CategoryService = {
     async getCategoriesWithCounts(): Promise<Category[]> {
         const supabase = createClient()
 
-        // Note: Counting related courses might require a different query or rpc
-        const { data, error } = await supabase
-            .from('marketplace_categories')
-            .select('id, name, slug, description, icon')
-            .order('name')
+        const [categoriesRes, marketplaceCoursesRes] = await Promise.all([
+            supabase
+                .from('marketplace_categories')
+                .select('id, name, slug, description, icon')
+                .order('name'),
+            supabase
+                .from('marketplace_courses')
+                .select('category_id, courses!inner(status)')
+        ])
 
-        if (error) {
-            console.error('Error fetching categories:', error)
+        if (categoriesRes.error) {
+            console.error('Error fetching categories:', categoriesRes.error)
             return []
         }
 
-        return data as Category[]
+        const categories = categoriesRes.data as unknown as Category[]
+
+        const countsById = new Map<string, number>()
+        if (!marketplaceCoursesRes.error && marketplaceCoursesRes.data) {
+            for (const row of marketplaceCoursesRes.data as any[]) {
+                if (!row.category_id) continue
+                if (row.courses?.status !== 'published') continue
+                countsById.set(row.category_id, (countsById.get(row.category_id) || 0) + 1)
+            }
+        } else if (marketplaceCoursesRes.error) {
+            console.error('Error counting marketplace courses:', marketplaceCoursesRes.error)
+        }
+
+        return categories.map(c => ({
+            ...c,
+            courses_count: countsById.get(c.id) || 0
+        }))
     },
 
     async getCategoryBySlug(slug: string): Promise<Category | null> {
