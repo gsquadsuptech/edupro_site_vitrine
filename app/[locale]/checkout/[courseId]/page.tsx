@@ -12,6 +12,8 @@ import { PaymentConfirmation } from "@/components/payment/payment-confirmation";
 import { AuthModal } from "@/components/auth/auth-modal";
 import { CourseService } from "@/services/course-service";
 import { useAuth } from "@/hooks/useAuth";
+import { useActiveBusinessOrg } from "@/hooks/use-active-business-org";
+import { PaymentItem } from "@/components/payment/payment-process";
 import { toast } from "sonner";
 import {
     derivePlanDetails,
@@ -33,6 +35,11 @@ export default function CheckoutPage({
     const tokenParam = searchParams.get('token');
 
     const { user, isAuthenticated } = useAuth();
+    const { orgId, isBusinessAdmin, isTeachOnly } = useActiveBusinessOrg();
+    const purchaseModeParam = searchParams.get('purchaseMode');
+    const initialPurchaseMode: 'individual' | 'team' = purchaseModeParam === 'team' ? 'team' : 'individual';
+    const [purchaseMode, setPurchaseMode] = useState<'individual' | 'team'>(initialPurchaseMode);
+    const [seats, setSeats] = useState<number>(1);
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [isVerifying, setIsVerifying] = useState(false);
@@ -121,8 +128,11 @@ export default function CheckoutPage({
 
                 // Helper: when we already know which cohort applies (0 or 1 cohort),
                 // pre-compute available modes and pre-select the plan if there's only one.
+                // En mode team purchase, on N'OPTIMISE PAS : on garde l'étape Plan
+                // pour laisser l'utilisateur saisir le nombre de sièges.
                 const presetSinglePaymentMode = (selectedCohort?: any) => {
                     if (isFree) return; // already handled above
+                    if (initialPurchaseMode === 'team') return; // garder l'étape Plan visible
                     const modes = getAvailableModes(fetchedCourse, selectedCohort);
                     if (getEnabledModeCount(modes) <= 1) {
                         const onlyMode = getOnlyEnabledMode(modes) ?? 'oneTime';
@@ -145,17 +155,24 @@ export default function CheckoutPage({
                     // For free courses, we'll trigger enrollment flow via a separate effect
                     // once we know auth status. Don't set currentStep to 3 here.
                     if (!isFree) {
-                        // If we just skipped the plan step (single mode), jump to payment.
-                        // Otherwise show the plan step.
-                        const modes = getAvailableModes(fetchedCourse, fetchedCohorts[0]);
-                        setCurrentStep(getEnabledModeCount(modes) <= 1 ? 3 : 2);
+                        // En team purchase, l'étape Plan reste visible (champ seats).
+                        if (initialPurchaseMode === 'team') {
+                            setCurrentStep(2);
+                        } else {
+                            const modes = getAvailableModes(fetchedCourse, fetchedCohorts[0]);
+                            setCurrentStep(getEnabledModeCount(modes) <= 1 ? 3 : 2);
+                        }
                     }
                 } else {
                     setSkipSessionStep(true);
                     presetSinglePaymentMode();
                     if (!isFree) {
-                        const modes = getAvailableModes(fetchedCourse);
-                        setCurrentStep(getEnabledModeCount(modes) <= 1 ? 3 : 2);
+                        if (initialPurchaseMode === 'team') {
+                            setCurrentStep(2);
+                        } else {
+                            const modes = getAvailableModes(fetchedCourse);
+                            setCurrentStep(getEnabledModeCount(modes) <= 1 ? 3 : 2);
+                        }
                     }
                 }
 
@@ -285,19 +302,22 @@ export default function CheckoutPage({
     }, [pendingEnrollment, user?.id, user?.email, enrollingFree, currentStep, handleFreeEnrollment]);
 
     const handleAccessCourse = async () => {
+        const targetPath = purchaseMode === 'team'
+            ? '/admin/billing/seat-pools'
+            : '/dashboard/courses';
         try {
             const { createClient } = await import("@/lib/supabase/client");
             const { getAppUrl } = await import("@/lib/utils");
-            
+
             const supabase = createClient();
             const { data } = await supabase.auth.getSession();
             const token = data.session?.access_token;
-            
-            window.location.href = getAppUrl('/dashboard/courses', token);
+
+            window.location.href = getAppUrl(targetPath, token);
         } catch (error) {
             console.error("Erreur de redirection:", error);
             // Fallback if import fails
-            window.location.href = `${process.env.NEXT_PUBLIC_SAAS_URL || 'https://app.edupro.africa'}/dashboard/courses`;
+            window.location.href = `${process.env.NEXT_PUBLIC_SAAS_URL || 'https://app.edupro.africa'}${targetPath}`;
         }
     };
 
@@ -378,6 +398,14 @@ export default function CheckoutPage({
                     <PaymentPlan
                         course={course}
                         cohort={selectedSession}
+                        item={course ? { type: 'course', id: course.id, title: course.title } : undefined}
+                        isBusinessAdmin={isBusinessAdmin}
+                        isTeachOnly={isTeachOnly}
+                        organizationId={orgId}
+                        purchaseMode={purchaseMode}
+                        onPurchaseModeChange={setPurchaseMode}
+                        seats={seats}
+                        onSeatsChange={setSeats}
                         onSelect={handlePlanSelect}
                         onPrevious={handlePrevious}
                     />
@@ -388,6 +416,9 @@ export default function CheckoutPage({
                         course={course}
                         cohort={selectedSession}
                         plan={selectedPlan}
+                        purchaseMode={purchaseMode}
+                        seats={seats}
+                        organizationId={orgId ?? undefined}
                         onSuccess={handlePaymentSuccess}
                         onFailure={handlePaymentFailure}
                         onPrevious={handlePrevious}
@@ -411,6 +442,7 @@ export default function CheckoutPage({
                         cohort={selectedSession} // pass as cohort too for flexibility
                         plan={selectedPlan}
                         paymentData={paymentData}
+                        purchaseMode={purchaseMode}
                         onAccessCourse={handleAccessCourse}
                     />
                 )}

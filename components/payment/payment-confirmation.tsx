@@ -2,29 +2,39 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CheckCircleIcon, XCircleIcon, BookOpenIcon, ClockIcon, CalendarIcon } from 'lucide-react';
+import { CheckCircleIcon, XCircleIcon, BookOpenIcon, ClockIcon, CalendarIcon, UsersIcon } from 'lucide-react';
 
 interface PaymentConfirmationProps {
     status: 'success' | 'failed' | 'pending';
     course: any;
+    /** Type de l'item acheté (par défaut 'course' pour rétro-compat). */
+    itemType?: 'course' | 'learning_path';
     session?: any;
     cohort?: any;
     plan: any;
     paymentData?: any;
+    purchaseMode?: 'individual' | 'team';
     onAccessCourse: () => void;
 }
 
 export const PaymentConfirmation = ({
     status,
     course,
+    itemType = 'course',
     session,
     cohort,
     plan,
     paymentData,
+    purchaseMode = 'individual',
     onAccessCourse
 }: PaymentConfirmationProps) => {
 
+    const isTeamPurchase = purchaseMode === 'team';
+
     const sessionData = cohort || session;
+    const isLearningPath = itemType === 'learning_path';
+    const itemLabel = isLearningPath ? 'Parcours' : 'Cours';
+    const itemLabelLower = isLearningPath ? 'parcours' : 'cours';
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('fr-FR').format(price) + ' FCFA';
@@ -118,7 +128,7 @@ export const PaymentConfirmation = ({
                 <div className="bg-green-50 p-4 rounded-md">
                     <p className="text-sm text-green-700">
                         {isFreeCourse
-                            ? 'Vous avez maintenant accès à ce cours.'
+                            ? `Vous avez maintenant accès à ce ${itemLabelLower}.`
                             : 'Nous vous remercions pour votre achat.'}
                     </p>
                 </div>
@@ -128,7 +138,7 @@ export const PaymentConfirmation = ({
 
                     <div className="space-y-2">
                         <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-sm text-muted-foreground">Cours</span>
+                            <span className="text-sm text-muted-foreground">{itemLabel}</span>
                             <span className="font-medium">{course.title}</span>
                         </div>
 
@@ -194,11 +204,15 @@ export const PaymentConfirmation = ({
                 <div className="bg-amber-50 p-4 rounded-md flex">
                     <ClockIcon className="text-amber-500 mr-3 h-5 w-5 mt-0.5" />
                     <div>
-                        <h4 className="font-medium text-amber-700">Accès au cours</h4>
+                        <h4 className="font-medium text-amber-700">
+                            {isTeamPurchase ? 'Sièges disponibles' : `Accès au ${itemLabelLower}`}
+                        </h4>
                         <p className="text-sm text-amber-600 mt-1">
-                            {course.format === 'auto-formation'
-                                ? "Accès immédiat."
-                                : "Vous êtes inscrit."
+                            {isTeamPurchase
+                                ? "Vos sièges sont prêts. Invitez vos collaborateurs depuis votre espace admin."
+                                : isLearningPath || course.format === 'auto-formation'
+                                    ? "Accès immédiat."
+                                    : "Vous êtes inscrit."
                             }
                         </p>
                     </div>
@@ -210,8 +224,17 @@ export const PaymentConfirmation = ({
                     className="w-full"
                     onClick={onAccessCourse}
                 >
-                    <BookOpenIcon className="mr-2 h-4 w-4" />
-                    Accéder au cours
+                    {isTeamPurchase ? (
+                        <>
+                            <UsersIcon className="mr-2 h-4 w-4" />
+                            Inviter vos collaborateurs
+                        </>
+                    ) : (
+                        <>
+                            <BookOpenIcon className="mr-2 h-4 w-4" />
+                            Accéder au {itemLabelLower}
+                        </>
+                    )}
                 </Button>
             </CardFooter>
         </Card>

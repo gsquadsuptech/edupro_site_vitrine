@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -10,29 +10,46 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { CheckIcon, Info } from "lucide-react"; // Changed from @radix-ui/react-icons for consistency if needed, but keeping CheckIcon
+import { CheckIcon, Info, Users, User as UserIcon } from "lucide-react";
 import {
     CreditCardIcon,
     CalendarIcon,
     ArrowRightIcon,
-    PercentIcon, // Replaced BadgePercentIcon
+    PercentIcon,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoginForm } from "@/components/pages/auth/login-form";
 import { RegisterForm } from "@/components/pages/auth/register-form";
 import { useAuth } from "@/hooks/useAuth";
 import { createClient } from "@/lib/supabase/client";
 import {
     getAvailableModes,
+    getEnabledModeCount,
+    getOnlyEnabledMode,
+    derivePlanDetails,
     parseInstallments as parseInstallmentsShared,
 } from "@/lib/pricing";
+import { PaymentItem } from "./payment-process";
 
 interface PaymentPlanProps {
     course: any;
     session?: any;
     cohort?: any;
+    /** Optionnel : item discriminé. Si fourni avec type='learning_path', force one_time uniquement. */
+    item?: PaymentItem;
+    /** Phase 5 — Toggle équipe. */
+    isBusinessAdmin?: boolean;
+    isTeachOnly?: boolean;
+    organizationId?: string | null;
+    purchaseMode?: 'individual' | 'team';
+    onPurchaseModeChange?: (mode: 'individual' | 'team') => void;
+    seats?: number;
+    onSeatsChange?: (seats: number) => void;
     onSelect: (plan: any) => void;
     onPrevious?: () => void;
 }
@@ -41,6 +58,14 @@ export const PaymentPlan = ({
     course,
     cohort: propCohort,
     session,
+    item,
+    isBusinessAdmin = false,
+    isTeachOnly = false,
+    organizationId,
+    purchaseMode = 'individual',
+    onPurchaseModeChange,
+    seats = 1,
+    onSeatsChange,
     onSelect,
     onPrevious,
 }: PaymentPlanProps) => {
@@ -49,6 +74,10 @@ export const PaymentPlan = ({
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [authTab, setAuthTab] = useState<"login" | "register">("login");
     const [pendingPlan, setPendingPlan] = useState<{ type: string, details: any } | null>(null);
+    /** Buffer string pour autoriser l'effacement temporaire (sinon le 1 par défaut bloque la saisie). */
+    const [seatsInput, setSeatsInput] = useState<string>(String(seats));
+    /** Flag pour ne déclencher l'auto-skip qu'une fois (sinon boucle infinie). */
+    const [autoSkipped, setAutoSkipped] = useState(false);
 
     // Unifier cohort et session car ils sont utilisés de manière interchangeable
     const cohort = propCohort || session;
@@ -59,12 +88,53 @@ export const PaymentPlan = ({
     // Determine which pricing source applies (cohort overrides course only when use_course_price === false)
     const isUsingCoursePrice = !cohort || cohort.use_course_price !== false;
 
-    const availableModes = getAvailableModes(course, cohort);
+    const isLearningPath = item?.type === 'learning_path';
+    const isTeam = purchaseMode === 'team';
+    /** En V1, learning_path et team purchase sont restreints à one_time. */
+    const forceOneTimeOnly = isLearningPath || isTeam;
+
+    const nativeModes = getAvailableModes(course, cohort);
+    const availableModes = { ...nativeModes };
+
+    /**
+     * En mode équipe, le contenu DOIT supporter nativement le paiement unique
+     * (pricing_modes.one_time + one_time_price). Sinon le backend renvoie
+     * `plan_not_supported` et l'utilisateur reste bloqué — on bloque l'achat
+     * équipe en amont avec une alerte claire.
+     */
+    const teamPurchaseUnavailable = isTeam && !nativeModes.oneTime;
+
+    if (forceOneTimeOnly) {
+        availableModes.oneTime = true;
+        availableModes.installments = false;
+        availableModes.subscription = false;
+        availableModes.registrationMonthly = false;
+    }
 
     // Si aucun mode n'est détecté, créer au moins un mode par défaut
     if (!Object.values(availableModes).some(Boolean)) {
         availableModes.oneTime = true;
     }
+
+    /**
+     * Auto-skip de la sélection quand un seul plan natif est disponible en mode individuel.
+     * Réplique le comportement historique côté page checkout : si l'utilisateur n'a aucun
+     * vrai choix à faire, on saute directement au paiement plutôt que d'afficher une carte
+     * isolée avec un bouton « Choisir ce plan ». En mode équipe, le bloc « seats + Continuer »
+     * fait office de validation, on ne déclenche pas l'auto-skip.
+     */
+    useEffect(() => {
+        if (autoSkipped) return;
+        if (isTeam) return;
+        if (!isAuthenticated) return;
+        const enabledCount = getEnabledModeCount(nativeModes);
+        if (enabledCount !== 1) return;
+        const only = getOnlyEnabledMode(nativeModes);
+        if (!only) return;
+        setAutoSkipped(true);
+        setSelectedPlan(only);
+        onSelect({ type: only, details: derivePlanDetails(only, course, cohort) });
+    }, [autoSkipped, isTeam, isAuthenticated, nativeModes, course, cohort, onSelect]);
 
     const oneTimePrice = isUsingCoursePrice
         ? parseFloat(course?.one_time_price || "0")
@@ -190,9 +260,108 @@ export const PaymentPlan = ({
                 )}
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Phase 5 — Toggle Pour moi / Pour mon équipe */}
+            {isBusinessAdmin && onPurchaseModeChange && (
+                <Tabs
+                    value={purchaseMode}
+                    onValueChange={(v) => onPurchaseModeChange(v as 'individual' | 'team')}
+                    className="w-full"
+                >
+                    <TabsList className="grid w-full max-w-md grid-cols-2">
+                        <TabsTrigger value="individual" className="gap-2">
+                            <UserIcon className="h-4 w-4" /> Pour moi
+                        </TabsTrigger>
+                        <TabsTrigger value="team" className="gap-2">
+                            <Users className="h-4 w-4" /> Pour mon équipe
+                        </TabsTrigger>
+                    </TabsList>
+                </Tabs>
+            )}
+
+            {isTeachOnly && (
+                <Alert className="bg-amber-50 border-amber-200">
+                    <Info className="h-4 w-4 text-amber-700" />
+                    <AlertTitle className="text-amber-900">Achat équipe indisponible</AlertTitle>
+                    <AlertDescription className="text-amber-800">
+                        Votre organisation TEACH ne peut pas acheter sur le marketplace.
+                    </AlertDescription>
+                </Alert>
+            )}
+
+            {/* Bloque l'achat équipe quand le contenu ne propose pas de paiement unique */}
+            {teamPurchaseUnavailable && (
+                <Alert variant="destructive">
+                    <Info className="h-4 w-4" />
+                    <AlertTitle>Achat équipe non disponible pour ce contenu</AlertTitle>
+                    <AlertDescription>
+                        En V1, l'achat équipe nécessite que le {isLearningPath ? 'parcours' : (cohort ? 'cours / la session' : 'cours')} propose un <strong>paiement unique</strong>. Ce contenu ne le supporte pas. Repassez en mode <strong>« Pour moi »</strong> ou choisissez un autre contenu.
+                    </AlertDescription>
+                </Alert>
+            )}
+
+            {/* Phase 5 — Champ seats en mode team (toujours affiché en mode team, désactivé si bloquant) */}
+            {isTeam && !teamPurchaseUnavailable && (
+                <Card className="bg-primary/5 border-primary/20">
+                    <CardContent className="pt-6 space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-end gap-4">
+                            <div className="flex-1 space-y-2">
+                                <Label htmlFor="seats-input" className="text-sm font-medium">
+                                    Nombre de sièges à acheter
+                                </Label>
+                                <Input
+                                    id="seats-input"
+                                    type="number"
+                                    min={1}
+                                    value={seatsInput}
+                                    onChange={(e) => {
+                                        const raw = e.target.value;
+                                        setSeatsInput(raw);
+                                        const parsed = parseInt(raw, 10);
+                                        if (!isNaN(parsed) && parsed >= 1) {
+                                            onSeatsChange?.(parsed);
+                                        }
+                                    }}
+                                    onBlur={() => {
+                                        const parsed = parseInt(seatsInput, 10);
+                                        if (isNaN(parsed) || parsed < 1) {
+                                            setSeatsInput("1");
+                                            onSeatsChange?.(1);
+                                        } else {
+                                            setSeatsInput(String(parsed));
+                                            onSeatsChange?.(parsed);
+                                        }
+                                    }}
+                                    className="max-w-[160px]"
+                                />
+                                <p className="text-xs text-muted-foreground">
+                                    Prix unitaire × {seats} = {new Intl.NumberFormat('fr-FR').format((parseFloat(course?.one_time_price || '0')) * seats)} FCFA
+                                </p>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                                En V1, l'achat équipe est en paiement unique.
+                            </p>
+                        </div>
+
+                        <Button
+                            size="lg"
+                            className="w-full sm:w-auto"
+                            onClick={() => handlePlanSelect("oneTime", {
+                                price: discountedPrice,
+                                originalPrice: oneTimePrice,
+                            })}
+                        >
+                            Continuer vers le paiement
+                        </Button>
+                    </CardContent>
+                </Card>
+            )}
+
+            {/* En mode équipe, on ne montre PAS la grille de plans : le mode est forcé en
+                paiement unique. Le bouton "Continuer vers le paiement" du bloc seats remplace
+                la sélection manuelle. */}
+            <div className={`grid gap-6 md:grid-cols-2 lg:grid-cols-3 ${teamPurchaseUnavailable ? 'pointer-events-none opacity-40' : ''} ${isTeam ? 'hidden' : ''}`}>
                 {/* Option de paiement unique */}
-                {availableModes.oneTime && (
+                {availableModes.oneTime && !teamPurchaseUnavailable && (
                     <Card
                         className={`cursor-pointer transition-shadow hover:shadow-md ${selectedPlan === "oneTime"
                             ? "border-primary ring-2 ring-primary/20"

@@ -97,21 +97,67 @@ export type LearningPath = {
     description: string | null
     price: number // mapped from one_time_price
     original_price: number | null
-    hours: number // mapped from estimated_duration
-    projects_count: number // placeholder or count from relations
-    courses_count: number // placeholder or count from relations
-    highlights: string[] | null // mapped from expected_results (JSON)
-    is_published: boolean // mapped from status === 'published'
+    hours: number // mapped from estimated_duration (minutes -> hours)
+    projects_count: number
+    courses_count: number
+    highlights: string[] | null // mapped from expected_results
+    is_published: boolean // mapped from marketplace_learning_paths.review_status === 'published' && status === 'published'
+
+    // Étendu pour le marketplace (Phase 1) — optionnels pour compat skill-pack-service legacy
+    short_description?: string | null
+    image_url?: string | null
+    currency?: string
+    duration?: string | null
+    level?: string | null
+    language?: string | null
+    format?: string | null
+    access_type?: 'free' | 'paid' | string | null
+    prerequisites?: string[] | null
+    objectives?: string[] | null
+    preview_video?: string | null
+    enable_certificate?: boolean
+    certificate_template_id?: string | null
+    organization_id?: string | null
+
+    one_time_price?: number | null
+    monthly_price?: number | null
+    registration_fee?: number | null
+    installments?: any[] | null
+    pricing_modes?: {
+        one_time: boolean
+        installments: boolean
+        subscription: boolean
+        registration_monthly: boolean
+    } | null
+
+    is_featured?: boolean
+    publication_mode?: string | null
+    rating?: number
+    reviewCount?: number
+    enrolled_count?: number
+    published_at?: string
+
     courses?: {
         id: string
         title: string
+        slug?: string
         description: string | null
         duration: string | null
         thumbnail: string | null
         level: string | null
         sequence_order: number
+        is_mandatory?: boolean
+    }[]
+    instructors?: {
+        name: string
+        avatar_url: string | null
+        institute?: string | null
     }[]
 }
+
+export type MarketplaceItem =
+    | { kind: 'course'; data: Course }
+    | { kind: 'learning_path'; data: LearningPath }
 
 export type Cohort = {
     id: string
