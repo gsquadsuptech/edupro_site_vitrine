@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useSearchParams, useRouter } from "next/navigation"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { AlertTriangle, Eye, EyeOff, Loader2 } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -44,9 +44,26 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
     })
 
     const [error, setError] = useState<string | null>(null)
+    const [rateLimitUntil, setRateLimitUntil] = useState<number | null>(null)
+    const [secondsLeft, setSecondsLeft] = useState<number>(0)
     const { signIn } = useAuth()
 
+    useEffect(() => {
+        if (!rateLimitUntil) return
+        const tick = () => {
+            const remaining = Math.max(0, Math.ceil((rateLimitUntil - Date.now()) / 1000))
+            setSecondsLeft(remaining)
+            if (remaining === 0) setRateLimitUntil(null)
+        }
+        tick()
+        const id = setInterval(tick, 1000)
+        return () => clearInterval(id)
+    }, [rateLimitUntil])
+
+    const isRateLimited = secondsLeft > 0
+
     const handleSubmit = async (data: FormValues) => {
+        if (isRateLimited) return
         try {
             setIsLoadingForm(true)
             setError(null)
@@ -63,9 +80,21 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
                     router.push('/')
                 }
             } else {
-                toast.error("Erreur de connexion", {
-                    description: error?.message || "Identifiants invalides"
-                })
+                const isRateLimit =
+                    error?.status === 429 ||
+                    error?.code === 'over_request_rate_limit' ||
+                    /rate limit/i.test(error?.message ?? '')
+
+                if (isRateLimit) {
+                    const cooldownMs = 60_000
+                    setRateLimitUntil(Date.now() + cooldownMs)
+                    setError("Trop de tentatives de connexion. Réessayez dans quelques minutes.")
+                } else {
+                    setError(error?.message || "Identifiants invalides")
+                    toast.error("Erreur de connexion", {
+                        description: error?.message || "Identifiants invalides"
+                    })
+                }
             }
 
         } catch (err: any) {
@@ -163,13 +192,32 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
                     </Link>
                 </div>
 
+                {isRateLimited && (
+                    <div
+                        role="alert"
+                        className="flex items-start gap-2 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+                    >
+                        <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                        <div>
+                            <p className="font-medium">Trop de tentatives de connexion</p>
+                            <p className="text-xs opacity-90">
+                                Réessayez dans {secondsLeft}s.
+                            </p>
+                        </div>
+                    </div>
+                )}
+
                 <Button
                     type="submit"
                     className="w-full mt-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold"
-                    disabled={isLoadingForm}
+                    disabled={isLoadingForm || isRateLimited}
                 >
                     {isLoadingForm ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                    {isLoadingForm ? "Connexion en cours..." : "Se connecter"}
+                    {isLoadingForm
+                        ? "Connexion en cours..."
+                        : isRateLimited
+                            ? `Réessayer dans ${secondsLeft}s`
+                            : "Se connecter"}
                 </Button>
             </Form>
 

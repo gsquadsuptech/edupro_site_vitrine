@@ -5,6 +5,9 @@ export const getPublicAuthError = (error: unknown): string => {
 
     // Handle Mock/Supabase AuthError structure loosely
     const err = error as any;
+    if (err.status === 429 || err.code === 'over_request_rate_limit' || /rate limit/i.test(err.message ?? '')) {
+        return 'Trop de tentatives de connexion. Réessayez dans quelques minutes.';
+    }
     if (err.message) {
         switch (err.message) {
             case 'Invalid login credentials':
