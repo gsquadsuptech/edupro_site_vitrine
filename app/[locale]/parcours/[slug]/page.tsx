@@ -1,25 +1,38 @@
-import { ParcoursHero } from "@/components/sections/parcours/hero-section"
-import { ParcoursOverview } from "@/components/sections/parcours/overview-section"
-import { ParcoursCurriculum } from "@/components/sections/parcours/curriculum-section"
-import { ParcoursInstructors } from "@/components/sections/parcours/instructors-section"
-import { ParcoursCertification } from "@/components/sections/parcours/certification-section"
-import { ParcoursTestimonials } from "@/components/sections/parcours/testimonials-section"
-import { ParcoursPricing } from "@/components/sections/parcours/pricing-section"
-import { ParcoursFAQ } from "@/components/sections/parcours/faq-section"
-import { ParcoursCTA } from "@/components/sections/parcours/cta-section"
+import { notFound } from "next/navigation"
+import { ParcoursHero } from "@/components/marketing/sections/parcours/hero-section"
+import { ParcoursOverview } from "@/components/marketing/sections/parcours/overview-section"
+import { ParcoursCurriculum } from "@/components/marketing/sections/parcours/curriculum-section"
+import { ParcoursInstructors } from "@/components/marketing/sections/parcours/instructors-section"
+import { ParcoursCertification } from "@/components/marketing/sections/parcours/certification-section"
+import { ParcoursTestimonials } from "@/components/marketing/sections/parcours/testimonials-section"
+import { ParcoursPricing } from "@/components/marketing/sections/parcours/pricing-section"
+import { ParcoursFAQ } from "@/components/marketing/sections/parcours/faq-section"
+import { ParcoursCTA } from "@/components/marketing/sections/parcours/cta-section"
+import { LearningPathService } from "@/services/learning-path-service"
 
-export default function ParcoursPage() {
+export default async function ParcoursPage({
+    params,
+}: {
+    params: Promise<{ locale: string; slug: string }>
+}) {
+    const { locale, slug } = await params
+    const learningPath = await LearningPathService.getLearningPathBySlug(slug)
+
+    if (!learningPath) {
+        notFound()
+    }
+
     return (
         <div className="bg-gradient-to-b from-slate-50 via-white to-slate-50">
-            <ParcoursHero />
-            <ParcoursOverview />
-            <ParcoursCurriculum />
-            <ParcoursInstructors />
-            <ParcoursCertification />
-            <ParcoursTestimonials />
-            <ParcoursPricing />
-            <ParcoursFAQ />
-            <ParcoursCTA />
+            <ParcoursHero learningPath={learningPath} locale={locale} />
+            <ParcoursOverview learningPath={learningPath} />
+            <ParcoursCurriculum learningPath={learningPath} />
+            <ParcoursInstructors learningPath={learningPath} />
+            <ParcoursCertification learningPath={learningPath} />
+            <ParcoursTestimonials learningPath={learningPath} />
+            <ParcoursPricing learningPath={learningPath} locale={locale} />
+            <ParcoursFAQ learningPath={learningPath} />
+            <ParcoursCTA learningPath={learningPath} locale={locale} />
         </div>
     )
 }

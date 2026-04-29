@@ -4,16 +4,19 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { FormationCard } from "@/components/marketing/marketplace/formation-card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Course } from "@/lib/supabase/types"
+import { Course, MarketplaceItem } from "@/lib/supabase/types"
 
 interface FeaturedCoursesProps {
   locale?: string
-  courses: Course[]
+  courses?: Course[]
+  items?: MarketplaceItem[]
   isLoading?: boolean
 }
 
-export function FeaturedCourses({ locale, courses, isLoading = false }: FeaturedCoursesProps) {
-  const displayCourses = courses || [];
+export function FeaturedCourses({ locale, courses, items, isLoading = false }: FeaturedCoursesProps) {
+  const displayItems: MarketplaceItem[] = items
+    ? items
+    : (courses || []).map((c) => ({ kind: 'course' as const, data: c }))
 
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
@@ -42,14 +45,14 @@ export function FeaturedCourses({ locale, courses, isLoading = false }: Featured
               </div>
             ))}
           </div>
-        ) : displayCourses.length === 0 ? (
+        ) : displayItems.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground">Aucune formation en vedette pour le moment.</p>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {displayCourses.map((course) => (
-              <FormationCard key={course.id} course={course} />
+            {displayItems.map((entry) => (
+              <FormationCard key={`${entry.kind}-${entry.data.id}`} item={entry} />
             ))}
           </div>
         )}

@@ -3,7 +3,13 @@
     "allow": [
       "mcp__plugin_supabase_supabase__execute_sql",
       "Bash(npx --yes sharp-cli -i assets/images/edupro-home7.png.bak -o assets/images/edupro-home7.png resize 1200 --quality 80)",
-      "Bash(npx --yes sharp-cli -i assets/images/edupro-home7.png.bak -o assets/images/edupro-home7.png resize 1000 --quality 70)"
+      "Bash(npx --yes sharp-cli -i assets/images/edupro-home7.png.bak -o assets/images/edupro-home7.png resize 1000 --quality 70)",
+      "Bash(git -C /c/Users/diopb/dev/edupro-site show 8bf830b --stat)",
+      "Bash(git -C /c/Users/diopb/dev/edupro-site log --all --oneline --grep=\"cross-domain\\\\|domain\\\\|cookie\\\\|share\\\\|session\")",
+      "mcp__plugin_supabase_supabase__apply_migration",
+      "Read(//c/Users/diopb/dev/**)",
+      "Bash(pnpm build *)",
+      "mcp__plugin_supabase_supabase__get_logs"
     ]
   }
 }

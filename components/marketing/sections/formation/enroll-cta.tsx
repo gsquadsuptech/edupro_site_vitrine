@@ -1,11 +1,12 @@
 "use client"
 
-import Link from "next/link"
+import { useParams } from "next/navigation"
 import { ArrowRight, BookOpen } from "lucide-react"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { useEnrollmentStatus } from "@/hooks/useEnrollmentStatus"
 import { getAppUrl } from "@/lib/utils"
 import { cn } from "@/lib/utils"
+import { EnrollButton } from "@/components/payment/enroll-button"
 
 interface EnrollCTAProps {
     courseId: string
@@ -35,14 +36,12 @@ export function EnrollCTA({
     showArrow = false,
 }: EnrollCTAProps) {
     const { isEnrolled, cohortId: enrolledCohortId, loading } = useEnrollmentStatus(courseId)
+    const params = useParams()
+    const locale = (params?.locale as string) || 'fr'
 
     // Disable the button while we don't know yet, but still render it so layout doesn't shift.
     const matchesCohort = !cohortId || !enrolledCohortId || enrolledCohortId === cohortId
     const showAccess = isEnrolled && matchesCohort
-
-    const checkoutHref = cohortId
-        ? `/checkout/${courseId}?cohort=${cohortId}`
-        : `/checkout/${courseId}`
 
     if (showAccess) {
         return (
@@ -62,17 +61,23 @@ export function EnrollCTA({
     }
 
     return (
-        <Link href={checkoutHref} className={cn("block w-full", className)}>
-            <Button
-                type="button"
-                variant={variant}
-                size={size}
-                className={cn("w-full", buttonClassName)}
-                disabled={loading}
+        <div className={cn("block w-full", className)}>
+            <EnrollButton
+                target={{ kind: "course", id: courseId }}
+                locale={locale}
+                extraQuery={cohortId ? { cohort: cohortId } : undefined}
             >
-                {enrollLabel}
-                {showArrow && <ArrowRight className="ml-2 h-4 w-4" />}
-            </Button>
-        </Link>
+                <Button
+                    type="button"
+                    variant={variant}
+                    size={size}
+                    className={cn("w-full", buttonClassName)}
+                    disabled={loading}
+                >
+                    {enrollLabel}
+                    {showArrow && <ArrowRight className="ml-2 h-4 w-4" />}
+                </Button>
+            </EnrollButton>
+        </div>
     )
 }

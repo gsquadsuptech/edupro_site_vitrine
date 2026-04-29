@@ -1,9 +1,12 @@
 "use client"
 
+import Link from "next/link"
+import { useParams } from "next/navigation"
 import { CheckCircle2, Heart, Bookmark, Share2, Smartphone, Monitor, Trophy, Clock, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
+import { useActiveBusinessOrg } from "@/hooks/use-active-business-org"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
 import { CoursePriceDisplay } from "./course-price-display"
@@ -14,11 +17,19 @@ interface CourseSidebarProps {
 }
 
 export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
+  const params = useParams()
+  const locale = (params?.locale as string) || 'fr'
+  const { isBusinessAdmin } = useActiveBusinessOrg()
   const isAutoFormation = course.format === 'auto-formation' || !course.format
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
   const hasAnyCohort = cohorts.length > 0
   const showEnrollButton = isAutoFormation || hasOpenCohort
   const showWaitlist = !isAutoFormation && !hasOpenCohort
+
+  // L'achat équipe V1 = paiement unique uniquement. Ne montrer le bouton que si
+  // le cours supporte one_time, sinon ça envoie vers une page d'erreur.
+  const supportsOneTime = (course.pricing_modes?.one_time !== false) && !!course.one_time_price
+  const showTeamPurchaseCTA = isBusinessAdmin && supportsOneTime
 
   // Count total lessons from sections
   const totalLessons = course.sections?.reduce((acc, s) => acc + (s.lessons?.length || 0), 0) || 0
@@ -107,9 +118,13 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
         <Button variant="outline" className="w-full border-primary/20 hover:bg-primary/5 text-primary transition-all">
           Offrir en cadeau
         </Button>
-        <Button variant="outline" className="w-full border-primary/20 hover:bg-primary/5 text-primary transition-all">
-          Acheter pour mon équipe
-        </Button>
+        {showTeamPurchaseCTA && (
+          <Link href={`/${locale}/checkout/${course.id}?purchaseMode=team`} className="block">
+            <Button variant="outline" className="w-full border-primary/20 hover:bg-primary/5 text-primary transition-all">
+              Acheter pour mon équipe
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   )

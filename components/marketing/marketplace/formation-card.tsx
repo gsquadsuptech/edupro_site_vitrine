@@ -2,83 +2,226 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useParams, useRouter } from "next/navigation"
-import { Star, Users, Clock, Heart, Bookmark } from "lucide-react"
+import { useParams } from "next/navigation"
+import { Star, Users, Clock, Heart, Bookmark, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "sonner"
 import { createClient } from "@/lib/supabase/client"
 
-import { Course } from "@/lib/supabase/types"
+import { Course, LearningPath, MarketplaceItem } from "@/lib/supabase/types"
 import { WishlistService } from "@/services/wishlist-service"
 
-interface FormationCardProps {
-  course: Pick<Course, 'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' | 'duration' | 'format' | 'one_time_price' | 'monthly_price' | 'pricing_modes' | 'registration_fee' | 'monthly_fee' | 'installments'> & {
-    // Add missing properties that might be computed or hardcoded for now
-    rating?: number
-    reviewCount?: number
-    enrolled_count?: number
-    badge?: string
-    has_varying_prices?: boolean
+type FormationCardProps =
+  | { item: MarketplaceItem; course?: never; badge?: string }
+  | {
+      item?: never
+      course: Pick<Course,
+        'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' |
+        'duration' | 'format' | 'one_time_price' | 'monthly_price' | 'pricing_modes' |
+        'registration_fee' | 'monthly_fee' | 'installments'
+      > & {
+        rating?: number
+        reviewCount?: number
+        enrolled_count?: number
+        badge?: string
+        has_varying_prices?: boolean
+      }
+      badge?: string
+    }
+
+interface CardViewModel {
+  id: string
+  href: string
+  title: string
+  imageUrl: string
+  categoryLabel: string
+  level: string | null
+  rating: number
+  reviewCount: number
+  enrolledCount: number
+  duration: string | null
+  /** Affiché au-dessus du titre (catégorie ou métadonnée principale). */
+  topBadgeLabel: string
+  /** Sous-titre : nom d'instructeur pour les cours, "N cours" pour les parcours. */
+  subtitle: string
+  /** Icône à gauche du sous-titre. */
+  subtitleIcon: typeof Users
+  /** Indique s'il faut afficher le toggle wishlist (pas de wishlist LP en V1). */
+  supportsWishlist: boolean
+  pricing: {
+    pricing_modes: any
+    price: number
+    monthly_price: number | null
+    registration_fee: number | null
+    monthly_fee: number | null
+    installments: any[] | null
+    has_varying_prices: boolean
   }
 }
 
-export function FormationCard({ course }: FormationCardProps) {
+const LEVEL_LABELS: Record<string, string> = {
+  beginner: 'Débutant',
+  intermediate: 'Intermédiaire',
+  high: 'Avancé',
+  advanced: 'Avancé',
+}
+
+function buildCourseViewModel(course: Course, locale: string): CardViewModel {
+  return {
+    id: course.id,
+    href: `/${locale}/formation/${course.slug}`,
+    title: course.title,
+    imageUrl: course.image_url || "/placeholder.svg",
+    categoryLabel: course.category?.name || "Général",
+    level: course.level,
+    rating: course.rating ?? 0,
+    reviewCount: course.reviewCount || 0,
+    enrolledCount: course.enrolled_count || 0,
+    duration: course.duration,
+    topBadgeLabel: course.category?.name || "Général",
+    subtitle: course.instructor?.institute || course.instructor?.name || "Instructeur",
+    subtitleIcon: Users,
+    supportsWishlist: true,
+    pricing: {
+      pricing_modes: course.pricing_modes,
+      price: course.price || 0,
+      monthly_price: course.monthly_price,
+      registration_fee: course.registration_fee,
+      monthly_fee: course.monthly_fee,
+      installments: course.installments,
+      has_varying_prices: !!course.has_varying_prices,
+    },
+  }
+}
+
+function buildLearningPathViewModel(lp: LearningPath, locale: string): CardViewModel {
+  const coursesCount = lp.courses_count || lp.courses?.length || 0
+  return {
+    id: lp.id,
+    href: `/${locale}/parcours/${lp.slug}`,
+    title: lp.title,
+    imageUrl: lp.image_url || "/placeholder.svg",
+    categoryLabel: 'Parcours',
+    level: lp.level ?? null,
+    rating: lp.rating ?? 0,
+    reviewCount: lp.reviewCount || 0,
+    enrolledCount: lp.enrolled_count || 0,
+    duration: lp.duration ?? null,
+    topBadgeLabel: 'Parcours',
+    subtitle: coursesCount > 0 ? `${coursesCount} cours` : 'Programme complet',
+    subtitleIcon: BookOpen,
+    supportsWishlist: false,
+    pricing: {
+      pricing_modes: lp.pricing_modes ?? null,
+      price: lp.price || 0,
+      monthly_price: lp.monthly_price ?? null,
+      registration_fee: lp.registration_fee ?? null,
+      monthly_fee: null,
+      installments: lp.installments ?? null,
+      has_varying_prices: false,
+    },
+  }
+}
+
+function renderPriceBlock(pricing: CardViewModel['pricing']) {
+  const modes = pricing.pricing_modes || {}
+  const hasOneTime = modes.one_time || modes.oneTime
+  const hasSubscription = modes.subscription
+  const hasRegistrationMonthly = modes.registration_monthly || modes.registrationMonthly
+  const hasInstallments = modes.installments
+  const price = pricing.price
+
+  let label = pricing.has_varying_prices ? 'À partir de' : 'Prix'
+  if (!pricing.has_varying_prices) {
+    if (modes.subscription && !modes.one_time && !modes.oneTime) label = 'Abonnement'
+    else if (hasRegistrationMonthly) label = 'Inscription + Mensualités'
+  }
+
+  let priceDisplay: string
+  if (hasOneTime && price > 0) {
+    priceDisplay = `${Math.round(Number(price)).toLocaleString()} FCFA`
+  } else if (hasSubscription && pricing.monthly_price) {
+    priceDisplay = `${pricing.monthly_price.toLocaleString()} FCFA/mois`
+  } else if (hasRegistrationMonthly && pricing.registration_fee) {
+    priceDisplay = `${pricing.registration_fee.toLocaleString()} FCFA`
+  } else if (hasInstallments && pricing.installments && pricing.installments.length > 0) {
+    const total = pricing.installments.reduce((acc: number, inst: any) => acc + (Number(inst.amount) || 0), 0)
+    priceDisplay = `${Math.round(total).toLocaleString()} FCFA`
+  } else {
+    priceDisplay = Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString()} FCFA` : 'Gratuit'
+  }
+
+  let secondary: string | null = null
+  if ((modes.one_time || modes.oneTime) && modes.subscription && pricing.monthly_price) {
+    secondary = `ou ${pricing.monthly_price.toLocaleString()} FCFA/mois`
+  } else if (hasRegistrationMonthly && pricing.monthly_fee) {
+    secondary = `+ ${pricing.monthly_fee.toLocaleString()} FCFA/mois`
+  } else if (hasInstallments && pricing.installments && pricing.installments.length > 0 && !(modes.one_time || modes.oneTime)) {
+    secondary = `en ${pricing.installments.length} versements`
+  }
+
+  return { label, priceDisplay, secondary }
+}
+
+export function FormationCard(props: FormationCardProps) {
+  const { badge } = props
   const params = useParams()
-  const router = useRouter()
-  const locale = params?.locale || 'fr'
+  const locale = (params?.locale as string) || 'fr'
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Derived/Fallback values
-  const imageUrl = course.image_url || "/placeholder.svg"
-  const categoryName = course.category?.name || "Général"
-  // Prefer institute name if available, otherwise instructor name
-  const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
-  const rating = course.rating ?? 0
-  const reviewCount = course.reviewCount || 0
-  const enrolledCount = course.enrolled_count || 0
-  const price = course.price || 0
+  const normalizedItem: MarketplaceItem = props.item
+    ? props.item
+    : { kind: 'course', data: props.course as Course }
+
+  const effectiveBadge = badge ?? (normalizedItem.kind === 'course'
+    ? (props as any).course?.badge
+    : undefined)
+
+  const vm = normalizedItem.kind === 'course'
+    ? buildCourseViewModel(normalizedItem.data, locale)
+    : buildLearningPathViewModel(normalizedItem.data, locale)
+
+  const { label: priceLabel, priceDisplay, secondary } = renderPriceBlock(vm.pricing)
+  const SubtitleIcon = vm.subtitleIcon
 
   useEffect(() => {
+    if (!vm.supportsWishlist) return
     checkWishlistStatus()
-  }, [course.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vm.id])
 
   const checkWishlistStatus = async () => {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-
-    if (user && course.id) {
-      const inWishlist = await WishlistService.isInWishlist(user.id, course.id)
+    if (user && vm.id) {
+      const inWishlist = await WishlistService.isInWishlist(user.id, vm.id)
       setIsWishlisted(inWishlist)
     }
   }
 
   const toggleWishlist = async (e: React.MouseEvent) => {
-    e.preventDefault() // Prevent navigation
+    e.preventDefault()
     e.stopPropagation()
-
     if (isLoading) return
 
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-
     if (!user) {
       toast.error("Vous devez être connecté pour ajouter aux favoris")
-      // Optionally redirect to login or open modal
       return
     }
-
-    if (!course.id) return
+    if (!vm.id) return
 
     setIsLoading(true)
     try {
       if (isWishlisted) {
-        await WishlistService.removeFromWishlist(user.id, course.id)
+        await WishlistService.removeFromWishlist(user.id, vm.id)
         setIsWishlisted(false)
         toast.success("Retiré des favoris")
       } else {
-        await WishlistService.addToWishlist(user.id, course.id)
+        await WishlistService.addToWishlist(user.id, vm.id)
         setIsWishlisted(true)
         toast.success("Ajouté aux favoris")
       }
@@ -90,145 +233,92 @@ export function FormationCard({ course }: FormationCardProps) {
   }
 
   return (
-    <Link href={`/${locale}/formation/${course.slug}`}>
+    <Link href={vm.href}>
       <div className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg">
-        {/* Thumbnail */}
         <div className="relative aspect-video overflow-hidden">
           <img
-            src={imageUrl}
-            alt={course.title}
+            src={vm.imageUrl}
+            alt={vm.title}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          {course.badge && (
-            <Badge className="absolute right-3 top-3 bg-accent text-accent-foreground">{course.badge}</Badge>
+          {normalizedItem.kind === 'learning_path' && (
+            <Badge className="absolute left-3 top-3 bg-primary text-primary-foreground shadow">Parcours</Badge>
+          )}
+          {effectiveBadge && (
+            <Badge className="absolute right-3 top-3 bg-accent text-accent-foreground">{effectiveBadge}</Badge>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
         </div>
 
-        {/* Content */}
         <div className="p-4">
-          {/* Category & Level */}
           <div className="mb-2 flex items-center gap-2 text-xs">
             <Badge variant="secondary" className="font-medium">
-              {categoryName}
+              {vm.topBadgeLabel}
             </Badge>
             <span className="text-muted-foreground">•</span>
             <span className="text-muted-foreground">
-              {(() => {
-                const labels: Record<string, string> = {
-                  'beginner': 'Débutant',
-                  'intermediate': 'Intermédiaire',
-                  'high': 'Avancé'
-                }
-                return labels[course.level || ''] || course.level || 'Tous niveaux'
-              })()}
+              {LEVEL_LABELS[vm.level || ''] || vm.level || 'Tous niveaux'}
             </span>
           </div>
 
-          {/* Title */}
           <h3 className="mb-2 line-clamp-2 text-base font-semibold leading-tight group-hover:underline">
-            {course.title}
+            {vm.title}
           </h3>
 
-          {/* Instructor */}
           <div className="mb-2 flex items-center gap-1 text-sm text-muted-foreground">
-            <Users className="h-3.5 w-3.5" />
-            <span>{instructorName}</span>
+            <SubtitleIcon className="h-3.5 w-3.5" />
+            <span>{vm.subtitle}</span>
           </div>
 
-          {/* Rating */}
           <div className="mb-3 flex items-center gap-1 min-h-[20px]">
-            {reviewCount > 0 && (
+            {vm.reviewCount > 0 && (
               <>
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-4 w-4 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                        }`}
+                      className={`h-4 w-4 ${i < Math.floor(vm.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
                     />
                   ))}
                 </div>
-                <span className="text-sm font-medium">{rating}</span>
-                <span className="text-sm text-muted-foreground">({reviewCount} avis)</span>
+                <span className="text-sm font-medium">{vm.rating}</span>
+                <span className="text-sm text-muted-foreground">({vm.reviewCount} avis)</span>
               </>
             )}
           </div>
 
-          {/* Price & Actions */}
           <div className="flex items-center justify-between border-t border-border pt-3">
             <div>
-              <div className="text-xs text-muted-foreground font-medium">
-                {course.has_varying_prices ? 'À partir de' : (
-                  (() => {
-                    const modes = course.pricing_modes as any || {};
-                    if (modes.subscription && !modes.one_time && !modes.oneTime) return "Abonnement";
-                    if (modes.registration_monthly || modes.registrationMonthly) return "Inscription + Mensualités";
-                    return "Prix";
-                  })()
-                )}
-              </div>
-              <div className="text-lg font-bold">
-                {(() => {
-                  const modes = course.pricing_modes as any || {};
-                  const hasOneTime = modes.one_time || modes.oneTime;
-                  const hasSubscription = modes.subscription;
-                  const hasRegistrationMonthly = modes.registration_monthly || modes.registrationMonthly;
-                  const hasInstallments = modes.installments;
-
-                  if (hasOneTime && price > 0) {
-                    return `${Math.round(Number(price)).toLocaleString()} FCFA`;
-                  } else if (hasSubscription && course.monthly_price) {
-                    return `${course.monthly_price.toLocaleString()} FCFA/mois`;
-                  } else if (hasRegistrationMonthly && course.registration_fee) {
-                    return `${course.registration_fee.toLocaleString()} FCFA`;
-                  } else if (hasInstallments && course.installments && course.installments.length > 0) {
-                    const total = course.installments.reduce((acc: number, inst: any) => acc + (Number(inst.amount) || 0), 0);
-                    return `${Math.round(total).toLocaleString()} FCFA`;
-                  }
-
-                  return Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString()} FCFA` : 'Gratuit';
-                })()}
-              </div>
-              {(() => {
-                const modes = course.pricing_modes as any || {};
-                if ((modes.one_time || modes.oneTime) && modes.subscription && course.monthly_price) {
-                  return <div className="text-xs text-muted-foreground">ou {course.monthly_price.toLocaleString()} FCFA/mois</div>;
-                }
-                if (modes.registration_monthly || modes.registrationMonthly) {
-                  return <div className="text-xs text-muted-foreground">+ {course.monthly_fee?.toLocaleString()} FCFA/mois</div>;
-                }
-                if (modes.installments && course.installments && course.installments.length > 0 && !(modes.one_time || modes.oneTime)) {
-                  return <div className="text-xs text-muted-foreground">en {course.installments.length} versements</div>;
-                }
-                return null;
-              })()}
+              <div className="text-xs text-muted-foreground font-medium">{priceLabel}</div>
+              <div className="text-lg font-bold">{priceDisplay}</div>
+              {secondary && <div className="text-xs text-muted-foreground">{secondary}</div>}
             </div>
             <div className="flex gap-1">
-              <Button
-                size="icon"
-                variant="ghost"
-                className={`h-8 w-8 ${isWishlisted ? "text-red-500 hover:text-red-600" : "text-muted-foreground hover:text-red-500"}`}
-                onClick={toggleWishlist}
-              >
-                <Heart className={`h-4 w-4 ${isWishlisted ? "fill-current" : ""}`} />
-              </Button>
+              {vm.supportsWishlist && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className={`h-8 w-8 ${isWishlisted ? "text-red-500 hover:text-red-600" : "text-muted-foreground hover:text-red-500"}`}
+                  onClick={toggleWishlist}
+                >
+                  <Heart className={`h-4 w-4 ${isWishlisted ? "fill-current" : ""}`} />
+                </Button>
+              )}
               <Button size="icon" variant="ghost" className="h-8 w-8">
                 <Bookmark className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          {/* Stats */}
           <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Users className="h-3.5 w-3.5" />
-              <span>{enrolledCount.toLocaleString()} inscrits</span>
+              <span>{vm.enrolledCount.toLocaleString()} inscrits</span>
             </div>
             <span>•</span>
             <div className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
-              <span>{course.duration || 'N/A'}</span>
+              <span>{vm.duration || 'N/A'}</span>
             </div>
           </div>
         </div>

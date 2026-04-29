@@ -3,45 +3,45 @@
 import { Container } from "@/components/marketing/layout/container"
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
+import { LearningPath } from "@/lib/supabase/types"
 
-export function ParcoursFAQ() {
+interface ParcoursFAQProps {
+  learningPath: LearningPath
+}
+
+// V1: pas de table learning_path_faq exposée — on rend une FAQ générique adaptée au parcours.
+// TODO: brancher sur un champ `faq` ou une table dédiée quand disponible.
+export function ParcoursFAQ({ learningPath }: ParcoursFAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   const faqs = [
     {
-      question: "Ai-je besoin d'expérience préalable en gestion d'entreprise ?",
-      answer:
-        "Non, cette formation est conçue pour les créatrices et entrepreneures de tous niveaux. Nous partons des bases et construisons progressivement les compétences nécessaires pour gérer une marque de mode professionnelle.",
+      question: "Ai-je besoin d'expérience préalable ?",
+      answer: learningPath.prerequisites && learningPath.prerequisites.length > 0
+        ? `Prérequis : ${learningPath.prerequisites.join(', ')}.`
+        : "Aucun prérequis particulier. Le parcours est conçu pour être accessible à tous niveaux et progresse étape par étape.",
     },
     {
       question: "Comment se déroule le parcours ?",
-      answer:
-        "Le parcours combine 70% d'e-learning (vidéos, études de cas, exercices) que vous suivez à votre rythme, et 30% d'ateliers en ligne interactifs et de coaching individuel avec les formateurs. Vous avez accès à une plateforme dédiée 24/7.",
+      answer: learningPath.format === 'session'
+        ? "Le parcours se déroule en sessions cohorte avec accompagnement, dates fixes et coaching personnalisé."
+        : "Le parcours est en auto-formation : vous progressez à votre rythme depuis votre espace apprenant, accessible 24/7.",
     },
     {
-      question: "Combien de temps par semaine dois-je consacrer à la formation ?",
-      answer:
-        "Nous recommandons 8 à 10 heures par semaine pour compléter le parcours en 6-8 semaines. La flexibilité du format e-learning vous permet d'adapter le rythme à vos contraintes personnelles et professionnelles.",
+      question: "Combien de temps consacrer à la formation ?",
+      answer: learningPath.hours > 0
+        ? `Le parcours représente environ ${learningPath.hours}h de formation au total. Vous pouvez le compléter à votre rythme.`
+        : "La durée dépend de votre rythme. Le contenu reste accessible aussi longtemps que vous en avez besoin.",
     },
     {
       question: "Le certificat est-il reconnu ?",
-      answer:
-        "Oui, le certificat EDUPRO × SO'FATOO est reconnu par plusieurs organisations internationales dont GIZ/BMZ, AFD et ONU Femmes. Il est vérifiable en ligne par QR code et peut être partagé sur LinkedIn et votre CV.",
-    },
-    {
-      question: "Puis-je suivre la formation depuis n'importe quel pays ?",
-      answer:
-        "Absolument ! La formation est 100% en ligne et accessible depuis n'importe où en Afrique ou ailleurs. Les ateliers en direct sont enregistrés si vous ne pouvez pas être présente en temps réel.",
-    },
-    {
-      question: "Proposez-vous un accompagnement après la formation ?",
-      answer:
-        "Oui, vous gardez l'accès à vie à la plateforme et au contenu mis à jour. Vous rejoignez également la communauté privée des alumni où vous pouvez continuer à échanger avec les formateurs et les autres entrepreneures.",
+      answer: learningPath.enable_certificate || learningPath.certificate_template_id
+        ? "Oui, à la complétion du parcours vous recevez un certificat professionnel vérifiable en ligne et partageable sur LinkedIn et votre CV."
+        : "Vous recevrez une attestation de réussite à la fin du parcours.",
     },
     {
       question: "Quelles sont les modalités de paiement ?",
-      answer:
-        "Vous pouvez payer par Mobile Money (Orange Money, Wave, MTN, Moov), carte bancaire ou virement. Un paiement en 3 fois sans frais est disponible. Pour les groupes de 3+ personnes, nous offrons -20% sur chaque inscription.",
+      answer: "Vous pouvez payer par Mobile Money (Orange Money, Wave, MTN, Moov), carte bancaire ou virement. L'achat groupé est également disponible pour les organisations.",
     },
   ]
 
@@ -65,9 +65,7 @@ export function ParcoursFAQ() {
               >
                 <span className="pr-8 font-semibold text-slate-900">{faq.question}</span>
                 <ChevronDown
-                  className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
+                  className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${openIndex === index ? "rotate-180" : ""}`}
                 />
               </button>
               {openIndex === index && (

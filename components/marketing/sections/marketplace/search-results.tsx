@@ -4,27 +4,28 @@ import { FormationCard } from "@/components/marketing/marketplace/formation-card
 import { Button } from "@/components/ui/button"
 import { Search } from "lucide-react"
 
-import { Course } from "@/lib/supabase/types"
+import { Course, MarketplaceItem } from "@/lib/supabase/types"
 
 interface SearchResultsProps {
   courses?: Course[]
+  items?: MarketplaceItem[]
 }
 
-export function SearchResults({ courses = [] }: SearchResultsProps) {
-  // Static courses removed
-
+export function SearchResults({ courses = [], items }: SearchResultsProps) {
+  const displayItems: MarketplaceItem[] = items
+    ? items
+    : courses.map((c) => ({ kind: 'course' as const, data: c }))
 
   return (
     <div className="flex-1">
-      {courses.length > 0 ? (
+      {displayItems.length > 0 ? (
         <>
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {courses.map((course) => (
-              <FormationCard key={course.id} course={course} />
+            {displayItems.map((entry) => (
+              <FormationCard key={`${entry.kind}-${entry.data.id}`} item={entry} />
             ))}
           </div>
 
-          {/* Load More */}
           <div className="mt-8 text-center">
             <Button size="lg" variant="outline">
               Charger plus de formations

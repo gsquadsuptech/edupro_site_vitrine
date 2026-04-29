@@ -3,12 +3,12 @@ import { ContextualHero } from "@/components/marketing/sections/category/context
 import { SubCategories } from "@/components/marketing/sections/category/sub-categories";
 import { SearchFilters } from "@/components/marketing/sections/marketplace/search-filters";
 import { SearchResults } from "@/components/marketing/sections/marketplace/search-results";
-import { CourseService } from "@/services/course-service";
 import { CategoryService } from "@/services/category-service";
+import { MarketplaceService } from "@/services/marketplace-service";
 
 export const metadata: Metadata = {
     title: "Catalogue - EduPro",
-    description: "Explorez notre catalogue complet de formations.",
+    description: "Explorez notre catalogue complet de formations et parcours.",
 };
 
 export default async function CatalogueAllPage({
@@ -26,21 +26,29 @@ export default async function CatalogueAllPage({
     const maxPrice = resolvedSearchParams?.maxPrice ? Number(resolvedSearchParams.maxPrice) : undefined;
     const levelQuery = resolvedSearchParams?.level as string;
     const levels = levelQuery ? levelQuery.split(',') : undefined;
+    const typeQuery = (resolvedSearchParams?.type as string) || "all";
+    const itemType: 'course' | 'learning_path' | 'all' =
+        typeQuery === 'course' || typeQuery === 'learning_path' ? typeQuery : 'all';
 
-    // Fetch data in parallel
-    const [categoriesData, coursesResult] = await Promise.all([
-        CategoryService.getCategoriesWithCounts(), // Assuming this exists or falls back to getAllCategories
-        CourseService.searchCourses({
+    // Quand l'utilisateur filtre par catégorie, l'API courses est plus fine — on bascule en courses-only
+    // (la taxonomie marketplace_categories ne s'applique pas encore aux learning_paths).
+    const effectiveType: 'course' | 'learning_path' | 'all' =
+        categoryQuery && categoryQuery !== 'all' ? 'course' : itemType;
+
+    const [categoriesData, marketplaceResult] = await Promise.all([
+        CategoryService.getCategoriesWithCounts(),
+        MarketplaceService.listMarketplaceItems({
+            type: effectiveType,
             searchTerm: searchQuery,
             category: categoryQuery,
             minPrice,
             maxPrice,
             level: levels,
-            limit: 12
-        })
+            limit: 12,
+        }),
     ]);
 
-    const { courses, total } = coursesResult;
+    const { items, total } = marketplaceResult;
 
     // Transform categories for filters
     const filterCategories = categoriesData.map(c => ({
@@ -61,7 +69,7 @@ export default async function CatalogueAllPage({
                 <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
                         <SearchFilters categories={filterCategories} />
-                        <SearchResults courses={courses} />
+                        <SearchResults items={items} />
                     </div>
                 </div>
             </main>
