@@ -11,6 +11,7 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { TurnstileWidget, isTurnstileConfigured } from "@/components/auth/turnstile-widget"
 
 interface RegisterFormProps {
     onLoginClick: () => void;
@@ -23,6 +24,9 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [isRegistering, setIsRegistering] = useState<boolean>(false)
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+    const [captchaKey, setCaptchaKey] = useState<number>(0)
+    const captchaEnabled = isTurnstileConfigured()
 
     const getPasswordStrength = (pass: string) => {
         if (pass.length === 0) return { label: "", strength: 0, color: "" }
@@ -62,6 +66,10 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
     })
 
     const onSubmit = async (data: FormValues) => {
+        if (captchaEnabled && !captchaToken) {
+            toast.error("Validez le captcha avant de continuer.")
+            return
+        }
         try {
             setIsRegistering(true)
 
@@ -74,12 +82,16 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                     firstName: data.firstName,
                     lastName: data.lastName,
                     role: 'student',
+                    captchaToken: captchaToken ?? undefined,
                 }),
             })
 
             const payload = await response.json().catch(() => ({}))
 
             if (!response.ok || !payload.user) {
+                // Captcha mono-usage: regénérer après échec
+                setCaptchaToken(null)
+                setCaptchaKey(k => k + 1)
                 toast.error("Erreur lors de l'inscription", {
                     description: payload.error || "Une erreur est survenue",
                 })
@@ -98,6 +110,8 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
 
         } catch (err: any) {
             console.error("Erreur d'inscription:", err)
+            setCaptchaToken(null)
+            setCaptchaKey(k => k + 1)
             toast.error("Erreur d'inscription", {
                 description: err?.message || "Une erreur est survenue",
             })
@@ -235,10 +249,21 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                         </FormItem>
                     )}
                 />
+                {captchaEnabled && (
+                    <TurnstileWidget
+                        key={captchaKey}
+                        action="signup"
+                        onToken={setCaptchaToken}
+                        onExpire={() => setCaptchaToken(null)}
+                        onError={() => setCaptchaToken(null)}
+                        className="flex justify-center"
+                    />
+                )}
+
                 <Button
                     type="submit"
                     className="w-full mt-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold"
-                    disabled={isRegistering}
+                    disabled={isRegistering || (captchaEnabled && !captchaToken)}
                 >
                     {isRegistering ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                     {isRegistering ? "Création en cours..." : "Créer un compte"}

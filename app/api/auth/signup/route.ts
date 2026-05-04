@@ -1,17 +1,28 @@
 
 import { createClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
+import { verifyTurnstileToken, getRemoteIp } from "@/lib/turnstile"
 
 export const runtime = 'nodejs'
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { email, password, firstName, lastName, role = 'student' } = body
+        const { email, password, firstName, lastName, role = 'student', captchaToken } = body
 
         if (!email || !password || !firstName) {
             return NextResponse.json(
                 { error: "Email, mot de passe et prénom sont requis" },
+                { status: 400 }
+            )
+        }
+
+        // Cette route utilise la service-role et bypasse donc le Captcha
+        // natif Supabase. On vérifie le token Turnstile manuellement.
+        const captcha = await verifyTurnstileToken(captchaToken, getRemoteIp(request))
+        if (!captcha.success) {
+            return NextResponse.json(
+                { error: "Captcha invalide. Rechargez la page et réessayez." },
                 { status: 400 }
             )
         }

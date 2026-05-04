@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createClient } from "@/lib/supabase/client"
+import { TurnstileWidget, isTurnstileConfigured } from "@/components/auth/turnstile-widget"
 
 const formSchema = z.object({
     email: z.string().email("Email invalide"),
@@ -27,6 +28,9 @@ export function ResetPasswordView() {
     const supabase = createClient()
     const [isLoading, setIsLoading] = useState(false)
     const [sent, setSent] = useState(false)
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+    const [captchaKey, setCaptchaKey] = useState<number>(0)
+    const captchaEnabled = isTurnstileConfigured()
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -34,6 +38,10 @@ export function ResetPasswordView() {
     })
 
     const handleSubmit = async (data: FormValues) => {
+        if (captchaEnabled && !captchaToken) {
+            toast.error("Validez le captcha avant de continuer.")
+            return
+        }
         try {
             setIsLoading(true)
 
@@ -41,9 +49,12 @@ export function ResetPasswordView() {
 
             const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
                 redirectTo,
+                captchaToken: captchaToken ?? undefined,
             })
 
             if (error) {
+                setCaptchaToken(null)
+                setCaptchaKey(k => k + 1)
                 toast.error("Impossible d'envoyer l'email", {
                     description: error.message,
                 })
@@ -56,6 +67,8 @@ export function ResetPasswordView() {
             })
         } catch (err: any) {
             console.error("Reset password error:", err)
+            setCaptchaToken(null)
+            setCaptchaKey(k => k + 1)
             toast.error("Une erreur est survenue")
         } finally {
             setIsLoading(false)
@@ -124,10 +137,21 @@ export function ResetPasswordView() {
                                         )}
                                     />
 
+                                    {captchaEnabled && (
+                                        <TurnstileWidget
+                                            key={captchaKey}
+                                            action="reset-password"
+                                            onToken={setCaptchaToken}
+                                            onExpire={() => setCaptchaToken(null)}
+                                            onError={() => setCaptchaToken(null)}
+                                            className="flex justify-center"
+                                        />
+                                    )}
+
                                     <Button
                                         type="submit"
                                         className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold"
-                                        disabled={isLoading}
+                                        disabled={isLoading || (captchaEnabled && !captchaToken)}
                                     >
                                         {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                                         {isLoading ? "Envoi en cours..." : "Envoyer le lien"}

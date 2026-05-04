@@ -6,6 +6,12 @@ import { useToast } from '@/hooks/use-toast';
 // import { type User } from '@supabase/supabase-js'; // REMOVED
 import { createClient } from '@/lib/supabase/client';
 import { canAccessRoute, getDefaultRouteForUser } from '../lib/role-guard';
+import {
+  isStormLocked,
+  recordSignOutEvent,
+  triggerStormCleanup,
+  clearStormLock,
+} from '@/lib/supabase/auth-storm-guard';
 
 // Local mock type for User
 type User = any;
@@ -22,8 +28,8 @@ interface AuthContextProps {
   user: User | null;
   isLoading: boolean;
   error: string | null;
-  signIn: (email: string, password: string) => Promise<any>;
-  signUp: (email: string, password: string) => Promise<{ success: boolean; user?: User | null; error?: any }>;
+  signIn: (email: string, password: string, captchaToken?: string) => Promise<any>;
+  signUp: (email: string, password: string, captchaToken?: string) => Promise<{ success: boolean; user?: User | null; error?: any }>;
   signOut: () => Promise<void>;
   isAuthenticated: boolean;
   refreshSession: () => Promise<void>;
@@ -31,7 +37,7 @@ interface AuthContextProps {
   disableDevBypass: () => void;
   bypassEnabled: boolean;
   supabase: AppSupabaseClient;
-  resendConfirmation: (email: string) => Promise<void>;
+  resendConfirmation: (email: string, captchaToken?: string) => Promise<void>;
   // Multi-rôles
   roles?: string[];
   currentRole?: string | null;
@@ -93,6 +99,12 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   // Fonction pour récupérer et vérifier la session courante
   const refreshSession = useCallback(async () => {
     try {
+      if (isStormLocked()) {
+        console.warn("[Auth] refreshSession ignoré (storm lock actif)");
+        setIsAuthenticated(false);
+        setUser(null);
+        return;
+      }
       console.log("[Auth] Récupération de la session courante...");
 
       const { data, error: sessionError } = await supabaseInstance.auth.getSession();
@@ -134,7 +146,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
 
     refreshIntervalRef.current = setInterval(async () => {
-      if (isAuthenticated) {
+      if (isAuthenticated && !isStormLocked()) {
         console.log("[Auth] Rafraîchissement automatique du token...");
         try {
           const { error: refreshError } = await supabaseInstance.auth.refreshSession();
@@ -268,6 +280,12 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
             clearInterval(refreshIntervalRef.current);
             refreshIntervalRef.current = null;
           }
+          // Anti-rebond: une rafale de SIGNED_OUT (refresh_token_not_found
+          // qui boucle) doit déclencher un cleanup global avant que Supabase
+          // rate-limite l'IP.
+          if (event === 'SIGNED_OUT' && recordSignOutEvent()) {
+            void triggerStormCleanup(supabaseInstance, 'SIGNED_OUT burst');
+          }
         }
         setIsLoading(false);
       }
@@ -281,13 +299,17 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     };
   }, [refreshSession, setupTokenRefresh, supabaseInstance.auth, router]);
 
-  const signIn = useCallback(async (email: string, password: string) => {
+  const signIn = useCallback(async (email: string, password: string, captchaToken?: string) => {
     setIsLoading(true);
     setError(null);
+    // Une saisie volontaire de credentials lève le verrou anti-rebond
+    // (sinon l'utilisateur reste bloqué jusqu'à expiration des 5 min).
+    clearStormLock();
     try {
       const { data, error: signInError } = await supabaseInstance.auth.signInWithPassword({
         email,
-        password
+        password,
+        options: captchaToken ? { captchaToken } : undefined,
       });
 
       if (signInError) {
@@ -358,14 +380,15 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }, [supabaseInstance.auth, toast, setupTokenRefresh]);
 
-  const signUp = useCallback(async (email: string, password: string) => {
+  const signUp = useCallback(async (email: string, password: string, captchaToken?: string) => {
     setIsLoading(true);
     setError(null);
     try {
       console.log("[Auth] Tentative d'inscription avec email:", email);
       const { data, error: signUpError } = await supabaseInstance.auth.signUp({
         email,
-        password
+        password,
+        options: captchaToken ? { captchaToken } : undefined,
       });
 
       if (signUpError) {
@@ -456,13 +479,14 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }, [supabaseInstance.auth, toast, router]);
 
-  const resendConfirmation = useCallback(async (email: string): Promise<void> => {
+  const resendConfirmation = useCallback(async (email: string, captchaToken?: string): Promise<void> => {
     try {
       console.log("[Auth] Renvoi de l'email de confirmation pour:", email);
 
       const { error } = await supabaseInstance.auth.resend({
         type: 'signup',
         email: email,
+        options: captchaToken ? { captchaToken } : undefined,
       });
 
       if (error) {

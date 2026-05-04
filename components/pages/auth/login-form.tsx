@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useAuth } from "@/hooks/useAuth"
+import { TurnstileWidget, isTurnstileConfigured } from "@/components/auth/turnstile-widget"
 
 interface LoginFormProps {
     onRegisterClick: () => void;
@@ -46,7 +47,10 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
     const [error, setError] = useState<string | null>(null)
     const [rateLimitUntil, setRateLimitUntil] = useState<number | null>(null)
     const [secondsLeft, setSecondsLeft] = useState<number>(0)
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+    const [captchaKey, setCaptchaKey] = useState<number>(0)
     const { signIn } = useAuth()
+    const captchaEnabled = isTurnstileConfigured()
 
     useEffect(() => {
         if (!rateLimitUntil) return
@@ -64,11 +68,15 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
 
     const handleSubmit = async (data: FormValues) => {
         if (isRateLimited) return
+        if (captchaEnabled && !captchaToken) {
+            setError("Validez le captcha avant de continuer.")
+            return
+        }
         try {
             setIsLoadingForm(true)
             setError(null)
 
-            const { success, error } = await signIn(data.email, data.password)
+            const { success, error } = await signIn(data.email, data.password, captchaToken ?? undefined)
 
             if (success) {
                 toast.success("Connexion réussie")
@@ -80,6 +88,10 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
                     router.push('/')
                 }
             } else {
+                // Le captcha token Supabase est mono-usage: forcer un nouveau widget après échec.
+                setCaptchaToken(null)
+                setCaptchaKey(k => k + 1)
+
                 const isRateLimit =
                     error?.status === 429 ||
                     error?.code === 'over_request_rate_limit' ||
@@ -100,6 +112,8 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
         } catch (err: any) {
             console.error("Erreur de connexion:", err)
             toast.error("Erreur de connexion")
+            setCaptchaToken(null)
+            setCaptchaKey(k => k + 1)
         } finally {
             setIsLoadingForm(false)
         }
@@ -207,10 +221,21 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
                     </div>
                 )}
 
+                {captchaEnabled && (
+                    <TurnstileWidget
+                        key={captchaKey}
+                        action="login"
+                        onToken={setCaptchaToken}
+                        onExpire={() => setCaptchaToken(null)}
+                        onError={() => setCaptchaToken(null)}
+                        className="flex justify-center"
+                    />
+                )}
+
                 <Button
                     type="submit"
                     className="w-full mt-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold"
-                    disabled={isLoadingForm || isRateLimited}
+                    disabled={isLoadingForm || isRateLimited || (captchaEnabled && !captchaToken)}
                 >
                     {isLoadingForm ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                     {isLoadingForm
