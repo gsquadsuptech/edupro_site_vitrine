@@ -49,6 +49,7 @@ jobs:
             NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
             NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
             NEXT_PUBLIC_SAAS_URL=${{ secrets.NEXT_PUBLIC_SAAS_URL }}
             NEXT_PUBLIC_SAAS_API_KEY=${{ secrets.NEXT_PUBLIC_SAAS_API_KEY }}
 
@@ -153,6 +154,7 @@ jobs:
               -e NEXT_PUBLIC_SUPABASE_ANON_KEY='${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}' \
               -e SUPABASE_SERVICE_ROLE_KEY='${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
               -e RECAPTCHA_SECRET_KEY='${{ secrets.RECAPTCHA_SECRET_KEY }}' \
+              -e TURNSTILE_SECRET_KEY='${{ secrets.TURNSTILE_SECRET_KEY }}' \
               -e NEXT_PUBLIC_SAAS_URL='${{ secrets.NEXT_PUBLIC_SAAS_URL }}' \
               -e NEXT_PUBLIC_SAAS_API_KEY='${{ secrets.NEXT_PUBLIC_SAAS_API_KEY }}' \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
