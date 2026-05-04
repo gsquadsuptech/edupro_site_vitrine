@@ -52,20 +52,38 @@ export function UpdatePasswordView() {
     useEffect(() => {
         const init = async () => {
             try {
+                const search = new URLSearchParams(window.location.search)
+                const queryError = search.get("error_description") || search.get("error")
+                const code = search.get("code")
+
                 const hash = window.location.hash.startsWith("#")
                     ? window.location.hash.substring(1)
                     : window.location.hash
-                const params = new URLSearchParams(hash)
-                const accessToken = params.get("access_token")
-                const refreshToken = params.get("refresh_token")
-                const errorDescription = params.get("error_description")
+                const hashParams = new URLSearchParams(hash)
+                const accessToken = hashParams.get("access_token")
+                const refreshToken = hashParams.get("refresh_token")
+                const hashError = hashParams.get("error_description")
 
-                if (errorDescription) {
+                if (queryError || hashError) {
                     setSessionStatus("invalid")
-                    setErrorMessage(errorDescription)
+                    setErrorMessage(queryError || hashError)
                     return
                 }
 
+                // Flow PKCE (Supabase par défaut via @supabase/ssr) : ?code=<uuid>
+                if (code) {
+                    const { error } = await supabase.auth.exchangeCodeForSession(code)
+                    if (error) {
+                        setSessionStatus("invalid")
+                        setErrorMessage(error.message)
+                        return
+                    }
+                    window.history.replaceState(null, "", window.location.pathname)
+                    setSessionStatus("ready")
+                    return
+                }
+
+                // Flow implicite (legacy) : #access_token=...&refresh_token=...
                 if (accessToken && refreshToken) {
                     const { error } = await supabase.auth.setSession({
                         access_token: accessToken,
