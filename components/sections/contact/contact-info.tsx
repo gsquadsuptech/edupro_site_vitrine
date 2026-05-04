@@ -45,8 +45,8 @@ export function ContactInfo() {
                         <div className="mt-3 grid grid-cols-2 gap-4">
                             <div>
                                 <p className="text-xs font-medium text-muted-foreground mb-1">Dakar</p>
-                                <a href="https://wa.me/221766651717" target="_blank" rel="noopener noreferrer" className="block font-medium text-primary hover:underline">
-                                    +221 76 665 17 17
+                                <a href="https://wa.me/221771739389" target="_blank" rel="noopener noreferrer" className="block font-medium text-primary hover:underline">
+                                    +221 77 173 93 89
                                 </a>
                             </div>
                             <div>

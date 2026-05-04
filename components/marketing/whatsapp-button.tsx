@@ -3,7 +3,7 @@
 import Link from "next/link"
 
 export function WhatsAppButton() {
-  const whatsappNumber = "+221766651717"
+  const whatsappNumber = "+221771739389"
   const whatsappMessage = encodeURIComponent("Bonjour, je souhaite en savoir plus sur EduPro")
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\+/g, "")}?text=${whatsappMessage}`
 

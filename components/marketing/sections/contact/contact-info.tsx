@@ -53,7 +53,7 @@ export function ContactInfo() {
             <div className="mt-3 grid grid-cols-2 gap-4">
               <div>
                 <p className="text-xs font-medium text-muted-foreground mb-1">{t("sections.phone.dakar.label")}</p>
-                <a href="https://wa.me/221766651717" target="_blank" rel="noopener noreferrer" className="block font-medium text-primary hover:underline">
+                <a href="https://wa.me/221771739389" target="_blank" rel="noopener noreferrer" className="block font-medium text-primary hover:underline">
                   {t("sections.phone.dakar.phone")}
                 </a>
               </div>
