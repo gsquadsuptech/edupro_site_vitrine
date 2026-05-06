@@ -49,10 +49,15 @@ export const CategoryService = {
             console.error('Error counting marketplace courses:', marketplaceCoursesRes.error)
         }
 
-        return categories.map(c => ({
-            ...c,
-            courses_count: countsById.get(c.id) || 0
-        }))
+        // Hide empty categories from the marketplace home — surfacing a
+        // category with 0 courses sends users to a dead-end search and
+        // muddies the curated taxonomy.
+        return categories
+            .map(c => ({
+                ...c,
+                courses_count: countsById.get(c.id) || 0
+            }))
+            .filter(c => c.courses_count > 0)
     },
 
     async getCategoryBySlug(slug: string): Promise<Category | null> {
