@@ -12,16 +12,12 @@ export const OrganizationService = {
 
         const { data, error } = await supabase
             .from('organizations')
-            .select(`
-                id,
-                name,
-                logo_url,
-                organization_branding_settings (
-                    logo_url
-                )
-            `)
+            .select('id, name, logo_url')
             .eq('is_active', true)
-            .limit(12)
+            .not('logo_url', 'is', null)
+            .neq('logo_url', '')
+            .order('name', { ascending: true })
+            .limit(24)
 
         if (error) {
             console.error('Error fetching partner institutes:', error)
@@ -31,7 +27,7 @@ export const OrganizationService = {
         return data.map((item: any) => ({
             id: item.id,
             name: item.name,
-            logo_url: item.logo_url || (item.organization_branding_settings?.logo_url) || null
+            logo_url: item.logo_url
         }))
     }
 }
