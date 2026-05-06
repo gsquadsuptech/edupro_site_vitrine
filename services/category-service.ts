@@ -29,6 +29,7 @@ export const CategoryService = {
             supabase
                 .from('marketplace_courses')
                 .select('category_id, courses!inner(status)')
+                .eq('review_status', 'published')
         ])
 
         if (categoriesRes.error) {

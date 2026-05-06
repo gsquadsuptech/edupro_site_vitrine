@@ -79,6 +79,10 @@ export const CourseService = {
         cohorts(one_time_price, monthly_price, status, use_course_price)
       `, { count: 'exact' })
             .eq('status', 'published')
+            // Hide courses whose marketplace entry isn't truly live (archived /
+            // pending review). Without this, "depublishing" via review_status
+            // has no effect on the public catalog.
+            .eq('marketplace.review_status', 'published')
 
         if (searchTerm) {
             query = query.ilike('title', `%${searchTerm}%`)
@@ -225,6 +229,7 @@ export const CourseService = {
             .select('course_id, featured, featured_order, rating, review_count')
             .eq('featured', true)
             .eq('searchable', true)
+            .eq('review_status', 'published')
             .order('featured_order', { ascending: true, nullsFirst: false })
             .limit(8)
 
@@ -363,6 +368,7 @@ export const CourseService = {
         cohorts(one_time_price, monthly_price, status, use_course_price)
       `)
             .eq('status', 'published')
+            .eq('marketplace.review_status', 'published')
             .eq('marketplace.category_id', (mcat as any).id)
             .order('created_at', { ascending: false })
 
