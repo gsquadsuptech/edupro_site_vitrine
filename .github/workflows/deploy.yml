@@ -28,6 +28,19 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      # next-env.d.ts is gitignored but tsconfig.json includes it. Without it,
+      # `next/image-types/global` ambient declarations for *.png/*.jpg are not
+      # picked up, and tsc fails on @/assets/images/* imports. Recreate the
+      # file with the same content `next dev`/`next build` would generate.
+      - name: Generate next-env.d.ts
+        run: |
+          cat > next-env.d.ts <<'EOF'
+          /// <reference types="next" />
+          /// <reference types="next/image-types/global" />
+
+          // NOTE: This file should not be edited
+          // see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+          EOF
       - name: TypeScript
         run: npx tsc --noEmit
       - name: ESLint
