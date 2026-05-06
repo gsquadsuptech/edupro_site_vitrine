@@ -79,16 +79,19 @@ function InstituteItem({ institute }: { institute: OrganizationInfo }) {
 }
 
 export function PartnerInstitutes({ institutes = [] }: PartnerInstitutesProps) {
-  if (institutes.length === 0) return null
+  const visibleInstitutes = institutes.filter((institute) => Boolean(institute.logo_url))
+  if (visibleInstitutes.length === 0) return null
 
   // Slow down the loop slightly when there are few items so motion stays calm.
-  const durationSeconds = Math.max(25, institutes.length * 4)
+  const durationSeconds = Math.max(25, visibleInstitutes.length * 4)
 
   return (
     <section className="border-y border-border bg-background py-12">
       <div className="container">
         <div className="mb-8 text-center">
-          <h2 className="mb-2 text-2xl font-bold md:text-3xl">Nos Instituts Partenaires</h2>
+          <h2 className="mb-2 text-2xl font-bold md:text-3xl">
+            Nos instituts et formateurs partenaires
+          </h2>
           <p className="text-muted-foreground text-sm">
             Ils nous font confiance pour diffuser leurs formations d'excellence
           </p>
@@ -102,10 +105,10 @@ export function PartnerInstitutes({ institutes = [] }: PartnerInstitutesProps) {
             className="flex w-max animate-marquee-x gap-10 group-hover/marquee:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:justify-center"
             style={{ ["--marquee-duration" as any]: `${durationSeconds}s` }}
           >
-            {institutes.map((institute) => (
+            {visibleInstitutes.map((institute) => (
               <InstituteItem key={`a-${institute.id}`} institute={institute} />
             ))}
-            {institutes.map((institute) => (
+            {visibleInstitutes.map((institute) => (
               <InstituteItem
                 key={`b-${institute.id}`}
                 institute={institute}
