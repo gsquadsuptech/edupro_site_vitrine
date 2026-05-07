@@ -48,14 +48,6 @@ const toBackendPlanCode = (planType: string): string => FRONTEND_TO_BACKEND_PLAN
 
 const resolveSaasUrl = (): string => {
     let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
-    if (typeof window !== 'undefined') {
-        const hostname = window.location.hostname;
-        if (hostname.includes('site.edupro.africa')) {
-            saasUrl = 'https://staging.edupro.africa';
-        } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
-            saasUrl = 'https://edupro.africa';
-        }
-    }
     if (!saasUrl || saasUrl.includes('localhost')) {
         saasUrl = 'http://localhost:3000';
     }

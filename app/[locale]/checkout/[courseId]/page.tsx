@@ -69,14 +69,6 @@ export default function CheckoutPage({
                     if (fetchedCourse) setCourse(fetchedCourse);
                     
                     let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
-                    if (typeof window !== 'undefined') {
-                        const hostname = window.location.hostname;
-                        if (hostname.includes('site.edupro.africa')) {
-                            saasUrl = 'https://staging.edupro.africa';
-                        } else if (hostname.includes('edupro.africa') && (!saasUrl || saasUrl.includes('localhost'))) {
-                            saasUrl = 'https://edupro.africa';
-                        }
-                    }
                     if (!saasUrl || saasUrl.includes('localhost')) {
                         saasUrl = 'http://localhost:3000';
                     }
@@ -301,23 +293,15 @@ export default function CheckoutPage({
         }
     }, [pendingEnrollment, user?.id, user?.email, enrollingFree, currentStep, handleFreeEnrollment]);
 
-    const handleAccessCourse = async () => {
-        const targetPath = purchaseMode === 'team'
-            ? '/admin/billing/seat-pools'
-            : '/dashboard/courses';
-        try {
-            const { createClient } = await import("@/lib/supabase/client");
-            const { getAppUrl } = await import("@/lib/utils");
-
-            const supabase = createClient();
-            const { data } = await supabase.auth.getSession();
-            const token = data.session?.access_token;
-
-            window.location.href = getAppUrl(targetPath, token);
-        } catch (error) {
-            console.error("Erreur de redirection:", error);
-            // Fallback if import fails
-            window.location.href = `${process.env.NEXT_PUBLIC_SAAS_URL || 'https://app.edupro.africa'}${targetPath}`;
+    const handleAccessCourse = () => {
+        if (purchaseMode === 'team') {
+            const adminBase = process.env.NEXT_PUBLIC_DASHBOARD_ADMIN_URL
+                || 'https://app.edupro.africa/admin';
+            window.location.href = `${adminBase}/billing/seat-pools`;
+        } else {
+            const studentBase = process.env.NEXT_PUBLIC_DASHBOARD_STUDENT_URL
+                || 'https://app.edupro.africa/dashboard';
+            window.location.href = `${studentBase}/courses`;
         }
     };
 

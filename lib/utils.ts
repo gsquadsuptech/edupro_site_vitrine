@@ -85,9 +85,8 @@ export function sanitizeFileName(fileName: string): string {
 
 
 // Builds a URL to the SaaS application (dashboard).
-// Detects the SaaS host dynamically from the current site host so that staging
-// (site.edupro.africa → staging.edupro.africa) and prod (edupro.africa →
-// edupro.africa) route correctly without relying on a build-time env var.
+// NEXT_PUBLIC_SAAS_URL is baked into the client bundle at build time (see
+// Dockerfile + .github/workflows/deploy.yml), so we trust it directly.
 // Sessions are shared via the .edupro.africa cookie domain (see
 // lib/supabase/cookie-domain.ts), so no token query param is needed.
 
@@ -96,18 +95,9 @@ export function getAppUrl(path: string = '', _token?: string): string {
     return path;
   }
 
-  let baseUrl = process.env.NEXT_PUBLIC_SAAS_URL
+  const baseUrl = process.env.NEXT_PUBLIC_SAAS_URL
     || process.env.NEXT_PUBLIC_APP_URL
-    || 'https://edupro.africa';
-
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    if (hostname === 'site.edupro.africa') {
-      baseUrl = 'https://staging.edupro.africa';
-    } else if (hostname === 'edupro.africa' || hostname === 'www.edupro.africa') {
-      baseUrl = 'https://edupro.africa';
-    }
-  }
+    || 'https://app.edupro.africa';
 
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${baseUrl}${cleanPath}`;
