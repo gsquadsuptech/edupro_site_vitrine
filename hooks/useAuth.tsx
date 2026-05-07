@@ -22,6 +22,12 @@ const supabase = createClient();
 // Token storage keys
 const AUTH_BYPASS_KEY = 'auth-bypass';
 
+// Pas de setInterval manuel pour refresher: `autoRefreshToken: true` est le
+// défaut de createBrowserClient (lib/supabase/client.ts) → gotrue-js
+// rafraîchit ~60s avant l'expiration. Forcer un refresh toutes les 15 min
+// multipliait les collisions avec saas-2 qui partage le cookie
+// `.edupro.africa` (refresh_token_already_used → SIGNED_OUT → boucle).
+
 type AppSupabaseClient = typeof supabase;
 
 interface AuthContextProps {
@@ -46,9 +52,6 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-// Constante pour l'intervalle de rafraîchissement du token (15 minutes)
-const TOKEN_REFRESH_INTERVAL = 15 * 60 * 1000;
-
 export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -61,11 +64,16 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   const { toast } = useToast();
   const router = useRouter();
 
-  // Référence pour gérer l'intervalle de rafraîchissement du token
-  const refreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
   // Référence pour accéder à l'utilisateur courant dans les callbacks
   const userRef = useRef<User | null>(null);
   useEffect(() => { userRef.current = user; }, [user]);
+
+  // Flag pour distinguer un SIGNED_OUT volontaire (clic sur "Déconnexion")
+  // d'un SIGNED_OUT involontaire (auto-refresh qui foire à cause d'une
+  // rotation concurrente sur le cookie partagé `.edupro.africa`). Sur les
+  // SIGNED_OUT involontaires, on tente une récupération depuis le cookie
+  // au lieu de propager la déconnexion (cf. handler onAuthStateChange).
+  const intentionalSignOutRef = useRef<boolean>(false);
 
   // Utiliser le client Supabase centralisé
   const supabaseInstance = useMemo(() => supabase, []);
@@ -139,30 +147,6 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     }
   }, [supabaseInstance.auth]);
 
-  // Fonction pour configurer l'intervalle de rafraîchissement du token
-  const setupTokenRefresh = useCallback(() => {
-    if (refreshIntervalRef.current) {
-      clearInterval(refreshIntervalRef.current);
-    }
-
-    refreshIntervalRef.current = setInterval(async () => {
-      if (isAuthenticated && !isStormLocked()) {
-        console.log("[Auth] Rafraîchissement automatique du token...");
-        try {
-          const { error: refreshError } = await supabaseInstance.auth.refreshSession();
-
-          if (refreshError) {
-            console.error("[Auth] Erreur lors du rafraîchissement du token:", refreshError);
-          } else {
-            console.log("[Auth] Tentative de rafraîchissement du token effectuée.");
-          }
-        } catch (err) {
-          console.error("[Auth] Erreur lors du rafraîchissement automatique:", err);
-        }
-      }
-    }, TOKEN_REFRESH_INTERVAL);
-  }, [isAuthenticated, supabaseInstance.auth]);
-
   useEffect(() => {
     const fetchUser = async () => {
       const bypass = localStorage.getItem(AUTH_BYPASS_KEY) === 'true';
@@ -225,7 +209,6 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
           }
           setUser(session.user);
           setIsAuthenticated(true);
-          setupTokenRefresh();
 
           // Ne faire les redirections qu'au moment du SIGNED_IN
           if (event === 'SIGNED_IN') {
@@ -274,12 +257,39 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
             }
           }
         } else {
+          // Récupération cross-app: si le SIGNED_OUT n'a PAS été déclenché par
+          // un clic explicite sur signOut(), c'est probablement une rotation
+          // concurrente du refresh_token entre saas-2 et edupro-site
+          // (cookie partagé `.edupro.africa`, mémoires gotrue-js séparées).
+          // On laisse 500ms au cookie pour se stabiliser puis on tente de
+          // recharger la session depuis le storage. Si l'autre app a écrit
+          // un token frais, gotrue-js le récupèrera ici.
+          if (event === 'SIGNED_OUT' && !intentionalSignOutRef.current) {
+            const recovered = await new Promise<boolean>(resolve => {
+              setTimeout(async () => {
+                try {
+                  const { data } = await supabaseInstance.auth.getSession();
+                  if (data.session?.user) {
+                    console.warn('[Auth] SIGNED_OUT involontaire récupéré via cookie partagé');
+                    setUser(data.session.user);
+                    setIsAuthenticated(true);
+                    resolve(true);
+                    return;
+                  }
+                } catch {
+                  /* fall through */
+                }
+                resolve(false);
+              }, 500);
+            });
+            if (recovered) {
+              setIsLoading(false);
+              return;
+            }
+          }
           setUser(null);
           setIsAuthenticated(false);
-          if (refreshIntervalRef.current) {
-            clearInterval(refreshIntervalRef.current);
-            refreshIntervalRef.current = null;
-          }
+          intentionalSignOutRef.current = false;
           // Anti-rebond: une rafale de SIGNED_OUT (refresh_token_not_found
           // qui boucle) doit déclencher un cleanup global avant que Supabase
           // rate-limite l'IP.
@@ -293,11 +303,8 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
     return () => {
       authListener.subscription.unsubscribe();
-      if (refreshIntervalRef.current) {
-        clearInterval(refreshIntervalRef.current);
-      }
     };
-  }, [refreshSession, setupTokenRefresh, supabaseInstance.auth, router]);
+  }, [refreshSession, supabaseInstance.auth, router]);
 
   const signIn = useCallback(async (email: string, password: string, captchaToken?: string) => {
     setIsLoading(true);
@@ -329,7 +336,6 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       if (data.user) {
         setUser(data.user as User);
         setIsAuthenticated(true);
-        setupTokenRefresh();
 
         // Synchroniser le cookie NEXT_LOCALE avec les préférences utilisateur
         try {
@@ -378,7 +384,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     } finally {
       setIsLoading(false);
     }
-  }, [supabaseInstance.auth, toast, setupTokenRefresh]);
+  }, [supabaseInstance.auth, toast]);
 
   const signUp = useCallback(async (email: string, password: string, captchaToken?: string) => {
     setIsLoading(true);
@@ -420,6 +426,9 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   const signOut = useCallback(async (): Promise<void> => {
     setIsLoading(true);
+    // Marquer la déconnexion comme volontaire pour que le SIGNED_OUT qui
+    // suivra ne déclenche pas la récupération cross-app via cookie partagé.
+    intentionalSignOutRef.current = true;
     try {
       console.log("[Auth] Déconnexion en cours...");
 
@@ -472,10 +481,6 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       });
     } finally {
       setIsLoading(false);
-      if (refreshIntervalRef.current) {
-        clearInterval(refreshIntervalRef.current);
-        refreshIntervalRef.current = null;
-      }
     }
   }, [supabaseInstance.auth, toast, router]);
 

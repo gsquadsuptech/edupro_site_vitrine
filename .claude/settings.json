@@ -9,7 +9,9 @@
       "mcp__plugin_supabase_supabase__apply_migration",
       "Read(//c/Users/diopb/dev/**)",
       "Bash(pnpm build *)",
-      "mcp__plugin_supabase_supabase__get_logs"
+      "mcp__plugin_supabase_supabase__get_logs",
+      "Bash(git checkout *)",
+      "Bash(git merge *)"
     ]
   }
 }
