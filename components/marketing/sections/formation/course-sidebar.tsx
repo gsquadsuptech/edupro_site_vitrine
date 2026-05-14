@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { useActiveBusinessOrg } from "@/hooks/use-active-business-org"
+import { getAvailableModes, pickDisplayCohort } from "@/lib/pricing"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
 import { CoursePriceDisplay } from "./course-price-display"
@@ -26,9 +27,14 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
   const showEnrollButton = isAutoFormation || hasOpenCohort
   const showWaitlist = !isAutoFormation && !hasOpenCohort
 
+  const displayCohort = pickDisplayCohort(cohorts)
   // L'achat équipe V1 = paiement unique uniquement. Ne montrer le bouton que si
-  // le cours supporte one_time, sinon ça envoie vers une page d'erreur.
-  const supportsOneTime = (course.pricing_modes?.one_time !== false) && !!course.one_time_price
+  // le cours (ou la cohorte effective) supporte one_time, sinon ça envoie vers
+  // une page d'erreur.
+  const effectiveOneTimePrice = displayCohort?.use_course_price === false
+    ? (displayCohort as any).one_time_price ?? course.one_time_price
+    : course.one_time_price
+  const supportsOneTime = getAvailableModes(course, displayCohort).oneTime && !!effectiveOneTimePrice
   const showTeamPurchaseCTA = isBusinessAdmin && supportsOneTime
 
   // Count total lessons from sections
@@ -36,7 +42,7 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
 
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-xl transition-all duration-300 hover:shadow-2xl">
-      <CoursePriceDisplay course={course} variant="sidebar" className="mb-6" />
+      <CoursePriceDisplay course={course} cohort={displayCohort} variant="sidebar" className="mb-6" />
 
       <div className="space-y-4">
         {showWaitlist ? (

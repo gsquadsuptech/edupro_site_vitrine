@@ -55,6 +55,19 @@ export function getEnabledModeCount(modes: PricingModes): number {
     return (Object.values(modes) as boolean[]).filter(Boolean).length
 }
 
+/**
+ * Pick the cohort whose pricing should drive the marketing display so it stays
+ * aligned with what the checkout will actually offer. Only applies when there
+ * is exactly one cohort overriding the course (use_course_price === false) —
+ * otherwise the course-level config remains the source of truth.
+ */
+export function pickDisplayCohort<T extends { use_course_price?: boolean | null }>(
+    cohorts: T[] | undefined | null
+): T | undefined {
+    if (!cohorts || cohorts.length !== 1) return undefined
+    return cohorts[0].use_course_price === false ? cohorts[0] : undefined
+}
+
 export function getOnlyEnabledMode(modes: PricingModes): PricingModeKey | null {
     const entries = Object.entries(modes) as [PricingModeKey, boolean][]
     const enabled = entries.filter(([, v]) => v)
