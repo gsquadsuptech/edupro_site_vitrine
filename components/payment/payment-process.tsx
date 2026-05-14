@@ -3,11 +3,21 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2, LogIn, Users } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2, LogIn, Users, Tag, X, CheckCircle2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useAuth } from '@/hooks/useAuth';
 import { AuthModal } from '@/components/auth/auth-modal';
 import { toast } from 'sonner';
+
+interface AppliedDiscount {
+    code: string;
+    discountAmount: number;
+    finalAmount: number;
+    originalAmount: number;
+    warnings: string[];
+}
 
 interface PaymentPlan {
     type: string;
@@ -88,6 +98,16 @@ export const PaymentProcess = ({
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const { user, isAuthenticated, supabase } = useAuth();
 
+    // État du code promo : input contrôlé, état "en cours de validation",
+    // erreur de validation, et la remise effectivement appliquée (résultat
+    // de POST /api/discounts/validate). Le client n'envoie au serveur que le
+    // code — le SaaS revalide avant d'initialiser le paiement, donc on n'a
+    // pas besoin de signer le payload côté front.
+    const [promoCodeInput, setPromoCodeInput] = useState('');
+    const [promoLoading, setPromoLoading] = useState(false);
+    const [promoError, setPromoError] = useState<string | null>(null);
+    const [appliedDiscount, setAppliedDiscount] = useState<AppliedDiscount | null>(null);
+
     // Normalisation : si on reçoit un course legacy, on construit l'item équivalent.
     const normalizedItem: PaymentItem = item
         ? item
@@ -126,6 +146,78 @@ export const PaymentProcess = ({
     };
 
     const initialAmount = getInitialPaymentAmount();
+    // Le montant réellement facturé = montant après remise si une promo est
+    // appliquée, sinon le montant brut du plan. Le serveur revalide quand
+    // même : si la promo a expiré entre l'aperçu et le clic, l'init renverra
+    // 400 et on remontera l'erreur à l'utilisateur.
+    const finalAmount = appliedDiscount ? appliedDiscount.finalAmount : initialAmount;
+
+    const applyPromoCode = async () => {
+        const code = promoCodeInput.trim();
+        if (!code) {
+            setPromoError('Saisissez un code');
+            return;
+        }
+        if (!user?.id) {
+            setPromoError('Vous devez être connecté pour appliquer un code');
+            return;
+        }
+        setPromoLoading(true);
+        setPromoError(null);
+        try {
+            const saasUrl = resolveSaasUrl();
+            // applicableItemType : la validate API distingue 'course' /
+            // 'learning-path' / 'category'. On dérive depuis le type d'item
+            // déjà normalisé en haut du composant.
+            const applicableItemType = normalizedItem.type === 'learning_path'
+                ? 'learning-path'
+                : 'course';
+
+            const response = await fetch(`${saasUrl}/api/discounts/validate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': process.env.NEXT_PUBLIC_SAAS_API_KEY || '',
+                },
+                body: JSON.stringify({
+                    code,
+                    userId: user.id,
+                    originalAmount: initialAmount,
+                    applicableItemId: normalizedItem.id,
+                    applicableItemType,
+                    cohortId: cohort?.id ?? null,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!data.isValid || !data.calculatedDiscount) {
+                setPromoError(data.errors?.[0] || 'Code invalide');
+                setAppliedDiscount(null);
+                return;
+            }
+
+            setAppliedDiscount({
+                code: data.discount?.code || code,
+                discountAmount: data.calculatedDiscount.discountAmount,
+                finalAmount: data.calculatedDiscount.finalAmount,
+                originalAmount: data.calculatedDiscount.originalAmount,
+                warnings: data.warnings || [],
+            });
+            setPromoError(null);
+            toast.success(`Code ${code} appliqué`);
+        } catch (e: any) {
+            setPromoError('Impossible de vérifier le code (réseau indisponible)');
+        } finally {
+            setPromoLoading(false);
+        }
+    };
+
+    const removePromoCode = () => {
+        setAppliedDiscount(null);
+        setPromoCodeInput('');
+        setPromoError(null);
+    };
 
     const buildInvoiceDescription = () => {
         const title = (normalizedItem.title || '').trim() || 'Formation EduPro';
@@ -198,6 +290,10 @@ export const PaymentProcess = ({
             }
 
             const body: Record<string, any> = {
+                // On envoie le montant ORIGINAL — le serveur recalcule le
+                // montant remisé à partir du discountCode revalidé. Sécurité :
+                // un client malicieux ne peut pas annoncer un montant déjà
+                // bradé sans avoir un code valide.
                 amount: initialAmount,
                 courseId: normalizedItem.type === 'course' ? normalizedItem.id : null,
                 cohortId: cohort?.id,
@@ -212,6 +308,9 @@ export const PaymentProcess = ({
                 // Type explicite pour les nouveaux endpoints
                 itemType: normalizedItem.type,
                 itemId: normalizedItem.id,
+                // Code promo validé côté client : le SaaS revalide avant
+                // d'initialiser la passerelle (cf. /api/payments/initialize).
+                discountCode: appliedDiscount?.code,
             };
 
             // Workaround : EnrollmentService.createLearningPathEnrollment lit
@@ -345,10 +444,81 @@ export const PaymentProcess = ({
                         )}
                     </div>
 
+                    {/* Code promo : caché pour les achats équipe en V1 (pas dans le scope EPIC 3). */}
+                    {!isTeam && (
+                        <div className="border-t pt-4">
+                            <Label htmlFor="promo-code" className="text-sm font-medium flex items-center gap-2 mb-2">
+                                <Tag className="h-4 w-4 text-primary" />
+                                Code promo
+                            </Label>
+                            {appliedDiscount ? (
+                                <div className="flex items-center justify-between rounded-md border border-green-200 bg-green-50 px-3 py-2">
+                                    <div className="flex items-center gap-2 text-sm">
+                                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                        <span className="font-medium text-green-800">
+                                            {appliedDiscount.code}
+                                        </span>
+                                        <span className="text-green-700">
+                                            (-{formatPrice(appliedDiscount.discountAmount)})
+                                        </span>
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={removePromoCode}
+                                        disabled={loading}
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className="flex gap-2">
+                                    <Input
+                                        id="promo-code"
+                                        placeholder="Saisir un code"
+                                        value={promoCodeInput}
+                                        onChange={(e) => setPromoCodeInput(e.target.value)}
+                                        disabled={promoLoading || loading || !isAuthenticated}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                applyPromoCode();
+                                            }
+                                        }}
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={applyPromoCode}
+                                        disabled={promoLoading || loading || !isAuthenticated || !promoCodeInput.trim()}
+                                    >
+                                        {promoLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Appliquer'}
+                                    </Button>
+                                </div>
+                            )}
+                            {promoError && (
+                                <p className="mt-2 text-xs text-destructive">{promoError}</p>
+                            )}
+                            {appliedDiscount && appliedDiscount.warnings.length > 0 && (
+                                <p className="mt-2 text-xs text-amber-700">
+                                    {appliedDiscount.warnings.join(' · ')}
+                                </p>
+                            )}
+                        </div>
+                    )}
+
                     <div className="border-t pt-4">
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-md text-muted-foreground">Montant à payer :</span>
-                            <span className="text-xl font-bold text-primary">{formatPrice(initialAmount)}</span>
+                            <div className="flex items-baseline gap-2">
+                                {appliedDiscount && (
+                                    <span className="text-sm text-muted-foreground line-through">
+                                        {formatPrice(appliedDiscount.originalAmount)}
+                                    </span>
+                                )}
+                                <span className="text-xl font-bold text-primary">{formatPrice(finalAmount)}</span>
+                            </div>
                         </div>
                         {plan.type === 'installments' && plan.details.totalAmount && initialAmount !== plan.details.totalAmount && (
                             <div className="flex justify-between text-sm">
@@ -369,7 +539,7 @@ export const PaymentProcess = ({
 
                 <CardFooter className="flex flex-col gap-4">
                     <div className="flex flex-col gap-4 w-full">
-                        {initialAmount > 0 ? (
+                        {finalAmount > 0 ? (
                             <Button
                                 size="lg"
                                 className="w-full text-lg font-bold"
@@ -377,7 +547,7 @@ export const PaymentProcess = ({
                                 disabled={loading || !isAuthenticated || (isTeam && !organizationId)}
                             >
                                 {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCardIcon className="mr-2 h-4 w-4" />}
-                                Payez {formatPrice(initialAmount)}
+                                Payez {formatPrice(finalAmount)}
                             </Button>
                         ) : (
                             <Button
