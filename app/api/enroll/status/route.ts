@@ -1,5 +1,4 @@
 import { createServerClient } from "@supabase/ssr"
-import { createClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -9,9 +8,9 @@ export async function GET(request: NextRequest) {
     try {
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
         const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-        const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-        if (!supabaseUrl || !anonKey || !serviceRoleKey) {
+        if (!supabaseUrl || !anonKey) {
+            console.warn("[enroll/status] Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY")
             return NextResponse.json({ isEnrolled: false }, { status: 200 })
         }
 
@@ -34,14 +33,11 @@ export async function GET(request: NextRequest) {
 
         const { data: userData, error: userError } = await supabase.auth.getUser()
         if (userError || !userData?.user) {
+            console.warn("[enroll/status] No authenticated user:", userError?.message ?? "no session")
             return NextResponse.json({ isEnrolled: false })
         }
 
-        const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
-            auth: { autoRefreshToken: false, persistSession: false },
-        })
-
-        const { data, error } = await supabaseAdmin
+        const { data, error } = await supabase
             .from("enrollments")
             .select("id, cohort_id, status")
             .eq("user_id", userData.user.id)
@@ -50,7 +46,7 @@ export async function GET(request: NextRequest) {
             .maybeSingle()
 
         if (error) {
-            console.error("enroll/status error:", error)
+            console.error("[enroll/status] DB error for user", userData.user.id, "course", courseId, ":", error.message)
             return NextResponse.json({ isEnrolled: false })
         }
 
@@ -60,7 +56,7 @@ export async function GET(request: NextRequest) {
             enrollmentId: data?.id ?? null,
         })
     } catch (err: any) {
-        console.error(err)
+        console.error("[enroll/status] Unhandled error:", err)
         return NextResponse.json({ isEnrolled: false }, { status: 200 })
     }
 }
