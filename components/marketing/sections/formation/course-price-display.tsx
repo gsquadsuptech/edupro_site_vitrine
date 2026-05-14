@@ -1,11 +1,12 @@
 "use client"
 
-import { Course } from "@/lib/supabase/types"
+import { Course, Cohort } from "@/lib/supabase/types"
 import { getAvailableModes, parseInstallments, type PricingModeKey } from "@/lib/pricing"
 import { cn } from "@/lib/utils"
 
 interface CoursePriceDisplayProps {
     course: Course
+    cohort?: Cohort
     variant?: "sidebar" | "compact"
     className?: string
 }
@@ -26,17 +27,22 @@ const modePriority: PricingModeKey[] = [
     "subscription",
 ]
 
-export function CoursePriceDisplay({ course, variant = "sidebar", className }: CoursePriceDisplayProps) {
-    const modes = getAvailableModes(course)
+export function CoursePriceDisplay({ course, cohort, variant = "sidebar", className }: CoursePriceDisplayProps) {
+    const modes = getAvailableModes(course, cohort)
     const activeModes = modePriority.filter((m) => modes[m])
     const primary: PricingModeKey = activeModes[0] ?? "oneTime"
 
     const num = (v: any) => (v == null ? 0 : Number(v) || 0)
-    const oneTimePrice = num((course as any).one_time_price ?? course.price)
-    const monthlyPrice = num((course as any).monthly_price)
-    const registrationFee = num((course as any).registration_fee)
-    const monthlyFee = num((course as any).monthly_fee)
-    const installmentsList = parseInstallments((course as any).installments)
+    const useCoursePrice = !cohort || cohort.use_course_price !== false
+    const pickNum = (cohortVal: any, courseVal: any) =>
+        useCoursePrice ? num(courseVal) : num(cohortVal ?? courseVal)
+    const oneTimePrice = pickNum((cohort as any)?.one_time_price, (course as any).one_time_price ?? course.price)
+    const monthlyPrice = pickNum((cohort as any)?.monthly_price, (course as any).monthly_price)
+    const registrationFee = pickNum((cohort as any)?.registration_fee, (course as any).registration_fee)
+    const monthlyFee = pickNum((cohort as any)?.monthly_fee, (course as any).monthly_fee)
+    const installmentsList = parseInstallments(
+        useCoursePrice ? (course as any).installments : (cohort as any)?.installments ?? (course as any).installments
+    )
     const installmentsTotal = installmentsList.reduce(
         (acc: number, item: any) => acc + num(item?.amount),
         0
