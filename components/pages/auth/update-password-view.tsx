@@ -55,6 +55,8 @@ export function UpdatePasswordView() {
                 const search = new URLSearchParams(window.location.search)
                 const queryError = search.get("error_description") || search.get("error")
                 const code = search.get("code")
+                const tokenHash = search.get("token_hash")
+                const otpType = search.get("type")
 
                 const hash = window.location.hash.startsWith("#")
                     ? window.location.hash.substring(1)
@@ -70,7 +72,25 @@ export function UpdatePasswordView() {
                     return
                 }
 
+                // Flow OTP (token_hash) : pas de PKCE, marche cross-browser.
+                // À activer en passant {{ .TokenHash }}&type=recovery dans le template email Supabase.
+                if (tokenHash) {
+                    const { error } = await supabase.auth.verifyOtp({
+                        token_hash: tokenHash,
+                        type: (otpType as any) || "recovery",
+                    })
+                    if (error) {
+                        setSessionStatus("invalid")
+                        setErrorMessage(error.message)
+                        return
+                    }
+                    window.history.replaceState(null, "", window.location.pathname)
+                    setSessionStatus("ready")
+                    return
+                }
+
                 // Flow PKCE (Supabase par défaut via @supabase/ssr) : ?code=<uuid>
+                // Requiert que le code_verifier soit en cookie (même navigateur).
                 if (code) {
                     const { error } = await supabase.auth.exchangeCodeForSession(code)
                     if (error) {

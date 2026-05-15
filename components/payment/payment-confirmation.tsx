@@ -15,6 +15,16 @@ interface PaymentConfirmationProps {
     paymentData?: any;
     purchaseMode?: 'individual' | 'team';
     onAccessCourse: () => void;
+    /** Si fourni en cas d'échec, remplace le simple reload(). Permet de
+     *  reprendre le flow de paiement (typiquement après un cancel/échec
+     *  côté passerelle). */
+    onRetry?: () => void;
+    /** Si fourni, affiche un CTA secondaire « Essayer une autre méthode »
+     *  pour basculer sur la passerelle de secours (PayTech) après un
+     *  cancel/échec PayDunya. */
+    onRetryWithOtherGateway?: () => void;
+    /** Nom de la passerelle d'origine, affiché dans le message d'échec. */
+    originGateway?: string;
 }
 
 export const PaymentConfirmation = ({
@@ -26,7 +36,10 @@ export const PaymentConfirmation = ({
     plan,
     paymentData,
     purchaseMode = 'individual',
-    onAccessCourse
+    onAccessCourse,
+    onRetry,
+    onRetryWithOtherGateway,
+    originGateway,
 }: PaymentConfirmationProps) => {
 
     const isTeamPurchase = purchaseMode === 'team';
@@ -81,6 +94,9 @@ export const PaymentConfirmation = ({
     };
 
     if (status === 'failed') {
+        const otherGatewayLabel = originGateway && originGateway.toLowerCase() === 'paydunya'
+            ? 'PayTech'
+            : 'une autre méthode';
         return (
             <Card className="border-red-200">
                 <CardHeader className="text-center">
@@ -88,17 +104,33 @@ export const PaymentConfirmation = ({
                         <XCircleIcon className="h-16 w-16 text-red-500" />
                     </div>
                     <CardTitle className="text-xl text-red-700">Échec du paiement</CardTitle>
-                    <CardDescription>Votre paiement n'a pas pu être traité</CardDescription>
+                    <CardDescription>
+                        {originGateway
+                            ? `Le paiement via ${originGateway} n'a pas abouti.`
+                            : "Votre paiement n'a pas pu être traité."}
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="bg-red-50 p-4 rounded-md mb-4">
                         <p className="text-sm text-red-700">
-                            Une erreur simulateur est survenue.
+                            Vous pouvez réessayer immédiatement
+                            {onRetryWithOtherGateway ? `, ou tenter avec ${otherGatewayLabel}` : ''}.
                         </p>
                     </div>
                 </CardContent>
-                <CardFooter>
-                    <Button variant="outline" className="w-full" onClick={() => window.location.reload()}>Réessayer</Button>
+                <CardFooter className="flex flex-col gap-2">
+                    <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={onRetry ?? (() => window.location.reload())}
+                    >
+                        Réessayer
+                    </Button>
+                    {onRetryWithOtherGateway && (
+                        <Button className="w-full" onClick={onRetryWithOtherGateway}>
+                            Réessayer avec {otherGatewayLabel}
+                        </Button>
+                    )}
                 </CardFooter>
             </Card>
         );

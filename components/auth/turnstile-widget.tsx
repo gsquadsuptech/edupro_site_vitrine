@@ -70,6 +70,10 @@ function loadTurnstileScript(): Promise<void> {
  * (Supabase invalide le token après usage). Utiliser une `key` qui change
  * à chaque tentative échouée.
  */
+// Désactivation forcée en code (en plus de la variable d'env). Repasser à
+// `false` quand le widget Turnstile + le captcha Supabase seront réactivés.
+const TURNSTILE_DISABLED = true
+
 export function TurnstileWidget({
     onToken,
     onExpire,
@@ -80,7 +84,7 @@ export function TurnstileWidget({
 }: TurnstileWidgetProps) {
     const containerRef = useRef<HTMLDivElement | null>(null)
     const widgetIdRef = useRef<string | null>(null)
-    const sitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+    const sitekey = TURNSTILE_DISABLED ? undefined : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
     useEffect(() => {
         if (!sitekey || !containerRef.current) return
@@ -119,4 +123,4 @@ export function TurnstileWidget({
 }
 
 export const isTurnstileConfigured = (): boolean =>
-    Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+    !TURNSTILE_DISABLED && Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)

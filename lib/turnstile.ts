@@ -20,10 +20,17 @@ export type TurnstileVerifyResult =
  * n'est pas configuré, on considère la vérification désactivée (pour ne pas
  * bloquer les déploiements avant l'activation côté Supabase + Cloudflare).
  */
+// Désactivation forcée en code (en plus de la variable d'env). Repasser à
+// `false` quand le widget Turnstile + le captcha Supabase seront réactivés.
+const TURNSTILE_DISABLED = true
+
 export async function verifyTurnstileToken(
     token: string | null | undefined,
     remoteIp?: string,
 ): Promise<TurnstileVerifyResult> {
+    if (TURNSTILE_DISABLED) {
+        return { success: true }
+    }
     const secret = process.env.TURNSTILE_SECRET_KEY
     if (!secret) {
         return { success: true }

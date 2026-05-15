@@ -45,6 +45,9 @@ interface PaymentProcessProps {
     onSuccess: (data: any) => void;
     onFailure: (error: any) => void;
     onPrevious?: () => void;
+    /** Force une passerelle spécifique côté serveur (utilisé par le bouton
+     *  « Réessayer avec PayTech » après un échec PayDunya). */
+    forcedGatewayId?: 'paydunya' | 'paytech' | 'intouch';
 }
 
 const FRONTEND_TO_BACKEND_PLAN: Record<string, string> = {
@@ -92,6 +95,7 @@ export const PaymentProcess = ({
     onSuccess,
     onFailure,
     onPrevious,
+    forcedGatewayId,
 }: PaymentProcessProps) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -311,6 +315,10 @@ export const PaymentProcess = ({
                 // Code promo validé côté client : le SaaS revalide avant
                 // d'initialiser la passerelle (cf. /api/payments/initialize).
                 discountCode: appliedDiscount?.code,
+                // Si fourni (CTA « Réessayer avec PayTech »), force la
+                // passerelle au lieu de laisser le serveur choisir
+                // payment_primary par défaut.
+                ...(forcedGatewayId ? { gatewayId: forcedGatewayId } : {}),
             };
 
             // Workaround : EnrollmentService.createLearningPathEnrollment lit

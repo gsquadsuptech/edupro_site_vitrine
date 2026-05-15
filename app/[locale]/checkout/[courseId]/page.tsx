@@ -33,6 +33,11 @@ export default function CheckoutPage({
     const searchParams = useSearchParams();
     const statusParam = searchParams.get('status');
     const tokenParam = searchParams.get('token');
+    // gateway = passerelle d'origine (ex: paydunya) propagée par /api/payments/cancel
+    // pour qu'on puisse proposer le bon CTA fallback (« Réessayer avec PayTech »).
+    const cancelGatewayParam = searchParams.get('gateway');
+    const allowRetryParam = searchParams.get('allow_retry') === '1';
+    const isCancelStatus = statusParam === 'cancel' || statusParam === 'cancelled';
 
     const { user, isAuthenticated } = useAuth();
     const { orgId, isBusinessAdmin, isTeachOnly } = useActiveBusinessOrg();
@@ -56,6 +61,9 @@ export default function CheckoutPage({
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [enrollingFree, setEnrollingFree] = useState(false);
     const [pendingEnrollment, setPendingEnrollment] = useState(false);
+    // forcedGatewayId est positionné par le CTA « Réessayer avec PayTech »
+    // après un cancel/échec PayDunya pour court-circuiter payment_primary.
+    const [forcedGatewayId, setForcedGatewayId] = useState<'paydunya' | 'paytech' | 'intouch' | undefined>(undefined);
 
     useEffect(() => {
         let isMounted = true;
@@ -179,11 +187,49 @@ export default function CheckoutPage({
         };
 
         fetchData();
-        
+
         return () => {
             isMounted = false;
         };
     }, [courseId, statusParam, tokenParam]);
+
+    // Détection d'un retour depuis /api/payments/cancel : on bascule sur
+    // l'écran de confirmation en mode failed pour proposer Réessayer +
+    // Réessayer-avec-une-autre-méthode (cf. PaymentConfirmation).
+    useEffect(() => {
+        if (isCancelStatus) {
+            setPaymentStatus('failed');
+            if (!selectedPlan) setSelectedPlan({ type: 'unknown', details: {} });
+            setCurrentStep(4);
+        }
+        // On ne re-déclenche pas tant que les query params n'ont pas changé.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isCancelStatus]);
+
+    // Nettoie les query params status/ref/gateway/allow_retry après lecture
+    // pour éviter qu'un refresh ne re-déclenche le mode failed.
+    const clearCancelParams = useCallback(() => {
+        const url = new URL(window.location.href);
+        ['status', 'ref', 'gateway', 'allow_retry', 'token'].forEach(k => url.searchParams.delete(k));
+        router.replace(url.pathname + (url.search || ''));
+    }, [router]);
+
+    // Handler du bouton « Réessayer » (même passerelle).
+    const handleRetrySamePayment = useCallback(() => {
+        setForcedGatewayId(undefined);
+        setPaymentStatus('pending');
+        clearCancelParams();
+        setCurrentStep(3);
+    }, [clearCancelParams]);
+
+    // Handler du CTA « Réessayer avec PayTech » (force la passerelle de secours).
+    const handleRetryWithOtherGateway = useCallback(() => {
+        const fallback = (cancelGatewayParam || '').toLowerCase() === 'paytech' ? 'paydunya' : 'paytech';
+        setForcedGatewayId(fallback as 'paydunya' | 'paytech');
+        setPaymentStatus('pending');
+        clearCancelParams();
+        setCurrentStep(3);
+    }, [cancelGatewayParam, clearCancelParams]);
 
     const handleFreeEnrollment = useCallback(async (session?: any) => {
         if (enrollingFree) return;
@@ -406,6 +452,7 @@ export default function CheckoutPage({
                         onSuccess={handlePaymentSuccess}
                         onFailure={handlePaymentFailure}
                         onPrevious={handlePrevious}
+                        forcedGatewayId={forcedGatewayId}
                     />
                 )}
 
@@ -428,6 +475,9 @@ export default function CheckoutPage({
                         paymentData={paymentData}
                         purchaseMode={purchaseMode}
                         onAccessCourse={handleAccessCourse}
+                        onRetry={handleRetrySamePayment}
+                        onRetryWithOtherGateway={allowRetryParam ? handleRetryWithOtherGateway : undefined}
+                        originGateway={cancelGatewayParam ?? undefined}
                     />
                 )}
             </div>
