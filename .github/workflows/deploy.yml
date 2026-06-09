@@ -59,6 +59,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Garde-fou : empêche un déploiement prod qui pointerait vers la base
+      # Supabase de staging (ou inversement). NEXT_PUBLIC_* sont figés dans le
+      # bundle au build — une mauvaise URL ici = prod servant les données de test.
+      - name: Guard — Supabase project matches environment
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+        run: |
+          set -euo pipefail
+          PROD_REF="cgvetdddfskhrrjziiig"
+          STAGING_REF="qofruhdfxvqfsdursqjv"
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            case "$SUPABASE_URL" in
+              *"$PROD_REF"*) echo "OK — build PROD pointe vers la base prod ($PROD_REF)";;
+              *) echo "::error::Build PROD pointe vers une mauvaise base Supabase ($SUPABASE_URL). Attendu le projet prod $PROD_REF. Corriger le secret NEXT_PUBLIC_SUPABASE_URL de l'environnement GitHub 'production'."; exit 1;;
+            esac
+          else
+            case "$SUPABASE_URL" in
+              *"$STAGING_REF"*) echo "OK — build STAGING pointe vers la base staging ($STAGING_REF)";;
+              *"$PROD_REF"*) echo "::error::Build STAGING pointe vers la base PROD ($PROD_REF). Corriger le secret NEXT_PUBLIC_SUPABASE_URL de l'environnement 'staging'."; exit 1;;
+              *) echo "::warning::URL Supabase staging inattendue ($SUPABASE_URL).";;
+            esac
+          fi
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
