@@ -33,7 +33,7 @@ export default async function CategoryPage({
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
-                <CategoryHero categorySlug={slug} courseCount={courses.length} />
+                <CategoryHero categoryName={category.name} categorySlug={slug} courseCount={courses.length} backgroundImage={category.image_url} />
                 <SubCategories />
                 <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">

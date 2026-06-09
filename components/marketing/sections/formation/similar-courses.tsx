@@ -1,15 +1,16 @@
 import { Course } from "@/lib/supabase/types"
-import { FormationCard } from "@/components/marketing/sections/marketplace/formation-card"
-import { Skeleton } from "@/components/ui/skeleton"
+import { FormationCard } from "@/components/marketing/marketplace/formation-card"
 
 interface SimilarCoursesProps {
   courses?: Course[]
 }
 
 export function SimilarCourses({ courses = [] }: SimilarCoursesProps) {
-  // If no courses (or empty array), show skeletons as requested
-  const showSkeletons = courses.length === 0
-  const displayCourses = showSkeletons ? Array(4).fill(null) : courses
+  // Le fetch est résolu côté serveur : aucune donnée = aucun cours similaire.
+  // On masque entièrement la section plutôt que d'afficher un loader figé.
+  if (!courses || courses.length === 0) {
+    return null
+  }
 
   return (
     <section className="border-t border-border py-16">
@@ -18,20 +19,9 @@ export function SimilarCourses({ courses = [] }: SimilarCoursesProps) {
         <p className="mb-8 text-muted-foreground">Les apprenants ont aussi aimé</p>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {showSkeletons
-            ? displayCourses.map((_, index) => (
-              <div key={index} className="flex flex-col space-y-3">
-                <Skeleton className="h-[200px] w-full rounded-xl" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-[250px]" />
-                  <Skeleton className="h-4 w-[200px]" />
-                </div>
-              </div>
-            ))
-            : courses.map((course) => (
-              <FormationCard key={course.id || 'skeleton'} course={course} />
-            ))
-          }
+          {courses.map((course) => (
+            <FormationCard key={course.id} course={course} />
+          ))}
         </div>
       </div>
     </section>

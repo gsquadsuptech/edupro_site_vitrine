@@ -3,8 +3,14 @@ import { ContextualHero } from "@/components/marketing/sections/category/context
 import { SubCategories } from "@/components/marketing/sections/category/sub-categories";
 import { SearchFilters } from "@/components/marketing/sections/marketplace/search-filters";
 import { SearchResults } from "@/components/marketing/sections/marketplace/search-results";
+import { CatalogueToolbar } from "@/components/marketing/sections/marketplace/catalogue-toolbar";
+import { PaginationControls } from "@/components/marketing/shared/pagination-controls";
 import { CategoryService } from "@/services/category-service";
 import { MarketplaceService } from "@/services/marketplace-service";
+import type { CourseSort } from "@/services/course-service";
+
+const PAGE_SIZE = 12;
+const SORT_VALUES: CourseSort[] = ["recent", "price_asc", "price_desc", "popular", "rating"];
 
 export const metadata: Metadata = {
     title: "Catalogue - EduPro",
@@ -30,6 +36,11 @@ export default async function CatalogueAllPage({
     const itemType: 'course' | 'learning_path' | 'all' =
         typeQuery === 'course' || typeQuery === 'learning_path' ? typeQuery : 'all';
 
+    const sortQuery = resolvedSearchParams?.sort as string;
+    const sort: CourseSort = SORT_VALUES.includes(sortQuery as CourseSort) ? (sortQuery as CourseSort) : 'recent';
+    const page = Math.max(1, Number(resolvedSearchParams?.page) || 1);
+    const offset = (page - 1) * PAGE_SIZE;
+
     // Quand l'utilisateur filtre par catégorie, l'API courses est plus fine — on bascule en courses-only
     // (la taxonomie marketplace_categories ne s'applique pas encore aux learning_paths).
     const effectiveType: 'course' | 'learning_path' | 'all' =
@@ -44,7 +55,9 @@ export default async function CatalogueAllPage({
             minPrice,
             maxPrice,
             level: levels,
-            limit: 12,
+            sort,
+            limit: PAGE_SIZE,
+            offset,
         }),
     ]);
 
@@ -69,7 +82,11 @@ export default async function CatalogueAllPage({
                 <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
                         <SearchFilters categories={filterCategories} />
-                        <SearchResults items={items} />
+                        <div className="flex-1">
+                            <CatalogueToolbar total={total} />
+                            <SearchResults items={items} />
+                            <PaginationControls totalCount={total} pageSize={PAGE_SIZE} />
+                        </div>
                     </div>
                 </div>
             </main>

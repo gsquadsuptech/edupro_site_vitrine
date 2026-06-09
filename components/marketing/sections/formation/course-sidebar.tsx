@@ -3,13 +3,17 @@
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { CheckCircle2, Heart, Bookmark, Share2, Smartphone, Monitor, Trophy, Clock, Globe } from "lucide-react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { useActiveBusinessOrg } from "@/hooks/use-active-business-org"
+import { useWishlist } from "@/hooks/use-wishlist"
+import { useSavedCourse } from "@/hooks/use-saved-course"
 import { getAvailableModes, pickDisplayCohort } from "@/lib/pricing"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
+import { GiftDialog } from "./gift-dialog"
 import { CoursePriceDisplay } from "./course-price-display"
 
 interface CourseSidebarProps {
@@ -21,11 +25,13 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
   const { isBusinessAdmin } = useActiveBusinessOrg()
-  const isAutoFormation = course.format === 'auto-formation' || !course.format
+  // "M'avertir pour la prochaine session" : uniquement pour les cours à
+  // cohortes/sessions configurées dont AUCUNE session n'est ouverte.
+  // Jamais pour les cours standalone (auto-formation) ni les cours sans cohorte.
+  const isSessionCourse = course.format === 'session'
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
   const hasAnyCohort = cohorts.length > 0
-  const showEnrollButton = isAutoFormation || hasOpenCohort
-  const showWaitlist = !isAutoFormation && !hasOpenCohort
+  const showWaitlist = isSessionCourse && hasAnyCohort && !hasOpenCohort
 
   const displayCohort = pickDisplayCohort(cohorts)
   // L'achat équipe V1 = paiement unique uniquement. Ne montrer le bouton que si
@@ -36,6 +42,23 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
     : course.one_time_price
   const supportsOneTime = getAvailableModes(course, displayCohort).oneTime && !!effectiveOneTimePrice
   const showTeamPurchaseCTA = isBusinessAdmin && supportsOneTime
+
+  const { isWishlisted, isLoading: wishlistLoading, toggle: toggleWishlist } = useWishlist(course.id)
+  const { isSaved, isLoading: savedLoading, toggle: toggleSaved } = useSavedCourse(course.id)
+
+  const handleShare = async () => {
+    const url = typeof window !== 'undefined' ? window.location.href : ''
+    try {
+      if (typeof navigator !== 'undefined' && navigator.share) {
+        await navigator.share({ title: course.title, url })
+      } else if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(url)
+        toast.success("Lien copié dans le presse-papier")
+      }
+    } catch {
+      // l'utilisateur a annulé le partage natif — silencieux
+    }
+  }
 
   // Count total lessons from sections
   const totalLessons = course.sections?.reduce((acc, s) => acc + (s.lessons?.length || 0), 0) || 0
@@ -60,17 +83,35 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
         )}
 
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm">
-            <Heart className="mr-1.5 h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">Favoris</span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleWishlist}
+            disabled={wishlistLoading}
+            aria-pressed={isWishlisted}
+            className={`flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm ${isWishlisted ? "text-red-500 border-red-200" : ""}`}
+          >
+            <Heart className={`mr-1.5 h-3.5 w-3.5 shrink-0 ${isWishlisted ? "fill-current" : ""}`} />
+            <span className="truncate">{isWishlisted ? "Dans vos favoris" : "Favoris"}</span>
           </Button>
-          <Button variant="outline" size="sm" className="flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm">
-            <Bookmark className="mr-1.5 h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">Sauvegarder</span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleSaved}
+            disabled={savedLoading}
+            aria-pressed={isSaved}
+            className={`flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm ${isSaved ? "text-primary border-primary/30" : ""}`}
+          >
+            <Bookmark className={`mr-1.5 h-3.5 w-3.5 shrink-0 ${isSaved ? "fill-current" : ""}`} />
+            <span className="truncate">{isSaved ? "Sauvegardé" : "Sauvegarder"}</span>
           </Button>
         </div>
 
-        <Button variant="ghost" className="w-full text-muted-foreground hover:text-primary transition-colors">
+        <Button
+          variant="ghost"
+          onClick={handleShare}
+          className="w-full text-muted-foreground hover:text-primary transition-colors"
+        >
           <Share2 className="mr-2 h-4 w-4" />
           Partager cette formation
         </Button>
@@ -121,9 +162,7 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
       </div>
 
       <div className="mt-8 space-y-3">
-        <Button variant="outline" className="w-full border-primary/20 hover:bg-primary/5 text-primary transition-all">
-          Offrir en cadeau
-        </Button>
+        <GiftDialog courseId={course.id} courseTitle={course.title} courseSlug={course.slug} />
         {showTeamPurchaseCTA && (
           <Link href={`/${locale}/checkout/${course.id}?purchaseMode=team`} className="block">
             <Button variant="outline" className="w-full border-primary/20 hover:bg-primary/5 text-primary transition-all">

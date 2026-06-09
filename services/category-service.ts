@@ -7,7 +7,7 @@ export const CategoryService = {
 
         const { data, error } = await supabase
             .from('marketplace_categories')
-            .select('id, name, slug, description, icon')
+            .select('id, name, slug, description, icon, image_url')
             .order('name')
 
         if (error) {
@@ -24,7 +24,7 @@ export const CategoryService = {
         const [categoriesRes, marketplaceCoursesRes] = await Promise.all([
             supabase
                 .from('marketplace_categories')
-                .select('id, name, slug, description, icon')
+                .select('id, name, slug, description, icon, image_url')
                 .order('name'),
             supabase
                 .from('marketplace_courses')
@@ -66,7 +66,7 @@ export const CategoryService = {
 
         const { data, error } = await supabase
             .from('marketplace_categories')
-            .select('id, name, slug, description, icon')
+            .select('id, name, slug, description, icon, image_url')
             .eq('slug', slug)
             .single()
 

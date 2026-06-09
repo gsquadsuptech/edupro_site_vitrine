@@ -4,6 +4,15 @@ import { useState } from "react"
 import { ChevronDown, ChevronRight, Play, Lock, FileText, CheckCircle } from "lucide-react"
 
 import { Course } from "@/lib/supabase/types"
+import { LessonPreviewDialog } from "../lesson-preview-dialog"
+
+interface CurriculumItem {
+  title: string
+  duration: string
+  type: string
+  preview: boolean
+  videoUrl?: string | null
+}
 
 interface CurriculumTabProps {
   course?: Course
@@ -11,11 +20,12 @@ interface CurriculumTabProps {
 
 export function CurriculumTab({ course }: CurriculumTabProps) {
   const [expandedSections, setExpandedSections] = useState<number[]>([0])
+  const [previewLesson, setPreviewLesson] = useState<{ title: string; videoUrl: string | null } | null>(null)
 
   // Use dynamic data if available, otherwise fall back to static
   const hasDynamicData = course?.sections && course.sections.length > 0
 
-  const curriculum = hasDynamicData ? course.sections!.map(section => ({
+  const curriculum: { title: string; lessons: number; duration: string; items: CurriculumItem[] }[] = hasDynamicData ? course!.sections!.map(section => ({
     title: section.title,
     lessons: section.lessons.length,
     duration: "Unknown", // Calc from lessons if needed
@@ -23,7 +33,8 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
       title: lesson.title,
       duration: lesson.duration,
       type: lesson.type,
-      preview: lesson.is_preview
+      preview: lesson.is_preview,
+      videoUrl: lesson.video_url,
     }))
   })) : [
     {
@@ -94,6 +105,12 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
 
   return (
     <div className="rounded-xl border border-border bg-card p-6">
+      <LessonPreviewDialog
+        open={previewLesson !== null}
+        onOpenChange={(o) => { if (!o) setPreviewLesson(null) }}
+        title={previewLesson?.title || ''}
+        videoUrl={previewLesson?.videoUrl ?? null}
+      />
       <div className="mb-6">
         <h3 className="mb-2 text-xl font-bold">Curriculum</h3>
         <p className="text-sm text-muted-foreground">{totalLessons} leçons • {curriculum.length} modules</p>
@@ -125,27 +142,40 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
 
             {expandedSections.includes(sectionIndex) && (
               <div className="border-t border-border bg-background">
-                {section.items.map((item, itemIndex) => (
-                  <div
-                    key={itemIndex}
-                    className="flex items-center justify-between border-b border-border p-4 last:border-b-0"
-                  >
-                    <div className="flex items-center gap-3">
-                      {item.preview ? (
-                        <div className="text-primary">{getIcon(item.type)}</div>
-                      ) : (
-                        <Lock className="h-4 w-4 text-muted-foreground" />
-                      )}
-                      <div>
-                        <div className="text-sm font-medium">
-                          {itemIndex + 1}. {item.title}
+                {section.items.map((item, itemIndex) => {
+                  const canPreview = item.preview && item.type === 'video' && !!item.videoUrl
+                  const RowTag = canPreview ? 'button' : 'div'
+                  return (
+                    <RowTag
+                      key={itemIndex}
+                      type={canPreview ? 'button' : undefined}
+                      onClick={canPreview ? () => setPreviewLesson({ title: item.title, videoUrl: item.videoUrl ?? null }) : undefined}
+                      className={`flex w-full items-center justify-between border-b border-border p-4 text-left last:border-b-0 ${canPreview ? 'cursor-pointer hover:bg-primary/5 transition-colors' : ''}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        {item.preview ? (
+                          <div className="text-primary">{getIcon(item.type)}</div>
+                        ) : (
+                          <Lock className="h-4 w-4 text-muted-foreground" />
+                        )}
+                        <div>
+                          <div className="text-sm font-medium">
+                            {itemIndex + 1}. {item.title}
+                          </div>
+                          {item.preview && (
+                            <span className="text-xs font-semibold text-primary">
+                              {canPreview ? "Aperçu gratuit" : "Aperçu"}
+                            </span>
+                          )}
                         </div>
-                        {item.preview && <span className="text-xs text-primary">[PREVIEW]</span>}
                       </div>
-                    </div>
-                    <span className="text-sm text-muted-foreground">{item.duration}</span>
-                  </div>
-                ))}
+                      <div className="flex items-center gap-3">
+                        {canPreview && <Play className="h-4 w-4 text-primary" fill="currentColor" />}
+                        <span className="text-sm text-muted-foreground">{item.duration}</span>
+                      </div>
+                    </RowTag>
+                  )
+                })}
               </div>
             )}
           </div>

@@ -1,16 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { Star, Users, Clock, Heart, Bookmark, BookOpen } from "lucide-react"
+import { Star, Users, Clock, Heart, BookOpen, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { toast } from "sonner"
-import { createClient } from "@/lib/supabase/client"
 
 import { Course, LearningPath, MarketplaceItem } from "@/lib/supabase/types"
-import { WishlistService } from "@/services/wishlist-service"
+import { useWishlist } from "@/hooks/use-wishlist"
 
 type FormationCardProps =
   | { item: MarketplaceItem; course?: never; badge?: string }
@@ -80,8 +77,13 @@ function buildCourseViewModel(course: Course, locale: string): CardViewModel {
     enrolledCount: course.enrolled_count || 0,
     duration: course.duration,
     topBadgeLabel: course.category?.name || "Général",
-    subtitle: course.instructor?.institute || course.instructor?.name || "Instructeur",
-    subtitleIcon: Users,
+    // Si aucun formateur n'est assigné, on affiche l'institut propriétaire.
+    subtitle: course.instructor
+      ? (course.instructor.is_institute
+          ? (course.instructor.institute || course.instructor.name)
+          : course.instructor.name)
+      : "Institut",
+    subtitleIcon: course.instructor?.is_institute ? Building2 : Users,
     supportsWishlist: true,
     pricing: {
       pricing_modes: course.pricing_modes,
@@ -168,8 +170,6 @@ export function FormationCard(props: FormationCardProps) {
   const { badge } = props
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
-  const [isWishlisted, setIsWishlisted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
   const normalizedItem: MarketplaceItem = props.item
     ? props.item
@@ -186,50 +186,12 @@ export function FormationCard(props: FormationCardProps) {
   const { label: priceLabel, priceDisplay, secondary } = renderPriceBlock(vm.pricing)
   const SubtitleIcon = vm.subtitleIcon
 
-  useEffect(() => {
-    if (!vm.supportsWishlist) return
-    checkWishlistStatus()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vm.id])
+  const { isWishlisted, toggle } = useWishlist(vm.supportsWishlist ? vm.id : undefined)
 
-  const checkWishlistStatus = async () => {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user && vm.id) {
-      const inWishlist = await WishlistService.isInWishlist(user.id, vm.id)
-      setIsWishlisted(inWishlist)
-    }
-  }
-
-  const toggleWishlist = async (e: React.MouseEvent) => {
+  const toggleWishlist = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    if (isLoading) return
-
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      toast.error("Vous devez être connecté pour ajouter aux favoris")
-      return
-    }
-    if (!vm.id) return
-
-    setIsLoading(true)
-    try {
-      if (isWishlisted) {
-        await WishlistService.removeFromWishlist(user.id, vm.id)
-        setIsWishlisted(false)
-        toast.success("Retiré des favoris")
-      } else {
-        await WishlistService.addToWishlist(user.id, vm.id)
-        setIsWishlisted(true)
-        toast.success("Ajouté aux favoris")
-      }
-    } catch (error) {
-      toast.error("Une erreur est survenue")
-    } finally {
-      setIsLoading(false)
-    }
+    toggle()
   }
 
   return (
@@ -300,13 +262,11 @@ export function FormationCard(props: FormationCardProps) {
                   variant="ghost"
                   className={`h-8 w-8 ${isWishlisted ? "text-red-500 hover:text-red-600" : "text-muted-foreground hover:text-red-500"}`}
                   onClick={toggleWishlist}
+                  aria-label={isWishlisted ? "Retirer des favoris" : "Ajouter aux favoris"}
                 >
                   <Heart className={`h-4 w-4 ${isWishlisted ? "fill-current" : ""}`} />
                 </Button>
               )}
-              <Button size="icon" variant="ghost" className="h-8 w-8">
-                <Bookmark className="h-4 w-4" />
-              </Button>
             </div>
           </div>
 

@@ -23,10 +23,23 @@ export type Course = {
         avatar_url: string | null
         role?: string
         institute?: string | null
+        /** true quand le "formateur" affiché est en réalité l'institut propriétaire (aucun formateur assigné). */
+        is_institute?: boolean
+        bio?: string | null
+        specialization?: string | null
+        website_url?: string | null
         courses_count?: number
         students_count?: number
         rating?: number
         organization_id?: string | null
+    } | null
+    /** Institut (organisation) propriétaire du cours. */
+    organization?: {
+        id: string
+        name: string
+        logo_url: string | null
+        description: string | null
+        website_url: string | null
     } | null
     highlights?: string[]
     objectives?: string[]
@@ -87,6 +100,8 @@ export type Category = {
     slug: string
     description: string | null
     icon: string | null
+    /** Image de fond de catégorie (gérée depuis le superadmin marketplace). */
+    image_url?: string | null
     courses_count?: number
 }
 
@@ -178,6 +193,7 @@ export type Cohort = {
     installments: any[] | null
     use_course_price: boolean | null
     // Relations
+    instructors?: { name: string; avatar_url: string | null }[]
     sessions?: CohortSession[]
 }
 

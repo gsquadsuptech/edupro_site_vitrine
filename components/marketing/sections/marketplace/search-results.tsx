@@ -19,19 +19,11 @@ export function SearchResults({ courses = [], items }: SearchResultsProps) {
   return (
     <div className="flex-1">
       {displayItems.length > 0 ? (
-        <>
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {displayItems.map((entry) => (
-              <FormationCard key={`${entry.kind}-${entry.data.id}`} item={entry} />
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Button size="lg" variant="outline">
-              Charger plus de formations
-            </Button>
-          </div>
-        </>
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {displayItems.map((entry) => (
+            <FormationCard key={`${entry.kind}-${entry.data.id}`} item={entry} />
+          ))}
+        </div>
       ) : (
         <EmptyState />
       )}

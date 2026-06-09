@@ -1,5 +1,5 @@
 import { Course, LearningPath, MarketplaceItem } from '@/lib/supabase/types'
-import { CourseService, CourseFilters } from './course-service'
+import { CourseService, CourseFilters, CourseSort } from './course-service'
 import { LearningPathService, LearningPathFilters } from './learning-path-service'
 
 export interface MarketplaceListFilters {
@@ -9,6 +9,7 @@ export interface MarketplaceListFilters {
     minPrice?: number
     maxPrice?: number
     category?: string  // courses only — categories taxonomy ne s'applique pas encore aux LP
+    sort?: CourseSort
     limit?: number
     offset?: number
 }
@@ -26,6 +27,7 @@ export const MarketplaceService = {
             minPrice: filters.minPrice,
             maxPrice: filters.maxPrice,
             level: filters.level,
+            sort: filters.sort,
             limit,
             offset,
         }
@@ -54,9 +56,14 @@ export const MarketplaceService = {
             }
         }
 
+        // Pagination type='all' : on ne peut pas appliquer le même offset aux deux
+        // sources puis tronquer (perd des items + pages vides). On récupère le
+        // top (offset+limit) GLOBAL de chaque source (offset 0), on fusionne/trie,
+        // puis on tranche la vraie page. total = nombre combiné réel.
+        const window = offset + limit
         const [coursesRes, lpRes] = await Promise.all([
-            CourseService.searchCourses(courseFilters),
-            LearningPathService.searchLearningPaths(lpFilters),
+            CourseService.searchCourses({ ...courseFilters, offset: 0, limit: window }),
+            LearningPathService.searchLearningPaths({ ...lpFilters, offset: 0, limit: window }),
         ])
 
         const courseItems: MarketplaceItem[] = coursesRes.courses.map((data) => ({ kind: 'course' as const, data }))
@@ -68,7 +75,7 @@ export const MarketplaceService = {
             return dateB.localeCompare(dateA)
         })
 
-        return { items: merged.slice(0, limit), total: coursesRes.total + lpRes.total }
+        return { items: merged.slice(offset, offset + limit), total: coursesRes.total + lpRes.total }
     },
 
     async getFeaturedItems(limit = 8): Promise<MarketplaceItem[]> {

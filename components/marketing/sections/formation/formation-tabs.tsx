@@ -16,7 +16,9 @@ interface FormationTabsProps {
 export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
   const hasCohorts = cohorts && cohorts.length > 0;
   const gridCols = hasCohorts ? "grid-cols-5" : "grid-cols-4";
-  
+  // Onglet "Institut" si aucun formateur n'est assigné (institut propriétaire).
+  const instructorTabLabel = course.instructor?.is_institute ? "Institut" : "Formateur";
+
   return (
     <section className="py-12">
       <Tabs defaultValue="apercu" className="w-full">
@@ -25,7 +27,7 @@ export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
             <TabsTrigger value="apercu" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Aperçu</TabsTrigger>
             {hasCohorts && <TabsTrigger value="sessions" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Sessions</TabsTrigger>}
             <TabsTrigger value="programme" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Programme</TabsTrigger>
-            <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur</TabsTrigger>
+            <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">{instructorTabLabel}</TabsTrigger>
             <TabsTrigger value="avis" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Avis</TabsTrigger>
           </TabsList>
         </div>

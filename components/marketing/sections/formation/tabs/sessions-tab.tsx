@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, Users, CheckCircle2, XCircle, AlertTriangle } from "lucide-react"
+import { Calendar, Users, CheckCircle2, XCircle, AlertTriangle, GraduationCap } from "lucide-react"
 import { Cohort, Course } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { format } from "date-fns"
@@ -126,6 +126,39 @@ export function SessionsTab({ course, cohorts }: SessionsTabProps) {
                       {" "}inscrits
                     </span>
                   </div>
+
+                  {cohort.instructors && cohort.instructors.length > 0 ? (
+                    <div className="flex items-center gap-2">
+                      <div className="flex -space-x-2">
+                        {cohort.instructors.slice(0, 3).map((ins, i) => (
+                          ins.avatar_url ? (
+                            <img
+                              key={i}
+                              src={ins.avatar_url}
+                              alt={ins.name}
+                              className="h-6 w-6 rounded-full border-2 border-card object-cover"
+                            />
+                          ) : (
+                            <div key={i} className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-card bg-primary/10 text-[10px] font-semibold text-primary">
+                              {ins.name?.charAt(0).toUpperCase() || '?'}
+                            </div>
+                          )
+                        ))}
+                      </div>
+                      <span className="text-foreground/80">
+                        {cohort.instructors.map(i => i.name).filter(Boolean).join(', ')}
+                      </span>
+                    </div>
+                  ) : course.instructor && (
+                    <div className="flex items-center gap-2 text-foreground/70">
+                      <GraduationCap className="h-4 w-4 shrink-0 text-primary" />
+                      <span>
+                        {course.instructor.is_institute
+                          ? (course.instructor.institute || course.instructor.name)
+                          : course.instructor.name}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="shrink-0 sm:w-auto">

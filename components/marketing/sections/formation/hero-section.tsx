@@ -10,8 +10,12 @@ interface FormationHeroProps {
 }
 
 export function FormationHero({ course }: FormationHeroProps) {
-  // Safe access / Fallbacks
-  const instructorName = course.instructor?.institute || course.instructor?.name || "Instructeur"
+  // Safe access / Fallbacks — affiche l'institut si aucun formateur n'est assigné.
+  const isInstitute = course.instructor?.is_institute
+  const instructorName = course.instructor
+    ? (isInstitute ? (course.instructor.institute || course.instructor.name) : course.instructor.name)
+    : "Institut"
+  const byLabel = isInstitute ? "Par l'institut" : "Par"
   const categoryName = course.category?.name || "Général"
 
   const reviews = course.reviews || []
@@ -87,9 +91,11 @@ export function FormationHero({ course }: FormationHeroProps) {
               <span className="font-medium text-foreground/80">{course.enrolled_count || 0} apprenants</span>
             </div>
             
-            <div className="flex items-center gap-2 group border-l border-border/50 pl-6">
-              <span className="text-muted-foreground italic">Par <strong className="text-foreground not-italic group-hover:text-primary transition-colors cursor-pointer">{instructorName}</strong></span>
-            </div>
+            {course.instructor && (
+              <div className="flex items-center gap-2 border-l border-border/50 pl-6">
+                <span className="text-muted-foreground italic">{byLabel} <strong className="text-foreground not-italic">{instructorName}</strong></span>
+              </div>
+            )}
 
             {reviewCount > 0 && (
             <div className="flex items-center gap-2 border-l border-border/50 pl-6">

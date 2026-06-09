@@ -26,11 +26,16 @@ export default async function FormationPage({
         notFound();
     }
 
-    const similarCourses = await CourseService.getRelatedCourses(
-        course.category?.slug || 'general',
-        course.id,
-        course.instructor?.organization_id
-    );
+    // Recommandations via l'endpoint SaaS dédié ; fallback sur l'heuristique
+    // locale (même institut → même catégorie) si l'API ne renvoie rien.
+    let similarCourses = await CourseService.getSimilarCoursesFromApi(course.id, 4);
+    if (similarCourses.length === 0) {
+        similarCourses = await CourseService.getRelatedCourses(
+            course.category?.slug || 'general',
+            course.id,
+            course.instructor?.organization_id
+        );
+    }
 
     const cohorts = await CourseService.getCohortsByCourseId(course.id);
 

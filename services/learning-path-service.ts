@@ -205,6 +205,8 @@ export const LearningPathService = {
             .eq('marketplace.review_status', 'published')
             .eq('marketplace.searchable', true)
             .eq('marketplace.featured', true)
+            // Exclure les parcours sur invitation (privés) — cf. visibilité cours.
+            .or('access_type.is.null,access_type.neq.invitation')
             .order('featured_order', { foreignTable: 'marketplace_learning_paths', ascending: true, nullsFirst: false })
             .limit(limit)
 
@@ -226,6 +228,7 @@ export const LearningPathService = {
             .eq('status', 'published')
             .eq('marketplace.review_status', 'published')
             .eq('marketplace.searchable', true)
+            .or('access_type.is.null,access_type.neq.invitation')
 
         if (searchTerm) query = query.ilike('title', `%${searchTerm}%`)
         if (level && level.length > 0) query = query.in('level', level)
@@ -262,6 +265,8 @@ export const LearningPathService = {
             .eq('slug', slug)
             .eq('status', 'published')
             .eq('marketplace.review_status', 'published')
+            .eq('marketplace.searchable', true)
+            .or('access_type.is.null,access_type.neq.invitation')
             .maybeSingle()
 
         if (error) {
@@ -282,6 +287,8 @@ export const LearningPathService = {
             .eq('id', id)
             .eq('status', 'published')
             .eq('marketplace.review_status', 'published')
+            .eq('marketplace.searchable', true)
+            .or('access_type.is.null,access_type.neq.invitation')
             .maybeSingle()
 
         if (error) {
