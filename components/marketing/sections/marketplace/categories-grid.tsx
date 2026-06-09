@@ -46,27 +46,12 @@ export function CategoriesGrid({ locale = 'fr', categories }: CategoriesGridProp
 
               return (
                 <Link key={`${category.slug}-${index}`} href={`/${locale}/catalogue/all?category=${category.slug}`}>
-                  <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary hover:shadow-lg">
-                    {category.image_url ? (
-                      <div className="relative h-32 w-full overflow-hidden">
-                        <img
-                          src={category.image_url}
-                          alt={category.name}
-                          loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      </div>
-                    ) : null}
-                    <div className="p-6">
-                      {!category.image_url && (
-                        <div className={`mb-4 inline-flex rounded-lg bg-gradient-to-br ${color} p-3`}>
-                          <Icon className="h-6 w-6 text-white" />
-                        </div>
-                      )}
-                      <h3 className="mb-2 text-lg font-semibold group-hover:text-primary">{category.name}</h3>
-                      <p className="text-sm text-muted-foreground">{category.courses_count || 0} cours</p>
+                  <div className="group relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:border-primary hover:shadow-lg">
+                    <div className={`mb-4 inline-flex rounded-lg bg-gradient-to-br ${color} p-3`}>
+                      <Icon className="h-6 w-6 text-white" />
                     </div>
+                    <h3 className="mb-2 text-lg font-semibold group-hover:text-primary">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground">{category.courses_count || 0} cours</p>
                   </div>
                 </Link>
               )
