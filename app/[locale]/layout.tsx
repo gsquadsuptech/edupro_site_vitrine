@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header/header";
+import { StagingBanner } from "@/components/layout/staging-banner";
 import { Footer } from "@/components/layout/footer/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { RecaptchaProvider } from "@/components/marketing/recaptcha-provider";
@@ -87,6 +88,7 @@ export default async function LocaleLayout({
                         >
                             <RecaptchaProvider>
                                 <div className="flex min-h-screen flex-col">
+                                    <StagingBanner />
                                     <Header />
                                     <main className="flex-1">{children}</main>
                                     <Footer />

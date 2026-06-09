@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings, GraduationCap } from "lucide-react"
+import { Menu, User as UserIcon, LogOut, LayoutDashboard, Loader2, Settings, GraduationCap, Heart } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/useAuth"
@@ -268,6 +268,11 @@ export function Header() {
                           <span>{locale === 'fr' ? dash.labelFr : dash.labelEn}</span>
                         </DropdownMenuItem>
                       ))}
+
+                      <DropdownMenuItem onClick={() => router.push(`/${locale}/mes-favoris`)} className="cursor-pointer">
+                        <Heart className="mr-2 h-4 w-4" />
+                        <span>{locale === 'fr' ? 'Mes favoris' : 'My favorites'}</span>
+                      </DropdownMenuItem>
 
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer focus:text-red-600">

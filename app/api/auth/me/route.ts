@@ -14,50 +14,46 @@ export async function GET() {
             return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
         }
 
-        // 2. Use service_role key to query organization_members (bypasses RLS)
-        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-            return NextResponse.json(
-                { error: "Configuration serveur incorrecte" },
-                { status: 500 }
-            )
-        }
+        // 2. Enrichissement des rôles via organization_members (service_role,
+        //    bypass RLS). BEST-EFFORT : une absence de clé service ou une erreur
+        //    de requête ne doit PAS bloquer l'utilisateur — un apprenant connecté
+        //    doit toujours obtenir au minimum le rôle 'student' (sinon le menu
+        //    « Espace Formation » disparaît, cf. divergence staging/prod).
+        let memberships: Array<{ role: string | null; role_code: string | null; organization_id: string | null }> = []
 
-        const supabaseAdmin = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL,
-            process.env.SUPABASE_SERVICE_ROLE_KEY,
-            {
-                auth: {
-                    autoRefreshToken: false,
-                    persistSession: false
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+            try {
+                const supabaseAdmin = createClient(
+                    process.env.NEXT_PUBLIC_SUPABASE_URL,
+                    process.env.SUPABASE_SERVICE_ROLE_KEY,
+                    { auth: { autoRefreshToken: false, persistSession: false } }
+                )
+
+                const { data, error: memberError } = await supabaseAdmin
+                    .from('organization_members')
+                    .select('role, role_code, organization_id, is_active')
+                    .eq('user_id', user.id)
+                    .eq('is_active', true)
+
+                if (memberError) {
+                    console.error('[/api/auth/me] Error fetching memberships (non-fatal):', memberError)
+                } else {
+                    memberships = data ?? []
                 }
+            } catch (e) {
+                console.error('[/api/auth/me] Membership lookup failed (non-fatal):', e)
             }
-        )
-
-        // 3. Query organization_members for this user's roles
-        const { data: memberships, error: memberError } = await supabaseAdmin
-            .from('organization_members')
-            .select('role, role_code, organization_id, is_active')
-            .eq('user_id', user.id)
-            .eq('is_active', true)
-
-        if (memberError) {
-            console.error('[/api/auth/me] Error fetching memberships:', memberError)
-            return NextResponse.json({ error: 'Failed to fetch roles' }, { status: 500 })
+        } else {
+            console.warn('[/api/auth/me] SUPABASE_SERVICE_ROLE_KEY absent — rôles limités au fallback (student).')
         }
 
-        // 4. Extract unique roles
-        const roles = memberships?.map(m => m.role).filter(Boolean) ?? []
-        const uniqueRoles = [...new Set(roles)]
+        // 3. Rôles uniques depuis les memberships, sinon metadata, sinon 'student'
+        const uniqueRoles = [...new Set(memberships.map(m => m.role).filter(Boolean) as string[])]
 
-        // 5. Fallback to user_metadata.role if no memberships found
         if (uniqueRoles.length === 0) {
             const metadataRole = user.user_metadata?.role
-            if (metadataRole) {
-                uniqueRoles.push(metadataRole)
-            }
+            if (metadataRole) uniqueRoles.push(metadataRole)
         }
-
-        // 6. Default to 'student' if no roles found at all
         if (uniqueRoles.length === 0) {
             uniqueRoles.push('student')
         }
@@ -66,11 +62,11 @@ export async function GET() {
             id: user.id,
             email: user.email,
             roles: uniqueRoles,
-            organizations: memberships?.map(m => ({
+            organizations: memberships.map(m => ({
                 organization_id: m.organization_id,
                 role: m.role,
                 role_code: m.role_code,
-            })) ?? [],
+            })),
         })
     } catch (error: any) {
         console.error('[/api/auth/me] Unexpected error:', error)

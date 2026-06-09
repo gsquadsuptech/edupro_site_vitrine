@@ -805,6 +805,29 @@ export const CourseService = {
         return data.map((item: any) => CourseService.mapCourseWithPricing(item))
     },
 
+    /** Récupère plusieurs cours par ids (favoris / sauvegardes), ordre conservé. */
+    async getCoursesByIds(ids: string[]): Promise<Course[]> {
+        if (!ids || ids.length === 0) return []
+        const supabase = createClient()
+
+        const { data, error } = await supabase
+            .from('courses')
+            .select(COURSE_CARD_FIELDS)
+            .in('id', ids)
+            .eq('status', 'published')
+            .or('access_type.is.null,access_type.neq.invitation')
+
+        if (error) {
+            console.error('Error fetching courses by ids:', error)
+            return []
+        }
+
+        const mapped = data.map((item: any) => CourseService.mapCourseWithPricing(item))
+        // Préserver l'ordre des ids fournis (les plus récemment ajoutés d'abord côté appelant).
+        const byId = new Map(mapped.map(c => [c.id, c]))
+        return ids.map(id => byId.get(id)).filter(Boolean) as Course[]
+    },
+
     async getCohortsByCourseId(courseId: string): Promise<Cohort[]> {
         const supabase = createClient()
 

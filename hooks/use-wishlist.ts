@@ -36,11 +36,15 @@ export function useWishlist(courseId?: string) {
         setIsLoading(true)
         try {
             if (isWishlisted) {
-                await WishlistService.removeFromWishlist(user.id, courseId)
+                const { success } = await WishlistService.removeFromWishlist(user.id, courseId)
+                if (!success) { toast.error("Impossible de retirer des favoris"); return }
                 setIsWishlisted(false)
                 toast.success("Retiré des favoris")
             } else {
-                await WishlistService.addToWishlist(user.id, courseId)
+                // On ne passe le bouton en "favori" QUE si l'écriture a réussi
+                // (sinon faux positif : rouge puis disparition au rechargement).
+                const { success } = await WishlistService.addToWishlist(user.id, courseId)
+                if (!success) { toast.error("Impossible d'ajouter aux favoris"); return }
                 setIsWishlisted(true)
                 toast.success("Ajouté aux favoris")
             }

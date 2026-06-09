@@ -36,11 +36,13 @@ export function useSavedCourse(courseId?: string) {
         setIsLoading(true)
         try {
             if (isSaved) {
-                await SavedCoursesService.removeFromSaved(user.id, courseId)
+                const { success } = await SavedCoursesService.removeFromSaved(user.id, courseId)
+                if (!success) { toast.error("Impossible de retirer la sauvegarde"); return }
                 setIsSaved(false)
                 toast.success("Retiré de vos sauvegardes")
             } else {
-                await SavedCoursesService.addToSaved(user.id, courseId)
+                const { success } = await SavedCoursesService.addToSaved(user.id, courseId)
+                if (!success) { toast.error("Impossible de sauvegarder"); return }
                 setIsSaved(true)
                 toast.success("Formation sauvegardée")
             }
