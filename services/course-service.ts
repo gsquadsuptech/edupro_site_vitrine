@@ -558,6 +558,53 @@ export const CourseService = {
         return true
     },
 
+    /**
+     * Complète `item.sections[].lessons` avec TOUTES les leçons du cours, en
+     * métadonnées seules (jamais `content`), via la clé service CÔTÉ SERVEUR.
+     *
+     * Sans cela, le RLS de `lessons` limite le client anon aux leçons en
+     * aperçu, d'où « 0 leçons » sur les cours sans aperçu. Le périmètre du
+     * service-role est volontairement minimal : une seule table (`lessons`),
+     * une projection explicite sans `content`, et restreinte aux sections de
+     * CE cours. Si la clé service est absente (mauvaise config serveur), on
+     * conserve les leçons déjà renvoyées par l'anon plutôt qu'échouer (page non
+     * cassée, plan éventuellement incomplet).
+     */
+    async attachFullCurriculum(item: any): Promise<void> {
+        const sectionIds: string[] = (item?.sections || [])
+            .map((s: any) => s.id)
+            .filter(Boolean)
+        if (sectionIds.length === 0) return
+
+        let admin
+        try {
+            admin = createAdminClient()
+        } catch (e) {
+            console.error('Curriculum complet indisponible (clé service), fallback aperçu:', e)
+            return
+        }
+
+        const { data, error } = await admin
+            .from('lessons')
+            .select('id, section_id, title, duration, is_preview, type, position')
+            .in('section_id', sectionIds)
+
+        if (error || !data) {
+            if (error) console.error('Erreur lecture curriculum (service):', error)
+            return
+        }
+
+        const bySection = new Map<string, any[]>()
+        for (const lesson of data as any[]) {
+            const arr = bySection.get(lesson.section_id) || []
+            arr.push(lesson)
+            bySection.set(lesson.section_id, arr)
+        }
+        for (const section of item.sections) {
+            section.lessons = bySection.get(section.id) || []
+        }
+    },
+
     /** Injecte l'URL vidéo des leçons en aperçu gratuit (requête restreinte). */
     async attachPreviewUrls(course: Course): Promise<void> {
         const previewIds = (course.sections || [])
@@ -630,22 +677,10 @@ export const CourseService = {
     async getCourseBySlug(slug: string): Promise<Course | null> {
         const supabase = createClient()
 
-        // Le plan de cours (sections + leçons) est lu via la clé service côté
-        // serveur : le RLS de `lessons` ne laisse l'anon voir que les leçons en
-        // aperçu, ce qui affichait « 0 leçons » sur les cours sans aperçu. On ne
-        // sélectionne que les métadonnées (jamais `content`) ; la visibilité
-        // publique reste imposée par status='published' + isPubliclyVisible.
-        // Si la clé service est absente (mauvaise config serveur), on retombe
-        // sur le client anon : curriculum potentiellement incomplet plutôt
-        // qu'une page en erreur 500.
-        let db = supabase
-        try {
-            db = createAdminClient()
-        } catch (e) {
-            console.error('Admin client indisponible, fallback anon pour le curriculum:', e)
-        }
-
-        const { data, error } = await db
+        // Le cours lui-même est lu avec le client anon : le RLS continue de
+        // vérifier l'état de publication et la visibilité (défense en
+        // profondeur, en plus de isPubliclyVisible côté app).
+        const { data, error } = await supabase
             .from('courses')
             .select(COURSE_DETAIL_FIELDS)
             .eq('slug', slug)
@@ -659,6 +694,13 @@ export const CourseService = {
 
         const item = data as any
         if (!CourseService.isPubliclyVisible(item)) return null
+
+        // Curriculum public complet : le RLS de `lessons` masque à l'anon les
+        // leçons non-aperçu (« 0 leçons » sur les cours sans aperçu). On
+        // complète donc le plan via la clé service CÔTÉ SERVEUR uniquement, et
+        // strictement sur des métadonnées (jamais `content`). La visibilité du
+        // cours, elle, reste imposée par le RLS anon ci-dessus.
+        await CourseService.attachFullCurriculum(item)
 
         const { data: reviewsData } = await supabase
             .from('course_reviews')

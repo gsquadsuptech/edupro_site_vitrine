@@ -69,7 +69,7 @@ export function sanitizeFileName(fileName: string): string {
     .toLowerCase()
     // Remplacer les caractères spéciaux et accents par leurs équivalents ASCII
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Supprimer les diacritiques
+    .replace(/\p{Mn}/gu, '') // Supprimer les diacritiques (marques combinantes)
     .replace(/[^a-z0-9\s-]/g, '') // Garder seulement lettres, chiffres, espaces et tirets
     .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
     .replace(/-+/g, '-') // Remplacer les tirets multiples par un seul
@@ -92,17 +92,36 @@ export function sanitizeFileName(fileName: string): string {
 
 /**
  * Normalise une URL externe saisie par un utilisateur (site web institut /
- * formateur) en URL absolue. Un domaine nu comme « www.edupro.africa » est
- * autrement interprété comme un chemin relatif par le navigateur → 404.
- * Renvoie null si l'entrée est vide.
+ * formateur) en URL absolue, sûre pour un attribut href.
+ *
+ * - Un domaine nu comme « www.edupro.africa » est sinon interprété comme un
+ *   chemin relatif par le navigateur → 404.
+ * - Sécurité : `website_url` est saisi par l'institut/le formateur (contenu non
+ *   fiable). On parse via `URL` et on n'autorise QUE http/https/mailto/tel ;
+ *   tout autre schéma (javascript:, data:, …) renvoie null → pas de href XSS.
+ *
+ * Renvoie null si l'entrée est vide, invalide ou à schéma non autorisé.
  */
 export function toExternalUrl(url: string | null | undefined): string | null {
   if (!url) return null;
-  const trimmed = url.trim();
+  // Retire les caractères de contrôle (certains navigateurs tolèrent
+  // « \tjavascript: » dans un href) puis les espaces de bord.
+  const trimmed = url.replace(/\p{Cc}/gu, '').trim();
   if (!trimmed) return null;
-  // Déjà une URL absolue (http://, https://, mailto:, tel:, //…) → on garde.
-  if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(trimmed)) return trimmed;
-  return `https://${trimmed}`;
+  // Domaine nu (sans schéma) → préfixe https://
+  const candidate = /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(trimmed)
+    ? trimmed
+    : `https://${trimmed}`;
+  let parsed: URL;
+  try {
+    parsed = new URL(candidate);
+  } catch {
+    return null;
+  }
+  // Allowlist stricte de schémas : bloque javascript:, data:, etc. (XSS via href).
+  const allowed = new Set(['http:', 'https:', 'mailto:', 'tel:']);
+  if (!allowed.has(parsed.protocol.toLowerCase())) return null;
+  return parsed.toString();
 }
 
 export function getAppUrl(path: string = '', _token?: string): string {
