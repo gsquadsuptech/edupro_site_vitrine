@@ -83,8 +83,11 @@ export type Lesson = {
     slug: string
     duration: string
     video_url: string | null
+    // HTML de l'article, injecté uniquement pour les leçons en aperçu gratuit
+    // de type 'article' (cf. attachPreviewUrls). Rendu en iframe sandboxée.
+    article_html: string | null
     is_preview: boolean
-    type: 'video' | 'quiz' | 'project'
+    type: 'video' | 'article' | 'quiz' | 'project'
 }
 
 export type Section = {

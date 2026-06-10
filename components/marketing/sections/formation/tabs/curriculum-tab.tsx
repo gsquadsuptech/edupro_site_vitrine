@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronRight, Play, Lock, FileText, CheckCircle } from "lucide-react"
+import { ChevronDown, ChevronRight, Play, Lock, FileText, CheckCircle, Eye } from "lucide-react"
 
 import { Course } from "@/lib/supabase/types"
 import { LessonPreviewDialog } from "../lesson-preview-dialog"
@@ -12,6 +12,7 @@ interface CurriculumItem {
   type: string
   preview: boolean
   videoUrl?: string | null
+  articleHtml?: string | null
 }
 
 interface CurriculumTabProps {
@@ -20,7 +21,7 @@ interface CurriculumTabProps {
 
 export function CurriculumTab({ course }: CurriculumTabProps) {
   const [expandedSections, setExpandedSections] = useState<number[]>([0])
-  const [previewLesson, setPreviewLesson] = useState<{ title: string; videoUrl: string | null } | null>(null)
+  const [previewLesson, setPreviewLesson] = useState<{ title: string; type: string; videoUrl: string | null; articleHtml: string | null } | null>(null)
 
   // Use dynamic data if available, otherwise fall back to static
   const hasDynamicData = course?.sections && course.sections.length > 0
@@ -35,6 +36,7 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
       type: lesson.type,
       preview: lesson.is_preview,
       videoUrl: lesson.video_url,
+      articleHtml: lesson.article_html,
     }))
   })) : [
     {
@@ -109,7 +111,9 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
         open={previewLesson !== null}
         onOpenChange={(o) => { if (!o) setPreviewLesson(null) }}
         title={previewLesson?.title || ''}
+        type={previewLesson?.type ?? 'video'}
         videoUrl={previewLesson?.videoUrl ?? null}
+        articleHtml={previewLesson?.articleHtml ?? null}
       />
       <div className="mb-6">
         <h3 className="mb-2 text-xl font-bold">Curriculum</h3>
@@ -143,13 +147,16 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
             {expandedSections.includes(sectionIndex) && (
               <div className="border-t border-border bg-background">
                 {section.items.map((item, itemIndex) => {
-                  const canPreview = item.preview && item.type === 'video' && !!item.videoUrl
+                  const canPreview = item.preview && (
+                    (item.type === 'video' && !!item.videoUrl) ||
+                    (item.type === 'article' && !!item.articleHtml)
+                  )
                   const RowTag = canPreview ? 'button' : 'div'
                   return (
                     <RowTag
                       key={itemIndex}
                       type={canPreview ? 'button' : undefined}
-                      onClick={canPreview ? () => setPreviewLesson({ title: item.title, videoUrl: item.videoUrl ?? null }) : undefined}
+                      onClick={canPreview ? () => setPreviewLesson({ title: item.title, type: item.type, videoUrl: item.videoUrl ?? null, articleHtml: item.articleHtml ?? null }) : undefined}
                       className={`flex w-full items-center justify-between border-b border-border p-4 text-left last:border-b-0 ${canPreview ? 'cursor-pointer hover:bg-primary/5 transition-colors' : ''}`}
                     >
                       <div className="flex items-center gap-3">
@@ -170,7 +177,11 @@ export function CurriculumTab({ course }: CurriculumTabProps) {
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        {canPreview && <Play className="h-4 w-4 text-primary" fill="currentColor" />}
+                        {canPreview && (
+                          item.type === 'article'
+                            ? <Eye className="h-4 w-4 text-primary" />
+                            : <Play className="h-4 w-4 text-primary" fill="currentColor" />
+                        )}
                         <span className="text-sm text-muted-foreground">{item.duration}</span>
                       </div>
                     </RowTag>

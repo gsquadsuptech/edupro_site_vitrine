@@ -513,10 +513,11 @@ export const CourseService = {
                     title: les.title,
                     slug: les.id,
                     duration: CourseService.formatDuration(les.duration),
-                    // L'URL n'est exposée que pour les leçons en aperçu gratuit ;
-                    // elle est injectée plus tard (getCourseBySlug) via une requête
-                    // restreinte aux leçons is_preview.
+                    // Vidéo / article ne sont exposés que pour les leçons en
+                    // aperçu gratuit ; injectés plus tard (attachPreviewUrls)
+                    // via une requête restreinte aux leçons is_preview.
                     video_url: null,
+                    article_html: null,
                     is_preview: les.is_preview || false,
                     type: les.type || 'video'
                 }))
@@ -605,7 +606,13 @@ export const CourseService = {
         }
     },
 
-    /** Injecte l'URL vidéo des leçons en aperçu gratuit (requête restreinte). */
+    /**
+     * Injecte le contenu d'aperçu gratuit des leçons is_preview (requête
+     * restreinte, autorisée à l'anon par la policy « Public read preview
+     * lessons ») : URL vidéo pour les leçons vidéo, HTML d'article pour les
+     * leçons de type 'article'. Le HTML brut (saisi par l'instructeur) est rendu
+     * côté client dans une iframe sandboxée — voir LessonPreviewDialog.
+     */
     async attachPreviewUrls(course: Course): Promise<void> {
         const previewIds = (course.sections || [])
             .flatMap(s => s.lessons.filter(l => l.is_preview).map(l => l.id))
@@ -619,16 +626,21 @@ export const CourseService = {
 
         if (error || !data) return
 
-        const urlById = new Map<string, string | null>()
+        const contentById = new Map<string, { videoUrl: string | null; articleHtml: string | null }>()
         for (const row of data as any[]) {
             const content = row.content || {}
-            urlById.set(row.id, content.url || content.video_url || content.videoUrl || null)
+            contentById.set(row.id, {
+                videoUrl: content.url || content.video_url || content.videoUrl || null,
+                articleHtml: typeof content.text === 'string' ? content.text : null,
+            })
         }
 
         for (const section of course.sections || []) {
             for (const lesson of section.lessons) {
                 if (lesson.is_preview) {
-                    lesson.video_url = urlById.get(lesson.id) || null
+                    const c = contentById.get(lesson.id)
+                    lesson.video_url = c?.videoUrl || null
+                    lesson.article_html = c?.articleHtml || null
                 }
             }
         }
