@@ -2,6 +2,7 @@ import { Star, Users, BookOpen, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Course } from "@/lib/supabase/types"
+import { toExternalUrl } from "@/lib/utils"
 
 interface FormateurTabProps {
   course: Course
@@ -89,11 +90,11 @@ export function FormateurTab({ course }: FormateurTabProps) {
           </div>
         )}
 
-        {instructor.website_url && (
+        {toExternalUrl(instructor.website_url) && (
           <div>
             <h4 className="mb-2 font-semibold">Site web</h4>
             <Button size="sm" variant="outline" asChild>
-              <a href={instructor.website_url} target="_blank" rel="noopener noreferrer">
+              <a href={toExternalUrl(instructor.website_url)!} target="_blank" rel="noopener noreferrer">
                 <Globe className="mr-2 h-4 w-4" />
                 Visiter le site
               </a>

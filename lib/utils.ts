@@ -90,6 +90,21 @@ export function sanitizeFileName(fileName: string): string {
 // Sessions are shared via the .edupro.africa cookie domain (see
 // lib/supabase/cookie-domain.ts), so no token query param is needed.
 
+/**
+ * Normalise une URL externe saisie par un utilisateur (site web institut /
+ * formateur) en URL absolue. Un domaine nu comme « www.edupro.africa » est
+ * autrement interprété comme un chemin relatif par le navigateur → 404.
+ * Renvoie null si l'entrée est vide.
+ */
+export function toExternalUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  // Déjà une URL absolue (http://, https://, mailto:, tel:, //…) → on garde.
+  if (/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
 export function getAppUrl(path: string = '', _token?: string): string {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path;
