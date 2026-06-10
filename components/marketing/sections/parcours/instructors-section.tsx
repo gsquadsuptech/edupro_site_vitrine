@@ -9,24 +9,37 @@ interface ParcoursInstructorsProps {
 
 export function ParcoursInstructors({ learningPath }: ParcoursInstructorsProps) {
   const instructors = learningPath.instructors || []
+  const institute = learningPath.institute
 
-  // Pas d'instructeurs renseignés en V1 — masquer la section.
-  // TODO: agréger les instructeurs depuis learning_path_courses.course.instructor une fois exposé côté service.
-  if (instructors.length === 0) {
+  // Rien à afficher si ni institut ni formateurs.
+  if (!institute && instructors.length === 0) {
     return null
   }
 
   return (
     <section className="border-b border-slate-200 bg-slate-50 py-20 lg:py-24">
       <Container>
-        <div className="mb-16 text-center">
-          <Badge className="mb-4 border-fuchsia-500/50 bg-fuchsia-50 text-fuchsia-700">Formateurs</Badge>
-          <h2 className="mb-4 text-3xl font-bold text-slate-900 lg:text-4xl">
-            Apprenez auprès de professionnels reconnus
-          </h2>
-        </div>
+        {/* Institut — toujours affiché lorsqu'il est connu. */}
+        {institute && (
+          <div className={instructors.length > 0 ? "mb-16 text-center" : "text-center"}>
+            <Badge className="mb-4 border-indigo-500/50 bg-indigo-50 text-indigo-700">Institut</Badge>
+            <h2 className="text-3xl font-bold text-slate-900 lg:text-4xl">
+              Proposé par {institute}
+            </h2>
+          </div>
+        )}
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* Formateurs — uniquement si au moins un formateur est assigné. */}
+        {instructors.length > 0 && (
+          <>
+            <div className="mb-12 mt-16 text-center">
+              <Badge className="mb-4 border-fuchsia-500/50 bg-fuchsia-50 text-fuchsia-700">Formateurs</Badge>
+              <h2 className="mb-4 text-3xl font-bold text-slate-900 lg:text-4xl">
+                Apprenez auprès de professionnels reconnus
+              </h2>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {instructors.map((instructor, index) => (
             <div
               key={index}
@@ -50,7 +63,9 @@ export function ParcoursInstructors({ learningPath }: ParcoursInstructorsProps) 
               </div>
             </div>
           ))}
-        </div>
+            </div>
+          </>
+        )}
       </Container>
     </section>
   )

@@ -10,12 +10,9 @@ interface FormationHeroProps {
 }
 
 export function FormationHero({ course }: FormationHeroProps) {
-  // Safe access / Fallbacks — affiche l'institut si aucun formateur n'est assigné.
-  const isInstitute = course.instructor?.is_institute
-  const instructorName = course.instructor
-    ? (isInstitute ? (course.instructor.institute || course.instructor.name) : course.instructor.name)
-    : "Institut"
-  const byLabel = isInstitute ? "Par l'institut" : "Par"
+  // En-tête : on affiche TOUJOURS l'institut propriétaire (jamais le formateur),
+  // cohérent avec les listes. Le détail formateur reste dans l'onglet dédié.
+  const instituteName = course.organization?.name || course.instructor?.institute || null
   const categoryName = course.category?.name || "Général"
 
   const reviews = course.reviews || []
@@ -91,9 +88,9 @@ export function FormationHero({ course }: FormationHeroProps) {
               <span className="font-medium text-foreground/80">{course.enrolled_count || 0} apprenants</span>
             </div>
             
-            {course.instructor && (
+            {instituteName && (
               <div className="flex items-center gap-2 border-l border-border/50 pl-6">
-                <span className="text-muted-foreground italic">{byLabel} <strong className="text-foreground not-italic">{instructorName}</strong></span>
+                <span className="text-muted-foreground italic">Par <strong className="text-foreground not-italic">{instituteName}</strong></span>
               </div>
             )}
 

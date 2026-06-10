@@ -49,6 +49,7 @@ const LEARNING_PATH_LIST_FIELDS = `
     one_time_discount,
     estimated_duration,
     organization_id,
+    organization:organizations(name),
     enable_certificate,
     certificate_template_id,
     status,
@@ -89,6 +90,7 @@ const LEARNING_PATH_DETAIL_FIELDS = `
     one_time_discount,
     estimated_duration,
     organization_id,
+    organization:organizations(name),
     enable_certificate,
     certificate_template_id,
     status,
@@ -176,6 +178,7 @@ export const LearningPathService = {
             enable_certificate: !!item.enable_certificate,
             certificate_template_id: item.certificate_template_id ?? null,
             organization_id: item.organization_id ?? null,
+            institute: item.organization?.name ?? null,
 
             one_time_price: isFree ? null : oneTimePrice,
             monthly_price: isFree ? null : (item.monthly_price ? Number(item.monthly_price) : null),

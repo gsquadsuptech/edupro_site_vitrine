@@ -3,7 +3,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { OverviewTab } from "./tabs/overview-tab"
 import { CurriculumTab } from "./tabs/curriculum-tab"
-import { InstructorTab } from "./tabs/instructor-tab"
+import { InstitutTab } from "./tabs/institut-tab"
+import { FormateurTab } from "./tabs/formateur-tab"
 import { ReviewsTab } from "./tabs/reviews-tab"
 import { SessionsTab } from "./tabs/sessions-tab"
 import { Course, Cohort } from "@/lib/supabase/types"
@@ -13,11 +14,20 @@ interface FormationTabsProps {
   cohorts?: Cohort[]
 }
 
+const GRID_COLS: Record<number, string> = {
+  4: "grid-cols-4",
+  5: "grid-cols-5",
+  6: "grid-cols-6",
+}
+
 export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
-  const hasCohorts = cohorts && cohorts.length > 0;
-  const gridCols = hasCohorts ? "grid-cols-5" : "grid-cols-4";
-  // Onglet "Institut" si aucun formateur n'est assigné (institut propriétaire).
-  const instructorTabLabel = course.instructor?.is_institute ? "Institut" : "Formateur";
+  const hasCohorts = cohorts && cohorts.length > 0
+  // Formateur réel assigné (≠ institut résolu par défaut). On affiche l'onglet
+  // "Formateur(s)" UNIQUEMENT dans ce cas ; l'onglet "Institut" est toujours là.
+  const hasFormateur = !!course.instructor && !course.instructor.is_institute
+
+  const tabCount = 4 + (hasCohorts ? 1 : 0) + (hasFormateur ? 1 : 0)
+  const gridCols = GRID_COLS[tabCount] || "grid-cols-4"
 
   return (
     <section className="py-12">
@@ -27,7 +37,8 @@ export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
             <TabsTrigger value="apercu" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Aperçu</TabsTrigger>
             {hasCohorts && <TabsTrigger value="sessions" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Sessions</TabsTrigger>}
             <TabsTrigger value="programme" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Programme</TabsTrigger>
-            <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">{instructorTabLabel}</TabsTrigger>
+            <TabsTrigger value="institut" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Institut</TabsTrigger>
+            {hasFormateur && <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur</TabsTrigger>}
             <TabsTrigger value="avis" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Avis</TabsTrigger>
           </TabsList>
         </div>
@@ -47,9 +58,15 @@ export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
             <CurriculumTab course={course} />
           </TabsContent>
 
-          <TabsContent value="formateur" className="focus-visible:outline-none">
-            <InstructorTab course={course} />
+          <TabsContent value="institut" className="focus-visible:outline-none">
+            <InstitutTab course={course} />
           </TabsContent>
+
+          {hasFormateur && (
+            <TabsContent value="formateur" className="focus-visible:outline-none">
+              <FormateurTab course={course} />
+            </TabsContent>
+          )}
 
           <TabsContent value="avis" className="focus-visible:outline-none">
             <ReviewsTab reviews={course.reviews as any} />

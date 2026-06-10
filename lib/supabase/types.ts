@@ -151,6 +151,8 @@ export type LearningPath = {
     reviewCount?: number
     enrolled_count?: number
     published_at?: string
+    /** Nom de l'institut (organisation) propriétaire du parcours. */
+    institute?: string | null
 
     courses?: {
         id: string

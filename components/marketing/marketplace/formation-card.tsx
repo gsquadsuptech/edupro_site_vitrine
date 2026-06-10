@@ -14,7 +14,7 @@ type FormationCardProps =
   | {
       item?: never
       course: Pick<Course,
-        'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'level' | 'price' |
+        'id' | 'slug' | 'title' | 'image_url' | 'category' | 'instructor' | 'organization' | 'level' | 'price' |
         'duration' | 'format' | 'one_time_price' | 'monthly_price' | 'pricing_modes' |
         'registration_fee' | 'monthly_fee' | 'installments'
       > & {
@@ -40,7 +40,7 @@ interface CardViewModel {
   duration: string | null
   /** Affiché au-dessus du titre (catégorie ou métadonnée principale). */
   topBadgeLabel: string
-  /** Sous-titre : nom d'instructeur pour les cours, "N cours" pour les parcours. */
+  /** Sous-titre : nom de l'institut propriétaire (jamais le formateur). */
   subtitle: string
   /** Icône à gauche du sous-titre. */
   subtitleIcon: typeof Users
@@ -77,13 +77,9 @@ function buildCourseViewModel(course: Course, locale: string): CardViewModel {
     enrolledCount: course.enrolled_count || 0,
     duration: course.duration,
     topBadgeLabel: course.category?.name || "Général",
-    // Si aucun formateur n'est assigné, on affiche l'institut propriétaire.
-    subtitle: course.instructor
-      ? (course.instructor.is_institute
-          ? (course.instructor.institute || course.instructor.name)
-          : course.instructor.name)
-      : "Institut",
-    subtitleIcon: course.instructor?.is_institute ? Building2 : Users,
+    // Listes : on affiche TOUJOURS l'institut propriétaire, jamais le formateur.
+    subtitle: course.organization?.name || course.instructor?.institute || "Institut",
+    subtitleIcon: Building2,
     supportsWishlist: true,
     pricing: {
       pricing_modes: course.pricing_modes,
@@ -111,8 +107,9 @@ function buildLearningPathViewModel(lp: LearningPath, locale: string): CardViewM
     enrolledCount: lp.enrolled_count || 0,
     duration: lp.duration ?? null,
     topBadgeLabel: 'Parcours',
-    subtitle: coursesCount > 0 ? `${coursesCount} cours` : 'Programme complet',
-    subtitleIcon: BookOpen,
+    // Listes : institut propriétaire (jamais le formateur), comme pour les cours.
+    subtitle: lp.institute || (coursesCount > 0 ? `${coursesCount} cours` : 'Programme complet'),
+    subtitleIcon: lp.institute ? Building2 : BookOpen,
     supportsWishlist: false,
     pricing: {
       pricing_modes: lp.pricing_modes ?? null,
