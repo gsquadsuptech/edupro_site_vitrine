@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { Course, Cohort, CohortAvailability } from '@/lib/supabase/types'
 
 export function getCohortAvailability(cohort: Cohort): CohortAvailability {
@@ -629,7 +630,22 @@ export const CourseService = {
     async getCourseBySlug(slug: string): Promise<Course | null> {
         const supabase = createClient()
 
-        const { data, error } = await supabase
+        // Le plan de cours (sections + leçons) est lu via la clé service côté
+        // serveur : le RLS de `lessons` ne laisse l'anon voir que les leçons en
+        // aperçu, ce qui affichait « 0 leçons » sur les cours sans aperçu. On ne
+        // sélectionne que les métadonnées (jamais `content`) ; la visibilité
+        // publique reste imposée par status='published' + isPubliclyVisible.
+        // Si la clé service est absente (mauvaise config serveur), on retombe
+        // sur le client anon : curriculum potentiellement incomplet plutôt
+        // qu'une page en erreur 500.
+        let db = supabase
+        try {
+            db = createAdminClient()
+        } catch (e) {
+            console.error('Admin client indisponible, fallback anon pour le curriculum:', e)
+        }
+
+        const { data, error } = await db
             .from('courses')
             .select(COURSE_DETAIL_FIELDS)
             .eq('slug', slug)
