@@ -8,7 +8,10 @@ interface ParcoursInstructorsProps {
 }
 
 export function ParcoursInstructors({ learningPath }: ParcoursInstructorsProps) {
-  const instructors = learningPath.instructors || []
+  // Formateurs uniquement pour les parcours à sessions/cohortes ; en
+  // auto-formation (autonome), on n'affiche que l'institut.
+  const isSession = learningPath.format === 'session'
+  const instructors = isSession ? (learningPath.instructors || []) : []
   const institute = learningPath.institute
 
   // Rien à afficher si ni institut ni formateurs.

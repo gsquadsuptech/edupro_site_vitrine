@@ -22,9 +22,11 @@ const GRID_COLS: Record<number, string> = {
 
 export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
   const hasCohorts = cohorts && cohorts.length > 0
-  // Formateur réel assigné (≠ institut résolu par défaut). On affiche l'onglet
-  // "Formateur(s)" UNIQUEMENT dans ce cas ; l'onglet "Institut" est toujours là.
-  const hasFormateur = !!course.instructor && !course.instructor.is_institute
+  // Onglet "Formateur" UNIQUEMENT pour les cours à sessions/cohortes avec un
+  // formateur réel assigné. Pour l'auto-formation (autonome), on n'affiche que
+  // l'onglet "Institut" (toujours présent).
+  const isSessionCourse = course.format === 'session'
+  const hasFormateur = isSessionCourse && !!course.instructor && !course.instructor.is_institute
 
   const tabCount = 4 + (hasCohorts ? 1 : 0) + (hasFormateur ? 1 : 0)
   const gridCols = GRID_COLS[tabCount] || "grid-cols-4"
