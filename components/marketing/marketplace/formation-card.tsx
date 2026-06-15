@@ -139,23 +139,23 @@ function renderPriceBlock(pricing: CardViewModel['pricing']) {
 
   let priceDisplay: string
   if (hasOneTime && price > 0) {
-    priceDisplay = `${Math.round(Number(price)).toLocaleString()} FCFA`
+    priceDisplay = `${Math.round(Number(price)).toLocaleString('fr-FR')} FCFA`
   } else if (hasSubscription && pricing.monthly_price) {
-    priceDisplay = `${pricing.monthly_price.toLocaleString()} FCFA/mois`
+    priceDisplay = `${pricing.monthly_price.toLocaleString('fr-FR')} FCFA/mois`
   } else if (hasRegistrationMonthly && pricing.registration_fee) {
-    priceDisplay = `${pricing.registration_fee.toLocaleString()} FCFA`
+    priceDisplay = `${pricing.registration_fee.toLocaleString('fr-FR')} FCFA`
   } else if (hasInstallments && pricing.installments && pricing.installments.length > 0) {
     const total = pricing.installments.reduce((acc: number, inst: any) => acc + (Number(inst.amount) || 0), 0)
-    priceDisplay = `${Math.round(total).toLocaleString()} FCFA`
+    priceDisplay = `${Math.round(total).toLocaleString('fr-FR')} FCFA`
   } else {
-    priceDisplay = Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString()} FCFA` : 'Gratuit'
+    priceDisplay = Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString('fr-FR')} FCFA` : 'Gratuit'
   }
 
   let secondary: string | null = null
   if ((modes.one_time || modes.oneTime) && modes.subscription && pricing.monthly_price) {
-    secondary = `ou ${pricing.monthly_price.toLocaleString()} FCFA/mois`
+    secondary = `ou ${pricing.monthly_price.toLocaleString('fr-FR')} FCFA/mois`
   } else if (hasRegistrationMonthly && pricing.monthly_fee) {
-    secondary = `+ ${pricing.monthly_fee.toLocaleString()} FCFA/mois`
+    secondary = `+ ${pricing.monthly_fee.toLocaleString('fr-FR')} FCFA/mois`
   } else if (hasInstallments && pricing.installments && pricing.installments.length > 0 && !(modes.one_time || modes.oneTime)) {
     secondary = `en ${pricing.installments.length} versements`
   }
@@ -270,7 +270,7 @@ export function FormationCard(props: FormationCardProps) {
           <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Users className="h-3.5 w-3.5" />
-              <span>{vm.enrolledCount.toLocaleString()} inscrits</span>
+              <span>{vm.enrolledCount.toLocaleString('fr-FR')} inscrits</span>
             </div>
             <span>•</span>
             <div className="flex items-center gap-1">

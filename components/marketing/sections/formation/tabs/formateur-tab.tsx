@@ -112,7 +112,7 @@ function DirectInstructorCard({ instructor }: { instructor: NonNullable<Course['
               {(instructor.students_count || 0) > 0 && (
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-medium">{instructor.students_count?.toLocaleString()}</span>
+                  <span className="font-medium">{instructor.students_count?.toLocaleString('fr-FR')}</span>
                   <span className="text-muted-foreground">étudiants</span>
                 </div>
               )}
