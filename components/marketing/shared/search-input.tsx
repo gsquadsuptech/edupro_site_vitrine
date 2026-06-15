@@ -55,7 +55,13 @@ export function SearchInput({ placeholder = "Rechercher...", className, onSearch
             <Input
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="pl-10 h-12 text-base"
+                // bg-transparent : le className de l'appelant (fond/couleur) est
+                // posé sur le wrapper ci-dessus ; sans ça l'Input garde son
+                // bg-background opaque (blanc) et masque ce fond, rendant le
+                // texte hérité (ex. text-white de la hero) invisible (blanc sur
+                // blanc). En transparent, l'input laisse voir le fond du wrapper
+                // et le texte saisi redevient lisible.
+                className="pl-10 h-12 text-base bg-transparent"
                 placeholder={placeholder}
                 {...props}
             />
