@@ -21,15 +21,17 @@ export function SearchInput({ placeholder = "Rechercher...", className, onSearch
     const [value, setValue] = React.useState(searchParams.get("q") || "")
     const debouncedValue = useDebounce(value, 500)
 
-    // Sync with URL params on mount
-    React.useEffect(() => {
-        setValue(searchParams.get("q") || "")
-    }, [searchParams])
-
     // Update URL on debounce or call onSearch callback
     React.useEffect(() => {
         if (onSearch) {
             onSearch(debouncedValue)
+            return
+        }
+
+        const currentQuery = searchParams.get("q") || ""
+        // Rien à faire si la valeur correspond déjà à l'URL : évite un push
+        // en boucle qui réinitialiserait le champ à chaque frappe.
+        if (debouncedValue.trim() === currentQuery.trim()) {
             return
         }
 
@@ -42,10 +44,7 @@ export function SearchInput({ placeholder = "Rechercher...", className, onSearch
         }
 
         // Reset page when searching
-        const currentQuery = searchParams.get("q") || ""
-        if (debouncedValue.trim() !== currentQuery.trim()) {
-            params.set("page", "1")
-        }
+        params.set("page", "1")
 
         router.push(`${pathname}?${params.toString()}`, { scroll: false })
     }, [debouncedValue, router, pathname, searchParams, onSearch])
