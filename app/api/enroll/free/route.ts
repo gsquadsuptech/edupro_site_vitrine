@@ -60,6 +60,16 @@ export async function POST(request: NextRequest) {
             .single()
 
         if (courseError || !course) {
+            // Diagnostic : ce cas ne devrait pas se produire si la page checkout
+            // a pu charger le cours (même base, même table, lecture service-role
+            // sans filtre de statut). S'il survient, on veut la cause exacte
+            // (clé service-role déployée invalide, RLS, id réellement absent…).
+            console.error('Free enrollment: course lookup failed', {
+                courseId,
+                code: courseError?.code,
+                message: courseError?.message,
+                details: courseError?.details,
+            })
             return NextResponse.json({ error: "Cours introuvable" }, { status: 404 })
         }
 
