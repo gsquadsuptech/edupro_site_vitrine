@@ -987,29 +987,50 @@ export const CourseService = {
             return
         }
 
-        const { data, error } = await admin
+        // Deux requêtes explicites plutôt qu'un embed PostgREST
+        // (cohort_instructors → instructors) : l'embed échoue si la relation
+        // FK n'est pas inférable par PostgREST, ce qui laissait la liste vide.
+        // 1) Liens cohorte ↔ formateur.
+        const { data: links, error: linkErr } = await admin
             .from('cohort_instructors')
-            .select('cohort_id, instructor:instructors(name, avatar_url)')
+            .select('cohort_id, instructor_id')
             .in('cohort_id', ids)
 
-        if (error || !data) {
-            console.error('Formateurs de cohorte indisponibles (service-role):', error)
+        if (linkErr) {
+            console.error('Formateurs de cohorte indisponibles (cohort_instructors):', linkErr)
+            return
+        }
+        if (!links || links.length === 0) return
+
+        // 2) Détails des formateurs liés.
+        const instructorIds = Array.from(
+            new Set((links as any[]).map(l => l.instructor_id).filter(Boolean))
+        )
+        const { data: instructors, error: insErr } = await admin
+            .from('instructors')
+            .select('id, name, avatar_url')
+            .in('id', instructorIds)
+
+        if (insErr || !instructors) {
+            console.error('Formateurs de cohorte indisponibles (instructors):', insErr)
             return
         }
 
+        const byId = new Map<string, any>((instructors as any[]).map(i => [i.id, i]))
         const byCohort = new Map<string, { name: string; avatar_url: string | null }[]>()
-        for (const row of data as any[]) {
-            const ins = row.instructor
+        for (const link of links as any[]) {
+            const ins = byId.get(link.instructor_id)
             if (!ins?.name) continue
-            const list = byCohort.get(row.cohort_id) || []
+            const list = byCohort.get(link.cohort_id) || []
             list.push({ name: ins.name, avatar_url: ins.avatar_url || null })
-            byCohort.set(row.cohort_id, list)
+            byCohort.set(link.cohort_id, list)
         }
 
         // La lecture service-role fait autorité : on remplace l'embed anon
-        // (toujours vide pour l'anon) par la liste complète.
+        // (vide pour l'anon) par la liste complète, quand on a des données.
         for (const cohort of cohorts) {
-            cohort.instructors = byCohort.get(cohort.id) || []
+            const list = byCohort.get(cohort.id)
+            if (list && list.length > 0) cohort.instructors = list
         }
     },
 
