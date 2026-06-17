@@ -6,7 +6,9 @@ import { FormationTabs } from "@/components/marketing/sections/formation/formati
 import { CourseSidebar } from "@/components/marketing/sections/formation/course-sidebar";
 import { SimilarCourses } from "@/components/marketing/sections/formation/similar-courses";
 import { MobilePurchaseBar } from "@/components/marketing/sections/formation/mobile-purchase-bar";
+import { CatalogBelongsSection } from "@/components/marketing/sections/parcours/catalogs-section";
 import { CourseService } from "@/services/course-service";
+import { CatalogService } from "@/services/catalog-service";
 
 export const metadata: Metadata = {
     title: "Détails Formation - EduPro",
@@ -38,6 +40,7 @@ export default async function FormationPage({
     }
 
     const cohorts = await CourseService.getCohortsByCourseId(course.id);
+    const catalogs = await CatalogService.getByCourse(course.id);
 
     return (
         <div className="flex min-h-screen flex-col bg-background">
@@ -63,6 +66,8 @@ export default async function FormationPage({
                         </aside>
                     </div>
                 </div>
+
+                <CatalogBelongsSection catalogs={catalogs} locale={locale} kind="cours" />
 
                 <SimilarCourses courses={similarCourses} />
             </main>

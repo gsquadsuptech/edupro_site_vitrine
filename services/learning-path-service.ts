@@ -49,7 +49,6 @@ const LEARNING_PATH_LIST_FIELDS = `
     one_time_discount,
     estimated_duration,
     organization_id,
-    organization:organizations(name),
     enable_certificate,
     certificate_template_id,
     status,
@@ -90,7 +89,6 @@ const LEARNING_PATH_DETAIL_FIELDS = `
     one_time_discount,
     estimated_duration,
     organization_id,
-    organization:organizations(name),
     enable_certificate,
     certificate_template_id,
     status,
@@ -121,6 +119,28 @@ const LEARNING_PATH_DETAIL_FIELDS = `
 
 export const LearningPathService = {
     formatDuration: formatHours,
+
+    /**
+     * Renseigne `row.organization = { name }` via une requête séparée plutôt
+     * qu'un embed PostgREST `organization:organizations(name)`. L'embed dépend de
+     * l'enregistrement de la FK learning_paths→organizations dans le cache de
+     * schéma PostgREST — absent sur certaines bases (staging) → PGRST200 qui
+     * faisait échouer TOUTE la requête (aucun parcours affiché). La requête
+     * séparée fonctionne quelle que soit la FK.
+     */
+    async attachOrganizations(rows: any[]): Promise<void> {
+        const ids = Array.from(new Set(rows.map((r) => r?.organization_id).filter(Boolean)))
+        if (ids.length === 0) return
+        const supabase = createClient()
+        const { data, error } = await supabase.from('organizations').select('id, name').in('id', ids)
+        if (error || !data) return
+        const byId = new Map<string, string>((data as any[]).map((o) => [o.id, o.name]))
+        for (const row of rows) {
+            if (!row?.organization_id) continue
+            const name = byId.get(row.organization_id)
+            if (name) row.organization = { name }
+        }
+    },
 
     mapLearningPathItem(item: any): LearningPath {
         const isFree = item.access_type === 'free'
@@ -218,7 +238,9 @@ export const LearningPathService = {
             return []
         }
 
-        return (data || []).map((item: any) => LearningPathService.mapLearningPathItem(item))
+        const rows = data || []
+        await LearningPathService.attachOrganizations(rows)
+        return rows.map((item: any) => LearningPathService.mapLearningPathItem(item))
     },
 
     async searchLearningPaths(filters: LearningPathFilters): Promise<{ learningPaths: LearningPath[]; total: number }> {
@@ -248,8 +270,10 @@ export const LearningPathService = {
             return { learningPaths: [], total: 0 }
         }
 
+        const rows = data || []
+        await LearningPathService.attachOrganizations(rows)
         return {
-            learningPaths: (data || []).map((item: any) => LearningPathService.mapLearningPathItem(item)),
+            learningPaths: rows.map((item: any) => LearningPathService.mapLearningPathItem(item)),
             total: count || 0,
         }
     },
@@ -278,6 +302,7 @@ export const LearningPathService = {
         }
         if (!data) return null
 
+        await LearningPathService.attachOrganizations([data])
         return LearningPathService.mapLearningPathItem(data)
     },
 
@@ -300,6 +325,7 @@ export const LearningPathService = {
         }
         if (!data) return null
 
+        await LearningPathService.attachOrganizations([data])
         return LearningPathService.mapLearningPathItem(data)
     },
 }
