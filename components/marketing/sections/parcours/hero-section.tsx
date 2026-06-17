@@ -2,9 +2,9 @@ import { Container } from "@/components/marketing/layout/container"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Clock, Users, Award, Star } from "lucide-react"
-import Image from "next/image"
 import { LearningPath } from "@/lib/supabase/types"
 import { EnrollButton } from "@/components/payment/enroll-button"
+import { ParcoursHeroMedia } from "@/components/marketing/sections/parcours/hero-media"
 
 interface ParcoursHeroProps {
   learningPath: LearningPath
@@ -55,7 +55,7 @@ export function ParcoursHero({ learningPath, locale }: ParcoursHeroProps) {
               {enrolled > 0 && (
                 <div className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 shadow-sm">
                   <Users className="h-5 w-5 text-fuchsia-600" />
-                  <span className="text-sm font-medium text-slate-900">{enrolled.toLocaleString()} apprenants</span>
+                  <span className="text-sm font-medium text-slate-900">{enrolled.toLocaleString('fr-FR')} apprenants</span>
                 </div>
               )}
               {reviewCount > 0 && (
@@ -112,12 +112,10 @@ export function ParcoursHero({ learningPath, locale }: ParcoursHeroProps) {
 
           <div className="relative">
             <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-2xl">
-              <Image
-                src={learningPath.image_url || "/placeholder.svg"}
-                alt={learningPath.title}
-                width={800}
-                height={600}
-                className="rounded-xl"
+              <ParcoursHeroMedia
+                imageUrl={learningPath.image_url || "/placeholder.svg"}
+                title={learningPath.title}
+                previewVideo={learningPath.preview_video}
               />
 
               {totalHours > 0 && (

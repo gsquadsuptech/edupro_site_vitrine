@@ -932,7 +932,7 @@ export const CourseService = {
             return []
         }
 
-        return (data as any[]).map(item => ({
+        const cohorts: Cohort[] = (data as any[]).map(item => ({
             id: item.id,
             name: item.name,
             description: item.description,
@@ -956,6 +956,82 @@ export const CourseService = {
                 .map((ins: any) => ({ name: ins.name, avatar_url: ins.avatar_url || null })),
             sessions: []
         }))
+
+        // Les formateurs de cohorte passent par la table de liaison
+        // `cohort_instructors`, dont le RLS masque les lignes au client anon :
+        // l'embed ci-dessus revient alors vide et seul le formateur du cours
+        // (jointure directe) s'affiche. On complète donc la liste des
+        // formateurs par session via la clé service CÔTÉ SERVEUR (projection
+        // sûre : name + avatar uniquement). Côté navigateur, createAdminClient
+        // lève une erreur → on conserve l'embed anon (repli silencieux).
+        await CourseService.attachCohortInstructors(cohorts)
+
+        return cohorts
+    },
+
+    /**
+     * Complète `cohorts[].instructors` avec TOUS les formateurs rattachés à
+     * chaque cohorte (table de liaison `cohort_instructors`), via la clé
+     * service. Sans cela, le RLS de la table de liaison masque ces lignes à
+     * l'anon et la vitrine n'affiche que le formateur assigné au cours.
+     */
+    async attachCohortInstructors(cohorts: Cohort[]): Promise<void> {
+        const ids = cohorts.map(c => c.id).filter(Boolean)
+        if (ids.length === 0) return
+
+        let admin
+        try {
+            admin = createAdminClient()
+        } catch {
+            // Côté navigateur (clé service absente) : on garde l'embed anon.
+            return
+        }
+
+        // Deux requêtes explicites plutôt qu'un embed PostgREST
+        // (cohort_instructors → instructors) : l'embed échoue si la relation
+        // FK n'est pas inférable par PostgREST, ce qui laissait la liste vide.
+        // 1) Liens cohorte ↔ formateur.
+        const { data: links, error: linkErr } = await admin
+            .from('cohort_instructors')
+            .select('cohort_id, instructor_id')
+            .in('cohort_id', ids)
+
+        if (linkErr) {
+            console.error('Formateurs de cohorte indisponibles (cohort_instructors):', linkErr)
+            return
+        }
+        if (!links || links.length === 0) return
+
+        // 2) Détails des formateurs liés.
+        const instructorIds = Array.from(
+            new Set((links as any[]).map(l => l.instructor_id).filter(Boolean))
+        )
+        const { data: instructors, error: insErr } = await admin
+            .from('instructors')
+            .select('id, name, avatar_url')
+            .in('id', instructorIds)
+
+        if (insErr || !instructors) {
+            console.error('Formateurs de cohorte indisponibles (instructors):', insErr)
+            return
+        }
+
+        const byId = new Map<string, any>((instructors as any[]).map(i => [i.id, i]))
+        const byCohort = new Map<string, { name: string; avatar_url: string | null }[]>()
+        for (const link of links as any[]) {
+            const ins = byId.get(link.instructor_id)
+            if (!ins?.name) continue
+            const list = byCohort.get(link.cohort_id) || []
+            list.push({ name: ins.name, avatar_url: ins.avatar_url || null })
+            byCohort.set(link.cohort_id, list)
+        }
+
+        // La lecture service-role fait autorité : on remplace l'embed anon
+        // (vide pour l'anon) par la liste complète, quand on a des données.
+        for (const cohort of cohorts) {
+            const list = byCohort.get(cohort.id)
+            if (list && list.length > 0) cohort.instructors = list
+        }
     },
 
     async addToWaitlist(courseId: string, userId: string): Promise<{ success: boolean; error?: any }> {

@@ -22,11 +22,14 @@ const GRID_COLS: Record<number, string> = {
 
 export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
   const hasCohorts = cohorts && cohorts.length > 0
-  // Onglet "Formateur" UNIQUEMENT pour les cours à sessions/cohortes avec un
-  // formateur réel assigné. Pour l'auto-formation (autonome), on n'affiche que
-  // l'onglet "Institut" (toujours présent).
+  // Onglet "Formateur(s)" pour les cours à sessions/cohortes dès qu'il existe
+  // un formateur réel : soit assigné directement au cours, soit rattaché à au
+  // moins une cohorte/session. Pour l'auto-formation (autonome), on n'affiche
+  // que l'onglet "Institut" (toujours présent).
   const isSessionCourse = course.format === 'session'
-  const hasFormateur = isSessionCourse && !!course.instructor && !course.instructor.is_institute
+  const hasDirectFormateur = !!course.instructor && !course.instructor.is_institute
+  const hasCohortFormateurs = cohorts.some(c => (c.instructors?.length ?? 0) > 0)
+  const hasFormateur = isSessionCourse && (hasDirectFormateur || hasCohortFormateurs)
 
   const tabCount = 4 + (hasCohorts ? 1 : 0) + (hasFormateur ? 1 : 0)
   const gridCols = GRID_COLS[tabCount] || "grid-cols-4"
@@ -40,7 +43,7 @@ export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
             {hasCohorts && <TabsTrigger value="sessions" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Sessions</TabsTrigger>}
             <TabsTrigger value="programme" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Programme</TabsTrigger>
             <TabsTrigger value="institut" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Institut</TabsTrigger>
-            {hasFormateur && <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur</TabsTrigger>}
+            {hasFormateur && <TabsTrigger value="formateur" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Formateur(s)</TabsTrigger>}
             <TabsTrigger value="avis" className="rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Avis</TabsTrigger>
           </TabsList>
         </div>
@@ -66,7 +69,7 @@ export function FormationTabs({ course, cohorts = [] }: FormationTabsProps) {
 
           {hasFormateur && (
             <TabsContent value="formateur" className="focus-visible:outline-none">
-              <FormateurTab course={course} />
+              <FormateurTab course={course} cohorts={cohorts} />
             </TabsContent>
           )}
 

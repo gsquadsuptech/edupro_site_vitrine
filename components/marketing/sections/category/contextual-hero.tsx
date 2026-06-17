@@ -43,7 +43,7 @@ export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }:
 
                     <div className="mx-auto mb-12 max-w-2xl">
                         <SearchInput
-                            className="h-12 w-full bg-white/10 text-white placeholder:text-white/70 backdrop-blur-sm border-white/20 focus-visible:bg-white/20"
+                            className="h-12 w-full bg-slate-900/50 text-white placeholder:text-white/70 backdrop-blur-sm border-white/20 focus-visible:bg-slate-900/60"
                             placeholder="Que souhaitez-vous apprendre aujourd'hui ?"
                         />
                     </div>

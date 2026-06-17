@@ -1,23 +1,80 @@
-import { Star, Users, BookOpen, Globe } from "lucide-react"
+import { Star, Users, BookOpen, Globe, CalendarDays } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Course } from "@/lib/supabase/types"
+import { Course, Cohort } from "@/lib/supabase/types"
 import { toExternalUrl } from "@/lib/utils"
 
 interface FormateurTabProps {
   course: Course
+  cohorts?: Cohort[]
 }
 
 /**
- * Onglet « Formateur(s) » — affiché uniquement lorsqu'un formateur réel est
- * assigné (instructor non-institut). Jamais de valeur vide / "Instructeur".
+ * Onglet « Formateur(s) ». Affiche, lorsqu'ils existent :
+ *  - le formateur assigné directement au cours (carte détaillée) ;
+ *  - les formateurs rattachés à chaque cohorte/session (un cours à sessions
+ *    peut avoir plusieurs formateurs, propres à chaque session).
+ * Jamais de valeur vide / "Instructeur".
  */
-export function FormateurTab({ course }: FormateurTabProps) {
+export function FormateurTab({ course, cohorts = [] }: FormateurTabProps) {
   const instructor = course.instructor
+  const hasDirectInstructor = !!instructor && !instructor.is_institute
+
+  // Sessions ayant au moins un formateur rattaché.
+  const sessionsWithInstructors = cohorts.filter(c => (c.instructors?.length ?? 0) > 0)
+
   // Garde : ne rien rendre si aucun formateur réel (l'onglet ne devrait pas
   // être affiché dans ce cas).
-  if (!instructor || instructor.is_institute) return null
+  if (!hasDirectInstructor && sessionsWithInstructors.length === 0) return null
 
+  return (
+    <div className="space-y-6">
+      {hasDirectInstructor && instructor && (
+        <DirectInstructorCard instructor={instructor} />
+      )}
+
+      {sessionsWithInstructors.length > 0 && (
+        <div className="rounded-xl border border-border bg-card p-6">
+          <h3 className="mb-1 text-lg font-bold">Formateurs des sessions</h3>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Les formateurs qui animent chaque session de cette formation.
+          </p>
+          <div className="space-y-5">
+            {sessionsWithInstructors.map((cohort) => (
+              <div key={cohort.id} className="rounded-lg border border-border/60 bg-muted/20 p-4">
+                <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
+                  <CalendarDays className="h-4 w-4 text-primary" />
+                  <span>{cohort.name}</span>
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  {(cohort.instructors ?? []).map((ins, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      {ins.avatar_url ? (
+                        <img
+                          src={ins.avatar_url}
+                          alt={ins.name}
+                          className="h-10 w-10 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                          {ins.name?.charAt(0).toUpperCase() || '?'}
+                        </div>
+                      )}
+                      <span className="text-sm font-medium">{ins.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/** Carte détaillée du formateur assigné directement au cours. */
+function DirectInstructorCard({ instructor }: { instructor: NonNullable<Course['instructor']> }) {
   const expertise = instructor.specialization
     ? instructor.specialization.split(/[,;]/).map(s => s.trim()).filter(Boolean)
     : []
@@ -55,7 +112,7 @@ export function FormateurTab({ course }: FormateurTabProps) {
               {(instructor.students_count || 0) > 0 && (
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-medium">{instructor.students_count?.toLocaleString()}</span>
+                  <span className="font-medium">{instructor.students_count?.toLocaleString('fr-FR')}</span>
                   <span className="text-muted-foreground">étudiants</span>
                 </div>
               )}
