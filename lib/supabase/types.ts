@@ -173,6 +173,11 @@ export type LearningPath = {
         avatar_url: string | null
         institute?: string | null
     }[]
+    /** Catégories du parcours (taxonomie admin), lues via la jonction. */
+    categories?: {
+        id: string
+        name: string
+    }[]
 }
 
 export type MarketplaceItem =

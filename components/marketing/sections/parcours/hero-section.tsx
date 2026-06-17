@@ -32,7 +32,18 @@ export function ParcoursHero({ learningPath, locale }: ParcoursHeroProps) {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-4">
-              <Badge className="w-fit border-indigo-300 bg-indigo-100 text-indigo-700">Parcours</Badge>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge className="w-fit border-indigo-300 bg-indigo-100 text-indigo-700">Parcours</Badge>
+                {learningPath.categories?.map((category) => (
+                  <Badge
+                    key={category.id}
+                    variant="outline"
+                    className="w-fit border-slate-300 bg-white/70 text-slate-700"
+                  >
+                    {category.name}
+                  </Badge>
+                ))}
+              </div>
 
               <h1 className="text-balance text-4xl font-bold leading-tight text-slate-900 lg:text-5xl xl:text-6xl">
                 {learningPath.title}

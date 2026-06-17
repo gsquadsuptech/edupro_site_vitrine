@@ -142,6 +142,48 @@ export const LearningPathService = {
         }
     },
 
+    /**
+     * Renseigne `row.categories = [{ id, name }]` via deux requêtes séparées
+     * (jonction `learning_path_categories` puis `categories`) plutôt qu'un embed
+     * PostgREST — même raison que `attachOrganizations` : éviter une dépendance
+     * au cache de schéma (PGRST200) qui ferait échouer toute la requête. La RLS
+     * n'expose la jonction et les catégories que pour les parcours publiés.
+     */
+    async attachCategories(rows: any[]): Promise<void> {
+        const lpIds = Array.from(new Set(rows.map((r) => r?.id).filter(Boolean)))
+        if (lpIds.length === 0) return
+        const supabase = createClient()
+
+        const { data: links, error: linkErr } = await supabase
+            .from('learning_path_categories')
+            .select('learning_path_id, category_id')
+            .in('learning_path_id', lpIds)
+        if (linkErr || !links || links.length === 0) return
+
+        const categoryIds = Array.from(new Set((links as any[]).map((l) => l.category_id).filter(Boolean)))
+        if (categoryIds.length === 0) return
+
+        const { data: cats, error: catErr } = await supabase
+            .from('categories')
+            .select('id, name')
+            .in('id', categoryIds)
+        if (catErr || !cats) return
+
+        const nameById = new Map<string, string>((cats as any[]).map((c) => [c.id, c.name]))
+        const byLp = new Map<string, { id: string; name: string }[]>()
+        for (const link of links as any[]) {
+            const name = nameById.get(link.category_id)
+            if (!name) continue
+            const list = byLp.get(link.learning_path_id) || []
+            list.push({ id: link.category_id, name })
+            byLp.set(link.learning_path_id, list)
+        }
+        for (const row of rows) {
+            const list = byLp.get(row.id)
+            if (list && list.length) row.categories = list
+        }
+    },
+
     mapLearningPathItem(item: any): LearningPath {
         const isFree = item.access_type === 'free'
 
@@ -215,6 +257,7 @@ export const LearningPathService = {
             published_at: marketplace?.published_at || '',
 
             courses: mappedCourses.length ? mappedCourses : undefined,
+            categories: Array.isArray(item.categories) && item.categories.length ? item.categories : undefined,
         }
     },
 
@@ -303,6 +346,7 @@ export const LearningPathService = {
         if (!data) return null
 
         await LearningPathService.attachOrganizations([data])
+        await LearningPathService.attachCategories([data])
         return LearningPathService.mapLearningPathItem(data)
     },
 
@@ -326,6 +370,7 @@ export const LearningPathService = {
         if (!data) return null
 
         await LearningPathService.attachOrganizations([data])
+        await LearningPathService.attachCategories([data])
         return LearningPathService.mapLearningPathItem(data)
     },
 }
