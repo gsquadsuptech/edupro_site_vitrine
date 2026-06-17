@@ -4,12 +4,12 @@ Bonjour,
 
 Merci de tester les nouveautés ci-dessous. Chrome ou Edge à jour, et sur mobile si possible. Pour chaque point, répondez **OK** ou **KO** (avec capture + URL).
 Environnement : ____________________ (staging ou prod).
-À NE PAS tester : le choix de plusieurs catégories pour un parcours (pas encore développé).
 
 Liens de test à utiliser :
 - Parcours avec vidéo : __________
 - Catalogue public : __________
 - Parcours/cours rattaché à un catalogue : __________
+- Parcours avec plusieurs catégories : __________
 
 ---
 
@@ -18,6 +18,7 @@ Liens de test à utiliser :
 - Onglet **Contenu** → **« Ajouter un parcours »** puis **« Ajouter un cours »**.
 - Vérifier que ce parcours/cours est bien publié et visible sur la marketplace (sinon il n'apparaîtra pas dans le catalogue : normal).
 - Laisser un autre catalogue **non** public pour le test du point 2 (404).
+- **Multi-catégories** : Parcours → éditer un parcours → cocher 2-3 catégories → Enregistrer.
 → OK / KO : ____
 
 ---
@@ -46,7 +47,12 @@ Liens de test à utiliser :
 - (Si aucun catalogue n'est public, la section n'apparaît pas : normal.)
 → OK / KO : ____
 
-**5. Inscription & paiement (vérif. importante)**
+**5. Multi-catégories d'un parcours**
+- Ouvrir le parcours sur lequel 2-3 catégories ont été cochées → un **badge par catégorie** sous le badge « Parcours ».
+- Parcours sans catégorie → aucun badge.
+→ OK / KO : ____
+
+**6. Inscription & paiement (vérif. importante)**
 - S'inscrire à une formation **gratuite** → aboutit sans erreur.
 - Lancer un **paiement** sur une formation payante → l'écran de paiement s'affiche.
 - Saisir un **code promo** de test → réduction appliquée (ou message clair si invalide).

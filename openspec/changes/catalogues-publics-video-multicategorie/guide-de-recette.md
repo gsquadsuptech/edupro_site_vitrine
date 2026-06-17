@@ -1,4 +1,4 @@
-# Guide de recette — Catalogues, vidéo de présentation & sécurité paiement
+# Guide de recette — Catalogues, vidéo de présentation, multi-catégories & sécurité paiement
 
 **Pour le testeur** — aucune compétence technique requise. Suivez chaque scénario dans l'ordre, cochez ✅ si le résultat attendu est conforme, ❌ sinon (avec une capture d'écran et l'URL de la page).
 
@@ -14,11 +14,10 @@
   2. La nouvelle **page détail d'un catalogue**.
   3. La section **« Ce parcours / ce cours appartient à un catalogue »**.
   4. La liste **« Catalogues co-certifiés »** sur la page Catalogue.
-  5. Que **l'inscription et le paiement fonctionnent toujours** (non-régression).
+  5. Les **plusieurs catégories** d'un parcours (badges).
+  6. Que **l'inscription et le paiement fonctionnent toujours** (non-régression).
 
 > ℹ️ Si une section liée aux catalogues n'apparaît nulle part, prévenez l'équipe : c'est peut-être que les données de test (catalogue rendu « visible », contenu rattaché) ne sont pas encore en place. Ce n'est pas forcément un bug d'affichage.
-
-> ⚠️ **Non inclus dans cette recette** : le choix de **plusieurs catégories** pour un parcours n'est pas encore développé — ne pas le tester.
 
 ---
 
@@ -34,10 +33,11 @@
 | A.4 | Toujours onglet **Contenu** → bouton **« Ajouter un cours »** → choisir un cours → **Ajouter**. | Le cours apparaît dans la liste du contenu. |
 | A.5 | Vérifier que le parcours / cours ajouté est bien **publié et visible sur la marketplace** (côté gestion de ce parcours/cours). | Sinon, il n'apparaîtra pas dans le catalogue côté site (c'est voulu). |
 | A.6 | Pour tester le cas « non public » : ouvrir un **autre** catalogue et **laisser** le switch désactivé. | Servira au test B (point 3.6) : ce catalogue ne doit pas être accessible côté site. |
+| A.7 | **Multi-catégories** : aller dans **Parcours**, éditer un parcours, dans **Catégories** cocher **2 ou 3 catégories** → **Enregistrer**. | La sélection est enregistrée. En rouvrant le parcours, les mêmes cases sont cochées. |
 
 ✅ / ❌ : __________
 
-> Notez les **noms / liens** du catalogue public, du parcours et du cours rattachés : ils serviront pour la PARTIE B.
+> Notez les **noms / liens** du catalogue public, du parcours et du cours rattachés (et du parcours multi-catégories) : ils serviront pour la PARTIE B.
 
 ---
 
@@ -119,7 +119,23 @@
 
 ---
 
-## 7. Non-régression : inscription & paiement
+## 7. Multi-catégories d'un parcours (badges)
+
+**But** : un parcours peut afficher plusieurs catégories sous forme de badges.
+
+> Prérequis : avoir coché 2-3 catégories sur un parcours **publié** à l'étape A.7.
+
+| # | Étape | Résultat attendu |
+|---|-------|------------------|
+| 7.1 | Ouvrez la page du parcours sur lequel vous avez coché plusieurs catégories. | Sous le badge **« Parcours »** (en haut), on voit **un badge par catégorie** cochée. |
+| 7.2 | Comparez avec la sélection faite à l'étape A.7. | Les badges correspondent exactement aux catégories cochées (ni plus, ni moins). |
+| 7.3 | Ouvrez un parcours **sans aucune catégorie**. | **Aucun** badge de catégorie n'est affiché (seul « Parcours » reste). |
+
+✅ / ❌ : __________
+
+---
+
+## 8. Non-régression : inscription & paiement
 
 **But** : vérifier qu'après les changements techniques de sécurité, l'inscription et le paiement marchent toujours.
 
@@ -136,7 +152,7 @@
 
 ---
 
-## 8. Comment remonter un problème
+## 9. Comment remonter un problème
 
 Pour chaque anomalie, indiquez :
 - **L'URL** exacte de la page.
