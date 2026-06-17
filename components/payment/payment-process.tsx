@@ -59,14 +59,6 @@ const FRONTEND_TO_BACKEND_PLAN: Record<string, string> = {
 
 const toBackendPlanCode = (planType: string): string => FRONTEND_TO_BACKEND_PLAN[planType] || planType;
 
-const resolveSaasUrl = (): string => {
-    let saasUrl = process.env.NEXT_PUBLIC_SAAS_URL || '';
-    if (!saasUrl || saasUrl.includes('localhost')) {
-        saasUrl = 'http://localhost:3000';
-    }
-    return saasUrl;
-};
-
 const mapTeamPurchaseError = (status: number, code?: string, message?: string): string => {
     const c = (code || '').toLowerCase();
     if (status === 403 && c === 'teach_org_cannot_purchase') {
@@ -169,7 +161,6 @@ export const PaymentProcess = ({
         setPromoLoading(true);
         setPromoError(null);
         try {
-            const saasUrl = resolveSaasUrl();
             // applicableItemType : la validate API distingue 'course' /
             // 'learning-path' / 'category'. On dérive depuis le type d'item
             // déjà normalisé en haut du composant.
@@ -177,11 +168,11 @@ export const PaymentProcess = ({
                 ? 'learning-path'
                 : 'course';
 
-            const response = await fetch(`${saasUrl}/api/discounts/validate`, {
+            // Proxy serveur vitrine : la clé API SaaS est ajoutée côté serveur.
+            const response = await fetch(`/api/discounts/validate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-api-key': process.env.NEXT_PUBLIC_SAAS_API_KEY || '',
                 },
                 body: JSON.stringify({
                     code,
@@ -267,14 +258,13 @@ export const PaymentProcess = ({
         }
 
         try {
-            const saasUrl = resolveSaasUrl();
             const returnPath = normalizedItem.type === 'learning_path'
                 ? `/checkout/learning-path/${normalizedItem.id}`
                 : `/checkout/${normalizedItem.id}`;
 
+            // Proxy serveur vitrine : la clé API SaaS est ajoutée côté serveur.
             const headers: Record<string, string> = {
                 'Content-Type': 'application/json',
-                'x-api-key': process.env.NEXT_PUBLIC_SAAS_API_KEY || '',
             };
 
             // Phase 4 — Auth cross-app : pour les achats équipe, on passe le JWT
@@ -339,10 +329,9 @@ export const PaymentProcess = ({
                 body.organizationId = organizationId;
             }
 
-            const response = await fetch(`${saasUrl}/api/payments/initialize`, {
+            const response = await fetch(`/api/payments/initialize`, {
                 method: 'POST',
                 headers,
-                credentials: 'include',
                 body: JSON.stringify(body),
             });
 

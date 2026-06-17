@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server"
 export const runtime = 'nodejs'
 
 const SAAS_URL = process.env.SAAS_API_URL || process.env.NEXT_PUBLIC_SAAS_URL
-const SAAS_API_KEY = process.env.MARKETPLACE_API_KEY || process.env.NEXT_PUBLIC_SAAS_API_KEY
+const SAAS_API_KEY = process.env.MARKETPLACE_API_KEY
 
 /**
  * Inscription gratuite — relais serveur vers le SaaS
