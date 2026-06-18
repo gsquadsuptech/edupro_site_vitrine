@@ -21,7 +21,7 @@ export function SkillPackPricingNew({ skillPack }: SkillPackPricingNewProps) {
         "Mises à jour gratuites",
         "Certificats co-signés",
         "Support communautaire",
-        `${skillPack.projects_count} projets pratiques`,
+        ...(skillPack.projects_count > 0 ? [`${skillPack.projects_count} projets pratiques`] : []),
       ],
     },
     {
@@ -36,7 +36,7 @@ export function SkillPackPricingNew({ skillPack }: SkillPackPricingNewProps) {
         "Mises à jour gratuites",
         "Certificats co-signés",
         "Support prioritaire",
-        `${skillPack.projects_count} projets pratiques`,
+        ...(skillPack.projects_count > 0 ? [`${skillPack.projects_count} projets pratiques`] : []),
         "Sessions de coaching mensuelles",
         "Accès au réseau alumni",
       ],

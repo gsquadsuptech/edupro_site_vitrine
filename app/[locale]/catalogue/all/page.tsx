@@ -42,15 +42,12 @@ export default async function CatalogueAllPage({
     const page = Math.max(1, Number(resolvedSearchParams?.page) || 1);
     const offset = (page - 1) * PAGE_SIZE;
 
-    // Quand l'utilisateur filtre par catégorie, l'API courses est plus fine — on bascule en courses-only
-    // (la taxonomie marketplace_categories ne s'applique pas encore aux learning_paths).
-    const effectiveType: 'course' | 'learning_path' | 'all' =
-        categoryQuery && categoryQuery !== 'all' ? 'course' : itemType;
-
+    // Le filtre par catégorie marketplace s'applique aux cours ET aux parcours :
+    // on conserve donc le type demandé par l'utilisateur (cours / parcours / tout).
     const [categoriesData, marketplaceResult] = await Promise.all([
         CategoryService.getCategoriesWithCounts(),
         MarketplaceService.listMarketplaceItems({
-            type: effectiveType,
+            type: itemType,
             searchTerm: searchQuery,
             category: categoryQuery,
             minPrice,

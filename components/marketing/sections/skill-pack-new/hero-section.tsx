@@ -53,11 +53,15 @@ export function SkillPackHeroNew({ skillPack }: SkillPackHeroNewProps) {
                 <p className="text-sm font-medium text-slate-400">Durée estimée</p>
                 <p className="text-2xl font-bold text-white">{skillPack.hours} heures</p>
               </div>
-              <div className="h-12 w-px bg-slate-700" />
-              <div>
-                <p className="text-sm font-medium text-slate-400">Projets</p>
-                <p className="text-2xl font-bold text-white">{skillPack.projects_count}</p>
-              </div>
+              {skillPack.projects_count > 0 && (
+                <>
+                  <div className="h-12 w-px bg-slate-700" />
+                  <div>
+                    <p className="text-sm font-medium text-slate-400">Projets</p>
+                    <p className="text-2xl font-bold text-white">{skillPack.projects_count}</p>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Stats grid */}

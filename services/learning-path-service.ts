@@ -5,6 +5,8 @@ export interface LearningPathFilters {
     searchTerm?: string
     level?: string[]
     language?: string
+    /** Slug d'une catégorie marketplace (marketplace_categories.slug). */
+    category?: string
     minPrice?: number
     maxPrice?: number
     limit?: number
@@ -143,11 +145,16 @@ export const LearningPathService = {
     },
 
     /**
-     * Renseigne `row.categories = [{ id, name }]` via deux requêtes séparées
-     * (jonction `learning_path_categories` puis `categories`) plutôt qu'un embed
-     * PostgREST — même raison que `attachOrganizations` : éviter une dépendance
-     * au cache de schéma (PGRST200) qui ferait échouer toute la requête. La RLS
-     * n'expose la jonction et les catégories que pour les parcours publiés.
+     * Renseigne `row.categories = [{ id, name, slug }]` via deux requêtes
+     * séparées (jonction `marketplace_learning_path_categories` puis
+     * `marketplace_categories`) plutôt qu'un embed PostgREST — même raison que
+     * `attachOrganizations` : éviter une dépendance au cache de schéma (PGRST200)
+     * qui ferait échouer toute la requête. La RLS n'expose la jonction qu'aux
+     * parcours publiés + searchable, et `marketplace_categories` est en lecture
+     * publique.
+     *
+     * ⚠️ Vitrine = `marketplace_*` UNIQUEMENT. NE PAS confondre avec la
+     * taxonomie back-office (`learning_path_categories` / `categories`).
      */
     async attachCategories(rows: any[]): Promise<void> {
         const lpIds = Array.from(new Set(rows.map((r) => r?.id).filter(Boolean)))
@@ -155,7 +162,7 @@ export const LearningPathService = {
         const supabase = createClient()
 
         const { data: links, error: linkErr } = await supabase
-            .from('learning_path_categories')
+            .from('marketplace_learning_path_categories')
             .select('learning_path_id, category_id')
             .in('learning_path_id', lpIds)
         if (linkErr || !links || links.length === 0) return
@@ -164,23 +171,32 @@ export const LearningPathService = {
         if (categoryIds.length === 0) return
 
         const { data: cats, error: catErr } = await supabase
-            .from('categories')
-            .select('id, name')
+            .from('marketplace_categories')
+            .select('id, name, slug, display_order')
             .in('id', categoryIds)
+            .eq('is_active', true)
         if (catErr || !cats) return
 
-        const nameById = new Map<string, string>((cats as any[]).map((c) => [c.id, c.name]))
-        const byLp = new Map<string, { id: string; name: string }[]>()
+        type Cat = { id: string; name: string; slug: string; display_order: number }
+        const catById = new Map<string, Cat>(
+            (cats as any[]).map((c) => [c.id, { id: c.id, name: c.name, slug: c.slug, display_order: c.display_order ?? 0 }])
+        )
+        const byLp = new Map<string, Cat[]>()
         for (const link of links as any[]) {
-            const name = nameById.get(link.category_id)
-            if (!name) continue
+            const cat = catById.get(link.category_id)
+            if (!cat) continue // catégorie inactive (filtrée ci-dessus) → ignorée
             const list = byLp.get(link.learning_path_id) || []
-            list.push({ id: link.category_id, name })
+            list.push(cat)
             byLp.set(link.learning_path_id, list)
         }
         for (const row of rows) {
             const list = byLp.get(row.id)
-            if (list && list.length) row.categories = list
+            if (!list || !list.length) continue
+            // Tri display_order puis name, cohérent avec la liste de filtres.
+            row.categories = list
+                .slice()
+                .sort((a, b) => (a.display_order - b.display_order) || a.name.localeCompare(b.name))
+                .map(({ id, name, slug }) => ({ id, name, slug }))
         }
     },
 
@@ -283,12 +299,37 @@ export const LearningPathService = {
 
         const rows = data || []
         await LearningPathService.attachOrganizations(rows)
+        await LearningPathService.attachCategories(rows)
         return rows.map((item: any) => LearningPathService.mapLearningPathItem(item))
     },
 
     async searchLearningPaths(filters: LearningPathFilters): Promise<{ learningPaths: LearningPath[]; total: number }> {
         const supabase = createClient()
-        const { searchTerm, level, language, minPrice, maxPrice, limit = 12, offset = 0 } = filters
+        const { searchTerm, level, language, category, minPrice, maxPrice, limit = 12, offset = 0 } = filters
+
+        // Filtre par catégorie marketplace : un parcours correspond s'il possède
+        // au moins une ligne dans `marketplace_learning_path_categories` pour la
+        // catégorie sélectionnée (gère le multi-catégories). On résout d'abord
+        // l'id depuis le slug, puis la liste des parcours rattachés, qu'on
+        // applique comme `.in('id', …)` sur la requête principale.
+        let lpIdsForCategory: string[] | null = null
+        if (category && category !== 'all') {
+            const { data: mcat } = await supabase
+                .from('marketplace_categories')
+                .select('id')
+                .eq('slug', category)
+                .maybeSingle()
+            if (!mcat) return { learningPaths: [], total: 0 }
+
+            const { data: links } = await supabase
+                .from('marketplace_learning_path_categories')
+                .select('learning_path_id')
+                .eq('category_id', (mcat as any).id)
+            lpIdsForCategory = Array.from(
+                new Set(((links as any[]) || []).map((l) => l.learning_path_id).filter(Boolean))
+            )
+            if (lpIdsForCategory.length === 0) return { learningPaths: [], total: 0 }
+        }
 
         let query = supabase
             .from('learning_paths')
@@ -298,6 +339,7 @@ export const LearningPathService = {
             .eq('marketplace.searchable', true)
             .or('access_type.is.null,access_type.neq.invitation')
 
+        if (lpIdsForCategory) query = query.in('id', lpIdsForCategory)
         if (searchTerm) query = query.ilike('title', `%${searchTerm}%`)
         if (level && level.length > 0) query = query.in('level', level)
         if (language) query = query.eq('language', language)
@@ -315,6 +357,7 @@ export const LearningPathService = {
 
         const rows = data || []
         await LearningPathService.attachOrganizations(rows)
+        await LearningPathService.attachCategories(rows)
         return {
             learningPaths: rows.map((item: any) => LearningPathService.mapLearningPathItem(item)),
             total: count || 0,
