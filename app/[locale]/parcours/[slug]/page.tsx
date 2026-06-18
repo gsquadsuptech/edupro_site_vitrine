@@ -11,6 +11,7 @@ import { ParcoursCTA } from "@/components/marketing/sections/parcours/cta-sectio
 import { ParcoursCatalogs } from "@/components/marketing/sections/parcours/catalogs-section"
 import { LearningPathService } from "@/services/learning-path-service"
 import { CatalogService } from "@/services/catalog-service"
+import { PricingService } from "@/services/pricing-service"
 
 export default async function ParcoursPage({
     params,
@@ -25,6 +26,7 @@ export default async function ParcoursPage({
     }
 
     const catalogs = await CatalogService.getByLearningPath(learningPath.id)
+    const promo = await PricingService.getEffectivePrice('learning_path', learningPath.id)
 
     return (
         <div className="bg-gradient-to-b from-slate-50 via-white to-slate-50">
@@ -35,7 +37,7 @@ export default async function ParcoursPage({
             <ParcoursCertification learningPath={learningPath} />
             <ParcoursTestimonials learningPath={learningPath} />
             <ParcoursCatalogs catalogs={catalogs} locale={locale} />
-            <ParcoursPricing learningPath={learningPath} locale={locale} />
+            <ParcoursPricing learningPath={learningPath} locale={locale} promo={promo ?? undefined} />
             <ParcoursFAQ learningPath={learningPath} />
             <ParcoursCTA learningPath={learningPath} locale={locale} />
         </div>

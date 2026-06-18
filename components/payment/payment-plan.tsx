@@ -33,8 +33,11 @@ import {
     getOnlyEnabledMode,
     derivePlanDetails,
     parseInstallments as parseInstallmentsShared,
+    computePublicPromoDiscount,
 } from "@/lib/pricing";
 import { PaymentItem } from "./payment-process";
+import { usePublicPrice } from "@/hooks/use-public-price";
+import { PromoBadge } from "@/components/marketing/marketplace/promo-badge";
 
 interface PaymentPlanProps {
     course: any;
@@ -146,6 +149,20 @@ export const PaymentPlan = ({
 
     const discountedPrice = oneTimePrice * (1 - oneTimeDiscount);
 
+    // Promo publique (auto-appliquée, sans code) sur le paiement unique. Hook
+    // désactivé en mode équipe. Le serveur applique la même remise au montant
+    // envoyé → l'affichage reste cohérent avec ce qui sera facturé.
+    const publicPrice = usePublicPrice(
+        (item?.type ?? 'course') as 'course' | 'learning_path',
+        item?.id ?? course?.id,
+        !isTeam,
+    );
+    const oneTimePublicDiscount = publicPrice?.hasPublicPromo
+        ? computePublicPromoDiscount(discountedPrice, publicPrice.promo)
+        : 0;
+    const oneTimeFinal = Math.max(0, discountedPrice - oneTimePublicDiscount);
+    const showOneTimePublicPromo = oneTimePublicDiscount > 0;
+
     const monthlyPrice = isUsingCoursePrice
         ? parseFloat(course?.monthly_price || "0")
         : parseFloat(cohort?.monthly_price || "0");
@@ -168,6 +185,32 @@ export const PaymentPlan = ({
             0
         )
         : 0;
+
+    // Promo publique (sans code) sur la 1ʳᵉ échéance : c'est le seul montant payé
+    // au checkout, et le serveur le remise au montant envoyé (cf. étape Paiement).
+    // Le solde restant demeure nominal (la remise est créditée sur ce 1ᵉʳ paiement).
+    const firstInstallmentAmount = Array.isArray(installments) && installments.length > 0
+        ? parseFloat(installments[0]?.amount || '0')
+        : 0;
+    const installmentsPublicDiscount = publicPrice?.hasPublicPromo
+        ? computePublicPromoDiscount(firstInstallmentAmount, publicPrice.promo)
+        : 0;
+    const showInstallmentsPublicPromo = installmentsPublicDiscount > 0;
+
+    // Nombre de plans réellement affichés → largeur des cartes adaptée. La plupart
+    // des cours n'ont que 2 options : on élargit alors les cartes (et on les centre)
+    // au lieu de garder une grille à 3 colonnes qui les comprime.
+    const visiblePlanCount = [
+        availableModes.oneTime,
+        availableModes.installments && Array.isArray(installments) && installments.length > 0,
+        availableModes.subscription,
+        availableModes.registrationMonthly,
+    ].filter(Boolean).length;
+    const planGridClass =
+        visiblePlanCount <= 1 ? 'sm:grid-cols-1 max-w-sm'
+            : visiblePlanCount === 2 ? 'sm:grid-cols-2 max-w-3xl'
+                : visiblePlanCount === 3 ? 'sm:grid-cols-2 lg:grid-cols-3 max-w-5xl'
+                    : 'sm:grid-cols-2 lg:grid-cols-4 max-w-6xl';
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("fr-FR").format(price) + " FCFA";
@@ -359,7 +402,7 @@ export const PaymentPlan = ({
             {/* En mode équipe, on ne montre PAS la grille de plans : le mode est forcé en
                 paiement unique. Le bouton "Continuer vers le paiement" du bloc seats remplace
                 la sélection manuelle. */}
-            <div className={`grid gap-6 md:grid-cols-2 lg:grid-cols-3 ${teamPurchaseUnavailable ? 'pointer-events-none opacity-40' : ''} ${isTeam ? 'hidden' : ''}`}>
+            <div className={`grid gap-6 mx-auto w-full ${planGridClass} ${teamPurchaseUnavailable ? 'pointer-events-none opacity-40' : ''} ${isTeam ? 'hidden' : ''}`}>
                 {/* Option de paiement unique */}
                 {availableModes.oneTime && !teamPurchaseUnavailable && (
                     <Card
@@ -390,11 +433,23 @@ export const PaymentPlan = ({
                         <CardContent>
                             <div className="space-y-4">
                                 <div className="text-center">
-                                    <div className="text-3xl font-bold text-primary">
-                                        {discountedPrice > 0 ? formatPrice(discountedPrice) : "Gratuit"}
+                                    <div className={`text-3xl font-bold ${showOneTimePublicPromo ? 'text-rose-600' : 'text-primary'}`}>
+                                        {oneTimeFinal > 0 ? formatPrice(oneTimeFinal) : "Gratuit"}
                                     </div>
 
-                                    {oneTimeDiscount > 0 && (
+                                    {showOneTimePublicPromo ? (
+                                        <div className="mt-1.5 flex flex-col items-center gap-1.5">
+                                            <div className="flex items-center justify-center gap-2">
+                                                <span className="text-sm line-through text-muted-foreground">
+                                                    {formatPrice(oneTimePrice)}
+                                                </span>
+                                                <PromoBadge percentageOff={publicPrice?.percentageOff} name={publicPrice?.promo?.name} />
+                                            </div>
+                                            <span className="text-xs font-semibold text-emerald-600">
+                                                Économisez {formatPrice(oneTimePublicDiscount)}
+                                            </span>
+                                        </div>
+                                    ) : oneTimeDiscount > 0 ? (
                                         <div className="mt-1 flex items-center justify-center">
                                             <span className="text-sm line-through text-muted-foreground mr-2">
                                                 {formatPrice(oneTimePrice)}
@@ -407,7 +462,7 @@ export const PaymentPlan = ({
                                                 {Math.round(oneTimeDiscount * 100)}% de réduction
                                             </Badge>
                                         </div>
-                                    )}
+                                    ) : null}
                                 </div>
 
                                 <ul className="space-y-2">
@@ -481,6 +536,14 @@ export const PaymentPlan = ({
                                         <div className="text-sm text-muted-foreground">
                                             en {installments.length} versements
                                         </div>
+                                        {showInstallmentsPublicPromo && (
+                                            <div className="mt-2 flex flex-col items-center gap-1">
+                                                <PromoBadge percentageOff={publicPrice?.percentageOff} name={publicPrice?.promo?.name} />
+                                                <span className="text-xs font-semibold text-emerald-600">
+                                                    Économisez {formatPrice(installmentsPublicDiscount)} sur le 1ᵉʳ versement
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="space-y-2">
@@ -493,9 +556,20 @@ export const PaymentPlan = ({
                                                     <div className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                                                         Versement {index + 1}
                                                     </div>
-                                                    <span className="text-sm font-bold whitespace-nowrap">
-                                                        {formatPrice(parseFloat(inst.amount))}
-                                                    </span>
+                                                    {showInstallmentsPublicPromo && index === 0 ? (
+                                                        <span className="whitespace-nowrap">
+                                                            <span className="text-xs line-through text-muted-foreground mr-1.5">
+                                                                {formatPrice(parseFloat(inst.amount))}
+                                                            </span>
+                                                            <span className="text-sm font-bold text-rose-600">
+                                                                {formatPrice(parseFloat(inst.amount) - installmentsPublicDiscount)}
+                                                            </span>
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-sm font-bold whitespace-nowrap">
+                                                            {formatPrice(parseFloat(inst.amount))}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 {index === 0 && (
                                                     <Badge

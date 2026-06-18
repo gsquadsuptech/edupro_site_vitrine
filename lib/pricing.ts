@@ -7,6 +7,80 @@ export type PricingModes = {
 
 export type PricingModeKey = keyof PricingModes
 
+/** Type d'item tel qu'utilisé en interne sur la vitrine. */
+export type PricingItemType = "course" | "learning_path"
+
+/** Cible d'un calcul de prix effectif (un cours ou un parcours). */
+export interface PricingTarget {
+    type: PricingItemType
+    id: string
+}
+
+/**
+ * Prix effectif renvoyé par l'API SaaS `POST /api/marketplace/pricing`.
+ * Quand `hasPublicPromo === false`, `discountedPrice === originalPrice` et
+ * `discountAmount === 0` : on affiche alors le prix normal sans badge.
+ */
+export interface PublicPrice {
+    originalPrice: number
+    discountedPrice: number
+    discountAmount: number
+    /** Pourcentage déjà arrondi côté serveur, prêt pour le badge `-XX%`. */
+    percentageOff: number
+    hasPublicPromo: boolean
+    promo?: {
+        discountId: string
+        name: string
+        type: string
+        value: number
+        /** Plafond de remise (promo %) si renvoyé par l'API. */
+        maxDiscount?: number | null
+        /** Montant minimum d'achat si renvoyé par l'API. */
+        minPurchase?: number | null
+    } | null
+}
+
+/** Map `itemId -> PublicPrice` telle que renvoyée par l'API (champ `prices`). */
+export type PublicPriceMap = Record<string, PublicPrice>
+
+/**
+ * Calcule la remise d'une promo publique pour un montant donné, en répliquant
+ * EXACTEMENT la logique serveur (`getEffectivePrice` côté SaaS, appliquée par
+ * `/api/payments/initialize` sur le montant envoyé) :
+ *  - pourcentage : `montant * value / 100`, plafonné par `maxDiscount` ;
+ *  - fixe : `min(value, montant)` ;
+ *  - ignorée si `montant < minPurchase`.
+ *
+ * Permet d'afficher au checkout le MÊME montant remisé que celui que le serveur
+ * facturera, quel que soit le plan (paiement unique, échéance, mensualité…).
+ */
+export function computePublicPromoDiscount(
+    amount: number,
+    promo: PublicPrice["promo"] | null | undefined,
+): number {
+    if (!promo || !(amount > 0)) return 0
+    const value = Number(promo.value) || 0
+    const minPurchase = Number(promo.minPurchase ?? 0)
+    if (amount < minPurchase) return 0
+
+    let discount = promo.type === "percentage" ? (amount * value) / 100 : Math.min(value, amount)
+    if (promo.type === "percentage" && promo.maxDiscount != null && discount > promo.maxDiscount) {
+        discount = promo.maxDiscount
+    }
+    return Math.min(Math.max(0, Math.round(discount)), amount)
+}
+
+/**
+ * Formatage FCFA cohérent avec l'existant : séparateurs de milliers fr-FR,
+ * pas de décimales, suffixe « FCFA ». Pour un montant nul, renvoie « Gratuit »
+ * (convention de la vitrine) sauf si `freeLabel` est explicitement désactivé.
+ */
+export function formatFCFA(amount: number | null | undefined, opts?: { zeroAsFree?: boolean }): string {
+    const n = Math.round(Number(amount) || 0)
+    if (n <= 0 && opts?.zeroAsFree) return "Gratuit"
+    return `${new Intl.NumberFormat("fr-FR").format(n)} FCFA`
+}
+
 export function parsePricingModes(raw: any): Record<string, any> {
     if (!raw) return {}
     if (typeof raw === "object" && !Array.isArray(raw)) return raw

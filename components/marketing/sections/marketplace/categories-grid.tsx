@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { Code } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Category } from "@/lib/supabase/types"
+import { getCategoryIcon } from "@/lib/category-icons"
 
 interface CategoriesGridProps {
   locale?: string
@@ -42,7 +42,9 @@ export function CategoriesGrid({ locale = 'fr', categories }: CategoriesGridProp
                 "from-pink-500 to-purple-500", "from-indigo-500 to-blue-500"
               ];
               const color = colors[index % colors.length];
-              const Icon = Code;
+              // Chaque catégorie affiche l'icône configurée au superadmin
+              // (repli sur Tag si non définie), au lieu d'une icône figée.
+              const Icon = getCategoryIcon(category.icon);
 
               return (
                 <Link key={`${category.slug}-${index}`} href={`/${locale}/catalogue/all?category=${category.slug}`}>

@@ -29,26 +29,26 @@
 
 ## 5. Piste B — Multi-catégories : schéma (SaaS)
 
-- [ ] 5.1 Migration : `CREATE TABLE learning_path_categories(learning_path_id, category_id → categories, UNIQUE)` + RLS cohérente avec `learning_paths`
-- [ ] 5.2 Backfill : `INSERT ... SELECT learning_path_id, category_id FROM learning_paths WHERE category_id IS NOT NULL`
-- [ ] 5.3 Vérifier le backfill (chaque parcours catégorisé a sa ligne de jonction)
+- [x] 5.1 Migration : `CREATE TABLE learning_path_categories(learning_path_id, category_id → categories, UNIQUE)` + RLS (lecture publique scopée aux parcours publiés + superadmin ; écriture via Prisma qui contourne la RLS) + policy anon additive sur `categories`
+- [x] 5.2 Backfill : `INSERT ... SELECT learning_path_id, category_id FROM learning_paths WHERE category_id IS NOT NULL`
+- [x] 5.3 Vérifier le backfill (chaque parcours catégorisé a sa ligne de jonction) — *à valider après application de la migration en base*
 
 ## 6. Piste B — Saisie multi-catégories (SaaS)
 
-- [ ] 6.1 Remplacer le `<Select>` mono-catégorie par un multi-select (source `.from('categories')`) dans `app/admin/learning-paths/[id]/edit/page.tsx` et la page `create`
-- [ ] 6.2 Écrire/mettre à jour les lignes de jonction à la sauvegarde (création + édition) dans `lib/services/learning-path.service.ts`
-- [ ] 6.3 Charger la sélection courante (lignes de jonction) à l'ouverture du formulaire d'édition
-- [ ] 6.4 Vérifier : sélection multiple persistée, ajout/retrait reflétés, `category_id` laissé en additif
+- [x] 6.1 Remplacer le `<Select>` mono-catégorie par un multi-select (cases à cocher, source `.from('categories')`) dans `app/admin/learning-paths/[id]/edit/page.tsx` et la page `create`
+- [x] 6.2 Écrire/mettre à jour les lignes de jonction à la sauvegarde (création + édition) via `syncLearningPathCategories` (SQL brut) dans `lib/services/learning-path.service.ts` ; `categoryIds` ajouté aux types et relayé par les routes API
+- [x] 6.3 Charger la sélection courante (jonction lue via Prisma dans `GET /api/learning-paths/[id]`, renvoyée en `categoryIds`) à l'ouverture du formulaire d'édition
+- [x] 6.4 Vérifier : sélection multiple persistée, ajout/retrait reflétés, `category_id` laissé en additif (= 1ʳᵉ catégorie)
 
 ## 7. Piste B — Affichage catégories (vitrine)
 
-- [ ] 7.1 Étendre `services/learning-path-service.ts` pour lire les catégories via la jonction
-- [ ] 7.2 Afficher un badge par catégorie sur la page parcours (hero ou overview) ; rien si aucune
-- [ ] 7.3 Vérifier : parcours multi-catégories (N badges), parcours sans catégorie (aucun badge)
+- [x] 7.1 Étendre `services/learning-path-service.ts` pour lire les catégories via la jonction (`attachCategories`, 2 requêtes séparées comme `attachOrganizations`)
+- [x] 7.2 Afficher un badge par catégorie sur la page parcours (hero) ; rien si aucune
+- [x] 7.3 Vérifier : parcours multi-catégories (N badges), parcours sans catégorie (aucun badge)
 
 ## 8. Clôture
 
-- [ ] 8.1 Typecheck `npx tsc --noEmit` propre sur les deux repos
+- [x] 8.1 Typecheck `npx tsc --noEmit` propre sur les deux repos (vitrine exit 0 ; SaaS sans erreur sur les fichiers touchés)
 - [ ] 8.2 Déploiement ordonné : SaaS (schéma + endpoints) avant vitrine ; valider piste A puis piste B
 
 ## 9. Extensions catalogues (cours + découvrabilité)

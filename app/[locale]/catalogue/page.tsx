@@ -13,6 +13,7 @@ import { SkillPackService } from "@/services/skill-pack-service";
 import { OrganizationService } from "@/services/organization-service";
 import { MarketplaceService } from "@/services/marketplace-service";
 import { CatalogService } from "@/services/catalog-service";
+import { PricingService, pricingTargetsFromItems } from "@/services/pricing-service";
 
 export default async function CataloguePage({
     params,
@@ -30,12 +31,15 @@ export default async function CataloguePage({
         CatalogService.getPublicCatalogs()
     ]);
 
+    // Prix effectifs (promos publiques) en UN seul appel batch pour la grille.
+    const promoPrices = await PricingService.getEffectivePrices(pricingTargetsFromItems(featuredItems));
+
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
                 <MarketplaceHero />
                 <MarketplaceStats />
-                <FeaturedCourses locale={locale} items={featuredItems} />
+                <FeaturedCourses locale={locale} items={featuredItems} promoPrices={promoPrices} />
                 <CategoriesGrid locale={locale} categories={categories} />
                 {/* <SkillPacksSection locale={locale} skillPacks={skillPacks} /> */}
                 <CoCertifiedCatalogs locale={locale} catalogs={coCertifiedCatalogs} />

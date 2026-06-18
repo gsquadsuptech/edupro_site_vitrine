@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 import { Course, LearningPath, MarketplaceItem } from "@/lib/supabase/types"
+import { PublicPrice, formatFCFA } from "@/lib/pricing"
 import { useWishlist } from "@/hooks/use-wishlist"
+import { PromoBadge } from "@/components/marketing/marketplace/promo-badge"
 
 type FormationCardProps =
-  | { item: MarketplaceItem; course?: never; badge?: string }
+  | { item: MarketplaceItem; course?: never; badge?: string; promo?: PublicPrice }
   | {
       item?: never
       course: Pick<Course,
@@ -25,6 +27,7 @@ type FormationCardProps =
         has_varying_prices?: boolean
       }
       badge?: string
+      promo?: PublicPrice
     }
 
 interface CardViewModel {
@@ -138,8 +141,13 @@ function renderPriceBlock(pricing: CardViewModel['pricing']) {
   }
 
   let priceDisplay: string
+  // `isOneTimePrice` indique que le prix affiché est un montant « paiement
+  // unique » simple — seul cas où une promo publique (calculée sur ce prix)
+  // s'applique proprement (pas pour un /mois ou un échelonné).
+  let isOneTimePrice = false
   if (hasOneTime && price > 0) {
     priceDisplay = `${Math.round(Number(price)).toLocaleString('fr-FR')} FCFA`
+    isOneTimePrice = true
   } else if (hasSubscription && pricing.monthly_price) {
     priceDisplay = `${pricing.monthly_price.toLocaleString('fr-FR')} FCFA/mois`
   } else if (hasRegistrationMonthly && pricing.registration_fee) {
@@ -147,8 +155,11 @@ function renderPriceBlock(pricing: CardViewModel['pricing']) {
   } else if (hasInstallments && pricing.installments && pricing.installments.length > 0) {
     const total = pricing.installments.reduce((acc: number, inst: any) => acc + (Number(inst.amount) || 0), 0)
     priceDisplay = `${Math.round(total).toLocaleString('fr-FR')} FCFA`
+  } else if (Number(price) >= 1) {
+    priceDisplay = `${Math.round(Number(price)).toLocaleString('fr-FR')} FCFA`
+    isOneTimePrice = true
   } else {
-    priceDisplay = Number(price) >= 1 ? `${Math.round(Number(price)).toLocaleString('fr-FR')} FCFA` : 'Gratuit'
+    priceDisplay = 'Gratuit'
   }
 
   let secondary: string | null = null
@@ -160,11 +171,11 @@ function renderPriceBlock(pricing: CardViewModel['pricing']) {
     secondary = `en ${pricing.installments.length} versements`
   }
 
-  return { label, priceDisplay, secondary }
+  return { label, priceDisplay, secondary, isOneTimePrice }
 }
 
 export function FormationCard(props: FormationCardProps) {
-  const { badge } = props
+  const { badge, promo } = props
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
 
@@ -180,7 +191,10 @@ export function FormationCard(props: FormationCardProps) {
     ? buildCourseViewModel(normalizedItem.data, locale)
     : buildLearningPathViewModel(normalizedItem.data, locale)
 
-  const { label: priceLabel, priceDisplay, secondary } = renderPriceBlock(vm.pricing)
+  const { label: priceLabel, priceDisplay, secondary, isOneTimePrice } = renderPriceBlock(vm.pricing)
+  // Promo publique : on l'affiche uniquement sur un prix « paiement unique »
+  // (le prix sur lequel le serveur calcule la remise). Sinon → prix normal.
+  const promoActive = !!promo?.hasPublicPromo && isOneTimePrice
   const SubtitleIcon = vm.subtitleIcon
 
   const { isWishlisted, toggle } = useWishlist(vm.supportsWishlist ? vm.id : undefined)
@@ -247,11 +261,26 @@ export function FormationCard(props: FormationCardProps) {
           </div>
 
           <div className="flex items-center justify-between border-t border-border pt-3">
-            <div>
-              <div className="text-xs text-muted-foreground font-medium">{priceLabel}</div>
-              <div className="text-lg font-bold">{priceDisplay}</div>
-              {secondary && <div className="text-xs text-muted-foreground">{secondary}</div>}
-            </div>
+            {promoActive && promo ? (
+              <div className="min-w-0">
+                <div className="text-xs text-muted-foreground font-medium">{priceLabel}</div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg font-bold text-rose-600">
+                    {formatFCFA(promo.discountedPrice, { zeroAsFree: true })}
+                  </span>
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatFCFA(promo.originalPrice)}
+                  </span>
+                </div>
+                <PromoBadge percentageOff={promo.percentageOff} name={promo.promo?.name} className="mt-1.5" />
+              </div>
+            ) : (
+              <div>
+                <div className="text-xs text-muted-foreground font-medium">{priceLabel}</div>
+                <div className="text-lg font-bold">{priceDisplay}</div>
+                {secondary && <div className="text-xs text-muted-foreground">{secondary}</div>}
+              </div>
+            )}
             <div className="flex gap-1">
               {vm.supportsWishlist && (
                 <Button
