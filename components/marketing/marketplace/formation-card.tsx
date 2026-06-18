@@ -43,6 +43,11 @@ interface CardViewModel {
   duration: string | null
   /** Affiché au-dessus du titre (catégorie ou métadonnée principale). */
   topBadgeLabel: string
+  /**
+   * Catégories marketplace à afficher en badges (parcours multi-catégories).
+   * Si vide, on retombe sur `topBadgeLabel`.
+   */
+  categoryBadges: string[]
   /** Sous-titre : nom de l'institut propriétaire (jamais le formateur). */
   subtitle: string
   /** Icône à gauche du sous-titre. */
@@ -80,6 +85,7 @@ function buildCourseViewModel(course: Course, locale: string): CardViewModel {
     enrolledCount: course.enrolled_count || 0,
     duration: course.duration,
     topBadgeLabel: course.category?.name || "Général",
+    categoryBadges: [],
     // Listes : on affiche TOUJOURS l'institut propriétaire, jamais le formateur.
     subtitle: course.organization?.name || course.instructor?.institute || "Institut",
     subtitleIcon: Building2,
@@ -110,6 +116,8 @@ function buildLearningPathViewModel(lp: LearningPath, locale: string): CardViewM
     enrolledCount: lp.enrolled_count || 0,
     duration: lp.duration ?? null,
     topBadgeLabel: 'Parcours',
+    // Catégories marketplace du parcours (peut en avoir plusieurs).
+    categoryBadges: (lp.categories || []).map((c) => c.name),
     // Listes : institut propriétaire (jamais le formateur), comme pour les cours.
     subtitle: lp.institute || (coursesCount > 0 ? `${coursesCount} cours` : 'Programme complet'),
     subtitleIcon: lp.institute ? Building2 : BookOpen,
@@ -224,10 +232,18 @@ export function FormationCard(props: FormationCardProps) {
         </div>
 
         <div className="p-4">
-          <div className="mb-2 flex items-center gap-2 text-xs">
-            <Badge variant="secondary" className="font-medium">
-              {vm.topBadgeLabel}
-            </Badge>
+          <div className="mb-2 flex flex-wrap items-center gap-2 text-xs">
+            {vm.categoryBadges.length > 0 ? (
+              vm.categoryBadges.map((name) => (
+                <Badge key={name} variant="secondary" className="font-medium">
+                  {name}
+                </Badge>
+              ))
+            ) : (
+              <Badge variant="secondary" className="font-medium">
+                {vm.topBadgeLabel}
+              </Badge>
+            )}
             <span className="text-muted-foreground">•</span>
             <span className="text-muted-foreground">
               {LEVEL_LABELS[vm.level || ''] || vm.level || 'Tous niveaux'}

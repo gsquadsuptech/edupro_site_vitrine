@@ -66,9 +66,11 @@ export function SkillPacksSection({ locale = 'fr', skillPacks = [] }: SkillPacks
                   <div>
                     <span className="font-semibold">{pack.hours}h</span> de contenu
                   </div>
-                  <div>
-                    <span className="font-semibold">{pack.projects_count}</span> projets
-                  </div>
+                  {pack.projects_count > 0 && (
+                    <div>
+                      <span className="font-semibold">{pack.projects_count}</span> projets
+                    </div>
+                  )}
                 </div>
 
                 <div className="mb-4 space-y-2 flex-grow">

@@ -8,7 +8,7 @@ export interface MarketplaceListFilters {
     level?: string[]
     minPrice?: number
     maxPrice?: number
-    category?: string  // courses only — categories taxonomy ne s'applique pas encore aux LP
+    category?: string  // slug d'une catégorie marketplace (cours ET parcours)
     sort?: CourseSort
     limit?: number
     offset?: number
@@ -33,6 +33,7 @@ export const MarketplaceService = {
         }
         const lpFilters: LearningPathFilters = {
             searchTerm: filters.searchTerm,
+            category: filters.category,
             level: filters.level,
             minPrice: filters.minPrice,
             maxPrice: filters.maxPrice,
