@@ -10,7 +10,7 @@ import { getCohortAvailability } from "@/services/course-service"
 import { useActiveBusinessOrg } from "@/hooks/use-active-business-org"
 import { useWishlist } from "@/hooks/use-wishlist"
 import { useSavedCourse } from "@/hooks/use-saved-course"
-import { getAvailableModes, pickDisplayCohort } from "@/lib/pricing"
+import { getAvailableModes, pickDisplayCohort, type PublicPrice } from "@/lib/pricing"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
 import { GiftDialog } from "./gift-dialog"
@@ -19,9 +19,11 @@ import { CoursePriceDisplay } from "./course-price-display"
 interface CourseSidebarProps {
   course: Course
   cohorts?: Cohort[]
+  /** Prix effectif (promo publique) calculé côté serveur. */
+  promo?: PublicPrice
 }
 
-export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
+export function CourseSidebar({ course, cohorts = [], promo }: CourseSidebarProps) {
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
   const { isBusinessAdmin } = useActiveBusinessOrg()
@@ -65,7 +67,7 @@ export function CourseSidebar({ course, cohorts = [] }: CourseSidebarProps) {
 
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-xl transition-all duration-300 hover:shadow-2xl">
-      <CoursePriceDisplay course={course} cohort={displayCohort} variant="sidebar" className="mb-6" />
+      <CoursePriceDisplay course={course} cohort={displayCohort} variant="sidebar" className="mb-6" promo={promo} />
 
       <div className="space-y-4">
         {showWaitlist ? (

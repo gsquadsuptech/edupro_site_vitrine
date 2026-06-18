@@ -7,6 +7,7 @@ import { CatalogueToolbar } from "@/components/marketing/sections/marketplace/ca
 import { PaginationControls } from "@/components/marketing/shared/pagination-controls";
 import { CategoryService } from "@/services/category-service";
 import { MarketplaceService } from "@/services/marketplace-service";
+import { PricingService, pricingTargetsFromItems } from "@/services/pricing-service";
 import type { CourseSort } from "@/services/course-service";
 
 const PAGE_SIZE = 12;
@@ -63,6 +64,9 @@ export default async function CatalogueAllPage({
 
     const { items, total } = marketplaceResult;
 
+    // Prix effectifs (promos publiques) en UN seul appel batch pour la page courante.
+    const promoPrices = await PricingService.getEffectivePrices(pricingTargetsFromItems(items));
+
     // Transform categories for filters
     const filterCategories = categoriesData.map(c => ({
         id: c.slug,
@@ -84,7 +88,7 @@ export default async function CatalogueAllPage({
                         <SearchFilters categories={filterCategories} />
                         <div className="flex-1">
                             <CatalogueToolbar total={total} />
-                            <SearchResults items={items} />
+                            <SearchResults items={items} promoPrices={promoPrices} />
                             <PaginationControls totalCount={total} pageSize={PAGE_SIZE} />
                         </div>
                     </div>

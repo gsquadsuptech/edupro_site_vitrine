@@ -7,6 +7,7 @@ import { SearchResults } from "@/components/marketing/sections/marketplace/searc
 
 import { CourseService } from "@/services/course-service";
 import { CategoryService } from "@/services/category-service";
+import { PricingService } from "@/services/pricing-service";
 
 export const metadata: Metadata = {
     title: "Catégorie - EduPro",
@@ -30,6 +31,11 @@ export default async function CategoryPage({
         notFound();
     }
 
+    // Prix effectifs (promos publiques) pour les cours de la catégorie, en un seul appel.
+    const promoPrices = await PricingService.getEffectivePrices(
+        courses.map((c) => ({ type: "course" as const, id: c.id }))
+    );
+
     return (
         <div className="flex min-h-screen flex-col">
             <main className="flex-1">
@@ -38,7 +44,7 @@ export default async function CategoryPage({
                 <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
                         <SearchFilters />
-                        <SearchResults courses={courses} />
+                        <SearchResults courses={courses} promoPrices={promoPrices} />
                     </div>
                 </div>
             </main>

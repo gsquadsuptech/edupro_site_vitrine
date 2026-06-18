@@ -9,6 +9,7 @@ import { MobilePurchaseBar } from "@/components/marketing/sections/formation/mob
 import { CatalogBelongsSection } from "@/components/marketing/sections/parcours/catalogs-section";
 import { CourseService } from "@/services/course-service";
 import { CatalogService } from "@/services/catalog-service";
+import { PricingService } from "@/services/pricing-service";
 
 export const metadata: Metadata = {
     title: "Détails Formation - EduPro",
@@ -42,6 +43,13 @@ export default async function FormationPage({
     const cohorts = await CourseService.getCohortsByCourseId(course.id);
     const catalogs = await CatalogService.getByCourse(course.id);
 
+    // Un seul appel pricing pour le cours affiché + les formations similaires.
+    const promoPrices = await PricingService.getEffectivePrices([
+        { type: 'course', id: course.id },
+        ...similarCourses.map((c) => ({ type: 'course' as const, id: c.id })),
+    ]);
+    const promo = promoPrices[course.id] ?? null;
+
     return (
         <div className="flex min-h-screen flex-col bg-background">
             <main className="flex-1">
@@ -61,7 +69,7 @@ export default async function FormationPage({
                         {/* Right Column - Sticky Sidebar (Desktop Only) */}
                         <aside className="hidden lg:block">
                             <div className="sticky top-24 self-start">
-                                <CourseSidebar course={course} cohorts={cohorts} />
+                                <CourseSidebar course={course} cohorts={cohorts} promo={promo ?? undefined} />
                             </div>
                         </aside>
                     </div>
@@ -69,10 +77,10 @@ export default async function FormationPage({
 
                 <CatalogBelongsSection catalogs={catalogs} locale={locale} kind="cours" />
 
-                <SimilarCourses courses={similarCourses} />
+                <SimilarCourses courses={similarCourses} promoPrices={promoPrices} />
             </main>
 
-            <MobilePurchaseBar course={course} cohorts={cohorts} />
+            <MobilePurchaseBar course={course} cohorts={cohorts} promo={promo ?? undefined} />
         </div>
     );
 }

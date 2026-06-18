@@ -2,7 +2,7 @@
 
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
-import { pickDisplayCohort } from "@/lib/pricing"
+import { pickDisplayCohort, type PublicPrice } from "@/lib/pricing"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
 import { CoursePriceDisplay } from "./course-price-display"
@@ -10,9 +10,11 @@ import { CoursePriceDisplay } from "./course-price-display"
 interface MobilePurchaseBarProps {
   course: Course
   cohorts: Cohort[]
+  /** Prix effectif (promo publique) calculé côté serveur. */
+  promo?: PublicPrice
 }
 
-export function MobilePurchaseBar({ course, cohorts }: MobilePurchaseBarProps) {
+export function MobilePurchaseBar({ course, cohorts, promo }: MobilePurchaseBarProps) {
   const isSessionCourse = course.format === 'session'
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
   const hasAnyCohort = cohorts.length > 0
@@ -24,7 +26,7 @@ export function MobilePurchaseBar({ course, cohorts }: MobilePurchaseBarProps) {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 p-4 backdrop-blur-lg lg:hidden shadow-[0_-8px_30px_rgb(0,0,0,0.12)]">
       <div className="container mx-auto flex items-center justify-between gap-4">
-        <CoursePriceDisplay course={course} cohort={displayCohort} variant="compact" className="shrink-0" />
+        <CoursePriceDisplay course={course} cohort={displayCohort} variant="compact" className="shrink-0" promo={promo} />
         {showEnrollButton ? (
           <div className="flex-1 sm:max-w-xs">
             <EnrollCTA

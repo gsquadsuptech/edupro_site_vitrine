@@ -5,13 +5,16 @@ import { Button } from "@/components/ui/button"
 import { Search } from "lucide-react"
 
 import { Course, MarketplaceItem } from "@/lib/supabase/types"
+import { PublicPriceMap } from "@/lib/pricing"
 
 interface SearchResultsProps {
   courses?: Course[]
   items?: MarketplaceItem[]
+  /** Prix effectifs (promos publiques) indexés par id d'item. */
+  promoPrices?: PublicPriceMap
 }
 
-export function SearchResults({ courses = [], items }: SearchResultsProps) {
+export function SearchResults({ courses = [], items, promoPrices }: SearchResultsProps) {
   const displayItems: MarketplaceItem[] = items
     ? items
     : courses.map((c) => ({ kind: 'course' as const, data: c }))
@@ -21,7 +24,11 @@ export function SearchResults({ courses = [], items }: SearchResultsProps) {
       {displayItems.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {displayItems.map((entry) => (
-            <FormationCard key={`${entry.kind}-${entry.data.id}`} item={entry} />
+            <FormationCard
+              key={`${entry.kind}-${entry.data.id}`}
+              item={entry}
+              promo={promoPrices?.[entry.data.id]}
+            />
           ))}
         </div>
       ) : (

@@ -5,15 +5,18 @@ import { Button } from "@/components/ui/button"
 import { FormationCard } from "@/components/marketing/marketplace/formation-card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Course, MarketplaceItem } from "@/lib/supabase/types"
+import { PublicPriceMap } from "@/lib/pricing"
 
 interface FeaturedCoursesProps {
   locale?: string
   courses?: Course[]
   items?: MarketplaceItem[]
   isLoading?: boolean
+  /** Prix effectifs (promos publiques) indexés par id d'item. */
+  promoPrices?: PublicPriceMap
 }
 
-export function FeaturedCourses({ locale, courses, items, isLoading = false }: FeaturedCoursesProps) {
+export function FeaturedCourses({ locale, courses, items, isLoading = false, promoPrices }: FeaturedCoursesProps) {
   const displayItems: MarketplaceItem[] = items
     ? items
     : (courses || []).map((c) => ({ kind: 'course' as const, data: c }))
@@ -52,7 +55,11 @@ export function FeaturedCourses({ locale, courses, items, isLoading = false }: F
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {displayItems.map((entry) => (
-              <FormationCard key={`${entry.kind}-${entry.data.id}`} item={entry} />
+              <FormationCard
+                key={`${entry.kind}-${entry.data.id}`}
+                item={entry}
+                promo={promoPrices?.[entry.data.id]}
+              />
             ))}
           </div>
         )}

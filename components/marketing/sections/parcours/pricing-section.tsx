@@ -3,16 +3,20 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Check, Sparkles, ShieldCheck } from "lucide-react"
 import { LearningPath } from "@/lib/supabase/types"
+import { type PublicPrice } from "@/lib/pricing"
 import { EnrollButton } from "@/components/payment/enroll-button"
+import { PromoBadge } from "@/components/marketing/marketplace/promo-badge"
 
 interface ParcoursPricingProps {
   learningPath: LearningPath
   locale: string
+  /** Prix effectif (promo publique) calculé côté serveur pour ce parcours. */
+  promo?: PublicPrice
 }
 
 const formatXOF = (n: number) => `${Math.round(n).toLocaleString('fr-FR')} FCFA`
 
-export function ParcoursPricing({ learningPath, locale }: ParcoursPricingProps) {
+export function ParcoursPricing({ learningPath, locale, promo }: ParcoursPricingProps) {
   const oneTimePrice = learningPath.one_time_price ?? learningPath.price ?? 0
   const monthlyPrice = learningPath.monthly_price ?? null
   const installments = (learningPath.installments && learningPath.installments.length > 0)
@@ -20,6 +24,8 @@ export function ParcoursPricing({ learningPath, locale }: ParcoursPricingProps) 
     : null
   const modes = learningPath.pricing_modes ?? null
   const hasOneTime = !modes || modes.one_time !== false
+  // Promo publique : affichée sur le prix « paiement unique » du parcours.
+  const promoActive = !!promo?.hasPublicPromo && hasOneTime && oneTimePrice > 0
 
   const included = [
     learningPath.courses_count > 0
@@ -63,7 +69,25 @@ export function ParcoursPricing({ learningPath, locale }: ParcoursPricingProps) 
             </div>
 
             <div className="mb-8">
-              {hasOneTime && oneTimePrice > 0 ? (
+              {promoActive && promo ? (
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-baseline gap-3">
+                    <span className="text-5xl font-bold text-rose-600">
+                      {promo.discountedPrice <= 0 ? 'Gratuit' : Math.round(promo.discountedPrice).toLocaleString('fr-FR')}
+                    </span>
+                    {promo.discountedPrice > 0 && <span className="text-xl text-slate-600">FCFA</span>}
+                    <span className="text-2xl font-medium text-slate-400 line-through">
+                      {formatXOF(promo.originalPrice)}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <PromoBadge percentageOff={promo.percentageOff} name={promo.promo?.name} size="md" />
+                    <span className="text-sm font-semibold text-emerald-600">
+                      Économisez {formatXOF(promo.discountAmount)}
+                    </span>
+                  </div>
+                </div>
+              ) : hasOneTime && oneTimePrice > 0 ? (
                 <div className="flex items-baseline gap-3">
                   <span className="text-5xl font-bold text-slate-900">
                     {Math.round(oneTimePrice).toLocaleString('fr-FR')}

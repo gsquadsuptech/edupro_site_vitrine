@@ -1,11 +1,14 @@
 import { Course } from "@/lib/supabase/types"
+import { PublicPriceMap } from "@/lib/pricing"
 import { FormationCard } from "@/components/marketing/marketplace/formation-card"
 
 interface SimilarCoursesProps {
   courses?: Course[]
+  /** Prix effectifs (promos publiques) indexés par id de cours. */
+  promoPrices?: PublicPriceMap
 }
 
-export function SimilarCourses({ courses = [] }: SimilarCoursesProps) {
+export function SimilarCourses({ courses = [], promoPrices }: SimilarCoursesProps) {
   // Le fetch est résolu côté serveur : aucune donnée = aucun cours similaire.
   // On masque entièrement la section plutôt que d'afficher un loader figé.
   if (!courses || courses.length === 0) {
@@ -20,7 +23,7 @@ export function SimilarCourses({ courses = [] }: SimilarCoursesProps) {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {courses.map((course) => (
-            <FormationCard key={course.id} course={course} />
+            <FormationCard key={course.id} course={course} promo={promoPrices?.[course.id]} />
           ))}
         </div>
       </div>

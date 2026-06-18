@@ -9,6 +9,9 @@ import { AlertCircleIcon, CreditCardIcon, ShieldCheckIcon, Loader2, LogIn, Users
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useAuth } from '@/hooks/useAuth';
 import { AuthModal } from '@/components/auth/auth-modal';
+import { PromoBadge } from '@/components/marketing/marketplace/promo-badge';
+import { computePublicPromoDiscount } from '@/lib/pricing';
+import { usePublicPrice } from '@/hooks/use-public-price';
 import { toast } from 'sonner';
 
 interface AppliedDiscount {
@@ -112,6 +115,11 @@ export const PaymentProcess = ({
     const isTeam = purchaseMode === 'team';
     const seatsCount = isTeam ? Math.max(1, Number(seats || 1)) : 1;
 
+    // Promo PUBLIQUE (auto-appliquée, sans code) : prix effectif renvoyé par le
+    // SaaS. Indicatif côté front — le serveur l'applique lui-même à l'init du
+    // paiement. Ignorée pour l'achat équipe (hors scope V1, comme le code promo).
+    const publicPrice = usePublicPrice(normalizedItem.type, normalizedItem.id, !isTeam);
+
     const formatPrice = (price: number | undefined | null) => {
         if (price === undefined || price === null) return 'N/A';
         return new Intl.NumberFormat('fr-SN', { style: 'currency', currency: 'XOF' }).format(price);
@@ -142,11 +150,29 @@ export const PaymentProcess = ({
     };
 
     const initialAmount = getInitialPaymentAmount();
-    // Le montant réellement facturé = montant après remise si une promo est
-    // appliquée, sinon le montant brut du plan. Le serveur revalide quand
-    // même : si la promo a expiré entre l'aperçu et le clic, l'init renverra
-    // 400 et on remontera l'erreur à l'utilisateur.
-    const finalAmount = appliedDiscount ? appliedDiscount.finalAmount : initialAmount;
+
+    // Remise promo publique sur le montant RÉELLEMENT facturé (initialAmount) :
+    // le serveur applique la promo à ce montant quel que soit le plan (paiement
+    // unique, 1ʳᵉ échéance, mensualité…). On réplique son calcul pour afficher le
+    // même total remisé. Un code promo privé est prioritaire (cohabitation gérée
+    // serveur) ; l'achat équipe est hors scope.
+    const publicPromoDiscount = (!isTeam && !appliedDiscount && publicPrice?.hasPublicPromo)
+        ? computePublicPromoDiscount(initialAmount, publicPrice.promo)
+        : 0;
+    const publicPromoShown = publicPromoDiscount > 0;
+
+    // Montant réellement dû (aperçu) :
+    //  - code promo privé appliqué → son finalAmount (revalidé serveur) ;
+    //  - sinon montant du plan moins la promo publique.
+    // NB : le PAYLOAD envoie toujours `initialAmount` (prix d'origine) — le serveur
+    // applique lui-même la promo publique et revalide le code (cf. handlePayment).
+    const finalAmount = appliedDiscount
+        ? appliedDiscount.finalAmount
+        : (initialAmount - publicPromoDiscount);
+
+    // Prix d'origine barré dans le récap « Montant à payer ».
+    const showStruckTotal = !!appliedDiscount || publicPromoShown;
+    const struckTotal = appliedDiscount ? appliedDiscount.originalAmount : initialAmount;
 
     const applyPromoCode = async () => {
         const code = promoCodeInput.trim();
@@ -441,6 +467,33 @@ export const PaymentProcess = ({
                         )}
                     </div>
 
+                    {/* Promotion publique (auto-appliquée, sans code) : réduction par ligne,
+                        calculée sur le montant réellement facturé pour ce plan. */}
+                    {publicPromoShown && publicPrice && (
+                        <div className="rounded-md border border-rose-200 bg-rose-50 px-4 py-3">
+                            <div className="flex items-start justify-between gap-3">
+                                <div className="flex flex-col gap-1.5">
+                                    <PromoBadge
+                                        percentageOff={publicPrice.percentageOff}
+                                        name={publicPrice.promo?.name}
+                                        size="md"
+                                    />
+                                    <span className="text-sm font-semibold text-emerald-700">
+                                        Vous économisez {formatPrice(publicPromoDiscount)}
+                                    </span>
+                                </div>
+                                <div className="shrink-0 text-right">
+                                    <div className="text-sm text-muted-foreground line-through">
+                                        {formatPrice(initialAmount)}
+                                    </div>
+                                    <div className="text-lg font-bold text-rose-600">
+                                        {(initialAmount - publicPromoDiscount) <= 0 ? 'Gratuit' : formatPrice(initialAmount - publicPromoDiscount)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Code promo : caché pour les achats équipe en V1 (pas dans le scope EPIC 3). */}
                     {!isTeam && (
                         <div className="border-t pt-4">
@@ -509,9 +562,9 @@ export const PaymentProcess = ({
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-md text-muted-foreground">Montant à payer :</span>
                             <div className="flex items-baseline gap-2">
-                                {appliedDiscount && (
+                                {showStruckTotal && (
                                     <span className="text-sm text-muted-foreground line-through">
-                                        {formatPrice(appliedDiscount.originalAmount)}
+                                        {formatPrice(struckTotal)}
                                     </span>
                                 )}
                                 <span className="text-xl font-bold text-primary">{formatPrice(finalAmount)}</span>

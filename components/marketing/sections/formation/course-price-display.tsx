@@ -1,14 +1,17 @@
 "use client"
 
 import { Course, Cohort } from "@/lib/supabase/types"
-import { getAvailableModes, parseInstallments, type PricingModeKey } from "@/lib/pricing"
+import { getAvailableModes, parseInstallments, type PricingModeKey, type PublicPrice } from "@/lib/pricing"
 import { cn } from "@/lib/utils"
+import { PromoBadge } from "@/components/marketing/marketplace/promo-badge"
 
 interface CoursePriceDisplayProps {
     course: Course
     cohort?: Cohort
     variant?: "sidebar" | "compact"
     className?: string
+    /** Prix effectif (promo publique) calculé côté serveur pour ce cours. */
+    promo?: PublicPrice
 }
 
 const formatFCFA = (amount: number) =>
@@ -27,7 +30,7 @@ const modePriority: PricingModeKey[] = [
     "subscription",
 ]
 
-export function CoursePriceDisplay({ course, cohort, variant = "sidebar", className }: CoursePriceDisplayProps) {
+export function CoursePriceDisplay({ course, cohort, variant = "sidebar", className, promo }: CoursePriceDisplayProps) {
     const modes = getAvailableModes(course, cohort)
     const activeModes = modePriority.filter((m) => modes[m])
     const primary: PricingModeKey = activeModes[0] ?? "oneTime"
@@ -55,6 +58,11 @@ export function CoursePriceDisplay({ course, cohort, variant = "sidebar", classN
     const bigSize = variant === "sidebar" ? "text-4xl" : "text-2xl"
     const subSize = variant === "sidebar" ? "text-sm" : "text-xs"
 
+    // Promo publique : affichée uniquement sur le prix « paiement unique » non
+    // surchargé par une cohorte (le serveur calcule la remise sur ce prix).
+    const promoActive =
+        !!promo?.hasPublicPromo && primary === "oneTime" && useCoursePrice && !isFree
+
     if (isFree && primary === "oneTime") {
         return (
             <div className={cn("flex flex-col", className)}>
@@ -72,9 +80,29 @@ export function CoursePriceDisplay({ course, cohort, variant = "sidebar", classN
     switch (primary) {
         case "oneTime":
             label = hasVaryingPrices ? "À partir de" : "Investissement"
-            mainNode = (
-                <span className={cn("font-extrabold text-foreground", bigSize)}>{formatFCFA(oneTimePrice)}</span>
-            )
+            if (promoActive && promo) {
+                const discountedLabel = promo.discountedPrice <= 0 ? "Gratuit" : formatFCFA(promo.discountedPrice)
+                mainNode = (
+                    <span className={cn("font-extrabold text-rose-600", bigSize)}>{discountedLabel}</span>
+                )
+                subNode = (
+                    <div className={cn("mt-1 flex flex-col gap-1.5", subSize)}>
+                        <div className="flex items-center gap-2">
+                            <span className="font-medium text-muted-foreground line-through">
+                                {formatFCFA(promo.originalPrice)}
+                            </span>
+                            <PromoBadge percentageOff={promo.percentageOff} name={promo.promo?.name} size="md" />
+                        </div>
+                        <span className="font-semibold text-emerald-600">
+                            Économisez {formatFCFA(promo.discountAmount)}
+                        </span>
+                    </div>
+                )
+            } else {
+                mainNode = (
+                    <span className={cn("font-extrabold text-foreground", bigSize)}>{formatFCFA(oneTimePrice)}</span>
+                )
+            }
             break
         case "subscription":
             label = "Abonnement mensuel"
