@@ -18,6 +18,16 @@ export type Course = {
         name: string
         slug: string
     } | null
+    /**
+     * Catégorie MARKETPLACE du cours (table marketplace_categories), distincte de
+     * `category` qui vient de la table `categories`. C'est CELLE-CI qui pilote le
+     * filtre du catalogue et les recommandations — l'utiliser pour tout lien vers
+     * `/catalogue/all?category=<slug>`.
+     */
+    marketplace_category?: {
+        name: string
+        slug: string
+    } | null
     instructor: {
         name: string
         avatar_url: string | null

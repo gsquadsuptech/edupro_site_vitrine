@@ -101,7 +101,7 @@ const COURSE_DETAIL_FIELDS = `
     category:categories(name, slug),
     instructor:instructors(name, avatar_url, bio, specialization, rating, students_count, courses_count, organization_id, organization:organizations(name, logo_url)),
     ${ORG_EMBED},
-    marketplace:marketplace_courses(featured, rating, review_count, student_count, searchable, review_status),
+    marketplace:marketplace_courses(featured, rating, review_count, student_count, searchable, review_status, category:marketplace_categories(name, slug)),
     ${COHORTS_EMBED},
     sections(
          id,
@@ -547,8 +547,18 @@ export const CourseService = {
 
         const baseCourse = CourseService.mapCourseWithPricing(item)
 
+        // Catégorie marketplace (table marketplace_categories) — c'est elle qui
+        // alimente le filtre du catalogue et les recommandations, contrairement à
+        // `category` (table `categories`). On la remonte pour les liens fil
+        // d'Ariane / formations similaires.
+        const mk = Array.isArray(item.marketplace) ? item.marketplace[0] : item.marketplace
+        const marketplaceCategory = mk?.category
+            ? { name: mk.category.name, slug: mk.category.slug }
+            : null
+
         return {
             ...baseCourse,
+            marketplace_category: marketplaceCategory,
             rating: item.marketplace?.rating || 0,
             reviewCount: item.marketplace?.review_count || reviews.length,
             enrolled_count: baseCourse.enrolled_count,
