@@ -31,10 +31,15 @@ export default async function FormationPage({
 
     // Recommandations via l'endpoint SaaS dédié ; fallback sur l'heuristique
     // locale (même institut → même catégorie) si l'API ne renvoie rien.
+    // Le fil d'Ariane et les recommandations doivent pointer vers la catégorie
+    // MARKETPLACE (celle que le catalogue sait filtrer), pas vers `category`
+    // (table `categories`) qui produit un catalogue vide.
+    const breadcrumbCategory = course.marketplace_category ?? null;
+
     let similarCourses = await CourseService.getSimilarCoursesFromApi(course.id, 4);
     if (similarCourses.length === 0) {
         similarCourses = await CourseService.getRelatedCourses(
-            course.category?.slug || 'general',
+            breadcrumbCategory?.slug || 'general',
             course.id,
             course.instructor?.organization_id
         );
@@ -54,7 +59,7 @@ export default async function FormationPage({
         <div className="flex min-h-screen flex-col bg-background">
             <main className="flex-1">
                 <FormationBreadcrumb
-                    category={course.category}
+                    category={breadcrumbCategory}
                     courseTitle={course.title}
                 />
 
