@@ -68,6 +68,22 @@ export function SearchFilters({ categories: initialCategories = [] }: SearchFilt
     router.push(`${pathname}?${params.toString()}`, { scroll: false })
   }
 
+  // Catégorie = sélection unique sur le param `category` (celui lu par la page
+  // et utilisé par le hero). Le back-end ne filtre que sur UN slug à la fois :
+  // cliquer une catégorie remplace l'active, recliquer la catégorie active la
+  // retire. On réinitialise aussi la pagination puisque le jeu de résultats change.
+  const setCategory = (slug: string, checked: boolean) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (checked) {
+      params.set('category', slug)
+    } else {
+      params.delete('category')
+    }
+    params.delete('subcategory') // nettoie l'ancien param hérité
+    params.delete('page')
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+  }
+
   const handlePriceChange = (value: number[]) => {
     setPriceRange(value)
   }
@@ -137,7 +153,7 @@ export function SearchFilters({ categories: initialCategories = [] }: SearchFilt
           </Button>
         </div>
 
-        <Accordion type="multiple" defaultValue={["prix", "categorie", "niveau"]} className="w-full">
+        <Accordion type="multiple" defaultValue={["prix", "category", "niveau"]} className="w-full">
           {/* Prix */}
           <AccordionItem value="prix">
             <AccordionTrigger className="text-sm font-medium">Prix</AccordionTrigger>
@@ -164,8 +180,8 @@ export function SearchFilters({ categories: initialCategories = [] }: SearchFilt
                   <div key={category.id} className="flex items-center space-x-2">
                     <Checkbox
                       id={category.id}
-                      checked={isChecked('subcategory', category.id) || isChecked('category', category.id)} // Check both params as fallback
-                      onCheckedChange={(checked) => updateFilter('subcategory', category.id, checked === true)}
+                      checked={isChecked('category', category.id)}
+                      onCheckedChange={(checked) => setCategory(category.id, checked === true)}
                     />
                     <Label
                       htmlFor={category.id}

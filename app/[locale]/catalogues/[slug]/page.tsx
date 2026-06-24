@@ -60,6 +60,41 @@ function ContentCard({
     )
 }
 
+/**
+ * Rend la description d'un catalogue en préservant son formatage.
+ *
+ * La description provient du SaaS sous forme de texte avec des sauts de ligne
+ * (titres de sections, paragraphes). Rendue dans un simple <p>, le HTML écrase
+ * ces sauts de ligne et tout se retrouve collé en un seul bloc. On découpe donc
+ * sur les lignes vides pour reconstituer les paragraphes, et `whitespace-pre-line`
+ * conserve les retours à la ligne simples à l'intérieur de chaque paragraphe.
+ */
+function CatalogDescription({ description }: { description: string }) {
+    const paragraphs = description
+        .split(/\n\s*\n/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+
+    return (
+        <section className="border-b border-slate-200 bg-white py-16 lg:py-20">
+            <Container>
+                <div className="mx-auto max-w-3xl">
+                    <h2 className="mb-8 text-center text-2xl font-bold text-slate-900 lg:text-3xl">
+                        À propos de ce catalogue
+                    </h2>
+                    <div className="space-y-5 text-pretty text-base leading-relaxed text-slate-700 lg:text-lg">
+                        {paragraphs.map((paragraph, i) => (
+                            <p key={i} className="whitespace-pre-line">
+                                {paragraph}
+                            </p>
+                        ))}
+                    </div>
+                </div>
+            </Container>
+        </section>
+    )
+}
+
 function SectionHeader({ icon: Icon, title, count }: { icon: typeof Route; title: string; count: number }) {
     return (
         <div className="mb-8 flex items-center gap-3">
@@ -121,11 +156,6 @@ export default async function CataloguePage({
                             Catalogue co-certifié
                         </Badge>
                         <h1 className="text-balance text-4xl font-black leading-[1.1] lg:text-6xl">{title}</h1>
-                        {description && (
-                            <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-slate-300">
-                                {description}
-                            </p>
-                        )}
                         <div className="mt-8 flex flex-wrap justify-center gap-3">
                             {learning_paths.length > 0 && (
                                 <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm backdrop-blur-sm">
@@ -143,6 +173,8 @@ export default async function CataloguePage({
                     </div>
                 </Container>
             </section>
+
+            {description && <CatalogDescription description={description} />}
 
             {isEmpty && (
                 <section className="py-20">

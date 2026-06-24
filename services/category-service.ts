@@ -21,7 +21,12 @@ export const CategoryService = {
     async getCategoriesWithCounts(): Promise<Category[]> {
         const supabase = createClient()
 
-        const [categoriesRes, marketplaceCoursesRes] = await Promise.all([
+        // Le filtre catégorie du catalogue s'applique aux cours ET aux parcours :
+        // le compteur doit donc agréger les deux pour rester cohérent avec la
+        // liste filtrée. Cours : 1 catégorie via marketplace_courses.category_id.
+        // Parcours : N catégories via la table de liaison
+        // marketplace_learning_path_categories.
+        const [categoriesRes, marketplaceCoursesRes, publishedLpRes] = await Promise.all([
             supabase
                 .from('marketplace_categories')
                 .select('id, name, slug, description, icon, image_url')
@@ -29,7 +34,14 @@ export const CategoryService = {
             supabase
                 .from('marketplace_courses')
                 .select('category_id, courses!inner(status)')
-                .eq('review_status', 'published')
+                .eq('review_status', 'published'),
+            supabase
+                .from('learning_paths')
+                .select('id, access_type, marketplace:marketplace_learning_paths!inner(review_status, searchable)')
+                .eq('status', 'published')
+                .eq('marketplace.review_status', 'published')
+                .eq('marketplace.searchable', true)
+                .or('access_type.is.null,access_type.neq.invitation')
         ])
 
         if (categoriesRes.error) {
@@ -48,6 +60,28 @@ export const CategoryService = {
             }
         } else if (marketplaceCoursesRes.error) {
             console.error('Error counting marketplace courses:', marketplaceCoursesRes.error)
+        }
+
+        // Parcours publiés → on récupère leurs liaisons catégorie puis on
+        // incrémente le compteur (un parcours peut compter dans plusieurs
+        // catégories, comme dans la liste filtrée).
+        if (!publishedLpRes.error && publishedLpRes.data && publishedLpRes.data.length > 0) {
+            const lpIds = (publishedLpRes.data as any[]).map((lp) => lp.id)
+            const { data: links, error: linksErr } = await supabase
+                .from('marketplace_learning_path_categories')
+                .select('category_id, learning_path_id')
+                .in('learning_path_id', lpIds)
+
+            if (!linksErr && links) {
+                for (const link of links as any[]) {
+                    if (!link.category_id) continue
+                    countsById.set(link.category_id, (countsById.get(link.category_id) || 0) + 1)
+                }
+            } else if (linksErr) {
+                console.error('Error counting learning path categories:', linksErr)
+            }
+        } else if (publishedLpRes.error) {
+            console.error('Error fetching published learning paths:', publishedLpRes.error)
         }
 
         // Hide empty categories from the marketplace home — surfacing a
