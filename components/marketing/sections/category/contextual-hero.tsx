@@ -1,9 +1,10 @@
 "use client"
 
 import { SearchInput } from "@/components/marketing/shared/search-input"
-import { Globe } from "lucide-react"
+import { Globe, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { useRef } from "react"
 import { Category } from "@/lib/supabase/types"
 
 // Image de fond par défaut (catégorie sans image définie en superadmin).
@@ -18,6 +19,16 @@ interface ContextualHeroProps {
 export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }: ContextualHeroProps) {
     const searchParams = useSearchParams();
     const currentCategory = searchParams.get('category') || 'all';
+
+    // Défilement horizontal de la liste des catégories via les flèches latérales.
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const scrollBy = (direction: 'left' | 'right') => {
+        const el = scrollRef.current;
+        if (!el) return;
+        // On défile d'environ 80% de la largeur visible pour garder un repère.
+        const amount = el.clientWidth * 0.8;
+        el.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
+    };
 
     // Le fond varie selon la catégorie active, piloté par marketplace_categories.image_url.
     const activeCategory = categories.find(c => c.slug === currentCategory);
@@ -49,7 +60,19 @@ export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }:
                     </div>
 
                     {/* Horizontal Categories Scroll */}
-                    <div className="scrollbar-hide flex snap-x gap-4 overflow-x-auto pb-4 text-left">
+                    <div className="relative">
+                        {/* Flèche gauche — indique que la liste est défilable.
+                            Centrée sur la hauteur des cartes (h-24 = 96px → top-12). */}
+                        <button
+                            type="button"
+                            aria-label="Catégories précédentes"
+                            onClick={() => scrollBy('left')}
+                            className="absolute left-0 top-12 z-20 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-slate-900/90 text-white shadow-lg backdrop-blur-sm transition hover:bg-slate-700 md:flex"
+                        >
+                            <ChevronLeft className="h-5 w-5" />
+                        </button>
+
+                        <div ref={scrollRef} className="scrollbar-hide flex snap-x gap-4 overflow-x-auto px-2 pb-4 text-left">
                         <Link
                             href={`/${locale}/catalogue/all`}
                             className={`snap-start shrink-0 cursor-pointer rounded-xl border transition-all hover:bg-white/20 overflow-hidden relative ${currentCategory === 'all' ? 'bg-white/20 border-primary' : 'bg-white/5 border-transparent'}`}
@@ -74,6 +97,17 @@ export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }:
                                 </div>
                             </Link>
                         ))}
+                        </div>
+
+                        {/* Flèche droite — indique que la liste est défilable. */}
+                        <button
+                            type="button"
+                            aria-label="Catégories suivantes"
+                            onClick={() => scrollBy('right')}
+                            className="absolute right-0 top-12 z-20 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-slate-900/90 text-white shadow-lg backdrop-blur-sm transition hover:bg-slate-700 md:flex"
+                        >
+                            <ChevronRight className="h-5 w-5" />
+                        </button>
                     </div>
                 </div>
             </div>

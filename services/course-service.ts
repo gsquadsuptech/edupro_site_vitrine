@@ -185,12 +185,33 @@ export const CourseService = {
             query = query.eq('marketplace.category_id', marketplaceCategoryId)
         }
 
-        if (minPrice !== undefined) {
-            query = query.gte('price', minPrice)
-        }
-
-        if (maxPrice !== undefined) {
-            query = query.lte('price', maxPrice)
+        // Filtre prix sur le prix EFFECTIVEMENT affiché, pas sur la colonne
+        // legacy `price` seule : l'affichage retombe sur `one_time_price` quand
+        // `price` vaut 0/null (cf. mapCourseItem). Filtrer uniquement `price`
+        // laissait passer des cours à 60 000 FCFA (price=0, one_time_price=60000)
+        // dans une tranche 0–25 000. On reproduit donc la logique d'affichage :
+        //  - prix legacy > 0 dans la tranche, OU
+        //  - prix legacy absent/0 et one_time_price dans la tranche, OU
+        //  - cours gratuit quand la borne basse est 0.
+        if (minPrice !== undefined || maxPrice !== undefined) {
+            // Ces bornes sont interpolées dans une chaîne de filtre PostgREST
+            // (`.or(...)`), non paramétrée : on les contraint donc strictement à
+            // des entiers finis et positifs avant usage. Toute valeur non
+            // numérique (NaN, Infinity, chaîne) retombe sur la borne par défaut,
+            // ce qui élimine tout risque d'injection de filtre.
+            const toBound = (v: number | undefined, fallback: number): number => {
+                const n = Number(v)
+                if (!Number.isFinite(n) || n < 0) return fallback
+                return Math.floor(n)
+            }
+            const min = toBound(minPrice, 0)
+            const max = toBound(maxPrice, 1_000_000_000)
+            const clauses = [
+                `and(price.gt.0,price.gte.${min},price.lte.${max})`,
+                `and(or(price.is.null,price.lte.0),one_time_price.gte.${min},one_time_price.lte.${max})`,
+            ]
+            if (min <= 0) clauses.push('access_type.eq.free')
+            query = query.or(clauses.join(','))
         }
 
         if (level && level.length > 0) {

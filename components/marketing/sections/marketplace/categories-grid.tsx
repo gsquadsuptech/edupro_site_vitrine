@@ -53,7 +53,9 @@ export function CategoriesGrid({ locale = 'fr', categories }: CategoriesGridProp
                       <Icon className="h-6 w-6 text-white" />
                     </div>
                     <h3 className="mb-2 text-lg font-semibold group-hover:text-primary">{category.name}</h3>
-                    <p className="text-sm text-muted-foreground">{category.courses_count || 0} cours</p>
+                    <p className="text-sm text-muted-foreground">
+                      {category.courses_count || 0} formation{(category.courses_count || 0) > 1 ? 's' : ''}
+                    </p>
                   </div>
                 </Link>
               )

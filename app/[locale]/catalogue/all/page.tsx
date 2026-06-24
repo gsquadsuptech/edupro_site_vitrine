@@ -64,11 +64,13 @@ export default async function CatalogueAllPage({
     // Prix effectifs (promos publiques) en UN seul appel batch pour la page courante.
     const promoPrices = await PricingService.getEffectivePrices(pricingTargetsFromItems(items));
 
-    // Transform categories for filters
+    // Transform categories for filters. Le nombre de cours par catégorie est
+    // déjà calculé par CategoryService.getCategoriesWithCounts() : on le réutilise
+    // ici plutôt que d'afficher (0) partout.
     const filterCategories = categoriesData.map(c => ({
         id: c.slug,
         label: c.name,
-        count: 0 // Count per category logic would be complex to dynamic update, leaving 0 or implementing specialized service later
+        count: c.courses_count ?? 0
     }));
 
     // Derive display name

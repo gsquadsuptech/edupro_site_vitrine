@@ -79,6 +79,14 @@ async function fetchPricesUncached(targets: PricingTarget[]): Promise<PublicPric
         // rendu de la page. Un timeout lève → fallback prix normal (non caché).
         signal: AbortSignal.timeout(4000),
     })
+    // 404 = endpoint pricing absent (ex. SaaS local sans la route promos).
+    // Ce n'est pas une erreur : pas de promo publique → on renvoie une map vide
+    // et les appelants gardent le prix normal. On évite ainsi de polluer la
+    // console (et l'overlay d'erreur Next en dev) pour un cas dégradé attendu.
+    if (res.status === 404) {
+        console.warn("PricingService: endpoint /api/marketplace/pricing absent (404) — promos publiques ignorées")
+        return {}
+    }
     if (!res.ok) throw new Error(`PricingService: réponse ${res.status}`)
 
     const data = await res.json()
