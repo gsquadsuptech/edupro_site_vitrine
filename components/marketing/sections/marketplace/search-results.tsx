@@ -38,7 +38,7 @@ export function SearchResults({ courses = [], items, promoPrices }: SearchResult
   )
 }
 
-function EmptyState() {
+export function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
       <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-muted">
