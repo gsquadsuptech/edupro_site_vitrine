@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { ContextualHero } from "@/components/marketing/sections/category/contextual-hero";
 import { SubCategories } from "@/components/marketing/sections/category/sub-categories";
 import { SearchFilters } from "@/components/marketing/sections/marketplace/search-filters";
-import { SearchResults } from "@/components/marketing/sections/marketplace/search-results";
+import { InfiniteResults } from "@/components/marketing/sections/marketplace/infinite-results";
 import { CatalogueToolbar } from "@/components/marketing/sections/marketplace/catalogue-toolbar";
-import { PaginationControls } from "@/components/marketing/shared/pagination-controls";
 import { CategoryService } from "@/services/category-service";
 import { MarketplaceService } from "@/services/marketplace-service";
 import { PricingService, pricingTargetsFromItems } from "@/services/pricing-service";
 import type { CourseSort } from "@/services/course-service";
+import type { CatalogueQuery } from "./actions";
 
 const PAGE_SIZE = 12;
 const SORT_VALUES: CourseSort[] = ["recent", "price_asc", "price_desc", "popular", "rating"];
@@ -39,23 +39,32 @@ export default async function CatalogueAllPage({
 
     const sortQuery = resolvedSearchParams?.sort as string;
     const sort: CourseSort = SORT_VALUES.includes(sortQuery as CourseSort) ? (sortQuery as CourseSort) : 'recent';
+    // Infinite scroll : l'URL ?page=N sert de point d'entrée (partage / refresh).
+    // On charge donc d'emblée N pages depuis le début (offset 0) ; le chargement
+    // incrémental côté client continue ensuite à partir de items.length.
     const page = Math.max(1, Number(resolvedSearchParams?.page) || 1);
-    const offset = (page - 1) * PAGE_SIZE;
+    const initialLimit = page * PAGE_SIZE;
+
+    // Filtres partagés entre le rendu serveur initial et la Server Action de
+    // chargement incrémental — garantit la cohérence des lots suivants.
+    const query: CatalogueQuery = {
+        type: itemType,
+        searchTerm: searchQuery,
+        category: categoryQuery,
+        minPrice,
+        maxPrice,
+        level: levels,
+        sort,
+    };
 
     // Le filtre par catégorie marketplace s'applique aux cours ET aux parcours :
     // on conserve donc le type demandé par l'utilisateur (cours / parcours / tout).
     const [categoriesData, marketplaceResult] = await Promise.all([
         CategoryService.getCategoriesWithCounts(),
         MarketplaceService.listMarketplaceItems({
-            type: itemType,
-            searchTerm: searchQuery,
-            category: categoryQuery,
-            minPrice,
-            maxPrice,
-            level: levels,
-            sort,
-            limit: PAGE_SIZE,
-            offset,
+            ...query,
+            limit: initialLimit,
+            offset: 0,
         }),
     ]);
 
@@ -85,12 +94,19 @@ export default async function CatalogueAllPage({
                 <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
                         <SearchFilters categories={filterCategories} />
-                        {/* scroll-mt-24 : cible d'ancrage pour la pagination, en
-                            tenant compte de la hauteur de l'en-tête collant. */}
-                        <div id="catalogue-results" className="flex-1 scroll-mt-24">
+                        <div className="flex-1">
                             <CatalogueToolbar total={total} />
-                            <SearchResults items={items} promoPrices={promoPrices} />
-                            <PaginationControls totalCount={total} pageSize={PAGE_SIZE} scrollTargetId="catalogue-results" />
+                            {/* key = signature des filtres : tout changement de
+                                filtre relance un montage propre (reset du scroll
+                                infini) au lieu d'empiler sur l'ancien jeu. */}
+                            <InfiniteResults
+                                key={`${itemType}|${searchQuery}|${categoryQuery}|${minPrice}|${maxPrice}|${levelQuery}|${sort}`}
+                                initialItems={items}
+                                initialPromoPrices={promoPrices}
+                                total={total}
+                                pageSize={PAGE_SIZE}
+                                query={query}
+                            />
                         </div>
                     </div>
                 </div>
