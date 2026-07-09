@@ -17,6 +17,11 @@ interface PaginationControlsProps {
     siblingCount?: number
     currentPage?: number
     onPageChange?: (page: number) => void
+    /**
+     * id d'un élément vers lequel remonter après un changement de page (ex. le
+     * haut de la liste des résultats). À défaut, on remonte en haut de la page.
+     */
+    scrollTargetId?: string
 }
 
 export function PaginationControls({
@@ -24,7 +29,8 @@ export function PaginationControls({
     pageSize = 12,
     siblingCount = 1,
     currentPage: controlledPage,
-    onPageChange
+    onPageChange,
+    scrollTargetId
 }: PaginationControlsProps) {
     const router = useRouter()
     const pathname = usePathname()
@@ -43,11 +49,35 @@ export function PaginationControls({
         return `${pathname}?${params.toString()}`
     }
 
+    // Remonte en douceur vers le haut des résultats : sans cela, la pagination
+    // étant en bas de liste, l'utilisateur reste bloqué en bas après changement
+    // de page (il ne voit pas les nouveaux items).
+    const scrollToResultsTop = () => {
+        const el = scrollTargetId ? document.getElementById(scrollTargetId) : null
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" })
+        } else {
+            window.scrollTo({ top: 0, behavior: "smooth" })
+        }
+    }
+
     const handlePageChange = (page: number, e: React.MouseEvent) => {
         if (onPageChange) {
             e.preventDefault()
             onPageChange(page)
+            return
         }
+
+        if (page < 1 || page > totalPages || page === currentPage) return
+
+        // On laisse le navigateur gérer les clics « ouvrir dans un nouvel onglet »
+        // (ctrl/cmd/maj + clic, clic du milieu) : le href reste intact.
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+
+        // Navigation douce (pas de rechargement complet) + remontée en haut.
+        e.preventDefault()
+        router.push(createPageURL(page), { scroll: false })
+        scrollToResultsTop()
     }
 
     // Generate page numbers array
