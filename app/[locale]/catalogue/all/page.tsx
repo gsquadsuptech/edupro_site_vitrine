@@ -85,10 +85,12 @@ export default async function CatalogueAllPage({
                 <div className="container py-8">
                     <div className="flex flex-col gap-6 lg:flex-row">
                         <SearchFilters categories={filterCategories} />
-                        <div className="flex-1">
+                        {/* scroll-mt-24 : cible d'ancrage pour la pagination, en
+                            tenant compte de la hauteur de l'en-tête collant. */}
+                        <div id="catalogue-results" className="flex-1 scroll-mt-24">
                             <CatalogueToolbar total={total} />
                             <SearchResults items={items} promoPrices={promoPrices} />
-                            <PaginationControls totalCount={total} pageSize={PAGE_SIZE} />
+                            <PaginationControls totalCount={total} pageSize={PAGE_SIZE} scrollTargetId="catalogue-results" />
                         </div>
                     </div>
                 </div>
