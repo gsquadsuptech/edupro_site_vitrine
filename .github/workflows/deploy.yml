@@ -218,9 +218,17 @@ jobs:
             # NEXT_PUBLIC_* must also be passed at runtime: server-side code
             # (lib/supabase/server.ts, lib/utils.ts, role-guard.ts) reads them
             # from process.env at request time, not from the client bundle.
+            #
+            # Pas de `sudo` : l'utilisateur `deploy` est membre du groupe docker, et
+            # /etc/sudoers.d/deploy ne lui accorde NOPASSWD que sur nginx. Avec sudo,
+            # chaque appel docker échoue sur « sudo: a password is required ».
+            #
+            # Le port est publié sur 127.0.0.1 uniquement : nginx est le seul point
+            # d'entrée. Sans ce préfixe docker écoute sur 0.0.0.0 et le site devient
+            # joignable en direct sur edupro.africa:3006, hors TLS et hors nginx.
             run_container() {
               local image="$1"
-              sudo docker run -d \
+              docker run -d \
                 --name "$CONTAINER_NAME" \
                 --restart always \
                 --env-file "$ENV_FILE" \
@@ -233,34 +241,34 @@ jobs:
                 -e NEXT_PUBLIC_DASHBOARD_STUDENT_URL="${{ secrets.NEXT_PUBLIC_DASHBOARD_STUDENT_URL }}" \
                 -e NEXT_PUBLIC_RECAPTCHA_SITE_KEY="${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" \
                 -e NEXT_PUBLIC_TURNSTILE_SITE_KEY="${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}" \
-                -p "${PORT}:3000" \
+                -p "127.0.0.1:${PORT}:3000" \
                 "$image"
             }
 
             # Login to GHCR (image is private to the org)
-            echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             # Pull first so a failed pull doesn't take down the running container
             echo "Pulling new image..."
-            sudo docker pull "$IMAGE"
+            docker pull "$IMAGE"
 
             # Tag the currently-running image as :previous-${env} for rollback
-            if sudo docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
-              PREV_IMAGE=$(sudo docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" || echo "")
-              [ -n "$PREV_IMAGE" ] && sudo docker tag "$PREV_IMAGE" "$PREV_TAG" || true
+            if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+              PREV_IMAGE=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" || echo "")
+              [ -n "$PREV_IMAGE" ] && docker tag "$PREV_IMAGE" "$PREV_TAG" || true
             fi
 
             # One-shot migration: stop the legacy "edupro-site" container so the
             # new "edupro-site-staging" can bind port 3000. Becomes a no-op once
             # the legacy container is gone.
-            if [ "$CONTAINER_NAME" = "edupro-site-staging" ] && sudo docker ps -a --format '{{.Names}}' | grep -q '^edupro-site$'; then
+            if [ "$CONTAINER_NAME" = "edupro-site-staging" ] && docker ps -a --format '{{.Names}}' | grep -q '^edupro-site$'; then
               echo "Cleaning up legacy edupro-site container..."
-              sudo docker stop edupro-site || true
-              sudo docker rm edupro-site || true
+              docker stop edupro-site || true
+              docker rm edupro-site || true
             fi
 
-            sudo docker stop "$CONTAINER_NAME" || true
-            sudo docker rm "$CONTAINER_NAME" || true
+            docker stop "$CONTAINER_NAME" || true
+            docker rm "$CONTAINER_NAME" || true
 
             echo "Starting new container ${CONTAINER_NAME} on port ${PORT}..."
             run_container "$IMAGE"
@@ -278,14 +286,14 @@ jobs:
 
             if [ $success -eq 1 ]; then
               echo "Deployment successful — ${CONTAINER_NAME} is UP on port ${PORT}."
-              sudo docker image prune -f || true
+              docker image prune -f || true
             else
               echo "Healthcheck failed! Logs:"
-              sudo docker logs "$CONTAINER_NAME" | tail -n 60
+              docker logs "$CONTAINER_NAME" | tail -n 60
               echo "Rolling back to previous image..."
-              sudo docker stop "$CONTAINER_NAME" || true
-              sudo docker rm "$CONTAINER_NAME" || true
-              if sudo docker image inspect "$PREV_TAG" > /dev/null 2>&1; then
+              docker stop "$CONTAINER_NAME" || true
+              docker rm "$CONTAINER_NAME" || true
+              if docker image inspect "$PREV_TAG" > /dev/null 2>&1; then
                 run_container "$PREV_TAG"
                 echo "Rolled back to $PREV_TAG."
               else
