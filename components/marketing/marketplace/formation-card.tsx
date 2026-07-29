@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { Star, Users, Clock, Heart, BookOpen, Building2 } from "lucide-react"
+import { Star, Users, Heart, BookOpen, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
@@ -309,18 +309,6 @@ export function FormationCard(props: FormationCardProps) {
                   <Heart className={`h-4 w-4 ${isWishlisted ? "fill-current" : ""}`} />
                 </Button>
               )}
-            </div>
-          </div>
-
-          <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Users className="h-3.5 w-3.5" />
-              <span>{vm.enrolledCount.toLocaleString('fr-FR')} inscrits</span>
-            </div>
-            <span>•</span>
-            <div className="flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5" />
-              <span>{vm.duration || 'N/A'}</span>
             </div>
           </div>
         </div>
