@@ -17,9 +17,9 @@ interface MobilePurchaseBarProps {
 export function MobilePurchaseBar({ course, cohorts, promo }: MobilePurchaseBarProps) {
   const isSessionCourse = course.format === 'session'
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
-  const hasAnyCohort = cohorts.length > 0
-  // Cf. course-sidebar : M'avertir seulement pour un cours à sessions sans session ouverte.
-  const showWaitlist = isSessionCourse && hasAnyCohort && !hasOpenCohort
+  // Cf. course-sidebar : M'avertir pour un cours au format session sans session
+  // ouverte, y compris quand aucune session n'a encore été créée.
+  const showWaitlist = isSessionCourse && !hasOpenCohort
   const showEnrollButton = !showWaitlist
   const displayCohort = pickDisplayCohort(cohorts)
 

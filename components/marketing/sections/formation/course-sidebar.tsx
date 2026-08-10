@@ -27,13 +27,13 @@ export function CourseSidebar({ course, cohorts = [], promo }: CourseSidebarProp
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
   const { isBusinessAdmin } = useActiveBusinessOrg()
-  // "M'avertir pour la prochaine session" : uniquement pour les cours à
-  // cohortes/sessions configurées dont AUCUNE session n'est ouverte.
-  // Jamais pour les cours standalone (auto-formation) ni les cours sans cohorte.
+  // "M'avertir pour la prochaine session" : pour tout cours au format session
+  // dont AUCUNE session n'est ouverte — y compris quand aucune session n'a
+  // encore été créée. Jamais pour l'auto-formation, qui reste inscriptible en
+  // permanence.
   const isSessionCourse = course.format === 'session'
   const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
-  const hasAnyCohort = cohorts.length > 0
-  const showWaitlist = isSessionCourse && hasAnyCohort && !hasOpenCohort
+  const showWaitlist = isSessionCourse && !hasOpenCohort
 
   const displayCohort = pickDisplayCohort(cohorts)
   // L'achat équipe V1 = paiement unique uniquement. Ne montrer le bouton que si
