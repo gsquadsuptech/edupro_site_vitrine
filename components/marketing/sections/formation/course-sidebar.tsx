@@ -2,14 +2,13 @@
 
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { CheckCircle2, Heart, Bookmark, Share2, Smartphone, Monitor, Trophy, Clock, Globe } from "lucide-react"
+import { CheckCircle2, Heart, Share2, Smartphone, Monitor, Trophy, Clock, Globe } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Course, Cohort } from "@/lib/supabase/types"
 import { getCohortAvailability } from "@/services/course-service"
 import { useActiveBusinessOrg } from "@/hooks/use-active-business-org"
 import { useWishlist } from "@/hooks/use-wishlist"
-import { useSavedCourse } from "@/hooks/use-saved-course"
 import { getAvailableModes, pickDisplayCohort, type PublicPrice } from "@/lib/pricing"
 import { WaitlistDialog } from "./waitlist-dialog"
 import { EnrollCTA } from "./enroll-cta"
@@ -46,7 +45,6 @@ export function CourseSidebar({ course, cohorts = [], promo }: CourseSidebarProp
   const showTeamPurchaseCTA = isBusinessAdmin && supportsOneTime
 
   const { isWishlisted, isLoading: wishlistLoading, toggle: toggleWishlist } = useWishlist(course.id)
-  const { isSaved, isLoading: savedLoading, toggle: toggleSaved } = useSavedCourse(course.id)
 
   const handleShare = async () => {
     const url = typeof window !== 'undefined' ? window.location.href : ''
@@ -91,21 +89,10 @@ export function CourseSidebar({ course, cohorts = [], promo }: CourseSidebarProp
             onClick={toggleWishlist}
             disabled={wishlistLoading}
             aria-pressed={isWishlisted}
-            className={`flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm ${isWishlisted ? "text-red-500 border-red-200" : ""}`}
+            className={`w-full min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm ${isWishlisted ? "text-red-500 border-red-200" : ""}`}
           >
             <Heart className={`mr-1.5 h-3.5 w-3.5 shrink-0 ${isWishlisted ? "fill-current" : ""}`} />
             <span className="truncate">{isWishlisted ? "Dans vos favoris" : "Favoris"}</span>
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={toggleSaved}
-            disabled={savedLoading}
-            aria-pressed={isSaved}
-            className={`flex-1 min-w-0 bg-transparent border-gray-200 hover:bg-muted/50 transition-colors text-xs sm:text-sm ${isSaved ? "text-primary border-primary/30" : ""}`}
-          >
-            <Bookmark className={`mr-1.5 h-3.5 w-3.5 shrink-0 ${isSaved ? "fill-current" : ""}`} />
-            <span className="truncate">{isSaved ? "Sauvegardé" : "Sauvegarder"}</span>
           </Button>
         </div>
 

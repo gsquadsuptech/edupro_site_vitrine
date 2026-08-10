@@ -66,20 +66,21 @@ export function CoursePriceDisplay({ course, cohort, variant = "sidebar", classN
     if (isFree && primary === "oneTime") {
         return (
             <div className={cn("flex flex-col", className)}>
-                <span className="text-xs font-bold text-primary uppercase tracking-widest mb-1">Investissement</span>
                 <span className={cn("font-extrabold text-foreground", bigSize)}>Gratuit</span>
             </div>
         )
     }
 
-    // Render label + main amount + optional sub line
-    let label = "Investissement"
+    // Render label + main amount + optional sub line.
+    // Le libellé « Investissement » a été retiré (redondant au-dessus du prix) ;
+    // les libellés porteurs de sens (À partir de, Abonnement, échelonné…) restent.
+    let label = ""
     let mainNode: React.ReactNode = null
     let subNode: React.ReactNode = null
 
     switch (primary) {
         case "oneTime":
-            label = hasVaryingPrices ? "À partir de" : "Investissement"
+            label = hasVaryingPrices ? "À partir de" : ""
             if (promoActive && promo) {
                 const discountedLabel = promo.discountedPrice <= 0 ? "Gratuit" : formatFCFA(promo.discountedPrice)
                 mainNode = (
@@ -145,7 +146,9 @@ export function CoursePriceDisplay({ course, cohort, variant = "sidebar", classN
 
     return (
         <div className={cn("flex flex-col", className)}>
-            <span className="mb-1 text-xs font-bold text-primary uppercase tracking-widest">{label}</span>
+            {label && (
+                <span className="mb-1 text-xs font-bold text-primary uppercase tracking-widest">{label}</span>
+            )}
             <div className="flex items-baseline gap-2">{mainNode}</div>
             {subNode}
         </div>
