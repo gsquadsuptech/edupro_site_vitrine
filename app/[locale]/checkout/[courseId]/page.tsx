@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Stepper } from "@/components/payment/stepper";
 import { SessionSelection } from "@/components/payment/session-selection";
+import { withTimeout, estTimeout } from "@/lib/with-timeout";
 import { PaymentPlan } from "@/components/payment/payment-plan";
 import { PaymentProcess } from "@/components/payment/payment-process";
 import { PaymentConfirmation } from "@/components/payment/payment-confirmation";
@@ -48,6 +49,10 @@ export default function CheckoutPage({
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [isVerifying, setIsVerifying] = useState(false);
+    // Une requete suspendue n'est pas une erreur : sans ces deux etats, la page
+    // restait sur son spinner indefiniment, sans message ni recours.
+    const [loadError, setLoadError] = useState<string | null>(null);
+    const [reloadKey, setReloadKey] = useState(0);
     const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (Plan) by default
     const [selectedSession, setSelectedSession] = useState<any>(null);
     const [selectedPlan, setSelectedPlan] = useState<any>(null);
@@ -68,6 +73,7 @@ export default function CheckoutPage({
     useEffect(() => {
         let isMounted = true;
         const fetchData = async () => {
+            setLoadError(null);
             try {
                 if (statusParam === 'success' && tokenParam) {
                     setIsVerifying(true);
@@ -81,7 +87,13 @@ export default function CheckoutPage({
                         saasUrl = 'http://localhost:3000';
                     }
 
-                    const res = await fetch(`${saasUrl}/api/payments/check-status?ref=${tokenParam}&status=success`);
+                    // Meme raison : sans borne, un retour de paiement pouvait
+                    // rester bloque sur « Verification du paiement en cours... ».
+                    const res = await withTimeout(
+                        fetch(`${saasUrl}/api/payments/check-status?ref=${tokenParam}&status=success`),
+                        15000,
+                        'verification du paiement'
+                    );
                     if (!isMounted) return;
 
                     if (res.ok) {
@@ -107,10 +119,17 @@ export default function CheckoutPage({
                     return;
                 }
 
-                const [fetchedCourse, fetchedCohorts] = await Promise.all([
-                    CourseService.getCourseById(courseId),
-                    CourseService.getCohortsByCourseId(courseId)
-                ]);
+                // Mesure en production : ces requetes repondent en 300-870 ms
+                // et ~200 ms. 15 s laissent donc une marge tres large, tout en
+                // garantissant qu'on sort de l'attente au lieu d'y rester.
+                const [fetchedCourse, fetchedCohorts] = await withTimeout(
+                    Promise.all([
+                        CourseService.getCourseById(courseId),
+                        CourseService.getCohortsByCourseId(courseId)
+                    ]),
+                    15000,
+                    'chargement du cours'
+                );
 
                 if (!isMounted) return;
 
@@ -178,6 +197,13 @@ export default function CheckoutPage({
 
             } catch (error) {
                 console.error("Failed to fetch data", error);
+                if (isMounted) {
+                    setLoadError(
+                        estTimeout(error)
+                            ? "Le chargement prend anormalement longtemps. Verifiez votre connexion."
+                            : "Impossible de charger les informations du cours."
+                    );
+                }
             } finally {
                 if (isMounted) {
                     setLoading(false);
@@ -191,7 +217,7 @@ export default function CheckoutPage({
         return () => {
             isMounted = false;
         };
-    }, [courseId, statusParam, tokenParam]);
+    }, [courseId, statusParam, tokenParam, reloadKey]);
 
     // Détection d'un retour depuis /api/payments/cancel : on bascule sur
     // l'écran de confirmation en mode failed pour proposer Réessayer +
@@ -371,6 +397,30 @@ export default function CheckoutPage({
             router.push(`/${locale}/formation/${course?.slug}`);
         }
     };
+
+    // L'erreur passe AVANT l'état de chargement : sinon un échec survenu
+    // pendant le chargement resterait invisible derrière le spinner.
+    if (loadError) {
+        return (
+            <div className="flex items-center justify-center h-screen px-4">
+                <div className="flex flex-col items-center gap-4 text-center max-w-md">
+                    <h2 className="text-xl font-semibold">Chargement impossible</h2>
+                    <p className="text-muted-foreground">{loadError}</p>
+                    <div className="flex flex-wrap items-center justify-center gap-3">
+                        <Button onClick={() => setReloadKey((k) => k + 1)}>
+                            Réessayer
+                        </Button>
+                        <Button
+                            variant="outline"
+                            onClick={() => router.push(`/${locale}/catalogue/all`)}
+                        >
+                            Retour au catalogue
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (loading || isVerifying) {
         return (
