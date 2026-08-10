@@ -61,7 +61,7 @@ export function WaitlistDialog({ courseId, courseSlug, courseTitle, cohortId }: 
         if (!user) return
         setLoading(true)
         try {
-            const { success } = await CourseService.addToWaitlist(courseId, user.id)
+            const { success } = await CourseService.addToWaitlist(courseId, user.id, cohortId)
             if (success) {
                 setIsJoined(true)
                 toast({
