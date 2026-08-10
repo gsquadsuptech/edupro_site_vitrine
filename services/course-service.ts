@@ -1065,15 +1065,18 @@ export const CourseService = {
         }
     },
 
-    async addToWaitlist(courseId: string, userId: string): Promise<{ success: boolean; error?: any }> {
+    async addToWaitlist(courseId: string, userId: string, cohortId?: string): Promise<{ success: boolean; error?: any }> {
         const supabase = createClient()
 
         try {
+            // cohortId présent = attente d'une cohorte précise (souvent pleine) ;
+            // absent = simple intérêt pour le cours (aucune session ouverte).
             const { error } = await supabase
                 .from('waitlist')
                 .insert({
                     course_id: courseId,
-                    user_id: userId
+                    user_id: userId,
+                    ...(cohortId ? { cohort_id: cohortId } : {})
                 });
 
             if (error) {
