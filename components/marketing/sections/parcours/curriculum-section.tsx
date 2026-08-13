@@ -10,6 +10,15 @@ interface ParcoursCurriculumProps {
   learningPath: LearningPath
 }
 
+const LEVEL_LABELS: Record<string, string> = {
+  beginner: 'Débutant',
+  intermediate: 'Intermédiaire',
+  high: 'Avancé',
+  advanced: 'Avancé',
+}
+
+const levelLabel = (level?: string | null) => LEVEL_LABELS[level || ''] || level || 'Tous niveaux'
+
 export function ParcoursCurriculum({ learningPath }: ParcoursCurriculumProps) {
   const [openModule, setOpenModule] = useState<number | null>(0)
   const courses = learningPath.courses || []
@@ -55,7 +64,7 @@ export function ParcoursCurriculum({ learningPath }: ParcoursCurriculumProps) {
                       <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-slate-600">
                         <span className="flex items-center gap-1">
                           <FileText className="h-4 w-4" />
-                          {course.level}
+                          {levelLabel(course.level)}
                         </span>
                       </div>
                     )}
@@ -98,7 +107,7 @@ export function ParcoursCurriculum({ learningPath }: ParcoursCurriculumProps) {
             {learningPath.level && (
               <div className="rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white p-6 text-center shadow-sm">
                 <Clock className="mx-auto mb-3 h-8 w-8 text-purple-600" />
-                <p className="text-3xl font-bold capitalize text-slate-900">{learningPath.level}</p>
+                <p className="text-3xl font-bold text-slate-900">{levelLabel(learningPath.level)}</p>
                 <p className="text-sm text-slate-600">Niveau</p>
               </div>
             )}
