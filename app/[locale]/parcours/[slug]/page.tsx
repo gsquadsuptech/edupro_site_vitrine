@@ -30,7 +30,7 @@ export default async function ParcoursPage({
 
     return (
         <div className="bg-gradient-to-b from-slate-50 via-white to-slate-50">
-            <ParcoursHero learningPath={learningPath} locale={locale} />
+            <ParcoursHero learningPath={learningPath} locale={locale} promo={promo ?? undefined} />
             <ParcoursOverview learningPath={learningPath} />
             <ParcoursCurriculum learningPath={learningPath} />
             <ParcoursInstructors learningPath={learningPath} />

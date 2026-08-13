@@ -49,20 +49,16 @@ export function ParcoursCurriculum({ learningPath }: ParcoursCurriculumProps) {
                         <Badge variant="outline" className="text-xs">Optionnel</Badge>
                       )}
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-slate-600">
-                      {course.duration && (
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          {course.duration}
-                        </span>
-                      )}
-                      {course.level && (
+                    {/* Durée masquée : les cours n'ont pas encore de contenu réel,
+                        les « 2 min » affichés étaient trompeurs. */}
+                    {course.level && (
+                      <div className="mt-1 flex flex-wrap items-center gap-4 text-sm text-slate-600">
                         <span className="flex items-center gap-1">
                           <FileText className="h-4 w-4" />
                           {course.level}
                         </span>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <ChevronDown
