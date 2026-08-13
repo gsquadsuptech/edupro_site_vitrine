@@ -3,20 +3,33 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Clock, Users, Award, Star } from "lucide-react"
 import { LearningPath } from "@/lib/supabase/types"
+import { type PublicPrice } from "@/lib/pricing"
 import { EnrollButton } from "@/components/payment/enroll-button"
+import { PromoBadge } from "@/components/marketing/marketplace/promo-badge"
 import { ParcoursHeroMedia } from "@/components/marketing/sections/parcours/hero-media"
 
 interface ParcoursHeroProps {
   learningPath: LearningPath
   locale: string
+  /** Prix effectif (promo publique) calculé côté serveur pour ce parcours. */
+  promo?: PublicPrice
 }
 
-export function ParcoursHero({ learningPath, locale }: ParcoursHeroProps) {
+const formatXOF = (n: number) => `${Math.round(n).toLocaleString('fr-FR')} FCFA`
+
+export function ParcoursHero({ learningPath, locale, promo }: ParcoursHeroProps) {
   const totalHours = learningPath.hours
   const enrolled = learningPath.enrolled_count || 0
   const rating = learningPath.rating || 0
   const reviewCount = learningPath.reviewCount || 0
   const hasCertificate = !!(learningPath.enable_certificate || learningPath.certificate_template_id)
+
+  // Prix affiché directement dans le hero (au lieu d'être seulement tout en bas).
+  const oneTimePrice = learningPath.one_time_price ?? learningPath.price ?? 0
+  const monthlyPrice = learningPath.monthly_price ?? null
+  const modes = learningPath.pricing_modes ?? null
+  const hasOneTime = !modes || modes.one_time !== false
+  const promoActive = !!promo?.hasPublicPromo && hasOneTime && oneTimePrice > 0
 
   return (
     <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-br from-indigo-50 via-white to-fuchsia-50 py-20 lg:py-32">
@@ -82,6 +95,44 @@ export function ParcoursHero({ learningPath, locale }: ParcoursHeroProps) {
                   <Award className="h-5 w-5 text-emerald-600" />
                   <span className="text-sm font-medium text-slate-900">Certifiant</span>
                 </div>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-baseline gap-3">
+                {promoActive && promo ? (
+                  <>
+                    <span className="text-4xl font-bold text-rose-600 lg:text-5xl">
+                      {promo.discountedPrice <= 0 ? 'Gratuit' : Math.round(promo.discountedPrice).toLocaleString('fr-FR')}
+                    </span>
+                    {promo.discountedPrice > 0 && <span className="text-lg text-slate-600">FCFA</span>}
+                    <span className="text-xl font-medium text-slate-400 line-through">
+                      {formatXOF(promo.originalPrice)}
+                    </span>
+                    <PromoBadge percentageOff={promo.percentageOff} name={promo.promo?.name} size="md" />
+                  </>
+                ) : hasOneTime && oneTimePrice > 0 ? (
+                  <>
+                    <span className="text-4xl font-bold text-slate-900 lg:text-5xl">
+                      {Math.round(oneTimePrice).toLocaleString('fr-FR')}
+                    </span>
+                    <span className="text-lg text-slate-600">FCFA</span>
+                  </>
+                ) : monthlyPrice ? (
+                  <>
+                    <span className="text-4xl font-bold text-slate-900 lg:text-5xl">
+                      {Math.round(monthlyPrice).toLocaleString('fr-FR')}
+                    </span>
+                    <span className="text-lg text-slate-600">FCFA/mois</span>
+                  </>
+                ) : (
+                  <span className="text-3xl font-bold text-slate-900">Gratuit</span>
+                )}
+              </div>
+              {promoActive && promo && (
+                <p className="text-sm font-semibold text-emerald-600">
+                  Économisez {formatXOF(promo.discountAmount)}
+                </p>
               )}
             </div>
 
