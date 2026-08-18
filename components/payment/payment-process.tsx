@@ -365,7 +365,8 @@ export const PaymentProcess = ({
                 const errorData = await response.json().catch(() => ({}));
                 if (popup) popup.close();
                 const friendly = isTeam
-                    ? mapTeamPurchaseError(response.status, errorData.code, errorData.message)
+                    // saas-2 renvoie le code machine dans `error` (et non `code`).
+                    ? mapTeamPurchaseError(response.status, errorData.code || errorData.error, errorData.message)
                     : (errorData.message || "Erreur lors de l'initialisation du paiement");
                 if (isTeam) toast.error(friendly);
                 throw new Error(friendly);
