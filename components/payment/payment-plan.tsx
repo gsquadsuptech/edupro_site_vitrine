@@ -382,9 +382,21 @@ export const PaymentPlan = ({
                                     className="max-w-[160px]"
                                 />
                                 <p className="text-xs text-muted-foreground">
-                                    {isFree
-                                        ? `Contenu gratuit — ${seats} siège${seats > 1 ? 's' : ''} à distribuer, 0 FCFA`
-                                        : `Prix unitaire × ${seats} = ${new Intl.NumberFormat('fr-FR').format((parseFloat(course?.one_time_price || '0')) * seats)} FCFA`}
+                                    {isFree ? (
+                                        `Contenu gratuit — ${seats} siège${seats > 1 ? 's' : ''} à distribuer, 0 FCFA`
+                                    ) : (
+                                        <>
+                                            Prix unitaire × {seats} ={' '}
+                                            <span className="font-semibold text-foreground">
+                                                {new Intl.NumberFormat('fr-FR').format(oneTimeFinal * seats)} FCFA
+                                            </span>
+                                            {oneTimeFinal < oneTimePrice && (
+                                                <span className="ml-2 line-through">
+                                                    {new Intl.NumberFormat('fr-FR').format(oneTimePrice * seats)} FCFA
+                                                </span>
+                                            )}
+                                        </>
+                                    )}
                                 </p>
                             </div>
                             <p className="text-sm text-muted-foreground">
@@ -398,7 +410,7 @@ export const PaymentPlan = ({
                             size="lg"
                             className="w-full sm:w-auto"
                             onClick={() => handlePlanSelect("oneTime", {
-                                price: isFree ? 0 : discountedPrice,
+                                price: isFree ? 0 : oneTimeFinal,
                                 originalPrice: isFree ? 0 : oneTimePrice,
                             })}
                         >
@@ -421,7 +433,7 @@ export const PaymentPlan = ({
                             }`}
                         onClick={() =>
                             handlePlanSelect("oneTime", {
-                                price: discountedPrice,
+                                price: oneTimeFinal,
                                 originalPrice: oneTimePrice,
                             })
                         }
