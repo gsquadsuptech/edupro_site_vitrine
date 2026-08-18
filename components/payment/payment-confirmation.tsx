@@ -147,21 +147,27 @@ export const PaymentConfirmation = ({
                     <CheckCircleIcon className="h-16 w-16 text-green-500" />
                 </div>
                 <CardTitle className="text-xl text-green-700">
-                    {isFreeCourse ? 'Inscription confirmée' : 'Paiement réussi'}
+                    {isTeamPurchase
+                        ? 'Achat groupé confirmé'
+                        : isFreeCourse ? 'Inscription confirmée' : 'Paiement réussi'}
                 </CardTitle>
                 <CardDescription>
-                    {isFreeCourse
-                        ? 'Félicitations ! Votre inscription a été enregistrée.'
-                        : 'Félicitations ! Votre paiement a été accepté'}
+                    {isTeamPurchase
+                        ? 'Vos sièges ont été crédités à votre organisation.'
+                        : isFreeCourse
+                            ? 'Félicitations ! Votre inscription a été enregistrée.'
+                            : 'Félicitations ! Votre paiement a été accepté'}
                 </CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-6">
                 <div className="bg-green-50 p-4 rounded-md">
                     <p className="text-sm text-green-700">
-                        {isFreeCourse
-                            ? `Vous avez maintenant accès à ce ${itemLabelLower}.`
-                            : 'Nous vous remercions pour votre achat.'}
+                        {isTeamPurchase
+                            ? `Vos sièges pour ce ${itemLabelLower} sont disponibles — vous n'êtes pas inscrit vous-même.`
+                            : isFreeCourse
+                                ? `Vous avez maintenant accès à ce ${itemLabelLower}.`
+                                : 'Nous vous remercions pour votre achat.'}
                     </p>
                 </div>
 
@@ -228,6 +234,13 @@ export const PaymentConfirmation = ({
                             <div className="flex justify-between items-center border-b pb-2">
                                 <span className="text-sm text-muted-foreground">Tarif</span>
                                 <span className="font-medium text-green-600">Gratuit</span>
+                            </div>
+                        )}
+
+                        {isTeamPurchase && paymentData?.seats && (
+                            <div className="flex justify-between items-center border-b pb-2">
+                                <span className="text-sm text-muted-foreground">Sièges achetés</span>
+                                <span className="font-medium">{paymentData.seats}</span>
                             </div>
                         )}
                     </div>

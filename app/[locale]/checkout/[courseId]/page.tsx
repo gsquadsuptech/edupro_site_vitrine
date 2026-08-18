@@ -140,9 +140,14 @@ export default function CheckoutPage({
                 const isFree = fetchedCourse?.access_type === 'free' || (fetchedCourse?.price || 0) <= 0;
 
                 if (isFree) {
-                    setSkipPaymentPlan(true);
+                    // Gratuit : pas d'étape Paiement. En achat équipe on GARDE
+                    // l'étape Plan pour saisir le nombre de sièges — sans elle,
+                    // l'admin était inscrit à titre individuel et aucun pool de
+                    // sièges n'était créé.
+                    setSkipPaymentPlan(initialPurchaseMode !== 'team');
                     setSkipPayment(true);
                     setSelectedPlan({ type: 'oneTime', details: { price: 0, originalPrice: 0 } });
+                    if (initialPurchaseMode === 'team') setCurrentStep(2);
                 }
 
                 // Helper: when we already know which cohort applies (0 or 1 cohort),
@@ -264,14 +269,26 @@ export default function CheckoutPage({
             setPendingEnrollment(true);
             return;
         }
+        if (purchaseMode === 'team' && !orgId) {
+            toast.error("Organisation introuvable : impossible de finaliser l'achat groupé.");
+            return;
+        }
         setEnrollingFree(true);
         try {
+            // Contenu gratuit acheté « pour mon équipe » : on transmet les
+            // marqueurs d'achat groupé pour que le SaaS crée un pool de sièges
+            // (à distribuer via /admin/billing/seat-pools) au lieu d'inscrire
+            // l'admin lui-même.
+            const isTeamPurchase = purchaseMode === 'team';
             const response = await fetch('/api/enroll/free', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     courseId: course?.id,
                     cohortId: (session ?? selectedSession)?.id,
+                    ...(isTeamPurchase
+                        ? { purchaseMode: 'team', seats, organizationId: orgId }
+                        : {}),
                 }),
             });
 
@@ -289,11 +306,16 @@ export default function CheckoutPage({
         } finally {
             setEnrollingFree(false);
         }
-    }, [course?.id, selectedSession, user, enrollingFree]);
+    }, [course?.id, selectedSession, user, enrollingFree, purchaseMode, seats, orgId]);
 
     const handleSessionSelect = (session: any) => {
         setSelectedSession(session);
         if (skipPayment) {
+            // Achat équipe : passer par l'étape Plan pour saisir les sièges.
+            if (purchaseMode === 'team') {
+                setCurrentStep(2);
+                return;
+            }
             // Free course: require auth, then enroll directly
             if (!isAuthenticated || !user?.id || !user?.email) {
                 setPendingEnrollment(true);
@@ -323,6 +345,18 @@ export default function CheckoutPage({
 
     const handlePlanSelect = (plan: any) => {
         setSelectedPlan(plan);
+        // Contenu gratuit : il n'y a pas d'étape Paiement. Le clic sur
+        // « Confirmer » vaut validation — inscription individuelle, ou création
+        // du pool de sièges en mode équipe (cf. handleFreeEnrollment).
+        if (skipPayment) {
+            if (!isAuthenticated) {
+                setPendingEnrollment(true);
+                setAuthModalOpen(true);
+                return;
+            }
+            handleFreeEnrollment();
+            return;
+        }
         setCurrentStep(3);
     };
 
@@ -346,7 +380,9 @@ export default function CheckoutPage({
 
     // Auto-trigger free enrollment when user is authenticated and on a free course with no session selection step
     useEffect(() => {
-        if (!loading && skipPayment && skipSessionStep && currentStep !== 4) {
+        // En achat équipe, l'inscription ne doit PAS partir toute seule : elle
+        // attend la saisie du nombre de sièges à l'étape Plan.
+        if (!loading && skipPayment && skipSessionStep && purchaseMode !== 'team' && currentStep !== 4) {
             if (isAuthenticated) {
                 if (paymentStatus === "pending" && !enrollingFree) {
                     setPendingEnrollment(true);
@@ -355,7 +391,7 @@ export default function CheckoutPage({
                 setAuthModalOpen(true);
             }
         }
-    }, [loading, skipPayment, skipSessionStep, isAuthenticated, currentStep, paymentStatus, enrollingFree]);
+    }, [loading, skipPayment, skipSessionStep, purchaseMode, isAuthenticated, currentStep, paymentStatus, enrollingFree]);
 
     // Execute deferred enrollment once user is fully loaded
     useEffect(() => {
@@ -474,7 +510,7 @@ export default function CheckoutPage({
                     />
                 )}
 
-                {currentStep === 2 && (
+                {currentStep === 2 && !enrollingFree && (
                     <PaymentPlan
                         course={course}
                         cohort={selectedSession}
@@ -482,6 +518,7 @@ export default function CheckoutPage({
                         isBusinessAdmin={isBusinessAdmin}
                         isTeachOnly={isTeachOnly}
                         organizationId={orgId}
+                        isFree={skipPayment}
                         purchaseMode={purchaseMode}
                         onPurchaseModeChange={setPurchaseMode}
                         seats={seats}

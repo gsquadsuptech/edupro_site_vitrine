@@ -49,6 +49,8 @@ interface PaymentPlanProps {
     isBusinessAdmin?: boolean;
     isTeachOnly?: boolean;
     organizationId?: string | null;
+    /** Contenu gratuit : pas d'étape Paiement, le CTA vaut confirmation. */
+    isFree?: boolean;
     purchaseMode?: 'individual' | 'team';
     onPurchaseModeChange?: (mode: 'individual' | 'team') => void;
     seats?: number;
@@ -65,6 +67,7 @@ export const PaymentPlan = ({
     isBusinessAdmin = false,
     isTeachOnly = false,
     organizationId,
+    isFree = false,
     purchaseMode = 'individual',
     onPurchaseModeChange,
     seats = 1,
@@ -105,7 +108,7 @@ export const PaymentPlan = ({
      * `plan_not_supported` et l'utilisateur reste bloqué — on bloque l'achat
      * équipe en amont avec une alerte claire.
      */
-    const teamPurchaseUnavailable = isTeam && !nativeModes.oneTime;
+    const teamPurchaseUnavailable = isTeam && !isFree && !nativeModes.oneTime;
 
     if (forceOneTimeOnly) {
         availableModes.oneTime = true;
@@ -288,7 +291,9 @@ export const PaymentPlan = ({
                         <p className="text-sm font-medium text-muted-foreground">{course.title}</p>
                     )}
                     <h2 className="text-2xl font-bold">
-                        Choisissez votre plan de paiement
+                        {isFree && isTeam
+                            ? "Combien de sièges souhaitez-vous ?"
+                            : "Choisissez votre plan de paiement"}
                     </h2>
                     {cohort?.name && (
                         <p className="text-sm text-muted-foreground mt-1">
@@ -377,11 +382,15 @@ export const PaymentPlan = ({
                                     className="max-w-[160px]"
                                 />
                                 <p className="text-xs text-muted-foreground">
-                                    Prix unitaire × {seats} = {new Intl.NumberFormat('fr-FR').format((parseFloat(course?.one_time_price || '0')) * seats)} FCFA
+                                    {isFree
+                                        ? `Contenu gratuit — ${seats} siège${seats > 1 ? 's' : ''} à distribuer, 0 FCFA`
+                                        : `Prix unitaire × ${seats} = ${new Intl.NumberFormat('fr-FR').format((parseFloat(course?.one_time_price || '0')) * seats)} FCFA`}
                                 </p>
                             </div>
                             <p className="text-sm text-muted-foreground">
-                                En V1, l'achat équipe est en paiement unique.
+                                {isFree
+                                    ? "Vous invitez ensuite vos collaborateurs depuis votre espace admin."
+                                    : "En V1, l'achat équipe est en paiement unique."}
                             </p>
                         </div>
 
@@ -389,11 +398,11 @@ export const PaymentPlan = ({
                             size="lg"
                             className="w-full sm:w-auto"
                             onClick={() => handlePlanSelect("oneTime", {
-                                price: discountedPrice,
-                                originalPrice: oneTimePrice,
+                                price: isFree ? 0 : discountedPrice,
+                                originalPrice: isFree ? 0 : oneTimePrice,
                             })}
                         >
-                            Continuer vers le paiement
+                            {isFree ? "Confirmer l'achat groupé" : "Continuer vers le paiement"}
                         </Button>
                     </CardContent>
                 </Card>
