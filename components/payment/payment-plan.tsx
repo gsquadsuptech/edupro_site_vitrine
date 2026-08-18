@@ -10,7 +10,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { CheckIcon, Info, Users, User as UserIcon } from "lucide-react";
+import { CheckIcon, Info } from "lucide-react";
 import {
     CreditCardIcon,
     CalendarIcon,
@@ -308,23 +308,8 @@ export const PaymentPlan = ({
                 )}
             </div>
 
-            {/* Phase 5 — Toggle Pour moi / Pour mon équipe */}
-            {isBusinessAdmin && onPurchaseModeChange && (
-                <Tabs
-                    value={purchaseMode}
-                    onValueChange={(v) => onPurchaseModeChange(v as 'individual' | 'team')}
-                    className="w-full"
-                >
-                    <TabsList className="grid w-full max-w-md grid-cols-2">
-                        <TabsTrigger value="individual" className="gap-2">
-                            <UserIcon className="h-4 w-4" /> Pour moi
-                        </TabsTrigger>
-                        <TabsTrigger value="team" className="gap-2">
-                            <Users className="h-4 w-4" /> Pour mon équipe
-                        </TabsTrigger>
-                    </TabsList>
-                </Tabs>
-            )}
+            {/* Le choix Pour moi / Pour mon équipe est fait à l'écran précédent :
+                on ne le réaffiche pas ici (« Retour » permet d'en changer). */}
 
             {isTeachOnly && (
                 <Alert className="bg-amber-50 border-amber-200">
@@ -399,11 +384,11 @@ export const PaymentPlan = ({
                                     )}
                                 </p>
                             </div>
-                            <p className="text-sm text-muted-foreground">
-                                {isFree
-                                    ? "Vous invitez ensuite vos collaborateurs depuis votre espace admin."
-                                    : "En V1, l'achat équipe est en paiement unique."}
-                            </p>
+                            {isFree && (
+                                <p className="text-sm text-muted-foreground">
+                                    Vous invitez ensuite vos collaborateurs depuis votre espace admin.
+                                </p>
+                            )}
                         </div>
 
                         <Button
