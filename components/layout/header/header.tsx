@@ -162,6 +162,13 @@ export function Header() {
             </NavigationMenu>
 
             <Link
+              href={`/${locale}/tarification`}
+              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
+            >
+              {locale === 'fr' ? 'Tarification' : 'Pricing'}
+            </Link>
+
+            <Link
               href={`/${locale}/catalogue`}
               className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground whitespace-nowrap"
             >
@@ -344,6 +351,9 @@ export function Header() {
                       </Link>
                     </div>
                   </div>
+                  <Link href={`/${locale}/tarification`} className="text-lg font-medium hover:text-primary">
+                    {locale === 'fr' ? 'Tarification' : 'Pricing'}
+                  </Link>
                   <Link href={`/${locale}/catalogue`} className="text-lg font-medium hover:text-primary">
                     {locale === 'fr' ? 'Découvrir le catalogue' : 'Discover the catalog'}
                   </Link>
