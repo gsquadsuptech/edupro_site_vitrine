@@ -21,6 +21,14 @@ import type { PublicAddon, PublicPlan } from "@/services/plans-service"
 /** Au-dela, la carte devient illisible : le reste passe derriere un bouton. */
 const VISIBLE_FEATURES = 7
 
+/**
+ * Affichage des prix desactive tant que la tarification n'est pas finalisee :
+ * on montre les offres (limites, fonctionnalites, CTA) sans les montants, la
+ * bascule mensuel/annuel ni les prix d'extensions. Repasser a true pour tout
+ * reafficher — aucune autre modification requise.
+ */
+const SHOW_PRICES = false
+
 interface PricingGridProps {
     plans: PublicPlan[]
     addons?: PublicAddon[]
@@ -51,7 +59,7 @@ export function PricingGrid({
 
     return (
         <>
-            {showBillingToggle && hasAnnualOffer && (
+            {SHOW_PRICES && showBillingToggle && hasAnnualOffer && (
                 <div className="mb-10 flex items-center justify-center gap-3">
                     <Label
                         htmlFor="billing-cycle"
@@ -98,12 +106,14 @@ export function PricingGrid({
                                         {addon.description}
                                     </p>
                                 )}
-                                <p className="mt-3 text-sm font-medium">
-                                    {addon.price}{" "}
-                                    <span className="font-normal text-muted-foreground">
-                                        {addon.periodLabel}
-                                    </span>
-                                </p>
+                                {SHOW_PRICES && (
+                                    <p className="mt-3 text-sm font-medium">
+                                        {addon.price}{" "}
+                                        <span className="font-normal text-muted-foreground">
+                                            {addon.periodLabel}
+                                        </span>
+                                    </p>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -124,9 +134,10 @@ function PlanCard({
 }) {
     const [expanded, setExpanded] = useState(false)
 
-    const price = annual ? plan.price.yearly : plan.price.monthly
-    const hidden = Math.max(0, plan.features.length - VISIBLE_FEATURES)
-    const shown = expanded ? plan.features : plan.features.slice(0, VISIBLE_FEATURES)
+    const price = annual ? plan.price?.yearly : plan.price?.monthly
+    const features = plan.features ?? []
+    const hidden = Math.max(0, features.length - VISIBLE_FEATURES)
+    const shown = expanded ? features : features.slice(0, VISIBLE_FEATURES)
 
     return (
         <div
@@ -149,29 +160,33 @@ function PlanCard({
                 <p className="mb-4 text-xs text-muted-foreground">{plan.audience}</p>
             )}
 
-            {/* Prix */}
-            <div className="mb-6">
-                <p className="text-3xl font-bold leading-tight">
-                    <span className="break-words">{price.amount}</span>
-                    <span className="text-base font-normal text-muted-foreground">
-                        {price.unit}
-                    </span>
-                </p>
-                {price.note && (
-                    <p className="mt-1 text-sm text-muted-foreground">{price.note}</p>
-                )}
-                {annual && plan.annualDiscount && (
-                    <p className="mt-1 text-sm font-medium text-primary">
-                        {plan.annualDiscount.monthsFree
-                            ? `${plan.annualDiscount.monthsFree} mois offerts`
-                            : `Economisez ${plan.annualDiscount.percent}%`}
-                        <span className="font-normal text-muted-foreground">
-                            {" "}
-                            ({plan.annualDiscount.savings.toLocaleString("fr-FR")} FCFA)
+            {/* Prix — masques tant que la tarification n'est pas finalisee (SHOW_PRICES). */}
+            {SHOW_PRICES && price && (
+                <div className="mb-6">
+                    <p className="text-3xl font-bold leading-tight">
+                        <span className="break-words">{price.amount}</span>
+                        <span className="text-base font-normal text-muted-foreground">
+                            {price.unit}
                         </span>
                     </p>
-                )}
-            </div>
+                    {price.note && (
+                        <p className="mt-1 text-sm text-muted-foreground">{price.note}</p>
+                    )}
+                    {annual && plan.annualDiscount && (
+                        <p className="mt-1 text-sm font-medium text-primary">
+                            {plan.annualDiscount.monthsFree
+                                ? `${plan.annualDiscount.monthsFree} mois offerts`
+                                : `Economisez ${plan.annualDiscount.percent}%`}
+                            {plan.annualDiscount.savings != null && (
+                                <span className="font-normal text-muted-foreground">
+                                    {" "}
+                                    ({plan.annualDiscount.savings.toLocaleString("fr-FR")} FCFA)
+                                </span>
+                            )}
+                        </p>
+                    )}
+                </div>
+            )}
 
             {/* Limites.
                 « Utilisateurs » est le total des comptes de l'organisation ;
