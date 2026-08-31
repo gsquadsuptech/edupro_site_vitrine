@@ -82,6 +82,13 @@ export interface PublicPlanCatalog {
     addons: PublicAddon[]
 }
 
+/** Utilise seulement si l'API ne fournit pas encore `periodLabel`. */
+const ADDON_PERIOD_FALLBACK: Record<string, string> = {
+    monthly: "par mois",
+    yearly: "par an",
+    one_time: "paiement unique",
+}
+
 export const PlansService = {
     /**
      * Catalogue d'une gamme. Renvoie `null` en cas d'indisponibilite : les
@@ -102,12 +109,46 @@ export const PlansService = {
                 { next: { revalidate: 300 } },
             )
 
-            if (!res.ok) return null
+            if (!res.ok) {
+                console.error(
+                    `PlansService: ${SAAS_URL}/api/public/pricing a repondu ${res.status}`,
+                )
+                return null
+            }
+
+            // Un SaaS qui n'expose pas encore cette route renvoie sa page 404
+            // en HTML : `res.json()` leverait une erreur de parsing peu
+            // parlante. On le detecte pour dire ce qui manque reellement.
+            const contentType = res.headers.get("content-type") ?? ""
+            if (!contentType.includes("application/json")) {
+                console.error(
+                    `PlansService: reponse non-JSON depuis ${SAAS_URL}. La route /api/public/pricing est-elle deployee sur cette instance ?`,
+                )
+                return null
+            }
 
             const data = await res.json()
             if (!Array.isArray(data?.plans)) return null
 
-            return data as PublicPlanCatalog
+            // Le site et le SaaS se deploient separement : le site doit rester
+            // fonctionnel face a une API plus ancienne. Un champ absent est
+            // normalise ici plutot que de faire disparaitre les offres a
+            // l'affichage — une grille vide est bien pire qu'un champ par
+            // defaut.
+            const plans = (data.plans as PublicPlan[]).map((plan) => ({
+                ...plan,
+                family: plan.family ?? "subscription",
+                ctaType: plan.ctaType ?? null,
+                fromPrice: plan.fromPrice ?? false,
+                annualDiscount: plan.annualDiscount ?? null,
+            }))
+
+            const addons = ((data.addons as PublicAddon[]) ?? []).map((addon) => ({
+                ...addon,
+                periodLabel: addon.periodLabel ?? ADDON_PERIOD_FALLBACK[addon.period] ?? "",
+            }))
+
+            return { ...(data as PublicPlanCatalog), plans, addons }
         } catch (error) {
             console.error("PlansService.getCatalog:", error)
             return null

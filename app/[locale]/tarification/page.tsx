@@ -12,6 +12,25 @@ export const metadata: Metadata = {
 }
 
 /**
+ * Repli quand le catalogue n'est pas joignable.
+ *
+ * Une section vide ne dit rien au visiteur et ne dit rien non plus a
+ * l'exploitant : on affiche une porte de sortie utilisable plutot qu'un blanc.
+ */
+function CatalogUnavailable({ locale, gamme }: { locale: string; gamme: string }) {
+    return (
+        <div className="rounded-xl border border-dashed p-8 text-center">
+            <p className="text-muted-foreground">
+                Nos offres {gamme} sont momentanement indisponibles.
+            </p>
+            <Button asChild className="mt-4" variant="outline">
+                <Link href={`/${locale}/contact`}>Nous contacter pour un tarif</Link>
+            </Button>
+        </div>
+    )
+}
+
+/**
  * Page tarifs publique.
  *
  * Les plans proviennent de l'API SaaS (`/api/public/pricing`) : c'est la meme
@@ -53,6 +72,7 @@ export default async function TarificationPage({
                 family="subscription"
                 title="EduPro Business"
                 subtitle="Formez vos equipes et mesurez l'impact"
+                fallback={<CatalogUnavailable locale={locale} gamme="entreprises" />}
             />
 
             {/* 2. Abonnements formateurs */}
@@ -65,11 +85,7 @@ export default async function TarificationPage({
                         bare
                         title="EduPro Teach"
                         subtitle="Transformez votre expertise en revenus"
-                        fallback={
-                            <p className="text-center text-muted-foreground">
-                                Nos offres formateurs sont momentanement indisponibles.
-                            </p>
-                        }
+                        fallback={<CatalogUnavailable locale={locale} gamme="formateurs" />}
                     />
                 </Container>
             </section>
