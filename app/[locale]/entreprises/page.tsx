@@ -4,6 +4,7 @@ import { SolutionSection } from "@/components/sections/enterprises/solution-sect
 import { FeaturesSection } from "@/components/sections/enterprises/features-section"
 import { CaseStudySection } from "@/components/sections/enterprises/case-study-section"
 import { PricingSection } from "@/components/sections/enterprises/pricing-section"
+import { LivePricingPlans } from "@/components/marketing/pricing/live-pricing-plans"
 import { PaymentSection } from "@/components/sections/enterprises/payment-section"
 import { FAQSection } from "@/components/sections/enterprises/faq-section"
 import { ExtendedFAQSection } from "@/components/sections/enterprises/extended-faq-section"
@@ -15,7 +16,13 @@ export const metadata: Metadata = {
     description: "Transformez vos équipes avec EduPro : Onboarding, Upskilling, et mesure de l'impact en temps réel.",
 }
 
-export default function EntreprisePage() {
+export default async function EntreprisePage({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}) {
+    const { locale } = await params
+
     return (
         <>
             <EnterprisesHeroSection />
@@ -23,7 +30,14 @@ export default function EntreprisePage() {
             <SolutionSection />
             <CaseStudySection />
             <FeaturesSection />
-            <PricingSection />
+            {/* Plans lus depuis le SaaS : l'heritage est deja resolu, donc
+                plus de « Tout BUSINESS Essentials + ». La section statique
+                sert de secours si l'API ne repond pas. */}
+            <LivePricingPlans
+                category="business"
+                locale={locale}
+                fallback={<PricingSection />}
+            />
             <PaymentSection />
             <FAQSection />
             <ExtendedFAQSection />
