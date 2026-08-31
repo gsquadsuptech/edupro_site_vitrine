@@ -10,7 +10,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { CheckIcon, Info, Users, User as UserIcon } from "lucide-react";
+import { CheckIcon, Info } from "lucide-react";
 import {
     CreditCardIcon,
     CalendarIcon,
@@ -152,13 +152,14 @@ export const PaymentPlan = ({
 
     const discountedPrice = oneTimePrice * (1 - oneTimeDiscount);
 
-    // Promo publique (auto-appliquée, sans code) sur le paiement unique. Hook
-    // désactivé en mode équipe. Le serveur applique la même remise au montant
-    // envoyé → l'affichage reste cohérent avec ce qui sera facturé.
+    // Promo publique (auto-appliquée, sans code) sur le paiement unique. Activée
+    // aussi en mode équipe : le serveur applique la remise au montant facturé, il
+    // faut donc que le prix unitaire affiché ici la reflète (sinon le checkout
+    // montrait le prix plein alors que Paydunya débitait le prix remisé).
     const publicPrice = usePublicPrice(
         (item?.type ?? 'course') as 'course' | 'learning_path',
         item?.id ?? course?.id,
-        !isTeam,
+        true,
     );
     const oneTimePublicDiscount = publicPrice?.hasPublicPromo
         ? computePublicPromoDiscount(discountedPrice, publicPrice.promo)
@@ -308,23 +309,8 @@ export const PaymentPlan = ({
                 )}
             </div>
 
-            {/* Phase 5 — Toggle Pour moi / Pour mon équipe */}
-            {isBusinessAdmin && onPurchaseModeChange && (
-                <Tabs
-                    value={purchaseMode}
-                    onValueChange={(v) => onPurchaseModeChange(v as 'individual' | 'team')}
-                    className="w-full"
-                >
-                    <TabsList className="grid w-full max-w-md grid-cols-2">
-                        <TabsTrigger value="individual" className="gap-2">
-                            <UserIcon className="h-4 w-4" /> Pour moi
-                        </TabsTrigger>
-                        <TabsTrigger value="team" className="gap-2">
-                            <Users className="h-4 w-4" /> Pour mon équipe
-                        </TabsTrigger>
-                    </TabsList>
-                </Tabs>
-            )}
+            {/* Le choix Pour moi / Pour mon équipe est fait à l'écran précédent :
+                on ne le réaffiche pas ici (« Retour » permet d'en changer). */}
 
             {isTeachOnly && (
                 <Alert className="bg-amber-50 border-amber-200">
@@ -399,11 +385,11 @@ export const PaymentPlan = ({
                                     )}
                                 </p>
                             </div>
-                            <p className="text-sm text-muted-foreground">
-                                {isFree
-                                    ? "Vous invitez ensuite vos collaborateurs depuis votre espace admin."
-                                    : "En V1, l'achat équipe est en paiement unique."}
-                            </p>
+                            {isFree && (
+                                <p className="text-sm text-muted-foreground">
+                                    Vous invitez ensuite vos collaborateurs depuis votre espace admin.
+                                </p>
+                            )}
                         </div>
 
                         <Button

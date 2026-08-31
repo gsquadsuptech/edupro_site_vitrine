@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
 import { Container } from "@/components/marketing/layout/container"
 import { Button } from "@/components/ui/button"
@@ -47,6 +48,11 @@ export default async function TarificationPage({
     params: Promise<{ locale: string }>
 }) {
     const { locale } = await params
+
+    // Page tarification masquée tant que les tarifs ne sont pas finalisés : le lien
+    // de navigation est retiré et un accès direct est redirigé vers l'accueil.
+    // Retirer cette ligne (et remettre les liens dans le header) pour la rétablir.
+    redirect(`/${locale}`)
 
     return (
         <>
