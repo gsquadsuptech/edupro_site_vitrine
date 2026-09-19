@@ -57,11 +57,11 @@ export function FloatingActions() {
     const strokeDashoffset = circumference - scrollProgress * circumference
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4 items-center">
+        <div className="fixed right-6 z-50 flex flex-col gap-4 items-center bottom-[calc(var(--bottom-bar-h,0px)+1.5rem)]">
 
             {/* Theme Toggle */}
             {mounted && (
-                <motion.div
+                <motion.div className="hidden md:block"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.6 }}
@@ -85,7 +85,7 @@ export function FloatingActions() {
             )}
 
             {/* Chatbot Guide Float */}
-            <motion.div
+            <motion.div className="hidden md:block"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.5 }}
