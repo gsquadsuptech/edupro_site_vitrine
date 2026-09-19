@@ -22,6 +22,26 @@ const supabase = createClient();
 // Token storage keys
 const AUTH_BYPASS_KEY = 'auth-bypass';
 
+/**
+ * Acces a localStorage tolerant aux navigateurs qui le refusent.
+ *
+ * Sur Safari iOS avec « Bloquer tous les cookies » (et dans certains modes
+ * prives), la simple lecture de `window.localStorage` leve une SecurityError.
+ * Ce hook est monte dans le header de toutes les pages : sans cette garde,
+ * l'exception remontait jusqu'a React et vidait la page entiere.
+ */
+const safeStorage = {
+  get(key: string): string | null {
+    try { return window.localStorage.getItem(key); } catch { return null; }
+  },
+  set(key: string, value: string): void {
+    try { window.localStorage.setItem(key, value); } catch { /* stockage indisponible : on continue sans */ }
+  },
+  remove(key: string): void {
+    try { window.localStorage.removeItem(key); } catch { /* idem */ }
+  },
+};
+
 // Pas de setInterval manuel pour refresher: `autoRefreshToken: true` est le
 // défaut de createBrowserClient (lib/supabase/client.ts) → gotrue-js
 // rafraîchit ~60s avant l'expiration. Forcer un refresh toutes les 15 min
@@ -81,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
   // Fonction pour activer le mode bypass
   const enableDevBypass = useCallback(() => {
     if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem(AUTH_BYPASS_KEY, 'true');
+      safeStorage.set(AUTH_BYPASS_KEY, 'true');
       setBypassEnabled(true);
       console.log("[Auth] Mode bypass activé (Développement uniquement)");
       toast({
@@ -95,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   // Fonction pour désactiver le mode bypass
   const disableDevBypass = useCallback(() => {
-    localStorage.removeItem(AUTH_BYPASS_KEY);
+    safeStorage.remove(AUTH_BYPASS_KEY);
     setBypassEnabled(false);
     console.log("[Auth] Mode bypass désactivé");
     toast({
@@ -131,7 +151,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       } else {
         console.log("[Auth] Aucune session trouvée");
 
-        if (process.env.NODE_ENV === 'development' && localStorage.getItem(AUTH_BYPASS_KEY) === 'true') {
+        if (process.env.NODE_ENV === 'development' && safeStorage.get(AUTH_BYPASS_KEY) === 'true') {
           console.log("[Auth] Mode bypass actif");
           setBypassEnabled(true);
         } else {
@@ -149,7 +169,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
 
   useEffect(() => {
     const fetchUser = async () => {
-      const bypass = localStorage.getItem(AUTH_BYPASS_KEY) === 'true';
+      const bypass = safeStorage.get(AUTH_BYPASS_KEY) === 'true';
       if (bypass && process.env.NODE_ENV === 'development') {
         setBypassEnabled(true);
         console.log("[Auth] Mode bypass détecté au démarrage");
@@ -451,7 +471,7 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       setBypassEnabled(false);
 
       // Nettoyer le localStorage
-      localStorage.removeItem(AUTH_BYPASS_KEY);
+      safeStorage.remove(AUTH_BYPASS_KEY);
 
       // Nettoyer les cookies d'organisation utilisés par l'UI
       try {
