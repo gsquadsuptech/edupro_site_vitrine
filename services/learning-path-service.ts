@@ -59,6 +59,7 @@ const LEARNING_PATH_LIST_FIELDS = `
         searchable,
         publication_mode,
         featured,
+        featured_order,
         rating,
         review_count,
         student_count,
@@ -99,6 +100,7 @@ const LEARNING_PATH_DETAIL_FIELDS = `
         searchable,
         publication_mode,
         featured,
+        featured_order,
         rating,
         review_count,
         student_count,
@@ -266,6 +268,7 @@ export const LearningPathService = {
 
             is_published: marketplace?.review_status === 'published' && item.status === 'published',
             is_featured: !!marketplace?.featured,
+            featured_order: marketplace?.featured_order ?? null,
             publication_mode: marketplace?.publication_mode ?? null,
             rating: marketplace?.rating ? Number(marketplace.rating) : 0,
             reviewCount: marketplace?.review_count || 0,

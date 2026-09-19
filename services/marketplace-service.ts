@@ -88,7 +88,16 @@ export const MarketplaceService = {
         const courseItems: MarketplaceItem[] = courses.map((data) => ({ kind: 'course' as const, data }))
         const lpItems: MarketplaceItem[] = learningPaths.map((data) => ({ kind: 'learning_path' as const, data }))
 
+        // L'ordre fixe par le superadmin prime ; a defaut, du plus recent au
+        // plus ancien. Sans cela, des dizaines de contenus « en vedette » se
+        // disputaient 8 places au hasard de l'ordre de la base.
+        const orderOf = (item: MarketplaceItem) => item.data.featured_order ?? null
         const merged = [...courseItems, ...lpItems].sort((a, b) => {
+            const oa = orderOf(a)
+            const ob = orderOf(b)
+            if (oa != null && ob != null && oa !== ob) return oa - ob
+            if (oa != null && ob == null) return -1
+            if (oa == null && ob != null) return 1
             const dateA = a.kind === 'course' ? courseSortDate(a.data) : lpSortDate(a.data)
             const dateB = b.kind === 'course' ? courseSortDate(b.data) : lpSortDate(b.data)
             return dateB.localeCompare(dateA)
