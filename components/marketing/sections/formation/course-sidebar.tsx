@@ -6,7 +6,7 @@ import { CheckCircle2, Heart, Share2, Smartphone, Monitor, Trophy, Clock, Globe 
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Course, Cohort } from "@/lib/supabase/types"
-import { getCohortAvailability } from "@/services/course-service"
+import { getEnrollCtaState, formatOpeningLabel } from "@/services/course-service"
 import { useActiveBusinessOrg } from "@/hooks/use-active-business-org"
 import { useWishlist } from "@/hooks/use-wishlist"
 import { getAvailableModes, pickDisplayCohort, type PublicPrice } from "@/lib/pricing"
@@ -30,9 +30,7 @@ export function CourseSidebar({ course, cohorts = [], promo }: CourseSidebarProp
   // dont AUCUNE session n'est ouverte — y compris quand aucune session n'a
   // encore été créée. Jamais pour l'auto-formation, qui reste inscriptible en
   // permanence.
-  const isSessionCourse = course.format === 'session'
-  const hasOpenCohort = cohorts.some(c => getCohortAvailability(c).isOpen)
-  const showWaitlist = isSessionCourse && !hasOpenCohort
+  const cta = getEnrollCtaState(course, cohorts)
 
   const displayCohort = pickDisplayCohort(cohorts)
   // L'achat équipe V1 = paiement unique uniquement. Ne montrer le bouton que si
@@ -68,17 +66,27 @@ export function CourseSidebar({ course, cohorts = [], promo }: CourseSidebarProp
       <CoursePriceDisplay course={course} cohort={displayCohort} variant="sidebar" className="mb-6" promo={promo} />
 
       <div className="space-y-4">
-        {showWaitlist ? (
-          <WaitlistDialog
-            courseId={course.id}
-            courseSlug={course.slug}
-            courseTitle={course.title}
-          />
-        ) : (
+        {cta.kind === 'enroll' ? (
           <EnrollCTA
             courseId={course.id}
             enrollLabel="S'inscrire maintenant"
             buttonClassName="h-14 bg-gradient-to-r from-primary to-chart-2 text-lg font-bold text-primary-foreground shadow-lg hover:opacity-90 transition-all duration-300 hover:translate-y-[-2px]"
+          />
+        ) : cta.kind === 'opens-later' ? (
+          <div>
+            <WaitlistDialog
+              courseId={course.id}
+              courseSlug={course.slug}
+              courseTitle={course.title}
+              label="M'avertir de l'ouverture"
+            />
+            <p className="mt-2 text-center text-sm font-medium text-primary">{formatOpeningLabel(cta.opensAt)}</p>
+          </div>
+        ) : (
+          <WaitlistDialog
+            courseId={course.id}
+            courseSlug={course.slug}
+            courseTitle={course.title}
           />
         )}
 

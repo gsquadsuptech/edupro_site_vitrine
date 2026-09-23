@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ['@formatjs/intl-localematcher'],
+  // Next ne transpile pas node_modules par defaut : on le lui demande ici
+  // pour les paquets livres avec une syntaxe trop recente pour iOS 14-16.
+  // - intl-messageformat (via next-intl) : blocs `static { }` (ES2022),
+  //   refuses par Safari < 16.4 -> SyntaxError au chargement du layout, donc
+  //   « Application error » sur toutes les pages (iPhone 7 Plus, iOS 15).
+  // - zod : operateur `??=` (ES2021), refuse par Safari < 14.
+  // `npm run check:es` verifie les chunks produits (cible ES2021).
+  transpilePackages: ['zod', 'intl-messageformat'],
   outputFileTracingRoot: __dirname,
 };
 

@@ -2,18 +2,77 @@ import { createClient } from '@/lib/supabase/client'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { Course, Cohort, CohortAvailability } from '@/lib/supabase/types'
 
+/**
+ * Une date saisie sans heure ("2026-10-05") vaut pour toute la journee :
+ * une date limite fixee au 5 doit accepter les inscriptions le 5.
+ */
+function endOfDayIfDateOnly(value: string): Date {
+    const d = new Date(value)
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) d.setHours(23, 59, 59, 999)
+    return d
+}
+
 export function getCohortAvailability(cohort: Cohort): CohortAvailability {
     const now = new Date()
-    const isDeadlinePassed = cohort.registration_deadline
-        ? new Date(cohort.registration_deadline) < now
-        : false
+
+    // Ouverture : absente = ouvert des la publication de la session.
+    const opensAt = cohort.registration_start_date ? new Date(cohort.registration_start_date) : null
+    const isBeforeOpening = !!opensAt && opensAt > now
+
+    // Fermeture : la date limite, sinon le demarrage de la session. Une
+    // session commencee sans date limite explicite n'est plus rejoignable.
+    const closesAt = cohort.registration_deadline
+        ? endOfDayIfDateOnly(cohort.registration_deadline)
+        : cohort.start_date
+            ? endOfDayIfDateOnly(cohort.start_date)
+            : null
+    const isDeadlinePassed = !!closesAt && closesAt < now
+
     const remainingPlaces = cohort.max_students != null
         ? cohort.max_students - cohort.current_students_count
         : null
     const isFull = remainingPlaces != null && remainingPlaces <= 0
-    const isOpen = !isDeadlinePassed && !isFull
+    const isOpen = !isBeforeOpening && !isDeadlinePassed && !isFull
 
-    return { isOpen, isFull, isDeadlinePassed, remainingPlaces }
+    return {
+        isOpen,
+        isFull,
+        isDeadlinePassed,
+        isBeforeOpening,
+        opensAt: opensAt ? opensAt.toISOString() : null,
+        remainingPlaces,
+    }
+}
+
+export type EnrollCtaState =
+    | { kind: 'enroll' }
+    | { kind: 'opens-later'; opensAt: string }
+    | { kind: 'waitlist' }
+
+/**
+ * Etat du bouton principal d'une fiche formation.
+ *
+ * Trois cas, et non deux : entre « S'inscrire » et « M'avertir pour la
+ * prochaine session », il existe la session publiee dont les inscriptions
+ * ouvrent a une date connue. Le visiteur doit la voir, sinon il croit qu'il
+ * n'y a rien de prevu.
+ */
+export function getEnrollCtaState(course: Pick<Course, 'format'>, cohorts: Cohort[]): EnrollCtaState {
+    if (course.format !== 'session') return { kind: 'enroll' }
+    const availabilities = cohorts.map(getCohortAvailability)
+    if (availabilities.some((a) => a.isOpen)) return { kind: 'enroll' }
+    const upcoming = availabilities
+        .filter((a) => a.isBeforeOpening && a.opensAt)
+        .map((a) => a.opensAt as string)
+        .sort()
+    if (upcoming.length > 0) return { kind: 'opens-later', opensAt: upcoming[0] }
+    return { kind: 'waitlist' }
+}
+
+/** "Inscriptions des le 5 octobre" */
+export function formatOpeningLabel(opensAt: string): string {
+    const d = new Date(opensAt)
+    return `Inscriptions dès le ${d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`
 }
 
 export type CourseSort = 'recent' | 'price_asc' | 'price_desc' | 'popular' | 'rating'
@@ -61,7 +120,7 @@ const COURSE_CARD_FIELDS = `
     category:categories(name, slug),
     instructor:instructors(name, avatar_url, organization:organizations(name)),
     ${ORG_EMBED},
-    marketplace:marketplace_courses!inner(featured, rating, review_count, student_count, category_id),
+    marketplace:marketplace_courses!inner(featured, featured_order, rating, review_count, student_count, category_id),
     ${COHORTS_EMBED}
 `
 
@@ -101,7 +160,7 @@ const COURSE_DETAIL_FIELDS = `
     category:categories(name, slug),
     instructor:instructors(name, avatar_url, bio, specialization, rating, students_count, courses_count, organization_id, organization:organizations(name, logo_url)),
     ${ORG_EMBED},
-    marketplace:marketplace_courses(featured, rating, review_count, student_count, searchable, review_status, category:marketplace_categories(name, slug)),
+    marketplace:marketplace_courses(featured, featured_order, rating, review_count, student_count, searchable, review_status, category:marketplace_categories(name, slug)),
     ${COHORTS_EMBED},
     sections(
          id,
@@ -347,6 +406,7 @@ export const CourseService = {
             pricing_modes: isFree ? null : pricingModes,
 
             is_featured: item.marketplace?.featured || false,
+            featured_order: item.marketplace?.featured_order ?? null,
             rating: item.marketplace?.rating ? Number(item.marketplace.rating) : 0,
             reviewCount: item.marketplace?.review_count || 0,
             enrolled_count: CourseService.resolveEnrolledCount(item),
@@ -870,6 +930,7 @@ export const CourseService = {
                     installments: [],
                     pricing_modes: null,
                     is_featured: false,
+                    featured_order: null,
                     is_published: true,
                     published_at: '',
                     rating: r.rating ? Number(r.rating) : 0,
@@ -932,9 +993,15 @@ export const CourseService = {
     async getCohortsByCourseId(courseId: string): Promise<Cohort[]> {
         const supabase = createClient()
 
-        const { data, error } = await supabase
-            .from('cohorts')
-            .select(`
+        // `registration_start_date` arrive avec la migration SaaS
+        // 20260919100000_cohorts_registration_start_date. Tant qu'elle n'est
+        // pas appliquee, PostgREST refuse TOUTE la requete (42703) et chaque
+        // fiche perdrait son bouton « S'inscrire ». On retente donc sans la
+        // colonne : le site reste correct quel que soit l'ordre de deploiement.
+        const selectCohorts = (withRegistrationStart: boolean) => {
+            // Liste typee `string` (pas un litteral) : le parseur de types de
+            // supabase-js ne sait pas representer une projection conditionnelle.
+            const fields: string = `
                 id,
                 name,
                 description,
@@ -944,6 +1011,7 @@ export const CourseService = {
                 max_participants,
                 pricing_modes,
                 registration_deadline,
+                ${withRegistrationStart ? 'registration_start_date,' : ''}
                 enable_waitlist,
                 allow_waitlist,
                 one_time_price,
@@ -954,9 +1022,19 @@ export const CourseService = {
                 use_course_price,
                 cohort_participants(count),
                 cohort_instructors(instructor:instructors(name, avatar_url))
-            `)
-            .eq('course_id', courseId)
-            .in('status', ['active', 'published'])
+            `
+            return supabase
+                .from('cohorts')
+                .select(fields)
+                .eq('course_id', courseId)
+                .in('status', ['active', 'published'])
+        }
+
+        let { data, error } = await selectCohorts(true)
+        if (error?.code === '42703' && String(error.message).includes('registration_start_date')) {
+            console.warn('cohorts.registration_start_date absente (migration non appliquee) : requete sans la colonne')
+            ;({ data, error } = await selectCohorts(false))
+        }
 
         if (error) {
             console.error('Error fetching cohorts:', error)
@@ -970,6 +1048,7 @@ export const CourseService = {
             start_date: item.start_date,
             end_date: item.end_date,
             registration_deadline: item.registration_deadline || null,
+            registration_start_date: item.registration_start_date ?? null,
             status: item.status,
             max_students: item.max_participants || null,
             current_students_count: item.cohort_participants?.[0]?.count || 0,

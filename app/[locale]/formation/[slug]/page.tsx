@@ -63,7 +63,7 @@ export default async function FormationPage({
                     courseTitle={course.title}
                 />
 
-                <div className="container pb-20">
+                <div className="container pb-48 sm:pb-32 lg:pb-8">
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
                         {/* Left Column - Main Content */}
                         <div className="min-w-0 space-y-4">

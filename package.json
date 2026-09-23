@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen:api-key": "node scripts/generate-api-key.mjs"
+    "gen:api-key": "node scripts/generate-api-key.mjs",
+    "check:es": "es-check es2021 \".next/static/chunks/**/*.js\" --not=\".next/static/chunks/**/*.map\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -71,9 +72,18 @@
     "@types/node": "^20",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
+    "es-check": "^8.0.2",
     "eslint": "^9",
     "eslint-config-next": "^15.1.3",
     "tinymce": "^8.3.2",
     "typescript": "^5"
-  }
+  },
+  "browserslist": [
+    "iOS >= 14",
+    "Safari >= 14",
+    "Chrome >= 80",
+    "Edge >= 80",
+    "Firefox >= 78",
+    "not dead"
+  ]
 }

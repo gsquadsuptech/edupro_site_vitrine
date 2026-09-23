@@ -57,6 +57,13 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Garde-fou navigateurs anciens : les chunks client doivent rester en ES2021
+# (iOS 14+). Une dependance livree en ES2022 (blocs `static { }`, champs de
+# classe...) casse tout le site sur les iPhone qui ne passent pas iOS 16.4,
+# avec pour seul symptome « Application error: a client-side exception ».
+# Mieux vaut echouer ici que decouvrir la regression chez les utilisateurs.
+RUN npm run check:es
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Inter, Poppins } from "next/font/google"; // Import fonts
 import "../globals.css";
 import { NextIntlClientProvider } from 'next-intl';
@@ -29,6 +30,17 @@ const poppins = Poppins({
     variable: "--font-poppins",
     display: 'swap',
 });
+
+/**
+ * `viewportFit: cover` est indispensable pour que `env(safe-area-inset-bottom)`
+ * ait une valeur sur les iPhone a encoche : sans lui, la barre d'achat fixe
+ * passe sous l'indicateur d'accueil et son bouton devient injoignable.
+ */
+export const viewport: Viewport = {
+    width: "device-width",
+    initialScale: 1,
+    viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
     title: {
@@ -78,6 +90,9 @@ export default async function LocaleLayout({
     return (
         <html lang={locale} suppressHydrationWarning>
             <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+                {/* Charge avant tout le reste, en ES5 : c'est lui qui rapporte les
+                    erreurs de chargement des bundles sur les vieux navigateurs. */}
+                <Script src="/error-reporter.js" strategy="beforeInteractive" />
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <AuthProvider>
                         <ThemeProvider

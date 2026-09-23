@@ -20,13 +20,15 @@ import { RegisterForm } from "@/components/pages/auth/register-form"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface WaitlistDialogProps {
+    /** Libelle du bouton. Par defaut : « M'avertir pour la prochaine session ». */
+    label?: string
     courseId: string
     courseSlug: string
     courseTitle: string
     cohortId?: string
 }
 
-export function WaitlistDialog({ courseId, courseSlug, courseTitle, cohortId }: WaitlistDialogProps) {
+export function WaitlistDialog({ label, courseId, courseSlug, courseTitle, cohortId }: WaitlistDialogProps) {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [isJoined, setIsJoined] = useState(false)
@@ -114,7 +116,7 @@ export function WaitlistDialog({ courseId, courseSlug, courseTitle, cohortId }: 
                         <Bell className="mr-2 h-4 w-4 shrink-0" />
                     )}
                     <span className="truncate">
-                        {loading ? "Traitement..." : isJoined ? "En attente" : "M'avertir pour la prochaine session"}
+                        {loading ? "Traitement..." : isJoined ? "En attente" : (label ?? "M'avertir pour la prochaine session")}
                     </span>
                 </Button>
             </DialogTrigger>

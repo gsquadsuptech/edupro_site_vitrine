@@ -56,6 +56,8 @@ export type Course = {
     prerequisites?: string[]
     preview_video?: string | null
     is_featured: boolean // mapped from marketplace_courses.featured
+    /** Ordre fixe par le superadmin ; null = apres les ordonnes, par date. */
+    featured_order?: number | null
     is_published?: boolean
     published_at: string
     one_time_price: number | null
@@ -159,6 +161,7 @@ export type LearningPath = {
     } | null
 
     is_featured?: boolean
+    featured_order?: number | null
     publication_mode?: string | null
     rating?: number
     reviewCount?: number
@@ -205,6 +208,8 @@ export type Cohort = {
     start_date: string
     end_date: string
     registration_deadline: string | null
+    /** Ouverture des inscriptions. null = des la publication de la session. */
+    registration_start_date?: string | null
     status: 'active' | 'published' | 'draft' | 'completed' | 'archived'
     max_students: number | null
     current_students_count: number
@@ -225,6 +230,10 @@ export type CohortAvailability = {
     isOpen: boolean
     isFull: boolean
     isDeadlinePassed: boolean
+    /** Les inscriptions ne sont pas encore ouvertes (date d'ouverture future). */
+    isBeforeOpening: boolean
+    /** Date d'ouverture des inscriptions (ISO), quand elle est definie. */
+    opensAt: string | null
     remainingPlaces: number | null
 }
 
