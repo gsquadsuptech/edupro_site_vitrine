@@ -1,5 +1,6 @@
 
 import { createClient } from "@supabase/supabase-js"
+import { randomBytes } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
 import { verifyTurnstileToken, getRemoteIp } from "@/lib/turnstile"
 
@@ -100,29 +101,32 @@ export async function POST(request: NextRequest) {
         }
 
         const normalizedEmail = String(email).trim().toLowerCase()
-        const existsError = NextResponse.json(
-            { error: "Un compte avec cet email existe déjà. Connectez-vous ou utilisez « Mot de passe oublié »." },
-            { status: 400 }
-        )
 
-        // Compte déjà présent ? (profil créé par trigger à chaque compte)
-        let pendingExisting = false
-        const { data: existingProfile } = await supabaseAdmin
-            .from('profiles')
-            .select('id')
-            .eq('email', normalizedEmail)
-            .maybeSingle()
-        if (existingProfile?.id) {
-            const { data: existing } = await supabaseAdmin.auth.admin.getUserById(existingProfile.id)
-            if (existing?.user?.email_confirmed_at) return existsError
-            if (existing?.user) pendingExisting = true
+        // Réponse IDENTIQUE quel que soit l'état de l'adresse (nouvelle,
+        // compte en attente, compte confirmé) : la route ne doit pas
+        // permettre d'énumérer les comptes.
+        const okResponse = () => NextResponse.json({ ok: true, email: normalizedEmail })
+        const failClosed = (context: string, detail?: unknown) => {
+            console.error(`signup: ${context}`, detail)
+            return NextResponse.json(
+                { error: "Impossible de traiter l'inscription pour le moment. Réessayez dans un instant." },
+                { status: 500 }
+            )
         }
 
-        let user: { id: string; email?: string } | null = null
-        let actionLink: string | undefined
-        let mode: 'confirm' | 'set_password' = 'confirm'
+        // 1) Création stricte : createUser échoue si l'email existe déjà
+        //    (pas d'heuristique sur la date de création).
+        const { data: created, error: createError } = await supabaseAdmin.auth.admin.createUser({
+            email: normalizedEmail,
+            password,
+            email_confirm: false,
+            user_metadata: userMetadata,
+        })
 
-        if (!pendingExisting) {
+        let actionLink: string | undefined
+        let mailNames = { first: userMetadata.first_name, last: userMetadata.last_name }
+
+        if (!createError && created?.user) {
             // Nouveau compte : lien de CONFIRMATION (type signup). Le mot de
             // passe vient d'être choisi ici ; le lien valide l'adresse et
             // ouvre la session sur /auth/callback de la vitrine. Auparavant,
@@ -132,47 +136,61 @@ export async function POST(request: NextRequest) {
                 type: 'signup',
                 email: normalizedEmail,
                 password,
-                options: { data: userMetadata, redirectTo: callbackUrl },
+                options: { redirectTo: callbackUrl },
             })
-            if (error) {
-                if (/already|exist|registered/i.test(error.message)) return existsError
-                return NextResponse.json({ error: error.message }, { status: 400 })
+            if (error || !data?.properties?.action_link) return failClosed('signup link', error?.message)
+            actionLink = data.properties.action_link
+        } else {
+            const alreadyExists =
+                (createError as any)?.code === 'email_exists' ||
+                /already|exist|registered/i.test(createError?.message ?? '')
+            if ((createError as any)?.code === 'weak_password') {
+                return NextResponse.json(
+                    { error: "Mot de passe trop faible : au moins 6 caractères avec majuscule, minuscule et chiffre." },
+                    { status: 400 }
+                )
             }
-            user = data?.user ?? null
-            actionLink = data?.properties?.action_link
-            // Course : compte apparu entre la vérification et ici (profil
-            // absent ou en retard) → on le traite comme préexistant.
-            if (user && Date.now() - new Date((data.user as any).created_at).getTime() > 60_000) {
-                pendingExisting = true
-            }
-        }
+            if (!alreadyExists) return failClosed('createUser', createError?.message)
 
-        if (pendingExisting) {
-            // Email déjà rattaché à un compte NON confirmé (inscription
-            // abandonnée, invitation d'organisation, ou tiers ayant pré-créé
-            // le compte avec SON mot de passe). Confirmer ce compte en l'état
-            // laisserait ce mot de passe en place : on envoie à la place un
-            // lien qui fait choisir le mot de passe par le détenteur de la
-            // boîte mail. Le compte n'est ni modifié ni supprimé ici (il peut
-            // porter des rattachements d'organisation).
+            // 2) Adresse déjà utilisée : état lu via l'API admin, en
+            //    échec fermé (toute erreur de lecture interrompt).
+            const { data: profile, error: profileError } = await supabaseAdmin
+                .from('profiles')
+                .select('id, first_name, last_name')
+                .eq('email', normalizedEmail)
+                .maybeSingle()
+            if (profileError || !profile?.id) return failClosed('profile lookup', profileError?.message)
+
+            const { data: existing, error: existingError } = await supabaseAdmin.auth.admin.getUserById(profile.id)
+            if (existingError || !existing?.user) return failClosed('getUserById', existingError?.message)
+
+            // Compte confirmé : aucun email, même réponse. L'interface invite
+            // à se connecter ou à utiliser « Mot de passe oublié ».
+            if (existing.user.email_confirmed_at) return okResponse()
+
+            // Compte NON confirmé (inscription abandonnée, invitation
+            // d'organisation, ou tiers l'ayant pré-créé avec SON mot de
+            // passe). On remplace d'abord le mot de passe par un secret
+            // aléatoire jamais communiqué : celui du tiers est révoqué même
+            // si le lien n'est pas suivi jusqu'au bout. Sans risque pour un
+            // compte légitime : non confirmé, il ne peut pas se connecter
+            // par mot de passe. Le lien fait ensuite choisir le mot de passe
+            // au détenteur de la boîte. Compte ni supprimé ni rattachements
+            // modifiés.
+            const { error: scrambleError } = await supabaseAdmin.auth.admin.updateUserById(existing.user.id, {
+                password: randomBytes(48).toString('base64url'),
+            })
+            if (scrambleError) return failClosed('password reset', scrambleError.message)
+
             const { data, error } = await supabaseAdmin.auth.admin.generateLink({
                 type: 'recovery',
                 email: normalizedEmail,
                 options: { redirectTo: `${origin}/${locale}/auth/update-password` },
             })
-            if (error) {
-                return NextResponse.json({ error: error.message }, { status: 400 })
-            }
-            user = data?.user ?? null
-            actionLink = data?.properties?.action_link
-            mode = 'set_password'
-        }
-
-        if (!user || !actionLink) {
-            return NextResponse.json(
-                { error: "Impossible de créer le compte" },
-                { status: 500 }
-            )
+            if (error || !data?.properties?.action_link) return failClosed('recovery link', error?.message)
+            actionLink = data.properties.action_link
+            // Noms du compte existant, pas ceux saisis par le demandeur.
+            mailNames = { first: profile.first_name || '', last: profile.last_name || '' }
         }
 
         const invitationResponse = await fetch(
@@ -185,8 +203,8 @@ export async function POST(request: NextRequest) {
                 },
                 body: JSON.stringify({
                     email: normalizedEmail,
-                    firstName: userMetadata.first_name,
-                    lastName: userMetadata.last_name,
+                    firstName: mailNames.first,
+                    lastName: mailNames.last,
                     role,
                     organizationName: 'EduPro',
                     // Lien fourni : la fonction Edge ne génère plus son
@@ -198,22 +216,15 @@ export async function POST(request: NextRequest) {
 
         if (!invitationResponse.ok) {
             const errorPayload = await invitationResponse.json().catch(() => ({}))
-            console.error('send-invitation failed for', email, errorPayload)
-            return NextResponse.json(
-                {
-                    error: "Compte créé mais l'email de confirmation n'a pas pu être envoyé. Réessayez dans un instant ou contactez le support.",
-                    userId: user.id,
-                },
-                { status: 500 }
-            )
+            return failClosed('send-invitation', errorPayload)
         }
 
-        return NextResponse.json({ user: { id: user.id, email: normalizedEmail }, mode })
+        return okResponse()
 
     } catch (error: any) {
         console.error('Signup error:', error)
         return NextResponse.json(
-            { error: error.message || "Une erreur est survenue" },
+            { error: "Une erreur est survenue. Réessayez dans un instant." },
             { status: 500 }
         )
     }

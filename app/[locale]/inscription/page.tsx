@@ -30,7 +30,6 @@ export default function InscriptionPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
-    const [setPasswordMode, setSetPasswordMode] = useState(false)
     const router = useRouter()
     const { locale } = useParams()
     const supabase = createClient()
@@ -98,15 +97,14 @@ export default function InscriptionPage() {
 
             const data = await response.json().catch(() => ({}))
 
-            if (!response.ok || !data.user) {
+            if (!response.ok || !data.ok) {
                 toast.error("Erreur lors de l'inscription", {
                     description: data.error || "Une erreur est survenue"
                 })
             } else {
-                toast.success("Compte créé !", {
-                    description: "Confirmez votre email pour l'activer."
+                toast.success("Vérifiez votre boîte mail", {
+                    description: "Un lien d'activation vient d'être envoyé."
                 })
-                setSetPasswordMode(data.mode === 'set_password')
                 setRegisteredEmail(formData.email)
                 setFormData({ fullName: "", email: "", password: "", country: "" })
             }
@@ -193,27 +191,17 @@ export default function InscriptionPage() {
                                         </div>
                                     </div>
                                     <h2 className="mb-2 text-2xl font-bold text-foreground">Confirmez votre email</h2>
-                                    {setPasswordMode ? (
-                                        <p className="mb-3 text-sm text-muted-foreground">
-                                            Un compte en attente d'activation existe déjà pour{" "}
-                                            <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
-                                            Par sécurité, nous vous avons envoyé un lien pour l'activer en
-                                            choisissant votre mot de passe.
-                                        </p>
-                                    ) : (
-                                        <>
-                                            <p className="mb-3 text-sm text-muted-foreground">
-                                                Votre compte est créé. Un lien de confirmation a été envoyé à{" "}
-                                                <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
-                                            </p>
-                                            <p className="mb-3 text-sm text-muted-foreground">
-                                                Cliquez dessus : votre compte sera activé et vous serez connecté
-                                                automatiquement, <strong>sans ressaisir de mot de passe</strong>.
-                                            </p>
-                                        </>
-                                    )}
+                                    {/* Message identique quel que soit l'état de l'adresse. */}
+                                    <p className="mb-3 text-sm text-muted-foreground">
+                                        Un email d'activation vient d'être envoyé à{" "}
+                                        <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
+                                    </p>
+                                    <p className="mb-3 text-sm text-muted-foreground">
+                                        Cliquez sur le lien qu'il contient : votre compte sera activé et vous serez connecté.
+                                    </p>
                                     <p className="mb-6 text-xs text-muted-foreground">
-                                        Pensez à vérifier vos courriers indésirables. Le lien est valable 24 heures.
+                                        Pensez à vérifier vos courriers indésirables ; le lien est valable 24 heures.
+                                        Rien reçu et vous avez déjà un compte ? Connectez-vous ou utilisez « Mot de passe oublié ».
                                     </p>
                                     <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
                                         <Button
