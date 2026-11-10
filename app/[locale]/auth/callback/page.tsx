@@ -11,7 +11,9 @@ function safeNext(raw: string | null, locale: string): string {
     if (raw && raw.startsWith("/") && !/[\x00-\x1f\\]/.test(raw)) {
         try {
             const url = new URL(raw, window.location.origin)
-            if (url.origin === window.location.origin) return url.pathname + url.search
+            const out = url.pathname + url.search
+            // `/a/..//evil.com` se résout en `//evil.com` : rejeté aussi.
+            if (url.origin === window.location.origin && !out.startsWith("//")) return out
         } catch { /* repli ci-dessous */ }
     }
     return `/${locale}`
@@ -75,7 +77,8 @@ export default function AuthCallbackPage() {
                     const { error: profileError } = await (supabase.from("profiles") as any)
                         .update({ status: "active" })
                         .eq("id", user.id)
-                        .neq("status", "active")
+                        // Jamais de réactivation d'un compte suspendu/inactif.
+                        .in("status", ["pending", "invited"])
                     if (profileError) console.error("Activation: statut non mis à jour", profileError)
                 }
 

@@ -31,7 +31,10 @@ function sanitizeNext(next: unknown): string | null {
         const base = 'https://internal.invalid'
         const url = new URL(next, base)
         if (url.origin !== base) return null
-        return url.pathname + url.search
+        // `/a/..//evil.com` se résout en chemin `//evil.com` (URL relative
+        // au protocole une fois réutilisée) : on rejette aussi le résultat.
+        const out = url.pathname + url.search
+        return out.startsWith('//') ? null : out
     } catch {
         return null
     }
@@ -48,7 +51,7 @@ export async function POST(request: NextRequest) {
         const locale = SUPPORTED_LOCALES.has(body.locale) ? body.locale : 'fr'
         const next = sanitizeNext(body.next)
 
-        if (!email || !password || !firstName) {
+        if (typeof email !== 'string' || typeof password !== 'string' || typeof firstName !== 'string' || !email || !password || !firstName) {
             return NextResponse.json(
                 { error: "Email, mot de passe et prénom sont requis" },
                 { status: 400 }
@@ -89,39 +92,81 @@ export async function POST(request: NextRequest) {
         const origin = resolveSiteOrigin(request.headers.get('origin'))
         const callbackUrl = `${origin}/${locale}/auth/callback${next ? `?next=${encodeURIComponent(next)}` : ''}`
 
+        // Noms bornés : ils sont repris dans l'email envoyé à l'adresse saisie.
         const userMetadata = {
-            first_name: firstName,
-            last_name: lastName || '',
+            first_name: firstName.trim().slice(0, 60),
+            last_name: typeof lastName === 'string' ? lastName.trim().slice(0, 60) : '',
             role: role
         }
 
-        // Lien de CONFIRMATION d'email (type signup) et non plus lien de
-        // récupération : l'utilisateur a déjà choisi son mot de passe ici,
-        // le lien se contente de valider l'adresse et d'ouvrir la session sur
-        // /auth/callback de la vitrine. Auparavant, send-invitation générait un
-        // lien `recovery` vers /auth/activate du SaaS qui redemandait un mot de
-        // passe (et refusait le même : « same_password »).
-        // generateLink(signup) crée l'utilisateur non confirmé, ou réutilise
-        // celui d'une tentative précédente non confirmée (renvoi possible).
-        const { data, error } = await supabaseAdmin.auth.admin.generateLink({
-            type: 'signup',
-            email,
-            password,
-            options: {
-                data: userMetadata,
-                redirectTo: callbackUrl,
-            },
-        })
+        const normalizedEmail = String(email).trim().toLowerCase()
+        const existsError = NextResponse.json(
+            { error: "Un compte avec cet email existe déjà. Connectez-vous ou utilisez « Mot de passe oublié »." },
+            { status: 400 }
+        )
 
-        if (error) {
-            const message = /already|exist|registered/i.test(error.message)
-                ? "Un compte avec cet email existe déjà. Connectez-vous ou utilisez « Mot de passe oublié »."
-                : error.message
-            return NextResponse.json({ error: message }, { status: 400 })
+        // Compte déjà présent ? (profil créé par trigger à chaque compte)
+        let pendingExisting = false
+        const { data: existingProfile } = await supabaseAdmin
+            .from('profiles')
+            .select('id')
+            .eq('email', normalizedEmail)
+            .maybeSingle()
+        if (existingProfile?.id) {
+            const { data: existing } = await supabaseAdmin.auth.admin.getUserById(existingProfile.id)
+            if (existing?.user?.email_confirmed_at) return existsError
+            if (existing?.user) pendingExisting = true
         }
 
-        const user = data?.user
-        const actionLink = data?.properties?.action_link
+        let user: { id: string; email?: string } | null = null
+        let actionLink: string | undefined
+        let mode: 'confirm' | 'set_password' = 'confirm'
+
+        if (!pendingExisting) {
+            // Nouveau compte : lien de CONFIRMATION (type signup). Le mot de
+            // passe vient d'être choisi ici ; le lien valide l'adresse et
+            // ouvre la session sur /auth/callback de la vitrine. Auparavant,
+            // send-invitation générait un lien `recovery` vers /auth/activate
+            // du SaaS qui redemandait un mot de passe (« same_password »).
+            const { data, error } = await supabaseAdmin.auth.admin.generateLink({
+                type: 'signup',
+                email: normalizedEmail,
+                password,
+                options: { data: userMetadata, redirectTo: callbackUrl },
+            })
+            if (error) {
+                if (/already|exist|registered/i.test(error.message)) return existsError
+                return NextResponse.json({ error: error.message }, { status: 400 })
+            }
+            user = data?.user ?? null
+            actionLink = data?.properties?.action_link
+            // Course : compte apparu entre la vérification et ici (profil
+            // absent ou en retard) → on le traite comme préexistant.
+            if (user && Date.now() - new Date((data.user as any).created_at).getTime() > 60_000) {
+                pendingExisting = true
+            }
+        }
+
+        if (pendingExisting) {
+            // Email déjà rattaché à un compte NON confirmé (inscription
+            // abandonnée, invitation d'organisation, ou tiers ayant pré-créé
+            // le compte avec SON mot de passe). Confirmer ce compte en l'état
+            // laisserait ce mot de passe en place : on envoie à la place un
+            // lien qui fait choisir le mot de passe par le détenteur de la
+            // boîte mail. Le compte n'est ni modifié ni supprimé ici (il peut
+            // porter des rattachements d'organisation).
+            const { data, error } = await supabaseAdmin.auth.admin.generateLink({
+                type: 'recovery',
+                email: normalizedEmail,
+                options: { redirectTo: `${origin}/${locale}/auth/update-password` },
+            })
+            if (error) {
+                return NextResponse.json({ error: error.message }, { status: 400 })
+            }
+            user = data?.user ?? null
+            actionLink = data?.properties?.action_link
+            mode = 'set_password'
+        }
 
         if (!user || !actionLink) {
             return NextResponse.json(
@@ -129,12 +174,6 @@ export async function POST(request: NextRequest) {
                 { status: 500 }
             )
         }
-
-        // Nouvelle tentative sur un compte encore non confirmé : on renvoie
-        // seulement un lien. Le mot de passe n'est JAMAIS modifié ici (route
-        // non authentifiée : sinon n'importe qui pourrait réécrire celui d'un
-        // compte en attente). L'utilisateur garde le mot de passe de sa
-        // première inscription, ou passe par « Mot de passe oublié ».
 
         const invitationResponse = await fetch(
             `${supabaseUrl}/functions/v1/send-invitation`,
@@ -145,9 +184,9 @@ export async function POST(request: NextRequest) {
                     'Authorization': `Bearer ${serviceRoleKey}`,
                 },
                 body: JSON.stringify({
-                    email,
-                    firstName,
-                    lastName: lastName || '',
+                    email: normalizedEmail,
+                    firstName: userMetadata.first_name,
+                    lastName: userMetadata.last_name,
                     role,
                     organizationName: 'EduPro',
                     // Lien fourni : la fonction Edge ne génère plus son
@@ -169,7 +208,7 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        return NextResponse.json({ user: { id: user.id, email: user.email } })
+        return NextResponse.json({ user: { id: user.id, email: normalizedEmail }, mode })
 
     } catch (error: any) {
         console.error('Signup error:', error)

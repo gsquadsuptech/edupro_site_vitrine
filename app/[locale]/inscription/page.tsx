@@ -30,6 +30,7 @@ export default function InscriptionPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
+    const [setPasswordMode, setSetPasswordMode] = useState(false)
     const router = useRouter()
     const { locale } = useParams()
     const supabase = createClient()
@@ -105,6 +106,7 @@ export default function InscriptionPage() {
                 toast.success("Compte créé !", {
                     description: "Confirmez votre email pour l'activer."
                 })
+                setSetPasswordMode(data.mode === 'set_password')
                 setRegisteredEmail(formData.email)
                 setFormData({ fullName: "", email: "", password: "", country: "" })
             }
@@ -191,14 +193,25 @@ export default function InscriptionPage() {
                                         </div>
                                     </div>
                                     <h2 className="mb-2 text-2xl font-bold text-foreground">Confirmez votre email</h2>
-                                    <p className="mb-3 text-sm text-muted-foreground">
-                                        Votre compte est créé. Un lien de confirmation a été envoyé à{" "}
-                                        <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
-                                    </p>
-                                    <p className="mb-3 text-sm text-muted-foreground">
-                                        Cliquez dessus : votre compte sera activé et vous serez connecté
-                                        automatiquement, <strong>sans ressaisir de mot de passe</strong>.
-                                    </p>
+                                    {setPasswordMode ? (
+                                        <p className="mb-3 text-sm text-muted-foreground">
+                                            Un compte en attente d'activation existe déjà pour{" "}
+                                            <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
+                                            Par sécurité, nous vous avons envoyé un lien pour l'activer en
+                                            choisissant votre mot de passe.
+                                        </p>
+                                    ) : (
+                                        <>
+                                            <p className="mb-3 text-sm text-muted-foreground">
+                                                Votre compte est créé. Un lien de confirmation a été envoyé à{" "}
+                                                <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
+                                            </p>
+                                            <p className="mb-3 text-sm text-muted-foreground">
+                                                Cliquez dessus : votre compte sera activé et vous serez connecté
+                                                automatiquement, <strong>sans ressaisir de mot de passe</strong>.
+                                            </p>
+                                        </>
+                                    )}
                                     <p className="mb-6 text-xs text-muted-foreground">
                                         Pensez à vérifier vos courriers indésirables. Le lien est valable 24 heures.
                                     </p>
