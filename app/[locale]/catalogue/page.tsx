@@ -9,7 +9,6 @@ import { PartnerInstitutes } from "@/components/marketing/sections/marketplace/p
 import { MarketplaceCTA } from "@/components/marketing/sections/marketplace/marketplace-cta";
 
 import { CategoryService } from "@/services/category-service";
-import { SkillPackService } from "@/services/skill-pack-service";
 import { OrganizationService } from "@/services/organization-service";
 import { MarketplaceService } from "@/services/marketplace-service";
 import { CatalogService } from "@/services/catalog-service";
@@ -23,10 +22,10 @@ export default async function CataloguePage({
     const { locale } = await params;
 
     // Parallel data fetching
-    const [featuredItems, categories, skillPacks, institutes, coCertifiedCatalogs] = await Promise.all([
+    // (Les skill packs ne sont plus chargés : leur section est masquée.)
+    const [featuredItems, categories, institutes, coCertifiedCatalogs] = await Promise.all([
         MarketplaceService.getFeaturedItems(8),
         CategoryService.getCategoriesWithCounts(),
-        SkillPackService.getAllSkillPacks(),
         OrganizationService.getPartnerInstitutes(),
         CatalogService.getPublicCatalogs()
     ]);

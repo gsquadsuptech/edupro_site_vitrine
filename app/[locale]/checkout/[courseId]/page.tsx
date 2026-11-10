@@ -66,6 +66,12 @@ export default function CheckoutPage({
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [enrollingFree, setEnrollingFree] = useState(false);
     const [pendingEnrollment, setPendingEnrollment] = useState(false);
+    // Erreur de la dernière inscription gratuite. Tant qu'elle est posée, rien
+    // ne relance automatiquement : sans ce verrou, l'échec remettait
+    // enrollingFree à false, l'effet d'auto-déclenchement repartait aussitôt
+    // et la page bouclait (toasts « Failed to process user account » en
+    // rafale, spinner infini, appels SaaS en continu).
+    const [freeEnrollError, setFreeEnrollError] = useState<string | null>(null);
     // forcedGatewayId est positionné par le CTA « Réessayer avec PayTech »
     // après un cancel/échec PayDunya pour court-circuiter payment_primary.
     const [forcedGatewayId, setForcedGatewayId] = useState<'paydunya' | 'paytech' | 'intouch' | undefined>(undefined);
@@ -274,6 +280,7 @@ export default function CheckoutPage({
             return;
         }
         setEnrollingFree(true);
+        setFreeEnrollError(null);
         try {
             // Contenu gratuit acheté « pour mon équipe » : on transmet les
             // marqueurs d'achat groupé pour que le SaaS crée un pool de sièges
@@ -302,7 +309,9 @@ export default function CheckoutPage({
             setCurrentStep(4);
         } catch (err: any) {
             console.error(err);
-            toast.error(err?.message || "Erreur lors de l'inscription gratuite");
+            const message = err?.message || "Erreur lors de l'inscription gratuite";
+            setFreeEnrollError(message);
+            toast.error(message);
         } finally {
             setEnrollingFree(false);
         }
@@ -382,7 +391,7 @@ export default function CheckoutPage({
     useEffect(() => {
         // En achat équipe, l'inscription ne doit PAS partir toute seule : elle
         // attend la saisie du nombre de sièges à l'étape Plan.
-        if (!loading && skipPayment && skipSessionStep && purchaseMode !== 'team' && currentStep !== 4) {
+        if (!loading && skipPayment && skipSessionStep && purchaseMode !== 'team' && currentStep !== 4 && !freeEnrollError) {
             if (isAuthenticated) {
                 if (paymentStatus === "pending" && !enrollingFree) {
                     setPendingEnrollment(true);
@@ -391,15 +400,15 @@ export default function CheckoutPage({
                 setAuthModalOpen(true);
             }
         }
-    }, [loading, skipPayment, skipSessionStep, purchaseMode, isAuthenticated, currentStep, paymentStatus, enrollingFree]);
+    }, [loading, skipPayment, skipSessionStep, purchaseMode, isAuthenticated, currentStep, paymentStatus, enrollingFree, freeEnrollError]);
 
     // Execute deferred enrollment once user is fully loaded
     useEffect(() => {
-        if (pendingEnrollment && user?.id && user?.email && !enrollingFree && currentStep !== 4) {
+        if (pendingEnrollment && user?.id && user?.email && !enrollingFree && currentStep !== 4 && !freeEnrollError) {
             setPendingEnrollment(false);
             handleFreeEnrollment();
         }
-    }, [pendingEnrollment, user?.id, user?.email, enrollingFree, currentStep, handleFreeEnrollment]);
+    }, [pendingEnrollment, user?.id, user?.email, enrollingFree, currentStep, handleFreeEnrollment, freeEnrollError]);
 
     const handleAccessCourse = () => {
         if (purchaseMode === 'team') {
@@ -510,7 +519,7 @@ export default function CheckoutPage({
                     />
                 )}
 
-                {currentStep === 2 && !enrollingFree && (
+                {currentStep === 2 && !enrollingFree && !(skipPaymentPlan && freeEnrollError) && (
                     <PaymentPlan
                         course={course}
                         cohort={selectedSession}
@@ -541,6 +550,22 @@ export default function CheckoutPage({
                         onPrevious={handlePrevious}
                         forcedGatewayId={forcedGatewayId}
                     />
+                )}
+
+                {skipPayment && freeEnrollError && !enrollingFree && currentStep !== 4 && (
+                    <div className="flex flex-col items-center gap-4 py-16 text-center">
+                        <h2 className="text-xl font-semibold">Inscription non finalisée</h2>
+                        <p className="max-w-md text-muted-foreground">{freeEnrollError}</p>
+                        <div className="flex flex-wrap items-center justify-center gap-3">
+                            <Button onClick={() => handleFreeEnrollment()}>Réessayer</Button>
+                            <Button
+                                variant="outline"
+                                onClick={() => router.push(`/${locale}/formation/${course?.slug}`)}
+                            >
+                                Retour à la formation
+                            </Button>
+                        </div>
+                    </div>
                 )}
 
                 {skipPayment && enrollingFree && currentStep !== 4 && (

@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Globe, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Course } from "@/lib/supabase/types"
@@ -29,7 +30,7 @@ export function InstitutTab({ course }: InstitutTabProps) {
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="mb-6 flex flex-col gap-6 md:flex-row">
         {org?.logo_url ? (
-          <img src={org.logo_url} alt={name} className="h-32 w-32 rounded-2xl object-cover" />
+          <Image src={org.logo_url} alt={name} width={128} height={128} sizes="128px" className="h-32 w-32 rounded-2xl object-cover" />
         ) : (
           <div className="flex h-32 w-32 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <Building2 className="h-12 w-12" />

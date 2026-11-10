@@ -3,6 +3,7 @@
 import { SearchInput } from "@/components/marketing/shared/search-input"
 import { Globe, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import { useRef } from "react"
 import { Category } from "@/lib/supabase/types"
@@ -38,10 +39,15 @@ export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }:
         <section className="relative overflow-hidden bg-slate-900 text-white">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
-                <img
+                <Image
                     src={backgroundImage}
-                    alt="Background"
-                    className="h-full w-full object-cover opacity-40 transition-opacity duration-500"
+                    alt=""
+                    fill
+                    priority
+                    sizes="100vw"
+                    quality={60}
+                    unoptimized={backgroundImage.endsWith(".svg")}
+                    className="object-cover opacity-40 transition-opacity duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
             </div>
@@ -90,7 +96,7 @@ export function ContextualHero({ categorySlug, locale = 'fr', categories = [] }:
                                 className={`snap-start shrink-0 cursor-pointer rounded-xl border overflow-hidden relative transition-all hover:scale-105 ${currentCategory === category.slug ? 'border-primary ring-2 ring-primary' : 'border-transparent'}`}
                             >
                                 <div className="relative h-24 w-32">
-                                    <img src={category.image_url || DEFAULT_IMAGE} alt={category.name} loading="lazy" className="h-full w-full object-cover opacity-80" />
+                                    <Image src={category.image_url || DEFAULT_IMAGE} alt={category.name} fill sizes="128px" quality={60} className="object-cover opacity-80" />
                                     <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-2">
                                         <span className="text-sm font-bold text-center leading-tight">{category.name}</span>
                                     </div>
