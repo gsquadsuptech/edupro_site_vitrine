@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useParams } from "next/navigation"
 import { Star, Users, Heart, BookOpen, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -217,10 +218,18 @@ export function FormationCard(props: FormationCardProps) {
     <Link href={vm.href}>
       <div className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg">
         <div className="relative aspect-video overflow-hidden">
-          <img
+          {/* next/image et non <img> : les visuels sont les fichiers d'origine
+              déposés sur Supabase (jusqu'à 7 Mo pièce). Servis bruts, 12 cartes
+              pesaient ~30 Mo sur mobile. L'optimiseur les redimensionne à la
+              taille affichée (WebP, ~50-150 Ko) et les charge en différé. */}
+          <Image
             src={vm.imageUrl}
             alt={vm.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={70}
+            unoptimized={vm.imageUrl.endsWith(".svg")}
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           {normalizedItem.kind === 'learning_path' && (
             <Badge className="absolute left-3 top-3 bg-primary text-primary-foreground shadow">Parcours</Badge>

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Container } from "@/components/marketing/layout/container"
 import { Library, ArrowRight } from "lucide-react"
 import type { CatalogListItem } from "@/services/catalog-service"
@@ -42,11 +43,13 @@ export function CoCertifiedCatalogs({ catalogs, locale }: CoCertifiedCatalogsPro
                         >
                             <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-indigo-100 to-fuchsia-100">
                                 {catalog.cover_image_url ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img
+                                    <Image
                                         src={catalog.cover_image_url}
                                         alt={catalog.title}
-                                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        quality={70}
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                 ) : (
                                     <div className="flex h-full items-center justify-center text-indigo-400">

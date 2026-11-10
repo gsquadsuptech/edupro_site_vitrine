@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   output: "standalone",
   /* config options here */
   images: {
+    // Les URLs Supabase sont horodatées (un nouveau dépôt = une nouvelle URL) :
+    // une variante optimisée peut donc être gardée longtemps. Par défaut (60 s)
+    // le serveur (2 vCPU) re-redimensionnerait sans cesse des originaux de
+    // plusieurs Mo.
+    minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
       {
         protocol: 'http',

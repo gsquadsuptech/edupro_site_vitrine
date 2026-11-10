@@ -36,7 +36,15 @@ export default async function FormationPage({
     // (table `categories`) qui produit un catalogue vide.
     const breadcrumbCategory = course.marketplace_category ?? null;
 
-    let similarCourses = await CourseService.getSimilarCoursesFromApi(course.id, 4);
+    // Ces lectures sont indépendantes : en parallèle plutôt qu'à la suite
+    // (auparavant 3 allers-retours réseau successifs avant le pricing).
+    const [apiSimilar, cohorts, catalogs] = await Promise.all([
+        CourseService.getSimilarCoursesFromApi(course.id, 4),
+        CourseService.getCohortsByCourseId(course.id),
+        CatalogService.getByCourse(course.id),
+    ]);
+
+    let similarCourses = apiSimilar;
     if (similarCourses.length === 0) {
         similarCourses = await CourseService.getRelatedCourses(
             breadcrumbCategory?.slug || 'general',
@@ -44,9 +52,6 @@ export default async function FormationPage({
             course.instructor?.organization_id
         );
     }
-
-    const cohorts = await CourseService.getCohortsByCourseId(course.id);
-    const catalogs = await CatalogService.getByCourse(course.id);
 
     // Un seul appel pricing pour le cours affiché + les formations similaires.
     const promoPrices = await PricingService.getEffectivePrices([

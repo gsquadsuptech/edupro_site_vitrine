@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Search, Mic } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -53,7 +54,14 @@ export function MarketplaceHero() {
 
       {/* Background decoration */}
       <div className="absolute right-0 top-0 -z-10 h-full w-1/2 opacity-20">
-        <img src="/african-professionals-learning-online-with-laptops.jpg" alt="" className="h-full w-full object-cover" />
+        <Image
+          src="/african-professionals-learning-online-with-laptops.jpg"
+          alt=""
+          fill
+          sizes="50vw"
+          quality={60}
+          className="object-cover"
+        />
       </div>
     </section>
   )

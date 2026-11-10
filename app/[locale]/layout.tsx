@@ -76,6 +76,17 @@ export const metadata: Metadata = {
     }
 };
 
+const CLIENT_NAMESPACES = [
+    'common', 'landing', 'marketplace', 'enterprises', 'professionals',
+    'trainers', 'blog', 'careers', 'about', 'investors',
+];
+
+function pick(source: Record<string, unknown>, keys: string[]) {
+    const out: Record<string, unknown> = {};
+    for (const k of keys) if (k in source) out[k] = source[k];
+    return out as Awaited<ReturnType<typeof getMessages>>;
+}
+
 export default async function LocaleLayout({
     children,
     params
@@ -85,7 +96,13 @@ export default async function LocaleLayout({
 }) {
     const resolvedParams = await params;
     const locale = resolvedParams.locale;
-    const messages = await getMessages();
+    const allMessages = await getMessages();
+    // Seuls les namespaces lus par des composants sont envoyés au navigateur.
+    // Auparavant TOUS les fichiers (dashboard, admin, courses… jamais utilisés
+    // côté vitrine) étaient sérialisés dans le HTML de chaque page : ~100 Ko
+    // de JSON à télécharger et parser sur mobile à chaque navigation.
+    // Ajouter ici tout nouveau namespace passé à useTranslations().
+    const messages = pick(allMessages as Record<string, unknown>, CLIENT_NAMESPACES);
 
     return (
         <html lang={locale} suppressHydrationWarning>

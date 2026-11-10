@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { OrganizationInfo } from "@/services/organization-service"
 
 interface PartnerInstitutesProps {
@@ -56,10 +57,14 @@ function InstituteItem({ institute }: { institute: OrganizationInfo }) {
     <div className="group flex w-[120px] shrink-0 flex-col items-center gap-2 grayscale transition-all hover:grayscale-0">
       <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-border bg-white p-2 transition-colors group-hover:border-primary">
         {institute.logo_url ? (
-          <img
+          // Logos d'origine jusqu'à 1,7 Mo pour un rendu de 64 px (×2 dans
+          // la boucle du bandeau) : l'optimiseur les ramène à quelques Ko.
+          <Image
             src={institute.logo_url}
             alt={institute.name}
-            loading="lazy"
+            width={64}
+            height={64}
+            sizes="64px"
             className="h-full w-full object-contain"
           />
         ) : (

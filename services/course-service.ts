@@ -803,17 +803,19 @@ export const CourseService = {
         // complète donc le plan via la clé service CÔTÉ SERVEUR uniquement, et
         // strictement sur des métadonnées (jamais `content`). La visibilité du
         // cours, elle, reste imposée par le RLS anon ci-dessus.
-        await CourseService.attachFullCurriculum(item)
-
-        const { data: reviewsData } = await supabase
-            .from('course_reviews')
-            .select(`
-                *,
-                user:profiles(full_name, avatar_url)
-            `)
-            .eq('course_id', item.id)
-            .order('created_at', { ascending: false })
-            .limit(10)
+        // Plan complet et avis sont indépendants : lus en parallèle.
+        const [, { data: reviewsData }] = await Promise.all([
+            CourseService.attachFullCurriculum(item),
+            supabase
+                .from('course_reviews')
+                .select(`
+                    *,
+                    user:profiles(full_name, avatar_url)
+                `)
+                .eq('course_id', item.id)
+                .order('created_at', { ascending: false })
+                .limit(10),
+        ])
 
         const reviews = reviewsData?.map((r: any) => ({
             id: r.id,

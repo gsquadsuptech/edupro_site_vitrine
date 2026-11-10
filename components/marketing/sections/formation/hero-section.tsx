@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Star, Users, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -29,10 +30,14 @@ export function FormationHero({ course }: FormationHeroProps) {
         {course.preview_video ? (
           <div className="relative flex h-full items-center justify-center bg-muted group cursor-pointer">
             {course.image_url && (
-              <img 
-                src={course.image_url} 
-                alt={course.title} 
-                className="h-full w-full object-cover opacity-70 transition-all duration-500 group-hover:opacity-40 group-hover:scale-105" 
+              <Image
+                src={course.image_url}
+                alt={course.title}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 800px"
+                quality={75}
+                className="object-cover opacity-70 transition-all duration-500 group-hover:opacity-40 group-hover:scale-105"
               />
             )}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover:bg-black/40">
@@ -44,7 +49,17 @@ export function FormationHero({ course }: FormationHeroProps) {
         ) : (
           <div className="relative h-full w-full bg-muted/50">
             {course.image_url ? (
-              <img src={course.image_url} alt={course.title} className="h-full w-full object-cover" />
+              // Visuel principal = LCP de la page : priorité + taille adaptée
+              // (fichiers d'origine jusqu'à 7 Mo).
+              <Image
+                src={course.image_url}
+                alt={course.title}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 800px"
+                quality={75}
+                className="object-cover"
+              />
             ) : (
               <div className="flex h-full items-center justify-center text-muted-foreground bg-gradient-to-br from-muted to-muted/30">
                 <div className="flex flex-col items-center gap-2">
