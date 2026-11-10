@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -187,6 +188,9 @@ export function FormationCard(props: FormationCardProps) {
   const { badge, promo } = props
   const params = useParams()
   const locale = (params?.locale as string) || 'fr'
+  // Si l'optimiseur échoue (il abandonne au bout de 7 s le téléchargement de
+  // l'original Supabase), on retombe sur l'image brute plutôt qu'une carte vide.
+  const [rawImage, setRawImage] = useState(false)
 
   const normalizedItem: MarketplaceItem = props.item
     ? props.item
@@ -228,7 +232,8 @@ export function FormationCard(props: FormationCardProps) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             quality={70}
-            unoptimized={vm.imageUrl.endsWith(".svg")}
+            unoptimized={rawImage || vm.imageUrl.endsWith(".svg")}
+            onError={() => setRawImage(true)}
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           {normalizedItem.kind === 'learning_path' && (

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
 import { Star, Users, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -15,6 +16,8 @@ export function FormationHero({ course }: FormationHeroProps) {
   // cohérent avec les listes. Le détail formateur reste dans l'onglet dédié.
   const instituteName = course.organization?.name || course.instructor?.institute || null
   const categoryName = course.category?.name || "Général"
+  // Repli sur l'original si l'optimiseur d'images échoue (timeout amont).
+  const [rawImage, setRawImage] = useState(false)
 
   const reviews = course.reviews || []
   const reviewCount = reviews.length
@@ -37,6 +40,8 @@ export function FormationHero({ course }: FormationHeroProps) {
                 priority
                 sizes="(max-width: 1024px) 100vw, 800px"
                 quality={75}
+                unoptimized={rawImage}
+                onError={() => setRawImage(true)}
                 className="object-cover opacity-70 transition-all duration-500 group-hover:opacity-40 group-hover:scale-105"
               />
             )}
@@ -58,6 +63,8 @@ export function FormationHero({ course }: FormationHeroProps) {
                 priority
                 sizes="(max-width: 1024px) 100vw, 800px"
                 quality={75}
+                unoptimized={rawImage}
+                onError={() => setRawImage(true)}
                 className="object-cover"
               />
             ) : (
