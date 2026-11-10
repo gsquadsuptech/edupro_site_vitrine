@@ -22,6 +22,9 @@ function isRateLimited(key: string, max: number): boolean {
         return true
     }
     recent.push(now)
+    // delete puis set : la clé repasse en fin de Map → éviction LRU réelle
+    // (une clé active n'est pas sacrifiée au profit d'une rafale de clés neuves).
+    hits.delete(key)
     hits.set(key, recent)
     if (hits.size > 10_000) {
         for (const [k, v] of hits) if (v.every((t) => now - t >= WINDOW_MS)) hits.delete(k)
@@ -39,7 +42,13 @@ function isRateLimited(key: string, max: number): boolean {
 // ($remote_addr, deploy/nginx/edupro.africa.conf) ; X-Forwarded-For et
 // CF-Connecting-IP sont fournis par le client et donc falsifiables.
 function trustedClientIp(request: NextRequest): string {
-    return request.headers.get('x-real-ip')?.trim() || 'unknown'
+    const ip = request.headers.get('x-real-ip')?.trim() || 'unknown'
+    // IPv6 : un client dispose en général d'un /64 entier → on agrège.
+    if (ip.includes(':')) {
+        const groups = ip.split('::')[0].split(':')
+        return `${groups.slice(0, 4).join(':')}::/64`
+    }
+    return ip
 }
 
 // Origine du lien de confirmation : jamais prise telle quelle dans les
