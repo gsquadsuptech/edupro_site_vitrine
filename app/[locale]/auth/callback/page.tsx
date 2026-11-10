@@ -26,6 +26,22 @@ function friendlyError(code: string | null, description: string | null): string 
     return description || "Impossible de confirmer votre compte."
 }
 
+// Garde-fou : sur certains navigateurs mobiles (verrou d'auth, onglet
+// suspendu), un appel Supabase peut ne jamais répondre. Mieux vaut un
+// message d'erreur actionnable qu'un spinner infini.
+const STEP_TIMEOUT_MS = 15_000
+function withTimeout<T>(promise: Promise<T>): Promise<T> {
+    return Promise.race([
+        promise,
+        new Promise<T>((_, reject) =>
+            setTimeout(
+                () => reject(new Error("La confirmation prend trop de temps. Vérifiez votre connexion puis rouvrez le lien de l'email.")),
+                STEP_TIMEOUT_MS,
+            ),
+        ),
+    ])
+}
+
 export default function AuthCallbackPage() {
     const router = useRouter()
     const { locale: rawLocale } = useParams()
@@ -57,13 +73,13 @@ export default function AuthCallbackPage() {
                 const code = query.get("code")
 
                 if (accessToken && refreshToken) {
-                    const { error } = await supabase.auth.setSession({
+                    const { error } = await withTimeout(supabase.auth.setSession({
                         access_token: accessToken,
                         refresh_token: refreshToken,
-                    })
+                    }))
                     if (error) throw error
                 } else if (code) {
-                    const { error } = await supabase.auth.exchangeCodeForSession(code)
+                    const { error } = await withTimeout(supabase.auth.exchangeCodeForSession(code))
                     if (error) throw error
                 } else {
                     throw new Error(friendlyError("otp_expired", null))
@@ -72,14 +88,20 @@ export default function AuthCallbackPage() {
                 // Le lien ne sert plus qu'à confirmer l'email : on passe le
                 // profil en « active » (même règle que /auth/activate du SaaS),
                 // sans redemander de mot de passe.
-                const { data: { user } } = await supabase.auth.getUser()
-                if (user) {
-                    const { error: profileError } = await (supabase.from("profiles") as any)
-                        .update({ status: "active" })
-                        .eq("id", user.id)
-                        // Jamais de réactivation d'un compte suspendu/inactif.
-                        .in("status", ["pending", "invited"])
-                    if (profileError) console.error("Activation: statut non mis à jour", profileError)
+                // La session est déjà ouverte : un échec ou un délai ici ne
+                // doit pas bloquer l'utilisateur.
+                try {
+                    const { data: { user } } = await withTimeout(supabase.auth.getUser())
+                    if (user) {
+                        const { error: profileError } = await withTimeout<any>((supabase.from("profiles") as any)
+                            .update({ status: "active" })
+                            .eq("id", user.id)
+                            // Jamais de réactivation d'un compte suspendu/inactif.
+                            .in("status", ["pending", "invited"]))
+                        if (profileError) console.error("Activation: statut non mis à jour", profileError)
+                    }
+                } catch (profileErr) {
+                    console.error("Activation: statut non mis à jour", profileErr)
                 }
 
                 // Nettoie les jetons de l'URL avant de quitter la page.
