@@ -25,8 +25,21 @@ function isRateLimited(key: string, max: number): boolean {
     hits.set(key, recent)
     if (hits.size > 10_000) {
         for (const [k, v] of hits) if (v.every((t) => now - t >= WINDOW_MS)) hits.delete(k)
+        // Plafond dur : on évince les clés les plus anciennes (ordre
+        // d'insertion de la Map) si l'élagage ne suffit pas.
+        for (const k of hits.keys()) {
+            if (hits.size <= 10_000) break
+            hits.delete(k)
+        }
     }
     return false
+}
+
+// IP pour la limitation : X-Real-IP est ÉCRASÉ par notre nginx
+// ($remote_addr, deploy/nginx/edupro.africa.conf) ; X-Forwarded-For et
+// CF-Connecting-IP sont fournis par le client et donc falsifiables.
+function trustedClientIp(request: NextRequest): string {
+    return request.headers.get('x-real-ip')?.trim() || 'unknown'
 }
 
 // Origine du lien de confirmation : jamais prise telle quelle dans les
@@ -123,12 +136,19 @@ export async function POST(request: NextRequest) {
 
         const normalizedEmail = String(email).trim().toLowerCase()
 
-        const ip = getRemoteIp(request) || 'unknown'
-        if (isRateLimited(`ip:${ip}`, LIMITS.ip) || isRateLimited(`email:${normalizedEmail}`, LIMITS.email)) {
+        // Limite par client : erreur explicite (c'est lui qui insiste).
+        if (isRateLimited(`ip:${trustedClientIp(request)}`, LIMITS.ip)) {
             return NextResponse.json(
                 { error: "Trop de tentatives. Réessayez dans quelques minutes." },
                 { status: 429 }
             )
+        }
+        // Limite par adresse : on ne bloque PAS le propriétaire de l'adresse
+        // à cause de requêtes d'un tiers. Au-delà du quota, rien n'est fait
+        // (ni email, ni modification de compte) mais la réponse reste la
+        // réponse générique. « Mot de passe oublié » reste disponible.
+        if (isRateLimited(`email:${normalizedEmail}`, LIMITS.email)) {
+            return NextResponse.json({ ok: true, email: normalizedEmail })
         }
 
         // Réponse IDENTIQUE quel que soit l'état de l'adresse (nouvelle,
