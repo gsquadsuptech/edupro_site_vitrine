@@ -146,6 +146,19 @@ export function UpdatePasswordView() {
                 return
             }
 
+            // Arrivée via le lien envoyé à une réinscription sur un compte non
+            // confirmé : le lien a confirmé l'email, le mot de passe est
+            // désormais choisi par le détenteur de la boîte → profil activé.
+            // Les comptes suspendus/inactifs ne sont pas touchés.
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                const { error: profileError } = await (supabase.from("profiles") as any)
+                    .update({ status: "active" })
+                    .eq("id", user.id)
+                    .in("status", ["pending", "invited"])
+                if (profileError) console.error("Activation: statut non mis à jour", profileError)
+            }
+
             setDone(true)
             toast.success("Mot de passe mis à jour")
             setTimeout(() => {

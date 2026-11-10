@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
-import { AlertTriangle, Eye, EyeOff, Loader2 } from "lucide-react"
+import { AlertTriangle, Eye, EyeOff, Loader2, MailWarning } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -47,6 +47,9 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
     })
 
     const [error, setError] = useState<string | null>(null)
+    // Connexion refusée car l'email n'est pas encore confirmé : alerte
+    // persistante (le toast seul passait inaperçu dans les modales).
+    const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null)
     const [rateLimitUntil, setRateLimitUntil] = useState<number | null>(null)
     const [secondsLeft, setSecondsLeft] = useState<number>(0)
     const [captchaToken, setCaptchaToken] = useState<string | null>(null)
@@ -77,6 +80,7 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
         try {
             setIsLoadingForm(true)
             setError(null)
+            setUnconfirmedEmail(null)
 
             const { success, error } = await signIn(data.email, data.password, captchaToken ?? undefined)
 
@@ -99,7 +103,13 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
                     error?.code === 'over_request_rate_limit' ||
                     /rate limit/i.test(error?.message ?? '')
 
-                if (isRateLimit) {
+                const isUnconfirmed =
+                    error?.code === 'email_not_confirmed' ||
+                    /email not confirmed/i.test(error?.message ?? '')
+
+                if (isUnconfirmed) {
+                    setUnconfirmedEmail(data.email)
+                } else if (isRateLimit) {
                     const cooldownMs = 60_000
                     setRateLimitUntil(Date.now() + cooldownMs)
                     setError("Trop de tentatives de connexion. Réessayez dans quelques minutes.")
@@ -222,6 +232,24 @@ export function LoginForm({ onRegisterClick, onSuccess, compact }: LoginFormProp
                         Mot de passe oublié?
                     </Link>
                 </div>
+
+                {unconfirmedEmail && (
+                    <div
+                        role="alert"
+                        className="flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200"
+                    >
+                        <MailWarning className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                        <div className="space-y-1">
+                            <p className="font-medium">Email pas encore confirmé</p>
+                            <p className="text-xs opacity-90">
+                                Ouvrez le lien de confirmation envoyé à{" "}
+                                <span className="font-medium break-all">{unconfirmedEmail}</span> : il active
+                                votre compte et vous connecte directement. Lien expiré ou introuvable ?
+                                Réinscrivez-vous avec le même email pour en recevoir un nouveau.
+                            </p>
+                        </div>
+                    </div>
+                )}
 
                 {isRateLimited && (
                     <div

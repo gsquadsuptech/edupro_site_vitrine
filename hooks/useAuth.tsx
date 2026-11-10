@@ -234,8 +234,11 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
           if (event === 'SIGNED_IN') {
             // Garde: ne pas rediriger depuis les écrans d'activation/réinitialisation
             try {
-              const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+              // Préfixe de langue retiré : les écrans vitrine sont sous /fr/auth/...
+              const pathname = (typeof window !== 'undefined' ? window.location.pathname : '')
+                .replace(/^\/(fr|en)(?=\/)/, '');
               const isActivationOrRecoveryFlow =
+                pathname.startsWith('/auth/callback') ||
                 pathname.startsWith('/auth/activate') ||
                 pathname.startsWith('/auth/activate-account') ||
                 pathname.startsWith('/auth/reset-password') ||

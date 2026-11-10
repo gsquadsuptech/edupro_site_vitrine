@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useParams, useRouter } from "next/navigation"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { useParams } from "next/navigation"
+import { Eye, EyeOff, Loader2, MailCheck } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -16,13 +16,21 @@ import { signInWithProvider, type OAuthProvider } from "@/lib/supabase/oauth"
 
 interface RegisterFormProps {
     onLoginClick: () => void;
+    /**
+     * Conservé pour compatibilité, mais n'est plus appelé après l'inscription :
+     * le compte n'est pas encore confirmé, il n'y a donc pas de session. Les
+     * modales l'utilisaient pour se fermer et « reprendre » l'achat, ce qui
+     * laissait l'utilisateur sans message ni session.
+     */
     onSuccess?: () => void;
     compact?: boolean;
 }
 
-export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormProps) {
-    const router = useRouter()
+export function RegisterForm({ onLoginClick, compact }: RegisterFormProps) {
     const { locale } = useParams<{ locale: string }>()
+    // Email du compte créé : tant qu'il est posé, on affiche l'alerte
+    // « confirmez votre email » à la place du formulaire.
+    const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [isRegistering, setIsRegistering] = useState<boolean>(false)
@@ -86,12 +94,16 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                     lastName: data.lastName,
                     role: 'student',
                     captchaToken: captchaToken ?? undefined,
+                    // Après confirmation, le lien ramène sur la page en cours
+                    // (fiche formation, checkout…) avec la session ouverte.
+                    locale: locale || 'fr',
+                    next: window.location.pathname + window.location.search,
                 }),
             })
 
             const payload = await response.json().catch(() => ({}))
 
-            if (!response.ok || !payload.user) {
+            if (!response.ok || !payload.ok) {
                 // Captcha mono-usage: regénérer après échec
                 setCaptchaToken(null)
                 setCaptchaKey(k => k + 1)
@@ -101,15 +113,11 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                 return
             }
 
-            toast.success("Inscription réussie", {
-                description: "Veuillez vérifier votre email pour activer votre compte.",
+            toast.success("Vérifiez votre boîte mail", {
+                description: "Un lien d'activation vient d'être envoyé.",
             })
-
-            if (onSuccess) {
-                onSuccess()
-            } else {
-                router.push('/')
-            }
+            setRegisteredEmail(data.email)
+            form.reset()
 
         } catch (err: any) {
             console.error("Erreur d'inscription:", err)
@@ -140,6 +148,47 @@ export function RegisterForm({ onLoginClick, onSuccess, compact }: RegisterFormP
                 description: error?.message || "Réessayez dans un instant.",
             })
         }
+    }
+
+    if (registeredEmail) {
+        return (
+            <div
+                role="alert"
+                aria-live="polite"
+                className="space-y-4 rounded-xl border border-emerald-200 bg-emerald-50 p-6 text-center dark:border-emerald-900/50 dark:bg-emerald-950/30"
+            >
+                <div className="flex justify-center">
+                    <div className="rounded-full bg-emerald-100 p-3 dark:bg-emerald-900/40">
+                        <MailCheck className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                </div>
+                <div className="space-y-2">
+                    <h2 className="text-xl font-bold text-foreground">Confirmez votre email</h2>
+                    {/* Message identique quel que soit l'état de l'adresse :
+                        l'API ne révèle pas si un compte existe déjà. */}
+                    <p className="text-sm text-muted-foreground">
+                        Un email d'activation vient d'être envoyé à{" "}
+                        <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                        Cliquez sur le lien qu'il contient : votre compte sera activé et vous serez
+                        connecté, puis ramené sur cette page.
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                        Pensez à vérifier vos courriers indésirables ; le lien est valable 24 heures.
+                        Rien reçu et vous avez déjà un compte ? Connectez-vous ou utilisez « Mot de passe oublié ».
+                    </p>
+                </div>
+                <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
+                    <Button type="button" onClick={onLoginClick} className="bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold">
+                        J'ai confirmé, me connecter
+                    </Button>
+                    <Button type="button" variant="outline" onClick={() => setRegisteredEmail(null)}>
+                        Modifier l'email
+                    </Button>
+                </div>
+            </div>
+        )
     }
 
     return (
