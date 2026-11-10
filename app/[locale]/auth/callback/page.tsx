@@ -6,8 +6,14 @@ import { Loader2, CheckCircle2, AlertCircle } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 
 // Chemin interne uniquement (pas de redirection ouverte via `next`).
+// Comparaison d'origine sur l'URL résolue, pas de test de préfixe.
 function safeNext(raw: string | null, locale: string): string {
-    if (raw && raw.startsWith("/") && !raw.startsWith("//") && !raw.includes("\\")) return raw
+    if (raw && raw.startsWith("/") && !/[\x00-\x1f\\]/.test(raw)) {
+        try {
+            const url = new URL(raw, window.location.origin)
+            if (url.origin === window.location.origin) return url.pathname + url.search
+        } catch { /* repli ci-dessous */ }
+    }
     return `/${locale}`
 }
 

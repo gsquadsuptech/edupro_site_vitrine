@@ -7,17 +7,44 @@ export const runtime = 'nodejs'
 
 const SUPPORTED_LOCALES = new Set(['fr', 'en'])
 
-// Chemin interne uniquement (pas de redirection ouverte via `next`).
+// Origine du lien de confirmation : jamais prise telle quelle dans les
+// en-têtes (falsifiables). Liste blanche, sinon le domaine de production.
+const DEFAULT_SITE_ORIGIN = 'https://edupro.africa'
+function resolveSiteOrigin(headerOrigin: string | null): string {
+    const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, '')
+    if (!headerOrigin) return fromEnv || DEFAULT_SITE_ORIGIN
+    const allowed =
+        headerOrigin === fromEnv ||
+        /^https:\/\/(www\.)?edupro\.africa$/.test(headerOrigin) ||
+        (process.env.NODE_ENV !== 'production' && /^http:\/\/localhost:\d+$/.test(headerOrigin))
+    return allowed ? headerOrigin : (fromEnv || DEFAULT_SITE_ORIGIN)
+}
+
+// Chemin interne uniquement (pas de redirection ouverte via `next`) : on
+// résout l'URL et on exige la même origine, plutôt qu'un test de préfixe
+// contournable (tabulations/retours ligne retirés par les navigateurs,
+// antislashs…).
 function sanitizeNext(next: unknown): string | null {
-    if (typeof next !== 'string') return null
-    if (!next.startsWith('/') || next.startsWith('//') || next.includes('\\')) return null
-    return next.slice(0, 512)
+    if (typeof next !== 'string' || next.length > 512) return null
+    if (!next.startsWith('/') || /[\x00-\x1f\\]/.test(next)) return null
+    try {
+        const base = 'https://internal.invalid'
+        const url = new URL(next, base)
+        if (url.origin !== base) return null
+        return url.pathname + url.search
+    } catch {
+        return null
+    }
 }
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { email, password, firstName, lastName, role = 'student', captchaToken } = body
+        const { email, password, firstName, lastName, captchaToken } = body
+        // Inscription publique = apprenant uniquement. Le rôle n'est jamais
+        // lu depuis la requête (sinon `role: 'admin'` passait dans les
+        // métadonnées du compte).
+        const role = 'student'
         const locale = SUPPORTED_LOCALES.has(body.locale) ? body.locale : 'fr'
         const next = sanitizeNext(body.next)
 
@@ -59,12 +86,8 @@ export async function POST(request: NextRequest) {
             }
         )
 
-        const origin =
-            request.headers.get('origin') ||
-            (request.headers.get('host') ? `https://${request.headers.get('host')}` : '')
-        const callbackUrl = origin
-            ? `${origin}/${locale}/auth/callback${next ? `?next=${encodeURIComponent(next)}` : ''}`
-            : undefined
+        const origin = resolveSiteOrigin(request.headers.get('origin'))
+        const callbackUrl = `${origin}/${locale}/auth/callback${next ? `?next=${encodeURIComponent(next)}` : ''}`
 
         const userMetadata = {
             first_name: firstName,
@@ -107,18 +130,11 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Nouvelle tentative sur un compte encore non confirmé : on aligne le
-        // mot de passe et les noms sur la dernière saisie.
-        const isRetry = Date.now() - new Date(user.created_at).getTime() > 60_000
-        if (isRetry) {
-            const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
-                password,
-                user_metadata: userMetadata,
-            })
-            if (updateError) {
-                console.error('signup retry: password update failed for', user.id, updateError.message)
-            }
-        }
+        // Nouvelle tentative sur un compte encore non confirmé : on renvoie
+        // seulement un lien. Le mot de passe n'est JAMAIS modifié ici (route
+        // non authentifiée : sinon n'importe qui pourrait réécrire celui d'un
+        // compte en attente). L'utilisateur garde le mot de passe de sa
+        // première inscription, ou passe par « Mot de passe oublié ».
 
         const invitationResponse = await fetch(
             `${supabaseUrl}/functions/v1/send-invitation`,
