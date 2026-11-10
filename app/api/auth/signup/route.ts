@@ -8,6 +8,27 @@ export const runtime = 'nodejs'
 
 const SUPPORTED_LOCALES = new Set(['fr', 'en'])
 
+// Limitation en mémoire (vitrine = un seul conteneur) : borne les envois
+// d'emails et les réinitialisations de comptes en attente déclenchés par un
+// tiers. Appliquée à toutes les adresses de la même façon (pas d'énumération).
+const WINDOW_MS = 15 * 60_000
+const LIMITS = { email: 3, ip: 10 }
+const hits = new Map<string, number[]>()
+function isRateLimited(key: string, max: number): boolean {
+    const now = Date.now()
+    const recent = (hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS)
+    if (recent.length >= max) {
+        hits.set(key, recent)
+        return true
+    }
+    recent.push(now)
+    hits.set(key, recent)
+    if (hits.size > 10_000) {
+        for (const [k, v] of hits) if (v.every((t) => now - t >= WINDOW_MS)) hits.delete(k)
+    }
+    return false
+}
+
 // Origine du lien de confirmation : jamais prise telle quelle dans les
 // en-têtes (falsifiables). Liste blanche, sinon le domaine de production.
 const DEFAULT_SITE_ORIGIN = 'https://edupro.africa'
@@ -102,6 +123,14 @@ export async function POST(request: NextRequest) {
 
         const normalizedEmail = String(email).trim().toLowerCase()
 
+        const ip = getRemoteIp(request) || 'unknown'
+        if (isRateLimited(`ip:${ip}`, LIMITS.ip) || isRateLimited(`email:${normalizedEmail}`, LIMITS.email)) {
+            return NextResponse.json(
+                { error: "Trop de tentatives. Réessayez dans quelques minutes." },
+                { status: 429 }
+            )
+        }
+
         // Réponse IDENTIQUE quel que soit l'état de l'adresse (nouvelle,
         // compte en attente, compte confirmé) : la route ne doit pas
         // permettre d'énumérer les comptes.
@@ -176,7 +205,11 @@ export async function POST(request: NextRequest) {
             // compte légitime : non confirmé, il ne peut pas se connecter
             // par mot de passe. Le lien fait ensuite choisir le mot de passe
             // au détenteur de la boîte. Compte ni supprimé ni rattachements
-            // modifiés.
+            // modifiés. Arbitrage assumé : sans ce remplacement, le mot de
+            // passe d'un tiers redevient valide dès que l'email est confirmé
+            // via le lien ; avec, un tiers ne peut que changer un mot de passe
+            // inutilisable (connexion refusée tant que l'email n'est pas
+            // confirmé), et c'est borné par la limitation ci-dessus.
             const { error: scrambleError } = await supabaseAdmin.auth.admin.updateUserById(existing.user.id, {
                 password: randomBytes(48).toString('base64url'),
             })
