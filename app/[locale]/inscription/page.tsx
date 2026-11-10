@@ -18,6 +18,7 @@ import { User, Briefcase, GraduationCap, Eye, EyeOff, Check, ArrowRight, Loader2
 import { createClient } from "@/lib/supabase/client"
 import { toast } from "sonner"
 import { getAppUrl } from "@/lib/utils"
+import { signInWithProvider, type OAuthProvider } from "@/lib/supabase/oauth"
 
 // Import assets locally if needed, assuming /images/edupro-logo.png exists in public or using the imported logo from header
 import logo from "@/assets/images/logo.png"
@@ -56,6 +57,19 @@ export default function InscriptionPage() {
 
     const passwordStrength = getPasswordStrength(password)
 
+    const [oauthPending, setOauthPending] = useState<OAuthProvider | null>(null)
+    const handleOAuth = async (provider: OAuthProvider) => {
+        if (oauthPending) return
+        setOauthPending(provider)
+        const { success, error } = await signInWithProvider(provider, `${window.location.origin}/${locale || "fr"}`)
+        if (!success) {
+            setOauthPending(null)
+            toast.error("Impossible de créer le compte", {
+                description: error?.message || "Réessayez dans un instant.",
+            })
+        }
+    }
+
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -76,7 +90,8 @@ export default function InscriptionPage() {
                     password: formData.password,
                     firstName,
                     lastName,
-                    role: 'student'
+                    role: 'student',
+                    locale: typeof locale === 'string' ? locale : 'fr',
                 }),
             })
 
@@ -87,8 +102,8 @@ export default function InscriptionPage() {
                     description: data.error || "Une erreur est survenue"
                 })
             } else {
-                toast.success("Inscription réussie !", {
-                    description: "Veuillez vérifier votre email pour activer votre compte."
+                toast.success("Compte créé !", {
+                    description: "Confirmez votre email pour l'activer."
                 })
                 setRegisteredEmail(formData.email)
                 setFormData({ fullName: "", email: "", password: "", country: "" })
@@ -169,30 +184,36 @@ export default function InscriptionPage() {
                         {/* PROFESSIONNEL TAB */}
                         {activeTab === "professionnel" && registeredEmail && (
                             <div className="mx-auto max-w-md animate-fade-in">
-                                <div className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
+                                <div role="alert" aria-live="polite" className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
                                     <div className="mb-4 flex justify-center">
                                         <div className="rounded-full bg-emerald-100 p-4 dark:bg-emerald-900/30">
                                             <MailCheck className="h-10 w-10 text-emerald-600 dark:text-emerald-400" />
                                         </div>
                                     </div>
-                                    <h2 className="mb-2 text-2xl font-bold text-foreground">Compte créé avec succès</h2>
-                                    <p className="mb-6 text-sm text-muted-foreground">
-                                        Un email d'activation a été envoyé à{" "}
-                                        <span className="font-medium text-foreground">{registeredEmail}</span>.
-                                        Cliquez sur le lien reçu pour activer votre compte.
+                                    <h2 className="mb-2 text-2xl font-bold text-foreground">Confirmez votre email</h2>
+                                    <p className="mb-3 text-sm text-muted-foreground">
+                                        Votre compte est créé. Un lien de confirmation a été envoyé à{" "}
+                                        <span className="font-medium text-foreground break-all">{registeredEmail}</span>.
+                                    </p>
+                                    <p className="mb-3 text-sm text-muted-foreground">
+                                        Cliquez dessus : votre compte sera activé et vous serez connecté
+                                        automatiquement, <strong>sans ressaisir de mot de passe</strong>.
+                                    </p>
+                                    <p className="mb-6 text-xs text-muted-foreground">
+                                        Pensez à vérifier vos courriers indésirables. Le lien est valable 24 heures.
                                     </p>
                                     <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
                                         <Button
                                             onClick={() => router.push(`/${locale}/connexion`)}
                                             className="bg-gradient-to-r from-violet-600 to-fuchsia-600 font-semibold text-white"
                                         >
-                                            Aller à la connexion
+                                            J'ai confirmé, me connecter
                                         </Button>
                                         <Button
                                             variant="outline"
                                             onClick={() => setRegisteredEmail(null)}
                                         >
-                                            Créer un autre compte
+                                            Modifier l'email
                                         </Button>
                                     </div>
                                 </div>
@@ -348,7 +369,7 @@ export default function InscriptionPage() {
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
-                                    <Button variant="outline" className="gap-2 bg-transparent">
+                                    <Button type="button" variant="outline" className="gap-2 bg-transparent" disabled={oauthPending !== null || isLoading} onClick={() => handleOAuth("google")}>
                                         <svg className="h-5 w-5" viewBox="0 0 24 24">
                                             <path
                                                 fill="currentColor"
@@ -369,7 +390,7 @@ export default function InscriptionPage() {
                                         </svg>
                                         Google
                                     </Button>
-                                    <Button variant="outline" className="gap-2 bg-transparent">
+                                    <Button type="button" variant="outline" className="gap-2 bg-transparent" disabled={oauthPending !== null || isLoading} onClick={() => handleOAuth("facebook")}>
                                         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                                         </svg>
