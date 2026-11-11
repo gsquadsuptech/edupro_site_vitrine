@@ -118,6 +118,10 @@ jobs:
             NEXT_PUBLIC_DASHBOARD_STUDENT_URL=${{ secrets.NEXT_PUBLIC_DASHBOARD_STUDENT_URL }}
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
             NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+            NEXT_PUBLIC_SENTRY_DSN=${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+            NEXT_PUBLIC_SENTRY_ENVIRONMENT=${{ github.ref_name == 'main' && 'production' || 'staging' }}
+          secrets: |
+            sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}
 
   deploy:
     needs: build-and-push
@@ -241,6 +245,7 @@ jobs:
                 -e NEXT_PUBLIC_DASHBOARD_STUDENT_URL="${{ secrets.NEXT_PUBLIC_DASHBOARD_STUDENT_URL }}" \
                 -e NEXT_PUBLIC_RECAPTCHA_SITE_KEY="${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" \
                 -e NEXT_PUBLIC_TURNSTILE_SITE_KEY="${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}" \
+                -e SENTRY_ENVIRONMENT="${{ github.ref_name == 'main' && 'production' || 'staging' }}" \
                 -p "127.0.0.1:${PORT}:3000" \
                 "$image"
             }

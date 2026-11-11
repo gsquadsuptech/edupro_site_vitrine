@@ -7,5 +7,6 @@ export const config = {
     // Match all pathnames except for
     // - … if they start with `/api`, `/_next` or `/_vercel`
     // - … the ones containing a dot (e.g. `favicon.ico`)
-    matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+    // `monitoring` : tunnel Sentry (next.config.ts), à ne pas préfixer d'une locale.
+    matcher: ['/((?!api|_next|_vercel|monitoring|.*\\..*).*)']
 };

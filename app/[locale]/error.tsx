@@ -23,6 +23,11 @@ export default function LocaleError({
     reset: () => void
 }) {
     useEffect(() => {
+        // Import dynamique : le SDK reste hors du bundle initial. Sans effet
+        // s'il n'est pas encore initialisé ; le rapporteur ES5 couvre ce cas.
+        import("@sentry/nextjs")
+            .then((Sentry) => Sentry.captureException(error, { extra: { digest: error.digest } }))
+            .catch(() => {})
         const report = (window as unknown as { __eduproReportError?: (e: Error, extra?: unknown) => void })
             .__eduproReportError
         if (typeof report === "function") {
