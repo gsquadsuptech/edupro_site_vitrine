@@ -22,12 +22,16 @@ Sentry.init({
     sendDefaultPii: false,
 
     // Les routes API journalisent puis répondent 500 sans relancer l'erreur :
-    // sans cette intégration, elles resteraient invisibles. Elle remonte aussi
-    // les rapports « [client-error] » des vieux navigateurs (public/error-reporter.js).
+    // sans cette intégration, elles resteraient invisibles.
     integrations: [Sentry.captureConsoleIntegration({ levels: ["error"] })],
 
     beforeSend(event, hint) {
         try {
+            // Rapports navigateur : déjà envoyés explicitement, après contrôle
+            // d'origine et limitation, par /api/client-error. Le console.error
+            // de cette route ne doit pas créer un second événement non borné.
+            if (event.logger === "console" && /^\[client-error\]/.test(event.message || "")) return null
+
             const err = hint?.originalException as { message?: string } | undefined
             const texts = [err?.message, event.message, event.exception?.values?.[0]?.value]
             if (IGNORED_NEEDLES.some((n) => texts.some((t) => typeof t === "string" && t.includes(n)))) {
