@@ -9,11 +9,13 @@ import eduproEntrepriseImage from "@/assets/images/edupro-entreprise3.png"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { useSignupCta } from "@/hooks/use-signup-cta"
 
 export function ProfessionalsHeroSection() {
     const t = useTranslations("professionals.hero")
     const params = useParams()
     const locale = (params?.locale as string) || 'fr'
+    const { signedIn } = useSignupCta(locale)
 
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/30 pt-20 md:pt-32">
@@ -33,12 +35,15 @@ export function ProfessionalsHeroSection() {
                         {/* CTAs and Selectors */}
                         <div className="space-y-4">
                             <div className="flex flex-col gap-3 sm:flex-row">
-                                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
-                                    <Link href={`/${locale}/inscription`}>
-                                        {t("cta.primary")}
-                                        <ArrowRight className="ml-2 h-5 w-5" />
-                                    </Link>
-                                </Button>
+                                {/* Connecté : l'inscription n'a plus lieu d'être, le bouton catalogue suffit. */}
+                                {!signedIn && (
+                                    <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
+                                        <Link href={`/${locale}/inscription`}>
+                                            {t("cta.primary")}
+                                            <ArrowRight className="ml-2 h-5 w-5" />
+                                        </Link>
+                                    </Button>
+                                )}
                                 <Button asChild variant="outline" size="lg">
                                     <Link href={`/${locale}/catalogue`}>
                                         {t("cta.secondary")}

@@ -4,6 +4,7 @@ import { randomBytes } from "crypto"
 import { isIPv4, isIPv6 } from "net"
 import { NextRequest, NextResponse } from "next/server"
 import { verifyTurnstileToken, getRemoteIp } from "@/lib/turnstile"
+import { ensureStudentProfile } from "@/lib/ensure-profile"
 
 export const runtime = 'nodejs'
 
@@ -212,6 +213,16 @@ export async function POST(request: NextRequest) {
             })
             if (error || !data?.properties?.action_link) return failClosed('signup link', error?.message)
             actionLink = data.properties.action_link
+
+            // Le SaaS retrouve l'inscrit par `profiles.email` (inscription aux
+            // cours) : on ne dépend pas du seul trigger handle_new_user.
+            const { error: profileError } = await ensureStudentProfile(supabaseAdmin, {
+                id: created.user.id,
+                email: normalizedEmail,
+                firstName: userMetadata.first_name,
+                lastName: userMetadata.last_name,
+            })
+            if (profileError) console.error('signup: profil non créé', profileError)
         } else {
             const alreadyExists =
                 (createError as any)?.code === 'email_exists' ||

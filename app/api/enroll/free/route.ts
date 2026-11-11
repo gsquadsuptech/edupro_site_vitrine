@@ -1,4 +1,6 @@
 import { createServerClient } from "@supabase/ssr"
+import { createClient } from "@supabase/supabase-js"
+import { ensureStudentProfile } from "@/lib/ensure-profile"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -75,6 +77,32 @@ export async function POST(request: NextRequest) {
     const fullName: string = meta.full_name || meta.name || ''
     const [firstName, ...rest] = fullName.split(' ')
     const lastName = meta.last_name || (rest.length ? rest.join(' ') : undefined)
+
+    // Le SaaS résout l'inscrit par `profiles.email`. Si la ligne `profiles`
+    // manque (trigger handle_new_user non exécuté), il répondait « Failed to
+    // process user account ». L'identité vient de la session vérifiée
+    // ci-dessus, jamais du corps de la requête.
+    let customerEmail = user.email
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (serviceKey) {
+        const admin = createClient(supabaseUrl, serviceKey, {
+            auth: { persistSession: false, autoRefreshToken: false },
+        })
+        const ensured = await ensureStudentProfile(admin, {
+            id: user.id,
+            email: user.email,
+            firstName: meta.first_name || firstName || null,
+            lastName: lastName || null,
+        })
+        if (ensured.error) console.error('enroll/free: profil non garanti', ensured.error)
+        // `profiles.email` est modifiable par son propriétaire : on ne reprend
+        // sa graphie que si c'est la MÊME adresse que celle de la session
+        // vérifiée (différence de casse seulement). Sinon, email de session.
+        else if (ensured.email.toLowerCase() === user.email.toLowerCase()) customerEmail = ensured.email
+        else console.error('enroll/free: profiles.email ne correspond pas à l\'email de session', user.id)
+    } else {
+        console.error('enroll/free: SUPABASE_SERVICE_ROLE_KEY absente, profil non vérifié')
+    }
 
     // redirectUrl est requis par le schéma SaaS (zod .url()) ; il n'est pas
     // utilisé côté vitrine (le client gère l'écran de confirmation), mais doit
@@ -168,7 +196,7 @@ export async function POST(request: NextRequest) {
         amount: 0,
         currency: 'XOF',
         customer: {
-            email: user.email,
+            email: customerEmail,
             firstName: meta.first_name || firstName || undefined,
             lastName,
             phone: meta.phone || undefined,
