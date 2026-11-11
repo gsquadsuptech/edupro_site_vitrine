@@ -95,7 +95,11 @@ export async function POST(request: NextRequest) {
             lastName: lastName || null,
         })
         if (ensured.error) console.error('enroll/free: profil non garanti', ensured.error)
-        else customerEmail = ensured.email
+        // `profiles.email` est modifiable par son propriétaire : on ne reprend
+        // sa graphie que si c'est la MÊME adresse que celle de la session
+        // vérifiée (différence de casse seulement). Sinon, email de session.
+        else if (ensured.email.toLowerCase() === user.email.toLowerCase()) customerEmail = ensured.email
+        else console.error('enroll/free: profiles.email ne correspond pas à l\'email de session', user.id)
     } else {
         console.error('enroll/free: SUPABASE_SERVICE_ROLE_KEY absente, profil non vérifié')
     }
