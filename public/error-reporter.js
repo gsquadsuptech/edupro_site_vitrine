@@ -39,9 +39,18 @@
     } catch (e) { /* rien a faire : ne jamais casser la page pour un rapport */ }
   }
 
+  // Jamais de jetons dans les rapports : les liens de confirmation Supabase
+  // les portent dans le hash (#access_token=...) ou la query (?code=...).
+  function safeUrl() {
+    var loc = window.location;
+    if (!loc) return '';
+    var query = String(loc.search || '').replace(/([?&](?:access_token|refresh_token|token|token_hash|code|password)=)[^&]*/gi, '$1[filtre]');
+    return String(loc.origin || '') + String(loc.pathname || '') + query;
+  }
+
   function base() {
     return {
-      url: String(window.location && window.location.href),
+      url: safeUrl(),
       ua: String(navigator.userAgent),
       at: new Date().toISOString()
     };

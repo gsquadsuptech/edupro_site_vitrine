@@ -1,4 +1,5 @@
 import createNextIntlPlugin from 'next-intl/plugin';
+import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from "next";
 
 const withNextIntl = createNextIntlPlugin(
@@ -37,4 +38,21 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: __dirname,
 };
 
-export default withNextIntl(nextConfig);
+export default withSentryConfig(withNextIntl(nextConfig), {
+  org: process.env.SENTRY_ORG || 'algorix-solutions',
+  project: process.env.SENTRY_PROJECT || 'edupro-vitrine',
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // Source maps envoyées seulement si un jeton est fourni au build (secret
+  // BuildKit, cf. Dockerfile) ; sinon le build reste identique.
+  sourcemaps: { disable: !process.env.SENTRY_AUTH_TOKEN },
+  silent: !process.env.CI,
+  telemetry: false,
+  // Envoi via le site lui-même : les bloqueurs de pub coupent sinon *.sentry.io.
+  // Exclu du middleware next-intl (middleware.ts).
+  tunnelRoute: '/monitoring',
+  // Le site est d'abord consulté sur mobile : on retire du bundle client tout
+  // ce qui sert au suivi de performance (traces désactivées) et aux logs du SDK.
+  webpack: {
+    treeshake: { removeDebugLogging: true, removeTracing: true },
+  },
+});

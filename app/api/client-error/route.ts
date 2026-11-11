@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { scrubUrl } from "@/lib/sentry-scrub"
 
 export const runtime = "nodejs"
 
@@ -9,9 +10,9 @@ export const runtime = "nodejs"
  * Elles sont ecrites dans les journaux serveur (visibles dans les logs de
  * l'App Platform), avec un prefixe stable pour les retrouver d'un grep.
  *
- * Pourquoi ici et pas un service tiers : le site n'a pas de Sentry. Tant
- * qu'un DSN n'existe pas, ce point d'entree est le seul moyen de savoir ce
- * qui casse sur les appareils que nous ne possedons pas.
+ * Complement de Sentry : ce script ES5 voit les erreurs de syntaxe des vieux
+ * navigateurs, qui empechent le SDK Sentry lui-meme de demarrer. Le
+ * console.error ci-dessous est remonte a Sentry (captureConsoleIntegration).
  *
  * Aucune authentification : un rapport d'erreur vient par definition d'un
  * visiteur anonyme. La taille est plafonnee et rien n'est persiste en base.
@@ -39,7 +40,9 @@ export async function POST(req: NextRequest) {
             source: String(payload.source ?? "").slice(0, 300),
             line: payload.line,
             col: payload.col,
-            url: String(payload.url ?? "").slice(0, 300),
+            // Défense en profondeur : un ancien script en cache peut encore
+            // envoyer l'URL complète, jetons compris.
+            url: scrubUrl(String(payload.url ?? "")).slice(0, 300),
             ua: String(payload.ua ?? "").slice(0, 300),
             at: String(payload.at ?? new Date().toISOString()).slice(0, 40),
             stack: String(payload.stack ?? "").slice(0, 2000),
