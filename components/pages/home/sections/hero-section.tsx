@@ -7,13 +7,15 @@ import { ArrowRight, CheckCircle2 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { useSignupCta } from "@/hooks/use-signup-cta"
 
 import eduproHome3 from "@/assets/images/edupro-home3.png"
 
 export function HeroSection() {
   const t = useTranslations("landing.hero")
   const params = useParams()
-  const locale = params?.locale || 'fr'
+  const locale = (params?.locale as string) || 'fr'
+  const signupCta = useSignupCta(locale)
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/30 py-20 md:py-32">
@@ -36,8 +38,8 @@ export function HeroSection() {
                 size="lg"
                 className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90"
               >
-                <Link href={`/${locale}/inscription`}>
-                  {t("cta.primary")}
+                <Link href={signupCta.href}>
+                  {signupCta.label(t("cta.primary"))}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>

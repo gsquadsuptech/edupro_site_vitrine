@@ -7,9 +7,13 @@ import { Building2, GraduationCap, Users, TrendingUp, ArrowRight, CheckCircle2 }
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { useParams } from "next/navigation"
+import { useSignupCta } from "@/hooks/use-signup-cta"
 
 export function FinalCTA() {
   const t = useTranslations("landing.finalCTA")
+  const params = useParams()
+  const signupCta = useSignupCta((params?.locale as string) || "fr")
 
   const ctas = [
     {
@@ -74,8 +78,8 @@ export function FinalCTA() {
                     asChild
                     className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground hover:opacity-90"
                   >
-                    <Link href={t(`ctas.${item.key}.href`)}>
-                      {t(`ctas.${item.key}.cta`)}
+                    <Link href={item.key === "professionals" ? signupCta.href : t(`ctas.${item.key}.href`)}>
+                      {item.key === "professionals" ? signupCta.label(t(`ctas.${item.key}.cta`)) : t(`ctas.${item.key}.cta`)}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

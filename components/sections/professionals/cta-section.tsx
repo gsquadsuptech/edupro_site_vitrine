@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, MessageCircle, GraduationCap, HelpCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
+import { useSignupCta } from "@/hooks/use-signup-cta"
 import Link from "next/link"
 
 export function ProfessionalsCTASection() {
     const t = useTranslations("professionals.cta")
     const params = useParams()
 
-    const locale = params?.locale || 'fr'
+    const locale = (params?.locale as string) || 'fr'
+    const signupCta = useSignupCta(locale)
 
     const options = [
         {
@@ -86,8 +88,8 @@ export function ProfessionalsCTASection() {
                     </ul>
                     <p className="text-sm font-semibold text-primary mb-6">{t("launch.note")}</p>
                     <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white gap-2">
-                        <Link href={`/${locale}/inscription`}>
-                            {t("launch.cta")}
+                        <Link href={signupCta.href}>
+                            {signupCta.label(t("launch.cta"))}
                             <ArrowRight className="h-5 w-5" />
                         </Link>
                     </Button>

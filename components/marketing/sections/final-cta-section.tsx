@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Building2, User, GraduationCap, TrendingUp, ArrowRight, Shield, Headphones, CreditCard, Database, Wifi } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { useSignupCta } from "@/hooks/use-signup-cta"
 
 export function FinalCTASection() {
   const params = useParams()
-  const locale = params?.locale || 'fr'
+  const locale = (params?.locale as string) || 'fr'
+  const signupCta = useSignupCta(locale)
 
   const options = [
     {
@@ -22,8 +24,8 @@ export function FinalCTASection() {
       icon: User,
       title: "JE SUIS UN PROFESSIONNEL",
       subtitle: "Large catalogue . paiement mobile",
-      cta: "Créer mon compte gratuit",
-      link: `/${locale}/inscription`
+      cta: signupCta.label("Créer mon compte gratuit"),
+      link: signupCta.href
     },
     {
       icon: GraduationCap,
